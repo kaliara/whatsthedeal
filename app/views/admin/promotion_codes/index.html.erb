@@ -1,0 +1,59 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'New Promotion Code', new_admin_promotion_code_path %></li>
+  <% if params[:all] %>
+    <li><%= link_to "Show Only 'Listed' Promotion Codes", "?" %></li>
+  <% else %>
+    <li><%= link_to "Show All #{PromotionCode.count} Promotion Codes", "?all=true" %></li>
+  <% end %>
+<% end %>
+
+
+<h2>Listing Promotion Codes</h2>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Code</th>
+    <th>User</th>
+    <th>Value</th>
+    <th>Restricted</th>
+    <th>Use limit</th>
+    <th>Times Used</th>
+    <th>Active</th>
+  </tr>
+
+<% @promotion_codes.each do |promotion_code| %>
+  <tr class="promotion_code" id="promotion_code_<%= promotion_code.id %>">
+    <td><%=h promotion_code.name %></td>
+    <td><%=h promotion_code.code %></td>
+    <td><%=h promotion_code.user_id %></td>
+    <td><%=h number_to_currency promotion_code.value, :precision => 0 %></td>
+    <td><%=h promotion_code.restricted? %></td>
+    <td><%=h promotion_code.use_limit < 9999 ? promotion_code.use_limit : "--" %></td>
+    <td><%=h promotion_code.credits.count %></td>
+    <td><%=h promotion_code.active? %></td>
+    <td><%= link_to 'Edit', edit_admin_promotion_code_path(promotion_code) %></td>
+    <td><%= link_to 'Show Credits', admin_promotion_code_path(promotion_code) %></td>
+    <td><%= link_to 'Unlist', "#", :class => 'unlist' %></td>
+  </tr>
+<% end %>
+</table>
+
+<script type="text/javascript" charset="utf-8">
+  $('.promotion_code .unlist').click(
+    function() {
+      $.ajax({
+          type: 'post', 
+          data: 'id=' + $(this).parent().parent().attr('id').match(/\d+/), 
+          dataType: 'script', 
+          success: function(msg){
+              $('#promotion_code_' + msg).fadeOut('slow');
+            },
+          url: '<%= admin_promotion_codes_unlist_path %>'
+      });
+      return false;
+    }
+  );
+</script>
+
+<%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>

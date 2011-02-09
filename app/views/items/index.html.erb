@@ -1,0 +1,57 @@
+<% content_for :page_title do %>WTD Charity Raffle and Auction<% end %>
+
+<div class="promotion_index item_index clearfix">
+  <h3>Help Support Local Charities and Win Great Prizes</h3>
+  <p style="line-height:1.2em">Thanks to everyone who helped make this promotion a success including our local website partners, our generous raffle and silent auction sponsors and to all of those who made a donation.  We're thrilled at the response and appreciate everyone's generosity. Check out the final tally!</p>
+  <br><br>
+  <p style="line-height:1.2em;font-size:16px">
+    <span style="color:#ccc">Raffle Tickets Sold:</span> 324<br>
+    <span style="color:#ccc">Raffle Ticket $ Raised:</span> $1,190<br>
+    <span style="color:#ccc">Silent Auction Money Raised:</span> $750<br>
+    <span style="color:#ccc">$ Raised across all 4 charities:</span> $1,940<br>
+    <br>
+    <span style="color:#ccc">WTD's Winning Charity Match (DC Central Kitchen sponsored by We Love DC): </span>$675<br><br>
+    <span style="font-size:20px">TOTAL $$ DONATED TO CHARITY: <strong style="color:#ffcc00;">$2,615</strong></span><br><br><br></p>
+  
+  <% @promotions.each do |promotion| %>
+    <div class="promotion">
+      <div class="main_details clearfix">
+        <div class="promotion_image">
+          <%= image_tag(promotion.image1.url, :alt => promotion.name) %>
+        </div>
+        <div class="event_content clearfix">
+          <h2 class="mutli_deal_header"><%= promotion.name %></h2>
+          <div class="event_details">
+            <%#= link_to "Support Charity", promotion, :class => 'secondary' %>
+          </div>
+        </div>
+      </div>
+      <div class="ie_clear"></div>
+    </div>
+  <% end %>
+  
+  <h3 class="clear">The raffle drawing will take place on Wednesday, December 29th at 6pm.</h3>
+  <%= render_content 'charity_prizes' %>
+  
+  <br><br>
+  <h3>WTD Silent Auction</h3>
+  <p>Help support the charities above by bidding on some of these amazing prizes.</p>
+
+  <% @items.each do |item| %>
+    <div class="promotion auction_item">
+      <div class="main_details clearfix">
+        <div class="promotion_image">
+          <%= image_tag(item.image1.url, :alt => item.name) %>
+        </div>
+        <div class="event_content">
+          <h2 class="mutli_deal_header"><%= item.name %></h2>
+          <div class="event_details">
+            <span style="color:#fff">Winner: <strong><%= item.high_bidder %></strong></span>
+            <%#= link_to "Bid on Auction", item_path(item), :class => 'secondary' %>
+          </div>
+        </div>
+      </div>
+      <div class="ie_clear"></div>
+    </div>
+  <% end %>
+</div>

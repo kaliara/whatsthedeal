@@ -1,0 +1,50 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Entrants', admin_raffle_entrants_path(@path) %></li>
+  <li><%= link_to 'Show this Raffle', admin_raffle_path(@raffle) %></li>
+  <li><%= link_to 'Raffle Listing', admin_raffles_path %></li>
+<% end %>
+
+<%= render :partial => "/admin/shared/tiny_mce" %>
+
+<h2>Editing Raffle</h2>
+
+<% form_for([:admin,@raffle], :html => {:multipart => true}) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :subscription_list_id %> (from step 2 above)<br />
+    <%= f.text_field :subscription_list_id %> (use <strong>44</strong> for MASTER list)
+  </p>
+  <br>
+  <p>
+    <%= f.label :business_id %><br />
+    <%= f.select :business_id, Business.find(:all, :order => 'name ASC').collect{|b| [b.name, b.id]} %>
+  </p>
+  <br><br>
+  <p>
+    <%= f.label :header %><br />
+    <%= f.text_field :header %>
+  </p>
+  <br><br>
+  <p>
+    <%= f.label :image1, 'Main Image' %><br />
+    <%= f.file_field :image1 %>
+  </p>
+  <p>
+    <%= f.label :body %><br />
+    <%= f.text_area :body, :rows => 10, :cols => 100 %>
+  </p>
+  <br><br>
+  <p>
+    <%= f.label :rotation_start_date %><br />
+    <%= f.datetime_select :rotation_start_date %>
+  </p>
+  <p>
+    <%= f.label :rotation_end_date %><br />
+    <%= f.datetime_select :rotation_end_date %>
+  </p>
+  <br><br>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>

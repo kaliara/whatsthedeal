@@ -1,0 +1,27 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Content Listing', admin_contents_path %></li>
+<% end %>
+
+<%= render :partial => "/admin/shared/tiny_mce" %>
+
+<h2>New content</h2>
+
+<% form_for([:admin,@content]) do |f| %>
+  <%= f.error_messages %>
+
+  <p id="rotation_item" style="display:none">
+    <%= f.label :rotation_item %> (should be next number in sequence, i.e. <strong>3</strong> for <em>event3</em>)<br>
+    <%= f.text_field :rotation_item %><br><br>
+  </p>
+  <p>
+    <%= f.label :name %> <span id="rotation_helper" style="display:none">(use name structure with 'rotation item' from above, i.e. <em>event_title3</em>)</span><br />
+    <%= f.text_field :name %><br><br>
+  </p>
+  <p>
+    <%= f.label :value %><br />
+    <%= f.text_area :value %><br><br>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>

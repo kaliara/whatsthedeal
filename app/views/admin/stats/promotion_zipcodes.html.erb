@@ -1,0 +1,30 @@
+<% content_for :sub_nav do %>
+  <% @no_sub_nav = true %>
+<% end %>
+<br><br>
+
+<h2>Top Zip Codes for Each Promotion</h2>
+
+<table>
+  <tr>
+    <th>Promotion #ID</th>
+    <th>Promotion Name</th>
+    <th>Zip code #1</th>
+    <th>Zip code #2</th>
+    <th>Zip code #3</th>
+    <th>Zip code #4</th>
+    <th>Zip code #5</th>
+  </tr>
+  
+  <% @promotions.each do |promotion| %>
+    <tr>
+      <td><%= promotion.id %></td>
+      <td><%= promotion.name %></td>
+      <% ids = promotion.coupons.delete_if{|c| c.purchase.billing_zipcode.nil?}.collect{|c| c.purchase_id}.uniq %>
+      <% Purchase.find(:all, :conditions => {:id => ids}, :group => 'billing_zipcode', :order => 'count(*) desc', :limit => 5).each do |purchase| %>
+        <td><%= purchase.billing_zipcode %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+

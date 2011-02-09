@@ -1,0 +1,28 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'New Origin', new_admin_origin_path %></li>
+<% end %>
+
+
+<h2>Listing origins</h2>
+
+<table>
+  <tr>
+    <th>Business</th>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Code</th>
+    <th>Number of Users</th>
+  </tr>
+
+<% @origins.each do |origin| %>
+  <tr>
+    <td><%=h origin.business.name %></td>
+    <td><%=h origin.name %></td>
+    <td><%= Origin::ORIGIN_TYPES[origin.origin_type - 1][0] %></td>
+    <td><%=h origin.code %></td>
+    <td><%= origin.users.size %></td>
+    <td><%= link_to 'Edit', edit_admin_origin_path(origin) %></td>
+    <td><%= link_to 'Destroy', admin_origin_path(origin), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>

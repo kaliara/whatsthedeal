@@ -1,0 +1,41 @@
+<% content_for :page_title do %>Login or Register For A New Account<% end %>
+
+<% if session[:return_to] == new_purchase_path %>
+  <div class="section_element featured actionable">
+    <div class="section_content new_user_welcome">
+      <%= render_content 'login_desc' %>
+    </div>  
+  </div>
+<% end %>
+
+<div class="section_element login_page">
+  <div class="section_header">
+    <%= image_tag '/images/logo.png', :class => 'logo' %>
+    <h3>Login to My Account</h3>
+  </div>
+
+  <div class="section_content simple_form">
+    <% form_for @user_session, :url => user_session_path do |f| %>
+      <%= display_error_messages(f.error_messages) %>
+      <div class="label_input_form">
+        <%= f.label :email %>
+        <% puts params.to_yaml %>
+        <%= text_field_tag 'user_session[email]', nil, :tabindex => 1, :class => "text", :type => "email" %>
+      </div>
+      <div class="label_input_form">
+        <%= f.label :password %>
+        <%= f.password_field :password, :tabindex => 2 %>
+      </div>
+      <div class="label_input_form forget_password clearfix">
+        <%= link_to "Forgot Password?", forgot_password_path %>
+      </div>
+      <div class="label_input_form remember_me">
+        <%= f.check_box :remember_me, :tabindex => 3 %>
+        <%= f.label :remember_me %>
+      </div>
+      <div class="form_action">
+        <p><%= f.submit "Login", :class => "primary", :tabindex => 4 %></p>
+      </div>
+    <% end %>
+  </div>
+</div>

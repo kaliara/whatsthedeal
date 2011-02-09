@@ -1,0 +1,46 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'New promotion', new_admin_promotion_path %></li>
+  <li><%= link_to 'Show all promotions', admin_promotions_path(:all => true) %></li>
+  <li><%= link_to 'Live promotions', admin_promotions_path(:live => true) %></li>
+<% end %>
+
+<h2><%= params[:live] == "true" ? "Live Promotions on WTD" : "Listing promotions" %></h2>
+
+<div id="updated" style="opactiy: 0">Promotion positions have been updated!</div>
+
+<table id="promotions">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Deals</th>
+    <th><strong>Purchases</strong></th>
+    <th>Quota</th>
+    <th>Profit Percentage</th>
+    <th>Live on WTD</th>
+    <th>Start date</th>
+    <th>End date</th>
+    <th>Activate Coupons</th>
+  </tr>
+
+<% @promotions.each do |promotion| %>
+  <tr id="promotion_<%= promotion.id %>" class="<%= "featured" if promotion.featured? %> <%= "next_featured" if promotion.id == @next_featured.id %> <%= "inactive" unless promotion.active? %>">
+    <td><%=h promotion.id %></td>
+    <td><%=h promotion.name %><%= ' <span style="color: green">(featured)</span>' if promotion.featured? %><%= ' <span style="color: #467EA7">(featured tomorrow)</span>' if promotion.id == @next_featured.id %></td>
+    <td><%=h promotion.deals.count %></td>
+    <td><strong><%=h promotion.purchases %></strong></td>
+    <td><%=h promotion.quota %></td>
+    <td><%= number_to_percentage promotion.profit_percentage, :precision => 2 %></td>
+    <td><%= "Yes" if promotion.active? %></td>
+    <td><%=h promotion.start_date.strftime("%b %e, %Y") %></td>
+    <td><%=h (promotion.end_date - 5.hours).strftime("%b %e, %Y") %></td>
+    <td><%= link_to "Activate Coupons", admin_promotion_activate_coupons_path(promotion) if promotion.quota_met?  %></td>
+    <td><%= link_to "Clear Carts", admin_clear_carts_path(:id => promotion.id), :confirm => 'Are you sure clear all of the cart items for this promotion?'  %></td>
+    <td><%= link_to 'Show', special_preview_path(:id => promotion.id, :password => Promotion::PREVIEW_PASSWORD) %></td>
+    <td><%= link_to 'Show&nbsp;Deals', admin_deals_path(:promotion_id => promotion.id) %></td>
+    <td><%= link_to 'Edit', edit_admin_promotion_path(promotion) %></td>
+    <td><%= (link_to 'Destroy', admin_promotion_path(promotion), :confirm => 'Are you sure?', :method => :delete) unless promotion.purchases > 0 %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />

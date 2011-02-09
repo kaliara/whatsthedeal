@@ -1,0 +1,22 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'New Content Entry', new_admin_content_path %></li>
+<% end %>
+
+
+<h2>Listing contents</h2>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Value</th>
+  </tr>
+
+<% @contents.each do |content| %>
+  <tr class="content_entry">
+    <td><%= content.name %></td>
+    <td><%= strip_tags truncate(content.value, :length => 200) %></td>
+    <td><%= link_to 'Edit', edit_admin_content_path(content) %></td>
+    <td><%= link_to 'Destroy', admin_content_path(content), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>

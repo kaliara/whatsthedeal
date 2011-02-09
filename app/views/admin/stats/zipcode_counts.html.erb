@@ -1,0 +1,20 @@
+<% content_for :sub_nav do %>
+  <% @no_sub_nav = true %>
+<% end %>
+<br><br>
+
+<h2>Users Per Zip Code</h2>
+
+<table>
+  <tr>
+    <th>Zip Code</th>
+    <th># of Users</th>
+  </tr>
+  
+  <% @zipcodes.each do |zipcode| %>
+    <tr>
+      <td><%= zipcode %></td>
+      <td><%= Customer.find(:all, :conditions => {:zipcode => zipcode}).size %></td>
+    </tr>
+  <% end %>
+</table>

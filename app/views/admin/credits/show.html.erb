@@ -1,0 +1,41 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Edit this Credit', edit_admin_credit_path(@credit) %></li>
+  <li><%= link_to 'Credit Listing', admin_credits_path %></li>
+<% end %>
+
+
+<div class="info_panel">
+
+  <h3>New Credits</h3>
+  
+  <p class="label_spacing">
+    <label>Promotion Code:</label>
+    <%=h @credit.promotion_code_id %>
+  </p>
+
+  <p>
+    <label>User:</label>
+    <%=h @credit.user_id %>
+  </p>
+
+  <p class="label_spacing">
+    <label>Referrer user:</label>
+    <%=h @credit.referrer_user_id %>
+  </p>
+
+  <p class="label_spacing">
+    <label>Value:</label>
+    <%=h @credit.value %>
+  </p>
+
+  <p class="label_spacing">
+    <label>Cart:</label>
+    <%=h @credit.cart_id %>
+  </p>
+
+  <p class="label_spacing">
+    <label>Purchase:</label>
+    <%=h @credit.purchase_id %>
+  </p>
+
+</div>

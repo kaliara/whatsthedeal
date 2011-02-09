@@ -1,0 +1,31 @@
+<div class="wrapper header">
+  <div class="wrapper clearfix">
+    <div class="nav_wrapper clearfix">
+      <ul class="cart_nav <%= "empty_cart" if cart.empty? %>">
+        <li><%= link_to "Shopping Cart <strong>(#{cart.cart_items.size})</strong>", my_cart_path %></li>
+      </ul>
+      <ul class="main_nav">
+        <li class="<%= 'current' if current_page? root_url %>"><%= link_to "Home", root_url %></li>
+        <li class="<%= 'current' if current_page? promotions_url %>"><%= link_to "More Great Deals", promotions_url %></li>
+    	  <li class="<%= 'current' if current_page? events_url %>"><%= link_to "Events", events_url %></li>
+    	  <li class="<%= 'current' if current_page? faq_url %>"><%= link_to "FAQs", faq_url %></li>
+      </ul>
+    </div>
+
+    <div class="account_nav">
+      <% if current_user and current_user.customer? %>
+        <div class="login_logout"><%= link_to'logout', logout_path, :class => 'sign_out' %></div>
+        Hey<%= ", " + current_user.customer.first_name if current_user.customer.has_name? %> <%= "(#{link_to("#{number_to_currency current_user.credit_total, :precision => 0} Credit", my_account_path, :class => 'credit_total')})" if current_user.credit_total > 0 %>
+        <ul>
+          <li><%= link_to "My Deals", my_deals_path %></li>
+          <li><%= link_to "Account Information", my_account_path %></li>
+        </ul>
+      <% else %>  
+        <div class="login_logout"><%= link_to'login', login_path %> or <%= link_to 'register', new_user_path, :class => 'sign_in' %></div>
+        <span class="user_status">You're missing out!</span>
+      <% end %>
+    </div>
+  </div>
+  
+  <%= link_to "<h1>What's the Deal DC</h1>", root_url, :id => 'logo' %>
+</div>

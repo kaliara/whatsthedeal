@@ -1,0 +1,105 @@
+<% content_for :sub_nav do %>
+  <% @no_sub_nav = true %>
+<% end %>
+<br><br>
+
+<div class="section_content clearfix">
+  <div style="float: left;">
+    <% form_tag "/admin/business_payments", :method => :get do %>
+      <label>Unpaid:</label> 
+      <% unless @unpaid_businesses.empty? %>
+        <%= select_tag :unpaid_business_id, options_for_select([""] + @unpaid_businesses.collect{|b| [b.name + " (##{b.id})", b.id]}, params[:unpaid_business_id].to_i), :onchange => "submit()" %>
+      <% else %>
+        <span style="color:green">NONE! Good work!</span>
+      <% end %>
+    <% end %>
+  </div>
+  <div style="float: left;margin-left:20px">
+    <% form_tag "/admin/business_payments", :method => :get do %>
+      <label>Partially Paid (<span style="color:red">45+ days</span>):</label> 
+      <% unless @partially_paid_businesses.empty? %>
+        <select name='partially_paid_business_id' onchange="submit()">
+          <option value=""></option>
+          <% @partially_paid_businesses.each do |biz| %>
+            <option value="<%= biz.id %>" class="<%= "late_business_payment" if biz.has_late_business_payment? %>" <%= "selected=\'selected\'" if biz.id == params[:partially_paid_business_id].to_i %>><%= biz.name %></option>
+          <% end %>
+        </select>
+        
+      <% else %>
+        <span style="color:black">None</span>
+      <% end %>
+    <% end %>
+  </div>
+  <div style="float: left; margin-left: 20px">
+    <% form_tag "/admin/business_payments", :method => :get do %>
+      <label>Paid:</label> <%= select_tag :paid_business_id, options_for_select([""] + @paid_businesses.collect{|b| [b.name + " (##{b.id})", b.id]}, params[:paid_business_id].to_i), :onchange => "submit()" %>
+    <% end %>
+  </div>
+</div>
+<br><br>
+
+<% if params[:business_id] %>
+  <h2>All Promotions for <%= Business.find(params[:business_id]).name %></h2>
+<% elsif params[:all] %>
+  <h2>All Promotions</h2>
+<% elsif params[:promotion_id].blank? %>
+<% end %>
+
+<div class="section_element"> 
+  <div class="section_content">
+    <% unless @promotions.empty? %>
+      <table width="1100">
+        <tr>
+          <th style="text-align:left">ID</th>
+          <th style="text-align:left; width:250px">Promotion Name</th>
+          <th style="text-align:center">Purchased</th>
+          <th style="text-align:center">Total $$ Collected</th>
+          <th style="text-align:center">% to Business</th>
+          <th style="text-align:center">Profit for WTD</th>
+          <th style="text-align:center">$$ to Business</th>
+          <th style="text-align:center">Paid?</th>
+          <th style="text-align:center">Notes</th>
+          <th style="text-align:center"></th>
+        </tr>
+
+        <% @promotions.each do |promotion| %>
+
+          <% 
+            reminder_purchases = 0
+            promotion_reminders = Reminder.find(:all, :conditions => {:promotion_id => promotion.id})
+            promotion_reminders.each do |reminder|
+            	reminder_purchases += 1 unless User.find_by_email(reminder.email).nil? or Coupon.find(:all, :conditions => {:deal_id => promotion.deals.collect{|d| d.id}, :user_id => User.find_by_email(reminder.email).id}).empty?
+            end
+          %>
+        
+          <tr style="background:#F0E8D0;">
+            <td style="text-align:left"><%= promotion.id %></td>
+            <td style="text-align:left;font-size:80%"><strong><%= promotion.name %></strong> (ends <%= promotion.end_date.strftime("%e %b %Y") %>)</td>
+            <td style="text-align:right"><%= promotion.purchases %></td>
+            <td style="text-align:right"><%= number_to_currency promotion.revenue %></td>
+            <td style="text-align:right"><%= number_to_percentage (100.00 - promotion.profit_percentage.to_f, :precision => 2) %></td>
+            <td style="text-align:center"><%= number_to_currency(promotion.revenue - promotion.credit_used - promotion.business_profit) %></td>
+            <td style="text-align:right" class="total"><%= number_to_currency promotion.business_profit %></td>
+
+            <% form_for ([:admin,BusinessPayment.find_by_promotion_id(promotion.id)]) do |f| %>
+              <%= f.hidden_field :amount, :value => promotion.business_profit %>
+              <%= f.hidden_field :promotion_id, :value => promotion.id %>
+              <td style="text-align:right;width:90px;font-size:90%">
+                <%= f.label :payment1_paid, "90%" %> <%= f.check_box :payment1_paid %>
+                <%= f.label :payment2_paid, "10%" %> <%= f.check_box :payment2_paid %>
+              </td>
+              <td style="text-align:center">
+                <%= f.text_area :notes, :rows => 3, :cols => 40, :style => "font-size: 10px" %>
+              </td>
+              <td style="text-align:left">
+                <%= f.submit "Update", :style => "margin-top: 17px" %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+      </table>
+    <% else %>
+      <p>Choose a promotion from one of the menus above.</p>
+    <% end %>
+  </div>
+</div>

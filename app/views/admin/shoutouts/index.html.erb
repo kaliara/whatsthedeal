@@ -1,0 +1,25 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'New Shoutout', new_admin_shoutout_path %></li>
+<% end %>
+
+
+<h2>Shoutouts</h2>
+
+<table>
+  <tr>
+    <th>Header</th>
+    <th>Rotation Start date</th>
+    <th>Rotation End date</th>
+  </tr>
+
+<% @shoutouts.each do |shoutout| %>
+  <tr class="<%= "inactive" unless shoutout.in_rotation? %>">
+    <td><%=h shoutout.header %></td>
+    <td><%=h shoutout.rotation_start_date.strftime("%b %d, %Y") %></td>
+    <td><%=h shoutout.rotation_end_date.strftime("%b %d, %Y") %></td>
+    <td><%= link_to 'Show', admin_shoutout_path(shoutout) %></td>
+    <td><%= link_to 'Edit', edit_admin_shoutout_path(shoutout) %></td>
+    <td><%= link_to 'Destroy', admin_shoutout_path(shoutout), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>

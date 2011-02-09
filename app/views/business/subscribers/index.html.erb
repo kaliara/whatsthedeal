@@ -1,0 +1,15 @@
+<h2>Listing subscribers</h2>
+
+<table>
+  <tr>
+    <th>Email</th>
+    <th>Origin</th>
+  </tr>
+
+<% @subscribers.each do |subscriber| %>
+  <tr>
+    <td><%=h subscriber.email %></td>
+    <td><%= Origin.find(subscriber.origin_id).name %></td>
+  </tr>
+<% end %>
+</table>

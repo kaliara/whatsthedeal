@@ -1,0 +1,11 @@
+<div class="section_content">
+  <h2>Your download should start any second. If not, just click the link below.</h2>
+
+  <%= link_to "#{HOST_URL}#{@path}", "#{HOST_URL}#{@path}" %>
+</div>
+  
+<script type="text/javascript">
+<!--
+  window.location = "<%= HOST_URL %><%= @path %>"
+//-->
+</script>

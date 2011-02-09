@@ -1,0 +1,100 @@
+<% content_for :page_title do %>My Deal Map<% end %>
+<% content_for :head do %>
+  <meta name="title" content="WTD Deals Near Me" /> 
+  <meta name="description" content="Find out what WTD deals are near you via Google Maps" /> 
+  <link rel="image_src" href="https://sowhatsthedeal.com/images/map_preview.png" />
+  <meta property="og:title" content="WTD Deals Near Me"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:image" content="https://sowhatsthedeal.com/images/map_preview.png"/>
+  <meta property="og:site_name" content="What's The Deal"/>
+  <meta property="og:type" content="article"/>
+  <meta property="fb:admins" content="mburnett" />
+  <meta name="tweetmeme-title" content="WTD Deals Near Me" />
+
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+  <script type="text/javascript" charset="utf-8">
+    function getLatLng(address) {
+      var geocoder = new google.maps.Geocoder;
+      geocoder.geocode( { 'address': address}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          $('#latitude').val(results[0].geometry.location.lat());
+          $('#longitude').val(results[0].geometry.location.lng());
+          
+          $('#search_location').hide();
+          $('.location_found').show();
+          
+          setTimeout(function(){$('#set_location').submit(), 1000});
+        }
+        else{
+         $('#set_location').submit();
+        }
+      });
+    }
+  </script>
+<% end %>
+<div class="section_element">
+  <div class="section_header">
+    <h3>My Deal Map</h3>
+  </div>
+  <div class="promotions_map">
+    <% unless session[:location_latitude].blank? or session[:location_longitude].blank? %>
+      <div class="section_content">
+        <div class="change_location">
+          Not the right location? <%= link_to "Update your address", clear_location_path %>.
+        </div>
+      </div>
+      <div class="promotion_listing_sidebar">
+        <h3>Deals on the Map</h3>
+        <ul class="mapped_promotions">
+          <% @mapped_promotions.each do |promotion| %>
+            <li><%= link_to promotion.name, "#", :onclick => "$('.promotion_listing_sidebar .mapped_promotions a.current').removeClass('current'); $(this).addClass('current'); resetMarkers(); resetInfoWindows(); marker_#{promotion.id}.setOptions({icon: '/images/map_marker_on.png'}); info_window_#{promotion.id}.open(map, marker_#{promotion.id}); return false;", :id => "promotion_listing_sidebar_link_#{promotion.id}" %></li>
+          <% end %>
+        </ul>
+
+        <% unless @unmapped_promotions.empty? %>
+          <h3>Online Deals</h3>
+          <ul>
+            <% @unmapped_promotions.each do |promotion| %>
+              <li><%= link_to promotion.name, promotion %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+      <%= render :partial => "/promotions/map", :locals => {:promotions => @mapped_promotions, :height => 450} %>
+    <% else %>
+      <div class="section_content">
+        <% form_tag set_location_path, :id => "set_location" do %>
+          <%= hidden_field_tag :latitude %>
+          <%= hidden_field_tag :longitude %>
+
+          <div class="label_input_form">
+            <%= label_tag :street %>
+            <%= text_field_tag :street, @street, :size => 30 %><br>
+          </div>
+          <div class="label_input_form">
+            <%= label_tag :city %>
+            <%= text_field_tag :city, @city, :size => 30 %><br>
+          </div>
+          <div class="label_input_form">
+            <%= label_tag :state %>
+            <%= text_field_tag :state, @state, :size => 3 %><br>
+          </div>
+          <div class="label_input_form">
+            <%= label_tag :zipcode, 'Zip Code' %>
+            <%= text_field_tag :zipcode, @zipcode, :size => 6 %><br>
+          </div>
+          <div class="save_card_info">   
+            <%= hidden_field_tag :set_defaul_location, 0 %>
+            <%= check_box_tag :set_defaul_location, 1, true, :id => 'set_defaul_location_true' %>
+            <%= label_tag :set_defaul_location, 'Set as My Default Location', :for => 'set_defaul_location_true' %>
+          </div>
+          <div class="label_input_form">
+            <%= label_tag "&nbsp;" %>
+            <%= submit_tag 'Search for Location', :class => 'primary', :id => 'search_location', :onclick => "getLatLng($('#street').val().replace(/\s/,'+')+'+'+$('#city').val().replace(/\s/,'+')+'+'+$('#state').val().replace(/\s/,'+')+'+'+$('#zipcode').val().replace(/\s/,'+')); return false;" %>
+            <div class="location_found" style="display:none">Searching...</div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

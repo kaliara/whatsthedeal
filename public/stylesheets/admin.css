@@ -1,0 +1,686 @@
+body { background-color: #FFF8E6; color: #333; margin:0;}
+
+body, p, ol, ul, td, div {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size:   13px;
+  line-height: 18px;
+  color: #333;
+}
+
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+
+ol {
+  list-style-type: decimal;
+  list-style-position: outside;
+  margin-left: 50px;
+}
+
+a { color: #FF9800; font-weight:bold; text-decoration: none;}
+a:visited { color:#FF9800; }
+a:hover { color: #fff; background-color:#000; }
+
+input[type="text"]{
+  width: 600px;
+}
+.clear {
+  clear: both;
+}
+
+.fieldWithErrors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+#errorExplanation {
+  width: 400px;
+  border: 2px solid red;
+  padding: 7px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+}
+
+#errorExplanation h2 {
+  text-align: left;
+  font-weight: bold;
+  padding: 5px 5px 5px 15px;
+  font-size: 12px;
+  margin: -7px;
+  background-color: #c00;
+  color: #fff;
+}
+
+#errorExplanation p {
+  color: #333;
+  margin-bottom: 0;
+  padding: 5px;
+}
+
+#errorExplanation ul li {
+  font-size: 12px;
+  list-style: square;
+}
+
+.notice, .error{
+  margin: 20px;
+}
+.notice {
+  color: green;
+}
+.error{
+  color: red;
+}
+.header{
+  color:#FFF;
+  background-color:#3D7EC7;
+  height: 60px;
+  padding: 2px;
+  border-bottom: solid 4px #C57000;
+}
+.header p{
+  color: #9ECEFF;
+  float: right;
+  margin-right: 20px;
+  font-weight: normal;
+  font-size: 15px;
+}
+
+.header p a{
+  color:#FFF;
+  font-weight: normal;
+}
+
+#nav{
+  background-color: #FF9800;
+  margin-top: 0;
+  padding: 0 10px 40px;
+}
+
+#nav li{
+  float: left;
+  list-style: none;
+  display: inline;
+  color: #FFF;
+  font-size: 18px;
+  padding: 0 13px;
+  line-height: 2em;
+  position: relative;
+  margin-right: 50px;
+}
+
+#nav li a{
+  color: #fff;
+  font-weight: normal;
+}
+#nav li ul{
+  position: absolute;
+  top: 18px;
+  left: -20px;
+  padding: 20px;
+  width: 200px;
+  display:none;
+}
+
+#nav li ul li{
+  background: #F0AC62;
+  margin: 0;
+  display: block;
+  float: none;  
+  font-size: 14px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+#nav li ul li a{
+  color: #FFF !important;
+  font-size: 14px;
+  font-weight: normal;
+  padding: 8px 0px 8px 0px;
+}
+
+#nav li ul li:hover{
+  background-color: #EDC191;
+}
+
+#nav li ul li a:hover{
+  background-color: transparent;
+}
+
+#sub_nav{
+  background-color: #FFE9BB;
+  margin-bottom: 50px;
+  padding: 14px;
+  height: 20px;
+}
+#sub_nav li{
+  float: left;
+  list-style: none;
+  display: inline;
+  margin-right: 50px;
+}
+
+h1{
+  color: #FFF;
+  font-weight: normal;
+  margin-left: 20px;
+  font-size: 25px;
+  margin-top: 10px;
+}
+
+h3{
+  padding-left: 10px;
+  font-weight: normal;
+  font-size: 20px;
+  color: #FFF;
+  background-color: #285A92;
+  height: 20px;
+  margin-top: 0;
+  padding:10px;
+}
+
+h2{
+  color: #3D7EC7;
+  font-weight: normal;
+  margin-left: 20px;
+  font-size: 25px;
+  margin-bottom: 15px;
+}
+
+h4{
+  font-weight: normal;
+  font-size: 15px;
+}
+
+th{
+  background-color: #3D7EC7;
+  color: #FFF;
+  font-weight: normal;
+  padding: 10px 10px;
+  height: 35px;
+}
+
+dl, dt, dd{
+  display: inline;
+}
+
+
+.copyright{
+  color: #AEA38B;
+  text-align: right;
+  margin-top: 30px;
+  padding-right: 20px;
+}
+
+.new_deal a{
+  color: #FF9800;
+  text-decoration: none;
+}
+
+table{
+  margin-right: 20px;
+  text-align: left;
+  padding-top: 15px;
+  height: 75px;
+  padding-left: 20px;
+  margin-left: 20px;
+}
+       
+td{
+  padding: 5px;
+  vertical-align: top;
+  padding-right: 20px;
+}
+
+.info_panel{
+  background-color:#3D7EC7;
+  width: 500px;
+  margin: 20px 20px 10px 20px;
+  color: #FFF;
+  padding-bottom: 10px;
+}
+
+.info_panel label{
+  color: #9ECEFF;
+  font-weight: bold;
+}
+
+.info_panel p{
+  padding: 5px 15px;
+}
+
+.info_panel_deals{
+  background-color:#285A92;
+  padding: 5px 0 5px 5px;
+  width: 500px;
+  float: left;
+}
+
+.label_spacing{
+  padding-bottom: 20px;
+}
+
+form{
+  margin-left: 25px;
+  margin-top:5px;
+}
+
+.floated_panel {
+    float: left;
+}
+.last {
+  margin-right: 0;
+  padding-right: 0;
+}
+
+.deal_show_containers{
+  clear: both;
+}
+
+.shopping_cart_title{
+  font-size: 15px;
+}
+.shopping_cart_title a{
+  color: #3D7EC7;
+  font-size: 10px;
+}
+
+.total td{
+  background-color: #3D7EC7;
+  color: #FFF;
+  text-align: right;
+}
+
+
+.cart_table{
+  width: 700px;
+}
+
+.cart_table table {
+  width: 100%;
+}
+
+.cart_table th{
+  text-align: center;
+}
+
+.checkout{
+  width: 700px
+}
+
+.next_featured td {
+  background: #A7C4DA;
+  color: #193654 !important;
+}
+.featured td,
+.highlight,
+.highlight td {
+  background: #c7faba;
+}
+.inactive td {
+  color: #B2A693;
+}
+
+.deal_breakdown td{
+  font-size: 75%;
+}
+
+#new_purchase{
+/*  text-align: right;*/
+/*  margin-right: 115px;*/
+}
+
+
+.name {
+  width: 150px;
+}
+
+table td.center {
+  text-align: center;
+}
+
+table td.right, th.right {
+  text-align: right;
+}
+
+table th.left{
+  text-align: left;
+}
+
+.first_label{
+  padding-top: 15px;
+}
+
+.discount_code td{
+  background-color:#DA0000;
+  color: #FFF;
+}
+
+td.remove{
+  background-color: transparent;
+}
+
+span.discount_off{
+  float: right;
+}
+
+.purchase_invoice th{
+  background-color: #285A92;
+}
+
+.invoice_table table{
+  width: 100%;
+}
+
+.active td {
+  color: #0B4B00;
+  font-weight: bold;
+  background: #C7DEBA;
+}
+.active .print{
+  background-color: transparent;
+}
+
+.section_content{
+  padding: 15px;
+}
+
+.purchase_show_payment_info dt{
+  float: left;
+  margin-top: 5px;
+  padding-right: 10px;
+  text-align: right;
+  width: 150px;
+}
+
+.purchase_show_payment_info dd{
+  display: block;
+  margin-top: 5px;
+}
+
+.billing_address_show{
+  margin-left: 160px;
+  text-align: left;
+  width: 400px;
+}
+
+.indented_link{
+  margin:20px 0 0 25px;
+}
+
+.account_info, .customer_info, .billing_newsletter_info{
+  display: block;
+  margin-bottom: 10px;
+}
+
+.account_info dt, .customer_info dt, .billing_newsletter_info dt{
+  display: block;
+  float: left;
+  margin-right: 20px;
+  text-align: right;
+  width: 75px;
+}
+
+.account_info dd, .customer_info dd, .billing_newsletter_info dd{
+  display: block;
+  float: left;
+  margin-right: 20px;
+  width: 170px;
+}
+
+
+/* HOMEPAGE */
+dl.totals {
+  font-size: 130%;
+}
+dl.homepage dt {
+  font-weight: bold;
+  float: left;
+  margin-right: 5px;
+  width: 200px;
+}
+dl.homepage dd {
+  margin-bottom: 20px;
+  display: block;
+}
+
+
+/* Coupon START*/
+
+.coupon{
+	border: 			solid 2px #BEBDBC;
+	width: 				135px;
+	height: 			120px;
+	padding: 			2px;
+	background: #FFF url('/images/bg_coupon.png') repeat-x bottom center;
+	margin-bottom: 5px;
+}
+
+.coupon_content{
+	text-align: 	center;
+	border: 			dashed 1px #BEBDBC;
+	width: 				127px;
+	height: 			112px;
+	padding: 			3px;
+	position:     relative;
+	color:        #666;
+}
+
+.coupon_container{
+  float:        left;
+  margin:				5px 5px 10px 5px;
+}
+
+.coupon_content .expiration_date {
+	color:				#FAA91D;
+  position:     absolute;
+	bottom:       0;
+	font-size:    1em;
+	width:        100%;
+}
+
+.active .coupon, 
+.active .coupon_content{
+	border-color: #FBDB74;
+  background: #FFF url('/images/bg_coupon_active.png') repeat-x bottom center;
+}
+.awaiting .coupon{
+  opacity: 0.5;
+}
+
+.awaiting_time .coupon_content{
+  background:   #FFF url('/images/bg_coupon_time.png') no-repeat center center;
+}
+.awaiting_buyers .coupon_content{
+  background:   #FFF url('/images/bg_coupon_buyers.png') no-repeat center center;
+}
+.coupon_container .coupon_action{
+  text-align: center;
+}
+
+.printed .coupon_content{
+  background: #FFF url('/images/bg_coupon_printed.png') no-repeat bottom center;
+}
+
+.coupon_link{
+  text-align: right;
+}
+
+.coupon_link_back{
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+}
+
+.section_element{
+  width: 645px;
+  clear: both;
+  margin-top: 15px;
+}
+.floated_section {
+  float: left;
+  margin-right: 20px;
+  width: 350px;
+  clear: none;
+}
+
+h5 a,
+h5 a:visited{
+  color: #666;
+}
+
+.empty_deals{
+  margin-left: 20px;
+}
+
+.business_table{
+  text-align: center;
+}
+
+.align_left{
+  text-align: left;
+}
+
+.commit{
+  text-align: right;
+  margin: 15px 230px 0 0;
+}
+
+.total {
+  color:#008000;
+  font-weight: bold;
+}
+.grand_total{
+  color: #fff;
+  background: #008000;
+  font-weight: bold;
+  font-size: 115%;
+}
+.super_grand_total{
+  text-align: right;
+  margin: 20px 0;
+  width: 710px;
+}
+
+/* business stuff */
+.business_dashboard h1{
+  color: #000;
+  margin: 20px;
+  font-weight: bold;
+}
+.business_dashboard h2{
+  margin-top: 40px;
+}
+.business_dashboard .section_element{
+  margin-left: 45px;
+  width: auto;
+}
+
+.business_dashboard .section_content{
+  padding-left: 0;
+}
+.business_dashboard .section_content table{
+  margin-left: 0;
+}
+
+
+/* washingtonian stuff */
+.washingtonian_ad{
+  position: absolute;
+  left: 350px;
+  margin-top: 5px;
+}
+.washingtonian_ad ol{
+  float: left;
+  font-size: 80%;
+  list-style-type: none;
+  margin-right: 40px;
+}
+.washingtonian_ad object{
+  position: relative;
+  top: 15px;
+}
+.wash_deal td{
+  background: #C5EDE2;
+}
+.odd{
+  background: #F0E8D0;
+}
+.credit{
+  color: red;
+}
+.profit{
+  color: green;
+}
+.totals th{
+  background: #6C685A;
+  color: #DFD8BE;
+  padding: 5px 20px 5px 5px;
+}
+.totals th strong{
+  color: #fff;
+}
+.totals .credit,
+.totals .credit strong{
+  color: #FFBABC;
+}
+.totals .profit,
+.totals .profit strong{
+  color: #D7FFA8;
+}
+
+/* Date picker */
+.datepicker form {
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  float: left;
+}
+
+.handle{
+  cursor: move;
+}
+#updated{
+  margin: 0 20px 10px;
+  background: #D2F8C3;
+  color: #1A6B00;
+  font-size: 20px;
+  padding: 10px;
+  opacity: 0;
+}
+.updated{
+  background: #F7F4A3;
+  color: #6D5900;
+}
+
+/* contents */
+.content_entry:hover{
+  background: #E2E2E1;
+}
+
+.source_filter{
+  margin-bottom: 20px;
+}
+.source_filter span{
+  color: #666;
+}
+
+.late_business_payment{
+  color: red !important;
+  font-weight: bold;
+}
+
+.edit_business #map_canvas,
+.new_user #map_canvas{
+  float: right;
+  width: 400px;
+  height: 300px;
+  margin-right: 20px;
+}
+.update_map_button{
+  font-size: 150%;
+}

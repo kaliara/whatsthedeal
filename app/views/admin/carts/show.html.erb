@@ -1,0 +1,54 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Cart Listing', admin_carts_path %></li>
+<% end %>
+
+<% if @cart.user.blank? %>
+  <h3>Cart not attached to any user</h3>
+<% else %>
+  <h3>Cart for <%=h @cart.user.customer.name %> (<%= @cart.user.email %>)</h3>
+<% end %>
+
+  <table class="shopping_cart">
+  
+    <tr>
+      <th class="shopping_cart_items">Shopping Cart Items: <span class="num_cart_items"><%= @cart.cart_items.size %></span></th>
+      <th class="quantity">Quantity</th>
+      <th class="price">Price</th>
+    </tr>
+
+    <% unless @cart.cart_items.empty? %>
+      <% @cart.cart_items.each do |cart_item| %>
+      <tr>
+        <td class="deal_name"><%= cart_item.deal.name %> <%= "<span>(#{number_to_currency cart_item.deal.price, :precision => 0} each)</span>" if cart_item.quantity > 1 %></td>
+        <td class="quantity">
+          <%= cart_item.quantity %>
+          </td>
+        <td class="price"><%= number_to_currency (cart_item.deal.price * cart_item.quantity), :precision => 0 %></td>
+      </tr>
+      <% end %>
+      
+      <tr>
+        <th class="total" colspan="3">Total: <span class="total_price"><%= number_to_currency @cart.deals_total %></span></th>
+      </tr>
+
+      <% unless @cart.credits.empty? %>
+        <tr class="credit">
+          <td colspan="2">Promo Code Applied:
+            <strong><%= @cart.credits.count > 1 ? "WTD Credit" : @cart.credits.first.name %></strong>
+            <% if @cart.true_credits_total > @cart.credits_total %>
+              <br/ ><p class="note">Note: The <strong>unused <%= number_to_currency (@cart.true_credits_total - @cart.credits_total) %> of credit</strong> will be saved in your account for your next purchase. Your welcome!</p>
+            <% end %>
+          </td> 
+          <td class="credit_amount">- <%= number_to_currency @cart.credits_total, :precision => 0 %></td>
+        </tr>
+
+        <tr>
+          <th class="new_total" colspan="3">New Total: <span class="new_total_price"><%= number_to_currency(@cart.deals_total - @cart.credits_total) %></span></th>
+        </tr>
+      <% end %>
+      
+    <% else %>
+      <tr><td colspan="3">no items in this cart.</td></tr>
+    <% end %>
+  </table>
+</div>

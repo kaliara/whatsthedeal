@@ -1,0 +1,40 @@
+<table width="580" style="border-collapse: collapse;border-spacing: 0;">
+  
+  <tr class="banner">
+    <td bgcolor="#114D95" colspan="3" valign="top" align="center" style="background-image url('http://www.sowhatsthedeal.com/emails/banner.png')">
+      <img src="http://www.sowhatsthedeal.com/emails/logo.png" align="left"><br> <span style="font-size:2em; color:#fff;">What's The Deal</span>
+    </td>
+  </tr> 
+  <tr>
+    <td colspan="3" style="vertical-align: top;padding: 0;"><br>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="vertical-align: top;padding: 0;"><strong>Hi <%= @coupon.user.customer.first_name == Customer::STOCK_FIRST_NAME ? 'there' : @coupon.user.customer.first_name %></strong>,<br><br> 
+      Just a reminder that your <strong><%= @coupon.name %></strong> is set to expire on <strong><%= @coupon.expiration.strftime("%m/%d/%Y") %></strong>.  Best to use it before you lose it.
+      <br><br>
+      <strong>Note:</strong> if you have already used your coupon, you are receiving this message because you haven't marked the coupon as "used" in your account.  To do so, go to the <%= link_to "My Deals", my_deals_url %> page and click the "used" checkbox.
+      <br><br>
+      Enjoy!
+      <br><br>
+       - The thoughtful folks at WTD
+    </td>
+  </tr>
+  <tr>
+    <td colspan="3" style="vertical-align: top;padding: 0;"><br>&nbsp;</td>
+  </tr>
+  <tr>
+    <td style="vertical-align: top;padding: 0;">
+      <table class="border" width="100%" style="border-collapse: collapse;border-spacing: 0;border: 1px solid #0C3050;">
+  <tr class="section_header" style="background-color: #0C3050;">
+    <td style="vertical-align: top;padding: 0;"><h2 style="text-align: center;padding-top: 10px;text-transform: uppercase;font-size: 1.08em;color: #FFF;">Coupons are Ready!</h2></td>
+  </tr>
+    <tr>
+      <td style="vertical-align: top;padding: 0;"><h3 style="margin-top: 20px;color: #0D304F;padding-left: 15px;margin-bottom: 5px;">Print your Coupons</h3></td>
+    </tr>
+  
+    <tr>
+      <td class="section_content last" style="vertical-align: top;padding: 15px;background-color: #FFF;border: 0;"><p style="font: normal 14px/1em Helvetica, Arial,sans-serif;margin-bottom: 5px;color: #052452;line-height: 150%;">Login to your account to <a href="<%= HOST_URL %>my_deals" style="color: #65b0ff;text-decoration: none;">print your coupons now</a>!</p></td>
+    </tr>
+</table>
+
+<%= render :partial => '/notifier/email_prefs' %>

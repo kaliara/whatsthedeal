@@ -1,0 +1,26 @@
+<% content_for :sub_nav do %>
+  <% @no_sub_nav = true %>
+<% end %>
+<br><br>
+
+<h2>Listing carts</h2>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Items in Cart</th>
+    <th>Total</th>
+  </tr>
+
+<% @carts.each do |cart| %>
+  <tr>
+    <td><%= cart.user.email if cart.user %></td>
+    <td><%=h cart.cart_items.size if cart.cart_items.size > 0 %></td>
+    <td><%=h number_to_currency(cart.total, :precision => 0) unless cart.total == 0 %></td>
+    <td><%= link_to 'Show', admin_cart_path(cart) %></td>
+    <td><%= link_to 'Destroy', admin_cart_path(cart), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+

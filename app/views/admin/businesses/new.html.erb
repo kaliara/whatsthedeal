@@ -1,0 +1,93 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Business Listing', admin_businesses_path %></li>
+<% end %>
+
+<h2>New Business</h2>
+
+<% form_for [:admin,@user], :url => admin_businesses_path do |f| %>
+  <%= f.error_messages %>
+  <h3>User Account</h3><br>
+  <p>
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= f.label :password %><br />
+    <%= f.password_field :password %>
+  </p>
+  <p>
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation %>
+  </p>
+  
+  <br><br><h3>Business Information</h3><br>
+  <% f.fields_for :business do |cf| %>
+    <%= cf.hidden_field :latitude %>
+    <%= cf.hidden_field :longitude %>
+    <div id="map_canvas"></div>
+    
+    <p>
+      <%= cf.label :name %><br />
+      <%= cf.text_field :name %>
+    </p>
+    <br><br>
+    <p>
+      <%= cf.label :street1 %><br />
+      <%= cf.text_field :street1 %>
+    </p>
+    <p>
+      <%= cf.label :street2 %><br />
+      <%= cf.text_field :street2 %>
+    </p>
+    <p>
+      <%= cf.label :city %><br />
+      <%= cf.text_field :city %>
+    </p>
+    <p>
+      <%= cf.label :state %><br />
+      <%= cf.text_field :state %>
+    </p>
+    <p>
+      <%= cf.label :zipcode %><br />
+      <%= cf.text_field :zipcode, :onblur => "refreshMap();" %>
+    </p>
+    <br>
+    <%= submit_tag "Update Map", :onclick => "refreshMap(); return false;", :class => "update_map_button" %>
+    
+    <br><br><br>
+    <p>
+      <%= cf.label :email, "Email Address (contact, not user)" %><br />
+      <%= cf.text_field :email %>
+    </p>
+    <p>
+      <%= cf.label :phone %><br />
+      <%= cf.text_field :phone %>
+    </p>
+    <p>
+      <%= cf.label :website %><br />
+      <%= cf.text_field :website %>
+    </p>
+    
+    <br><br><h3>Affiliate Information</h3><br>
+    <p>
+      <%= cf.label :purchaser_rate, 'Purchase Profit Share (example: 25 for 25%)' %><br />
+      <%= cf.text_field :purchaser_rate %>
+    </p>
+    <p>
+      <%= cf.label :subscriber_rate, 'Subscriber Rate (example: 0.52 for fifty-two cents)' %><br />
+      <%= cf.text_field :subscriber_rate %>
+    </p>
+    
+  <% end %>
+  <p><br>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>
+
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript" src="/javascripts/admin_maps.js"></script>
+<script type="text/javascript" charset="utf-8">
+  function refreshMap() {
+    updateMap($('#user_business_attributes_street1').val().replace(/\s/,'+') + '+' + $('#user_business_attributes_city').val().replace(/\s/,'+') + ',+' + $('#user_business_attributes_state').val().replace(/\s/,'+') + ',+' + $('#user_business_attributes_zipcode').val().replace(/\s/,'+'));
+  }
+</script>

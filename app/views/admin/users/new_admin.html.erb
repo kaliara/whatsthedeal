@@ -1,0 +1,32 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Admin Listing', admins_path %></li>
+<% end %>
+
+<h2>New Admin</h2>
+
+<% form_for(@user) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= f.label :password %><br />
+    <%= f.password_field :password %>
+  </p>
+  <p>
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation %>
+  </p>
+  
+  <% f.fields_for :admin do |cf| %>
+    <p>
+      <%= cf.label :name %><br />
+      <%= cf.text_field :name %>
+    </p>
+  <% end %>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>

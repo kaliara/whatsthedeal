@@ -1,0 +1,132 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Show All Origins', "/admin/dashboards/source_report?all=heck_ya&start_date=#{@start_date}&end_date=#{@end_date}" %></li>
+<% end %>
+<div class="source_filter">
+  <% form_tag do %>
+    <%= hidden_field_tag 'start_date', @start_date.strftime("%m/%d/%Y"), :id => 'start_date_hidden' %>
+    <%= hidden_field_tag 'end_date', @end_date.strftime("%m/%d/%Y"), :id => 'end_date_hidden' %>
+    <label>Business:</label> <%= select_tag :business_id, options_for_select([''] + @businesses.collect{|b| [b.name, b.id]}, params[:business_id].to_i), :onchange => "submit()" %>
+  <% end %>
+  <% form_tag do %>
+    <%= hidden_field_tag 'start_date', @start_date.strftime("%m/%d/%Y"), :id => 'start_date_hidden' %>
+    <%= hidden_field_tag 'end_date', @end_date.strftime("%m/%d/%Y"), :id => 'start_date_hidden' %>
+    <label>Source:</label> <%= @sources.empty? ? "<span>[none]</span>" : select_tag(:source, options_for_select([''] + @sources.collect{|o| [o.source, o.source]}, params[:source].to_s), :onchange => "submit()") %>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <label>Medium:</label> <%= @mediums.empty? ? "<span>[none]</span>" : select_tag(:medium, options_for_select([''] + @mediums.collect{|o| [o.medium, o.medium]}, params[:medium].to_s), :onchange => "submit()") %>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <label>Campaign:</label> <%= @campaigns.empty? ? "<span>[none]</span>" : select_tag(:campaign, options_for_select([''] + @campaigns.collect{|o| [o.campaign, o.campaign]}, params[:campaign].to_s), :onchange => "submit()") %>
+  <% end %>
+</div>
+
+<div class="datepicker clearfix">
+  <% form_tag do %>
+    &nbsp;
+    <%= hidden_field_tag 'source', params[:source] %>
+    <%= hidden_field_tag 'medium', params[:medium] %>
+    <%= hidden_field_tag 'campaign', params[:campaign] %>
+    <%= hidden_field_tag 'business_id', params[:business_id] %>
+    
+    <%= hidden_field_tag 'start_date', Date.commercial(Date.today.year, Date.today.cweek, 1).strftime("%m/%d/%Y"), :id => 'start_date_this_week' %>
+    <%= hidden_field_tag 'end_date', Date.commercial(Date.today.year, Date.today.cweek, 7).strftime("%m/%d/%Y"), :id => 'end_date_this_week' %>
+    <%= submit_tag 'This Week' %>
+  <% end %>
+  <% form_tag do %>
+    <span>or</span>&nbsp;
+    <%= hidden_field_tag 'source', params[:source] %>
+    <%= hidden_field_tag 'medium', params[:medium] %>
+    <%= hidden_field_tag 'campaign', params[:campaign] %>
+    <%= hidden_field_tag 'business_id', params[:business_id] %>
+    
+    <%= hidden_field_tag 'start_date', (Date.today - 1.day).strftime("%m/%d/%Y"), :id => 'start_date_last_week' %>
+    <%= hidden_field_tag 'end_date', (Date.today - 1.day).strftime("%m/%d/%Y"), :id => 'end_date_last_week' %>
+    <%= submit_tag 'Yesterday' %>
+  <% end %>
+  <% form_tag do %>
+    <span>or</span>&nbsp;
+    <%= hidden_field_tag 'source', params[:source] %>
+    <%= hidden_field_tag 'medium', params[:medium] %>
+    <%= hidden_field_tag 'campaign', params[:campaign] %>
+    <%= hidden_field_tag 'business_id', params[:business_id] %>
+    
+    <%= hidden_field_tag 'start_date', Date.today.strftime("%m/%d/%Y"), :id => 'start_date_today' %>
+    <%= hidden_field_tag 'end_date', Date.today.strftime("%m/%d/%Y"), :id => 'end_date_today' %>
+    <%= submit_tag 'Today' %>
+  <% end %>
+  <% form_tag do %>
+    <%= hidden_field_tag 'source', params[:source] %>
+    <%= hidden_field_tag 'medium', params[:medium] %>
+    <%= hidden_field_tag 'campaign', params[:campaign] %>
+    <%= hidden_field_tag 'business_id', params[:business_id] %>
+  
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <span>Specific Range:</span>
+    <%= text_field_tag 'start_date', @start_date.strftime("%m/%d/%Y"), :size => 10 %>
+    &nbsp;&nbsp;to&nbsp;&nbsp;
+    <%= text_field_tag 'end_date', @end_date.strftime("%m/%d/%Y"), :size => 10 %>
+    <%= submit_tag 'Filter by Date' %>
+  <% end %>
+</div>
+
+<br><br>
+<h2>Source Report</h2>
+<div class="clearfix">
+  <h3><%= @start_date.strftime("%B %e") %> - <%= @end_date.strftime("%B %e") %></h3>
+  <div class="section_content">
+    <% unless @origins.empty? %>
+      <table class="origins">
+        <tr>
+          <th width="300">Source (origin)</th>
+          <th># of Users</th>
+          <th># of Subscribers</th>
+          <th># of Purchases</th>
+          <th>Lifetime Revenue</th>
+          <th>Lifetime Profit</th>
+          <td width="20">&nbsp;</td>
+          <th>Associated Business</th>
+        </tr>
+        <% @origins.each do |origin| %>
+          <%
+            subscribers = User.find(:all, :conditions => {:origin_id => origin.id, :gets_daily_deal_email => true}).delete_if{|s| s.created_at < @start_date or s.created_at > @end_date}.size
+            lifetime_users = User.find(:all, :conditions => {:origin_id => origin.id}).delete_if{|s| s.created_at < @start_date or s.created_at > @end_date}.uniq
+            lifetime_purchases = lifetime_users.collect{|u| u.purchases}.flatten.delete_if{|s| s.created_at < @start_date or s.created_at > @end_date}
+            lifetime_purchases_total = lifetime_purchases.collect{|p| p.total}.sum
+            lifetime_purchases_profit = lifetime_purchases.collect{|p| p.profit}.sum
+          %>
+          <tr id="origin_<%= origin.id %>">
+            <td><%= origin.name %></td>
+            <td style="text-align: center"><%= lifetime_users.size %></td>
+            <td style="text-align: center"><%= subscribers %></td>
+            <td style="text-align: center"><%= lifetime_purchases.size %></td>
+            <td class="total"><strong><%= number_to_currency lifetime_purchases_total %></strong></td>
+            <td><strong><%= number_to_currency lifetime_purchases_profit %></strong></td>
+            <td width="20">&nbsp;</td>
+            <td><%= select_tag 'business_id', options_for_select([''] + Business.find(:all, :order => 'name asc').collect{|b| [b.name, b.id]}, :selected => origin.business_id), :class => 'business_select' %></td>
+          </tr>
+        <% end %>
+      </table>
+    <% else %>
+      <p><br><br>Filter sources! <strong>Choose a business OR a source/medium/campaign combination</strong></p>
+    <% end %>
+  </div>
+</div>  
+
+<script type="text/javascript" charset="utf-8">
+  $("#start_date").datepicker();
+  $("#end_date").datepicker();
+  
+  $('.origins .business_select').change(
+    function(){
+      $.ajax({
+        type: 'post',
+        data: 'origin_id=' + $(this).parent().parent().attr('id').match(/\d+/) + '&origin[business_id]=' + $(this).val(),
+        dataType: 'script',
+        success: function(msg) {
+          $('#origin_' + msg).addClass('updated');
+        },
+        url: '<%= admin_origin_associate_business_path %>'
+      });
+    }
+  );
+</script>
+
+<%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>

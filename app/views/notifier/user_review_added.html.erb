@@ -1,0 +1,90 @@
+<% Time.zone = "Eastern Time (US & Canada)" %>
+<% @google_tracking = "?utm_medium=email&utm_campaign=giftreceived" %>
+
+<div id="email">
+
+    <!-- yahoo fixes -->
+    <style type="text/css">
+       td.main .yshortcuts { color: #1279af }
+       .featured_deal td.main .yshortcuts { color: #3fc7ff;}
+       .footer .yshortcuts { color: #94BFF2;}
+    </style>
+
+   <!-- hotmail fixes -->
+    <style type="text/css">  
+       #mpf0_MsgContainer{display: block !important;}
+    </style>
+
+
+  <body style="background-color: #0059a9;margin: 0;padding: 0;">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#0059a9">
+    <tr>
+      <td align="center">
+        <table width="600" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td>
+              <table width="600" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td align="left" valign="top" style="font-size:0;"><a href="http://sowhatsthedeal.com<%= @google_tracking %>"><img src="http://sowhatsthedeal.com/emails/new_logo.png" alt="What's the Deal - " width="144" height="77" border="0"></a></td>
+                  <td align="left" valign="top" style="font-size:0;"><img src="http://sowhatsthedeal.com/emails/new_banner.png" alt="Deal is" width="330" height="77"></td>
+                  <td align="left" valign="top">
+                    <table border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                          <td align="left" valign="top" style="font-size:0;"><a href="http://sowhatsthedeal.com/promotions<%= @google_tracking %>"><img src="http://sowhatsthedeal.com/emails/corner_1_empty.png" width="126" height="38" border="0" style="border: none;"></a></td>
+                        </tr>
+                        <tr>
+                          <td align="left" valign="top" style="font-size:0;"><a href="http://sowhatsthedeal.com/my_account<%= @google_tracking %>"><img src="http://sowhatsthedeal.com/emails/corner_2_empty.png" width="126" height="39" border="0" style="border: none;"></a></td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <table width="600" border="0" cellspacing="0" cellpadding="0" class="featured_deal" style="background-color: #013049;">
+                 <tr>
+                    <td class="main" align="left" valign="top" width="600" style="padding:10px">
+                      <h2 style="color: #fff;font-family: 'Myriad', sans-serif;font-size: 20px;font-weight: normal;margin: 0;padding: 15px 0;text-align:left">Just Added <%= link_to "User Review # #{@user_review.id}", admin_user_review_url(@user_review) %></h2>
+                      <p style="color: #fff;font-family: 'Myriad', sans-serif;font-size: 14px;font-weight: normal;margin: 0;padding: 15px 0;text-align:left">
+                        <table>
+                          <tr>
+                            <td><strong>User A</strong></td>
+                            <td><%= link_to @user_review.user.email, admin_customer_url(@user_review.user.customer) %></td>
+                            <td><%= @user_review.user.customer.name %></td>
+                            <td><%= @user_review.user.purchases.count %> purchases</td>
+                          </tr>
+                          <tr>
+                            <td><strong>User B</strong></td>
+                            <td><%= link_to @user_review.referred_user.email, admin_customer_url(@user_review.referred_user.customer) %></td>
+                            <td><%= @user_review.referred_user.customer.name %></td>
+                            <td>---</td>
+                          </tr>
+                        </table>
+                      </p>  
+                      <p style="color: #666;font-family: 'Myriad', sans-serif;font-size: 20px;font-weight: normal;margin: 7px 0 0 0;padding:20px; background:#ccc; border: 1px solid #999; text-align:center;">
+                        <%= link_to "GOOD, give credit", admin_user_review_mark_good_url(@user_review), :style => 'color:green' %>&nbsp;&nbsp;&nbsp;- or -&nbsp;&nbsp;&nbsp;<%= link_to "BAD, don't give credit", admin_user_review_mark_bad_url(@user_review), :style => 'color:red' %>
+                      </p>
+                      <br>
+                  </td>
+               </tr>
+            </table>
+          </td>
+        </tr>
+
+        <tr class="separator">
+          <td height="3" style="background-color: #999999;font-size: 6px;line-height: 6px;"></td>
+        </tr>
+
+      </table>
+
+      <br><br>
+      
+    </td>
+    </tr>
+  </table>
+  <br><br>
+
+  </body>
+</div>

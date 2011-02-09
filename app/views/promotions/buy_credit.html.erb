@@ -1,0 +1,27 @@
+<% content_for :page_title do %>Purchase WTD Credit for a Friend<% end %>
+
+<div class="promotion buying_credit">
+  <h2><%= @promotion.name %></h2>
+  <p><%= @promotion.summary %></p>
+  <br><br>
+  
+  <div class="main_details clearfix">
+    <% form_for @cart_item do %>
+      <%= hidden_field_tag "promotion_id", @promotion.id %>
+      <%= hidden_field_tag "adding_gift", true %>
+      <div class="promotion_image">
+        <%= image_tag @promotion.image1.url, :alt => @promotion.name, :style => 'border:none' %><br>
+      </div>
+      <div class="buying_details clearfix">
+        <%= label_tag "cart_items[0][deal_id]", "Amount: " %>
+        <%= select_tag "cart_items[0][deal_id]", options_for_select(@promotion.deals.active.collect{|d| [d.coupon_description, d.id]}) %>
+        <%= hidden_field_tag "cart_items[0][quantity]", 1 %>
+        
+        <div class="checkout_buttons">
+          <div class="deal_me_in"><%= submit_tag 'Add Gift Details', :class => 'primary' %></div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  
+</div>

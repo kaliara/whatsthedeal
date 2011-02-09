@@ -1,0 +1,40 @@
+<h2>Listing Deals</h2>
+
+<table>
+  <tr>
+    <th>Promotion</th>
+    <th>Code</th>
+    <th>Name</th>
+    <th>Price</th>
+    <th>Value</th>
+    <th>Purchase limit</th>
+    <th>Inventory</th>
+    <th>Featured</th>
+    <th>Coupon name</th>
+    <th>Coupon expiration</th>
+  </tr>
+
+<% @deals.each do |deal| %>
+  <tr>
+    <td><%=h deal.promotion_id %></td>
+    <td><%=h deal.code %></td>
+    <td><%=h deal.name %></td>
+    <td><%=h deal.price %></td>
+    <td><%=h deal.value %></td>
+    <td><%=h deal.purchase_limit %></td>
+    <td><%=h deal.inventory_remaining == 9999 ? "unlimited" : "#{deal.inventory_remaining} of #{deal.inventory}" %></td>
+    <td><%=h deal.featured? %></td>
+    <td><%=h deal.coupon_name %></td>
+    <td><%=h deal.coupon_expiration.strftime("%b %e, %Y") %></td>
+    <td><%= link_to 'Edit', edit_admin_deal_path(deal) %></td>
+    <td><%= link_to 'Destroy', admin_deal_path(deal), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<div class="bottom_link_next_page">
+<%= link_to 'New deal', new_admin_deal_path %>
+</div>
+

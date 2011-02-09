@@ -1,0 +1,47 @@
+<table class="shopping_cart">
+
+  <tr>
+    <th class="shopping_cart_items">Shopping Cart Items: <span class="num_cart_items"><%= cart.cart_items.size %></span></th>
+    <th class="quantity">Quantity</th>
+    <th class="price">Price</th>
+    <th class="total">Total</th>
+  </tr>
+
+  <% unless cart.cart_items.empty? %>
+    <% cart.cart_items.each do |cart_item| %>
+    <tr>
+      <td class="deal_name"><%= cart_item.deal.name %><%= " at #{cart_item.deal.promotion.business.name unless cart_item.deal.promotion.business.nil?}" %><% if cart_item.gift? %><br><span class="gift_cart_item">Gift for <%= link_to cart_item.gift_name, edit_gift_item_path(cart_item.id) %></span><% end %></td>
+      <td class="quantity">
+        <% form_for(cart_item) do |f| %>
+          <%= f.select :quantity, 0..([cart_item.deal.inventory_remaining, cart_item.deal.purchase_limit_remaining(cart, cart_item.gift_name) + cart_item.quantity].min), {:selected => cart_item.quantity}, {:onchange => "submit()"} %>&nbsp;&nbsp;<%= link_to 'Remove', cart_item_path(cart_item), :confirm => "Remove #{cart_item.deal.name} from cart?", :method => :delete, :class => 'remove' %>
+        <% end %>
+      </td>
+      <td class="price"><%= number_to_currency cart_item.deal.adjusted_price %></td>
+      <td class="total"><%= number_to_currency (cart_item.deal.adjusted_price * cart_item.quantity) %></td>
+    </tr>
+    <% end %>
+    
+    <tr>
+      <th class="sub_total" colspan="4"><%= cart.credits.empty? ? "Grand Total" : "Sub Total" %>: <span class="total_price"><%= number_to_currency cart.deals_total %></span></th>
+    </tr>
+
+    <% unless cart.credits.empty? %>
+      <tr class="credit">
+        <td colspan="3">Promo Code Applied:
+          <strong><%= cart.credits.count > 1 ? "WTD Credit" : cart.credits.first.name %></strong>
+          <% if cart.true_credits_total > cart.credits_total %>
+            <br/ ><p class="note">Note: The <strong>unused <%= number_to_currency (cart.true_credits_total - cart.credits_total) %> of credit</strong> will be saved in your account for your next purchase. Your welcome!</p>
+          <% end %>
+        </td> 
+        <td class="credit_amount">- <%= number_to_currency cart.credits_total %></td>
+      </tr>
+
+      <tr>
+        <th class="new_total" colspan="4">Grand Total: <span class="new_total_price"><%= number_to_currency(cart.deals_total - cart.credits_total) %></span></th>
+      </tr>
+    <% end %>
+    
+  <% else %>
+    <tr><td colspan="4"><%= render_content 'cart_empty_desc' %></td></tr>
+  <% end %>
+</table>

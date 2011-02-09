@@ -1,0 +1,29 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Origin Listing', admin_origins_path %></li>
+<% end %>
+
+<h2>New origin</h2>
+
+<% form_for([:admin,@origin]) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :business_id %><br />
+    <%= f.select :business_id, Business.find(:all, :order => 'name asc').collect{|b| [b.name, b.id]} %>
+  </p>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :origin_type %><br />
+    <%= f.select :origin_type, Origin::ORIGIN_TYPES %>
+  </p>
+  <p>
+    <%= f.label :code %><br />
+    <%= f.text_field :code %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>

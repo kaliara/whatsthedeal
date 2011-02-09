@@ -1,0 +1,117 @@
+<br><br><br><br><br><br>
+
+<div class="section_element">
+  <div class="section_header">
+    <h3><%= @event.header %></h3>
+  </div>
+  <div class="section_content">
+    <p style="text-align: center; margin: 10px 0"><img src="<%= @event.image2.url %>" alt="Event Image" /></p>
+    <p><%= @event.page_body %></p> 
+    
+    <p align="center" style="margin: 20px 0"> 
+      <b><%= @event.business.name %></b>
+      <%= "<br>" + @event.business.street1 unless @event.business.street1.blank? %>
+      <%= "<br>" + @event.business.street2 unless @event.business.street2.blank? %>
+      <%= "<br>" + @event.business.city %>, <%= @event.business.state %> <%= @event.business.zipcode %>
+      <%= "<br>" + @event.business.phone unless @event.business.phone.blank? %>
+      <%= "<br>" + @event.business.email unless @event.business.email.blank? %>
+      <%= "<br>" + link_to(@event.business.website, @event.business.website, :target => "_blank") unless @event.business.website.blank? %>
+    </p> 
+
+
+    <% form_tag event_signup_path(@event), :onsubmit => "return checkF(this)" do %>
+      <div class="signup_daily_deal signup_box" style="margin: 0pt auto; padding: 15px; background: rgb(23, 63, 111) none repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; color: rgb(255, 255, 255); -moz-border-radius-topleft: 10px; -moz-border-radius-topright: 10px; -moz-border-radius-bottomright: 10px; -moz-border-radius-bottomleft: 10px;">
+        <table align="center" border="0" cellpadding="5" cellspacing="0">
+        <tbody> 
+        <tr>
+        <td>First name</td>
+        <td><input type="Text" name="fname" size="30"></td>
+        </tr>
+
+        <tr>
+        <td>Last name</td>
+        <td><input type="Text" name="lname" size="30"></td>
+
+        </tr>
+
+        <tr>
+        <td>E-mail</td>
+        <td><input type="Text" name="email" size="30"></td>
+        </tr>
+
+        <tr>
+        <td>Zip Code</td>
+        <td><input type="Text" name="c4" size="10"></td>
+        </tr>
+
+        <tr>
+        <td>&nbsp;</td>
+        <td><br><input type="Submit" class="primary" value="Happy Hour Me"></td>
+
+        </tr>
+        </tbody> 
+        </table>
+      </div>
+    <% end %>
+
+  </div>
+</div>
+
+<script language="JavaScript" type="text/javascript">
+<!--
+  function check(e){
+  	if(document.images){
+  		re = /(@.*@)|(\.\.)|(^\.)|(^@)|(@$)|(\.$)|(@\.)/;
+  		re_two = /^.+\@(\[?)[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+  		if(!e.match(re) && e.match(re_two)){
+  			return(-1);	
+  		}
+  	}
+  }
+// -->
+</script>
+
+<script language="JavaScript" type="text/javascript">
+<!--
+  function ged(noDays){
+  	var today = new Date();
+  	var expr = new Date(today.getTime() + noDays*24*60*60*1000);
+  	return  expr.toGMTString();
+  }
+
+  function checkF(f){
+
+  if(f.fname.value.length < 1){
+  	alert("Please enter your first name.");
+  	f.fname.style.background = "#FFFF00";
+  	f.fname.focus();
+  	return (false);
+  }
+	
+  if(!check(f.email.value)){
+  	alert("Invalid email address detected.");
+  	f.email.style.background = "#FFFF00";
+  	f.email.focus();
+  	return (false);
+  }
+
+  if(f.c4.value.length < 5){
+  	alert("Please enter your zip code.");
+  	f.c4.style.background = "#FFFF00";
+  	f.c4.focus();
+  	return (false);
+  }
+
+  document.cookie = "uls90=1; path=/; expires=" + ged(90);
+
+  }
+// -->
+</script>
+
+
+
+<div class="clear">
+  <br><br><br>
+  <%= link_to 'Edit this Event', edit_admin_event_path(@event) %> |
+  <%= link_to 'Back to all Events', admin_events_path %>
+</div>

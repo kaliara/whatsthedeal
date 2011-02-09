@@ -1,0 +1,40 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Promotion Code Listing', admin_promotion_codes_path %></li>
+<% end %>
+
+<h2>New Promotion Code</h2>
+
+<% form_for([:admin,@promotion_code]) do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :code %><br />
+    <%= f.text_field :code %>
+  </p>
+  <p>
+    <%= f.label :value %><br />
+    <%= f.text_field :value %>
+  </p>
+  <p>
+    <%= f.label :restricted %><br />
+    <%= f.check_box :restricted %>
+  </p>
+  <p>
+    <%= f.label :listed, 'Listed (in main promotion codes list on admin)' %><br />
+    <%= f.check_box :listed %>
+  </p>
+  <p>
+    <%= f.label :use_limit %><br />
+    <%= f.text_field :use_limit %>
+  </p>
+  <p>
+    <%= f.label :active %><br />
+    <%= f.check_box :active %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>

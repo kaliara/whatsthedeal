@@ -1,0 +1,80 @@
+<table width="580" style="border-collapse: collapse;border-spacing: 0;">
+  
+  <tr class="banner">
+    <td bgcolor="#114D95" colspan="3" valign="top" align="center" style="background-image url('http://www.sowhatsthedeal.com/emails/banner.png')">
+      <img src="http://www.sowhatsthedeal.com/emails/logo.png" align="left"><br> <span style="font-size:2em; color:#fff;">What's The Deal</span>
+    </td>
+  </tr> 
+  
+  <tr class="section_header" style="background-color: #0C3050;">
+    <td colspan="3" style="vertical-align: top;padding: 0;"><h2 style="text-align: center;padding-top: 10px;text-transform: uppercase;font-size: 1.08em;color: #FFF;">You Got $5 For Your Referral!</h2></td>
+  </tr>
+ 
+ 
+ <tr>
+   <td>
+     <table style="border-collapse: collapse;border-spacing: 0;"> 
+  <tr>
+    <td><p style="font: normal 14px/1em Helvetica, Arial,sans-serif;margin-bottom: 5px;color: #052452;line-height: 150%;">Hi <%= @user.customer.first_name == Customer::STOCK_FIRST_NAME ? 'there' : @user.customer.first_name %>,</p></td>
+  </tr>
+ 
+  <tr>
+    <td><p style="font: normal 14px/1em Helvetica, Arial,sans-serif;margin-bottom: 5px;color: #052452;line-height: 150%;">Because someone who you referred made their first purchase, we put $5 of WTD Credit in your account. Use it on anything you want. </p></td>
+  </tr>
+
+  
+  <tr>
+    <td><p>Continue to earn even more credit by sending new friends to: <span style="color: #F5A73A;"><%= HOST_DOMAIN %>ref/<%= @user.referral_link %></p></td>
+  </tr>
+     <!-- <tr>
+               <td class="section_content no_border"></td>
+             </tr> -->
+  
+  <tr>
+    <td><p style="font: normal 14px/1em Helvetica, Arial,sans-serif;margin-bottom: 5px;color: #052452;line-height: 150%;">Thanks again for telling a friend about What's the Deal</p></td>
+  </tr>
+  
+  </table>
+  </td>
+  </tr>
+    
+  <tr>
+    <td colspan="3" style="padding: 0;vertical-align: top;"><br>&nbsp;</td>
+  </tr>
+  
+  <tr>
+    <td> <p style="font: normal 14px/1em Helvetica, Arial,sans-serif;margin-bottom: 5px;color: #052452;line-height: 150%;">The friendly folks at What's the Deal DC</p></td>
+  </tr>
+  
+  
+
+  <tr>
+    <td><a href="<%= HOST_URL %>"><%= HOST_URL %></a></td>
+  </tr>
+  
+  <tr>
+    <td><p style="font: normal 14px/1em Helvetica, Arial,sans-serif;margin-bottom: 5px;color: #052452;line-height: 150%;">(888) 765-3481</p></td>
+  </tr>
+  
+  <tr>
+    <td><a href="support@sowhatsthedeal.com">support@sowhatsthedeal.com</a></td>
+  </tr>
+  
+  <tr>
+    <td colspan="3" style="padding: 0;vertical-align: top;"><br>&nbsp;</td>
+  </tr>
+  
+  
+  <tr>
+    <td><p style="font: normal 14px/1em Helvetica, Arial,sans-serif;margin-bottom: 5px;color: #052452;line-height: 150%;">Connect with WTD:</p></td>
+  </tr>
+  
+  <tr>
+    <td><%= link_to image_tag('http://sowhatsthedeal.com/images/facebook.png', :alt => 'Facebook', :style => 'border:0'), "http://www.facebook.com/pages/Washington-DC/Whats-the-Deal/113164707517" %>&nbsp;&nbsp;<%= link_to image_tag('http://sowhatsthedeal.com/images/twitter.png', :alt => 'Twitter', :style => 'border:0'), "http://www.twitter.com/whatsthedealdc", :id => "footer_twitter", :target => "_blank" %></td>
+  </tr>
+    
+   
+
+</table>
+
+<%= render :partial => '/notifier/email_prefs' %>

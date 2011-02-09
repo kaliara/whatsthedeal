@@ -1,0 +1,13 @@
+<br><br><br><br>
+
+<div class="sidebar_content clearfix">
+  <h3><%= @event.header %></h3>
+  <div class="event">
+    <img src="<%= @event.image1.url %>" alt="Event Picture" />
+    <p><%= @event.description %></p> 
+  </div>
+</div>
+
+
+<%= link_to 'Edit this Event', edit_admin_event_path(@event) %> |
+<%= link_to 'Back to all Events', admin_events_path %>

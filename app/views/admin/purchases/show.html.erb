@@ -1,0 +1,51 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Purchases Listing', admin_purchases_path %></li>
+<% end %>
+
+
+<h2>Purchase Invoice</h2>
+
+  <div class="section_element">  
+    <div class="section_header">
+      <h3>Purchase Details</h3>
+    </div>
+    <div class="section_content">
+      <div class="purchase_show_content clearfix">
+        <dl class="purchase_show_payment_info clearfix">
+          <dt>Invoice number:</dt>
+          <dd><%=h @purchase.invoice_number %></dd><br>
+        
+          <dt>Purchase date:</dt>
+          <dd><%=h @purchase.created_at.to_date %></dd>
+        
+          <dt>Deals Purchased:</dt>
+          <dd><%= @purchase.coupons.count %></dd>
+
+          <% unless @purchase.credits.empty? %>
+            <dt>WTD Credit used:</dt>
+            <dd><%= number_to_currency([@purchase.credits.collect{|c| c.value}.to_a.sum, @purchase.deals_total].min, :precision => 2) %> <%= link_to("(see how credit was issued)", admin_credit_profile_path(:email => @purchase.user.email, :purchase => @purchase.id)) %></dd>
+          <% end %>
+        
+          <dt>Total<%= " (after credits)" unless @purchase.credits.empty? %>:</dt>
+          <dd><%= number_to_currency @purchase.total %></dd>
+        </dl>
+      </div><br>
+    
+      <table class="simple_table">
+        <tr>
+          <th>Name</th>
+          <th>Expiration</th>
+          <td></td>
+        </tr>
+        <% @purchase.coupons.each do |coupon| %>
+          <tr>
+            <td><%= link_to coupon.name, admin_coupon_path(coupon) %></td>
+            <td><%=h coupon.expiration.strftime("%m/%d/%Y") %></td>
+          </tr>
+        <% end %>
+      </table>
+    
+    </div>  
+  </div>
+  
+</div>

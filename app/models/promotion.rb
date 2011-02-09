@@ -1,0 +1,142 @@
+class Promotion < ActiveRecord::Base
+  has_many :deals
+  has_many :coupons, :through => :deals
+  belongs_to :business
+  
+  named_scope :featured, :conditions => ['featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'featured DESC, start_date DESC', :limit => 1
+  named_scope :washingtonian_featured, :conditions => ['washingtonian_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'washingtonian_featured DESC, start_date DESC', :limit => 1
+  named_scope :halfpricedc_featured,   :conditions => ['halfpricedc_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'halfpricedc_featured DESC, start_date DESC', :limit => 1
+  named_scope :sidebar, lambda { |excluded| {:conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and id != ?', Time.now.utc, Time.now.utc, true, false, excluded.nil? ? 0 : excluded], :order => 'position ASC', :limit => 3}}
+
+  has_attached_file :image1, 
+                      :styles => { :original => "315x222>" }, 
+                      :url  => "/dc/promotions/:id/image1.:extension", 
+                      :path => ":rails_root/public/system/assets/dc/promotions/:id/image1.:extension",
+                      :default_url => "/images/deal_default_image.png"
+
+  has_attached_file :image2, 
+                      :styles => { :original => "600x900>" }, 
+                      :url  => "/dc/promotions/:id/image2.:extension", 
+                      :path => ":rails_root/public/system/assets/dc/promotions/:id/image2.:extension",
+                      :default_url => "/images/deal_default_image.png"
+
+  has_attached_file :ad_image1, 
+                      :styles => { :original => "140x140#" }, 
+                      :url  => "/dc/promotions/:id/ad_image.:extension", 
+                      :path => ":rails_root/public/system/assets/dc/promotions/:id/ad_image.:extension",
+                      :default_url => "/images/deal_default_image_140.png"
+
+  has_attached_file :map_replacement_image, 
+                      :styles => { :original => "265x265>" }, 
+                      :url  => "/dc/promotions/:id/map_replacement_image.:extension", 
+                      :path => ":rails_root/public/system/assets/dc/promotions/:id/map_replacement_image.:extension"
+
+  validates_attachment_presence :image1
+  validates_attachment_size :image1, :less_than => 2.megabytes
+
+  PREVIEW_PASSWORD = 'special_preview'
+  BUY_AS_GIFT_LABEL = 'Buy As Gift'
+  BUYING_CREDIT_PROMOTION = 266
+  PROMOTION_MAP_DEFAULT_LAT = 38.897275
+  PROMOTION_MAP_DEFAULT_LNG = -77.036594
+  
+  def active?
+    self.active == true and self.start_date < Time.now.utc and self.end_date > Time.now.utc
+  end
+  
+  def featured?
+    Promotion.featured.empty? ? false : self.id == Promotion.featured.first.id
+  end
+  
+  def early_bird?
+    self.deals.each do |d|
+      return true if d.early_bird?
+    end
+    return false
+  end
+  
+  def auto_activate_coupons?
+    self.auto_activate_coupons == true and self.quota_met? and (self.start_date < 1.day.ago)
+  end
+
+  def featured_deal
+    self.deals.featured.first || self.deals.first
+  end
+  
+  def purchases(partner_id=nil)
+    if self.id == 230
+      Promotion.find(231,232,233,234,235,236,237).collect{|p| p.purchases}.sum
+    elsif self.id == 216
+      Promotion.find(217,218,219,220,221).collect{|p| p.purchases}.sum
+    elsif partner_id.nil?
+      self.deals.collect{|d| d.coupons.count}.to_a.sum
+    else
+      self.deals.collect{|d| d.coupons.select{|c| c.purchase.partner_id == partner_id}.size}.to_a.sum
+    end
+  end
+  
+  def buyers_needed 
+    [self.quota - self.purchases, 0].max
+  end
+  
+  def quota_met?
+    buyers_needed == 0
+  end
+  
+  def sold_out?
+    self.deals.each do |deal|
+      return false unless deal.sold_out?
+    end
+    
+    return true
+  end
+  
+  def near_sellout?
+    self.deals.each do |deal|
+      return true if deal.near_sellout?
+    end
+    
+    return false
+  end
+  
+  def almost_over?
+    (Time.zone.now - self.end_date).abs.seconds < 40.hours
+  end
+  
+  def ended?
+    Time.zone.now > self.end_date
+  end
+  
+  def revenue(partner_id=nil)
+    if partner_id.nil?
+      self.deals.collect{|d| d.price * d.coupons.count}.sum
+    else
+      self.deals.collect{|d| d.price * d.coupons.select{|c| c.purchase.partner_id == partner_id}.size}.sum
+    end
+  end
+  
+  def profit(partner_id=nil)
+    if partner_id.nil?
+      self.deals.collect{|d| d.profit * d.coupons.count}.sum
+    else
+      self.deals.collect{|d| d.profit * d.coupons.select{|c| c.purchase.partner_id == partner_id}.size}.sum
+    end
+  end
+  
+  def credit_used(partner_id=nil)
+    if partner_id.nil?
+      self.deals.collect{|deal| deal.coupons.collect{|c| c.purchase}.uniq.collect{|p| p.coupons.select{|c| c.deal_id == deal.id}.size * p.credit_per_deal}.sum}.sum
+    else
+      self.deals.collect{|deal| deal.coupons.select{|c| c.purchase.partner_id == partner_id}.collect{|c| c.purchase}.uniq.collect{|p| p.coupons.select{|c| c.deal_id == deal.id}.size * p.credit_per_deal}.sum}.sum
+    end
+  end
+  
+  def early_bird_losses
+    @early_bird_coupons = Coupon.find(:all, :conditions => {:deal_id => self.deals}, :order => 'created_at ASC', :limit => self.quota)
+    return @early_bird_coupons.collect{|coupon| coupon.early_bird? ? coupon.deal.early_bird_discount : 0}.sum.to_f
+  end
+  
+  def business_profit
+    self.deals.collect{|d| d.business_profit * d.coupons.count}.sum
+  end
+end

@@ -1,0 +1,187 @@
+body {
+  background: #E8E8E8;
+}
+.washingtonian{
+  background:   #2963a4 url('/images/bg_body.png') repeat-x top center;
+  width: 1040px;
+  margin: 0 auto;
+}
+.washingtonian .page_content{
+  margin-top: 10px;
+}
+.washingtonian_sidebar{
+  width: 250px;
+  margin: 10px 20px 0 0;
+  float: left;
+  text-align: center;
+}
+
+.washingtonian .with_sidebar{
+  width: 660px;
+}
+
+.washingtonian .section_element{
+  width: 655px;
+}
+
+.washingtonian .wrapper{
+  width: 980px;
+}
+.washingtonian .footer_wrapper{
+  width: 715px;
+}
+
+.washingtonian .signup_login{
+  background: #01314A;
+  color: #fff;
+  font-size: 1.3em;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 27px;
+}
+.washingtonian .signup_login span{
+  margin: 0 10px;
+}
+
+.washingtonian .washingtonian_sidebar .primary{
+  color: #fff;
+  font-size: 1.8em;
+  margin: 0;
+  text-decoration: none;
+  padding: 9px 23px 9px 17px;
+}
+.washingtonian .washingtonian_sidebar .small_primary{
+  font-size:1em;
+  margin:0;
+  padding:1px 4px;
+}
+.washingtonian .washingtonian_sidebar .secondary{
+  color: #fff;
+  font-size: 1.8em;
+  padding: 10px 20px;
+  text-decoration: none;
+  background-image: url(/images/washingtonian/bg_button_secondary.png);
+}
+.washingtonian .btn_container{
+  margin: 70px 0 30px;
+}
+.washingtonian .cart_icon{
+  background: transparent url(/images/washingtonian/cart_icon.png) no-repeat center left;
+  padding: 0 14px;
+}
+
+
+.washingtonian #nav{
+  background: #01314A;
+  color: #fff;
+  padding: 15px 0;
+  text-align: left;
+}
+.washingtonian #nav ul{
+  background: transparent;
+  float: none;
+  display: block;
+  font-size: 100%;
+}
+.washingtonian #nav a{
+  font-weight: normal;
+}
+.washingtonian .main_nav li{
+  list-style-type: disc;
+  font-size: 1.7em;
+  line-height: 1.5em;
+  float: none;
+  border-right: none;
+  margin-left: 45px;
+  display: list-item;
+}
+
+.washingtonian ul.social_links{
+  padding: 0;
+  margin-left: 35px;
+  margin-top: 50px;
+  float: none;
+  text-align: left;
+}
+.washingtonian ul.social_links li{
+  display: list-item;
+  float: none;
+  margin: 30px 0;
+}
+.washingtonian ul.social_links a{
+  padding: 11px 0 11px 45px;
+  font-size: 1.1em;
+  color: #fff;
+}
+.washingtonian ul.social_links .facebook{
+  background:transparent url(/images/washingtonian/facebook.png) no-repeat scroll left top;
+}
+.washingtonian ul.social_links .twitter{
+  background:transparent url(/images/washingtonian/twitter.png) no-repeat scroll left top;
+}
+.washingtonian ul.social_links .rss{
+  background:transparent url(/images/washingtonian/rss.png) no-repeat scroll left top;
+}
+
+/* washingtonian version of credit */
+.washingtonian .washingtonian_sidebar .credit_balance{
+  background-image: none;
+  position: static;
+  float: none;
+  width: 230px;
+  padding: 10px;
+  margin-top: 30px;
+}
+.washingtonian .washingtonian_sidebar .credit_balance .referral_link{
+  padding: 6px;
+  font-size: 85%;
+}
+.washingtonian .washingtonian_sidebar .share_with_friends{
+  display: none;
+}
+
+.washingtonian .page_content .credit_balance{
+  display: none;
+}
+
+
+/* sidebar text on purchase new */
+.sidebar_text{
+  display: none;
+}
+.washingtonian .credit_card_info{
+  display: block;
+  float: right;
+  width: 170px;
+}
+.washingtonian .credit_card_info img{
+  padding: 5px 15px 0 0;
+}
+.save_card_info{
+  width: auto;
+  padding-right: 5px;
+}
+.logged_in_as{
+  color: #A7C4F9;
+  margin-bottom: 37px;
+}
+
+.washingtonian .washingtonian_sidebar .daily_deal{
+  float: none;
+  width: 100%;
+  margin-top: 70px;
+}
+.washingtonian .washingtonian_sidebar .daily_deal_textfield{
+  width: 140px;
+}
+
+/* my deals */
+.coupon_content{
+  width: 372px;
+}
+.coupon_content .expiration_date{
+  right: -69px;
+}
+.coupon_footer{
+  width: 425px;
+}

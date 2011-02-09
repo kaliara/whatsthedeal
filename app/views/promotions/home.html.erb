@@ -1,0 +1,145 @@
+<% content_for :page_title do %>Home: Up to 80% off restaurants, spas, and bars!<% end %>
+<% content_for :head do %>
+  <meta name="title" content="<%= @promotion.name %>" /> 
+  <meta name="description" content="<%= truncate(strip_tags(@promotion.body1), :length => 200) %>" /> 
+  <link rel="image_src" href="http://sowhatsthedeal.com<%= @promotion.image1.url %>" />
+  
+  <!-- open graph stuff -->
+  <meta property="og:title" content="<%= @promotion.name %>"/>
+  <meta property="og:site_name" content="What's The Deal"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="<%= promotion_url @promotion %>"/>
+  <meta property="og:image" content="http://sowhatsthedeal.com<%= @promotion.image1.url %>"/>
+  <meta property="fb:admins" content="mburnett" />
+
+  <!-- tweetmeme stuff -->
+  <meta name="tweetmeme-title" content="<%= @promotion.name %>" />
+<% end %>
+
+<h2 class="featured_deal_title"><%=h @promotion.name %></h2> 
+<div class="section_element actionable home_deal">
+  <%= render :partial => "facebook_like", :locals => {:promotion => @promotion} %>
+  <!-- <p class="home_featured_deal">Featured</p> -->
+  <div class="section_content">   
+    <div class="deal_listing clearfix">
+      <% form_for @cart_item do |f| -%>
+        <div class="deal_details clearfix">
+          <div class="buyable_deal">
+			      <h3 class="<%= "no_price_info" if @promotion.featured_deal.id == 411 %>"><%= @promotion.featured_deal.name %></h3>
+
+            <% unless @promotion.featured_deal.id == 411 %>
+              <dl class="you_pay <%= 'early_bird_you_pay' if @promotion.featured_deal.early_bird? %> clearfix"><dt>You Pay:</dt><dd class="<%= "with_cents" if has_cents?(@promotion.featured_deal.adjusted_price) %>"> <%= has_cents?(@promotion.featured_deal.adjusted_price) ? number_to_currency(@promotion.featured_deal.adjusted_price, :precision => 2) : number_to_currency(@promotion.featured_deal.adjusted_price, :precision => 0) %></dd></dl>
+              <dl class="you_get clearfix"><dt>Value:</dt><dd class="<%= " with_cents" if has_cents?(@promotion.featured_deal.value) %>"> <%= has_cents?(@promotion.featured_deal.value) ? number_to_currency(@promotion.featured_deal.value, :precision => 2) : number_to_currency(@promotion.featured_deal.value, :precision => 0) %></dd></dl>
+              <dl class="you_save clearfix"><dt>You Save:</dt><dd> <%= number_to_percentage(@promotion.featured_deal.savings, :precision => 0) %></dd></dl>
+            <% end %>
+            
+            <%= hidden_field_tag "cart_items[0][deal_id]", @promotion.featured_deal.id %>
+            <% if @promotion.id == 216 or @promotion.id == 230 %>
+              <p class="quantity_message">Please choose one of the dates below.</p>
+            <% elsif @promotion.featured_deal.purchase_limit_remaining(cart) > 0 %>
+              <div class="quantity_selector">
+                <span>Quantity</span>
+                <%= select_tag "cart_items[0][quantity]", options_for_select(1..@promotion.featured_deal.purchase_limit_remaining(cart)) %>
+              </div>
+            <% elsif @promotion.featured_deal.sold_out? %>  
+              <p class="quantity_message"><%= render_content 'deal_status_soldout' %></p>
+            <% elsif current_user and Coupon.find(:all, :conditions => {:user_id => current_user.id, :deal_id => @promotion.featured_deal.id}).size == @promotion.featured_deal.purchase_limit %>
+              <p class="quantity_message">You've already purchased the max allowed.</p>
+            <% else %>
+              <p class="quantity_message">Your cart has the max allowed. <%= link_to "Checkout now", my_cart_path %>.</p>
+            <% end %>
+          </div>
+        
+          <% if @promotion.deals.active.count > 1 %>
+            <strong><p class="multiple_deals_homepage"><span><%= link_to "Click to see " + (@promotion.deals.count > 2 ? "all #{@promotion.deals.count}" : "both") + " offers from #{@promotion.business.name}", @promotion %></span></p></strong>
+          <% end %>
+        </div>
+         
+        <hr class="clear dotted" />
+        
+        <% unless @promotion.id == 216 or @promotion.id == 230 %>
+          <div class="promotion_stats_container clearfix">
+            <div class="promotion_details">  
+              <% unless @promotion.buyers_needed > 0 %>
+                <dl class="promotion_stats deals_purchased">
+                  <dt><strong><%=h @promotion.purchases %></strong> Deals Purchased</dt>
+                  <dd>Buy away, the deal is on!</dd>
+                </dl>
+              <% else %>
+                <% if @promotion.early_bird? %>
+                  <dl class="promotion_stats early_bird_buyers_needed">
+                    <dt>With Early Bird Discount <a href="#" id="early_bird_tooltip_link">(?)</a>:</dt> 
+                    <dd><%=h @promotion.buyers_needed %> more available</dd>
+                    <div id="early_bird_tooltip" style="display: none">Buy before the deal tips and get this deal for the early bird price!</div>
+                  </dl>
+                <% else %>
+                  <dl class="promotion_stats buyers_needed">
+                    <dt>Additional Buyers Needed:</dt> 
+                    <dd><%=h @promotion.buyers_needed %></dd>
+                  </dl>
+                <% end %>
+              <% end %>
+              <dl class="promotion_stats time_left">
+                <dt>Time Left to Buy:</dt>
+                <dd><%= distance_of_time_in_words_to_now @promotion.end_date %></dd>
+              </dl>  
+            </div>
+            <% if !@promotion.external_url.blank? %>   
+              <%= button_to 'Deal Me In', @promotion.external_url, :class => "primary", :onclick => "window.location='#{@promotion.external_url}';return false;" %>                  
+            <% elsif (@promotion.featured_deal.adjusted_price > 0) and !@promotion.sold_out? %>                  
+              <%= f.submit 'Deal Me In', :class => "primary" %>                  
+              <% if @promotion.auto_activate_coupons? %>
+                <div class="asap">Available ASAP <a href="#" id="asap_tooltip_link">(?)</a><div id="asap_tooltip" style="display: none">Buy this deal and get your coupon immediately</div></div>
+              <% end %>
+            <% else %>
+              <div class="sold_out">Sorry, but this deal<br>is sold out!</div>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+      
+      <% unless @promotion.id == 216 or @promotion.id == 230 %>
+        <%= render :partial => "reminder", :locals => {:promotion => @promotion} if ((Time.now - @promotion.end_date).abs.seconds > 48.hours) and !@promotion.sold_out? %>
+      <% end %>
+    </div>
+  </div>  
+</div>
+
+<div class="section_element home_deal">
+  <div class="section_content promotion_text clearfix">
+    
+    <!-- START (promotion template) -->
+      <%= image_tag(@promotion.image1.url, :alt => @promotion.header, :class => 'promotion_main_image') unless @promotion.image1.url.blank? %>
+      <h1><%= @promotion.header %></h1>
+      
+      <div class="promotion_main_body"><%= @promotion.body1 unless @promotion.body1.nil? %></div>
+      <div class="clear promotion_montage_image"><%= image_tag(@promotion.image2.url, :alt => @promotion.header) unless @promotion.image2.url.blank? %></div>
+      <div class="promotion_additional_body"><%= @promotion.body2 unless @promotion.body2.nil? %></div>
+    <!-- END (promotion template) -->
+    
+    <div class="share_with_friends">
+      <p>Share with friends!</p>
+      <span><a target="_blank" href="http://www.facebook.com/share.php?u=<%= CGI::escape promotion_url(@promotion) %>"><img src="/images/facebook.png" /></a></span>
+      <span><a target="_blank" href="http://twitter.com/home?status=<%= CGI::escape(@promotion.name + " at " + promotion_url(@promotion)) %>"><img src="/images/twitter.png" /></a></span>
+      <% if current_user and current_user.customer? %>
+        <span><a href="mailto:?subject=Check this out  -- <%= @promotion.name.sub(/\%/, '%25') %> from What's the Deal DC&body=I thought you may like today's bargain from What's the Deal DC:  <%= @promotion.name.sub(/\%/, '%25') %> - <%= CGI::escape promotion_url(@promotion) %>.  If you're not already a member, you can get $5 off your first purchase by signing up here <%= HOST_URL %>ref/<%= current_user.referral_link %>.%0A %0AHappy Bargain hunting!"><img src="/images/email.gif" class="email"/></a></span>
+      <% else %>
+        <span><a href="mailto:?subject=Check this out  -- <%=  @promotion.name.sub(/\%/, '%25') %> from What's the Deal DC&body=I thought you may like today's bargain from What's the Deal DC:  <%=  @promotion.name.sub(/\%/, '%25') %> - <%= CGI::escape promotion_url(@promotion) %>.%0A %0AHappy Bargain hunting!"><img src="/images/email.gif" class="email"/></a></span>
+      <% end %>
+    </div>    
+    <% unless @promotion.restrictions.blank? %>
+      <div class="fine_print_promotions">
+        <h5>Fine Print:</h5>
+        <%= @promotion.restrictions %>
+      </div>
+    <% end %>
+    <%= render :partial => "business_address", :locals => {:promotion => @promotion} %>
+    <div class="ie_clear"></div>
+  </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  $('#early_bird_tooltip_link').click(function(){$('#early_bird_tooltip').toggle(); return false;})
+  $('#early_bird_tooltip').click(function(){$('#early_bird_tooltip').hide()})
+  $('#early_bird_tooltip').mouseleave(function(){$('#early_bird_tooltip').hide()})  
+</script>

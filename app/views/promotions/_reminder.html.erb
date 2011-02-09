@@ -1,0 +1,15 @@
+<div class="reminder_container">
+  <% if promotion.almost_over? %>
+    <div class="last_chance">Last Chance</div>
+  <% elsif reminder_exists?(current_user ? current_user.email : session[:floating_email], promotion.id) %>
+    <div class="reminded"><span class="checkmark">&#10003;</span> Reminder Set</div>
+  <% else %>
+    <% form_for :reminder, :url => quick_reminder_path(promotion.id, current_page?('/promotions')), :method => 'post' do %>
+      <%= hidden_field_tag :reminder_promotion_id, promotion.id %>
+      <% if current_user %>
+        <%= hidden_field_tag :reminder_email, current_user.email %>
+      <% end %>
+      <%= submit_tag 'Remind Me', :class => 'secondary' %>
+    <% end %>
+  <% end %>
+</div>

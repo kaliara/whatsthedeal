@@ -1,0 +1,43 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'New credit', new_admin_credit_path %>
+  </li>
+<% end %>
+
+<% form_tag nil, :method => :get do %>
+  <label for="q"><strong>Email</strong> or <strong>Promotion Code</strong>:</label>
+  <%= text_field_tag 'q' %>
+  <%= submit_tag 'search' %>
+<% end %>
+<br><br>
+
+<% if @type %>
+  <h2><%= pluralize @credits.size, "Credit" %> matching <%= @type %> '<%= params[:q] %>'</h2>
+<% else %>
+  <h2>Last 20 Credits</h2>
+<% end %>
+
+
+<table>
+  <tr>
+    <th>Promotion Code</th>
+    <th>User</th>
+    <th>Referrer user</th>
+    <th>Value</th>
+    <th>Cart</th>
+    <th>Purchase</th>
+    <th>Issued</th>
+  </tr>
+
+<% @credits.each do |credit| %>
+  <tr>
+    <td><%= credit.promotion_code.code unless credit.promotion_code.nil? %></td>
+    <td><%= credit.user.nil? ? "---" : credit.user.email %></td>
+    <td><%= User.find(credit.referrer_user_id).email if User.exists?(credit.referrer_user_id) %></td>
+    <td><%= number_to_currency credit.value, :precision => 0 %></td>
+    <td><%=h credit.cart_id %></td>
+    <td><%= link_to credit.purchase_id, admin_purchase_path(credit.purchase) unless credit.purchase.nil? %></td>
+    <td><%= credit.created_at.strftime("%b %e, %Y at %I:%M %p") %></td>
+    <td><%= link_to 'Destroy', admin_credit_path(credit), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>

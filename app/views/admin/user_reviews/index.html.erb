@@ -1,0 +1,31 @@
+<% content_for :sub_nav do %>
+  <% @no_sub_nav = true %>
+<% end %>
+<br><br>
+
+<h2>User Review</h2>
+
+<% form_tag :controller => :user_reviews, :action => :bulk_review do %>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>User (link to account)</th>
+      <th>Reviewed?</th>
+      <th>Credit Given?</th>
+    </tr>
+
+  <% @user_reviews.each do |user_review| %>
+    <tr>
+      <td><%= user_review.id %></td>
+      <td><%= link_to user_review.user.email, admin_customer_path(user_review.user.customer) %></td>
+      <% if user_review.reviewed? %>
+        <td style="color: green;">&#10004;</td>
+        <td><%= user_review.credit_given? %></td>
+      <% else %>
+        <td colspan="2"><%= link_to "GOOD, give credit", admin_user_review_mark_good_path(user_review), :style => 'color:green' %>&nbsp;&nbsp;&nbsp;- or -&nbsp;&nbsp;&nbsp;<%= link_to "BAD, don't give credit", admin_user_review_mark_bad_path(user_review), :style => 'color:red' %></td>
+      <% end %>
+    </tr>
+  <% end %>
+  </table>
+
+<% end %>

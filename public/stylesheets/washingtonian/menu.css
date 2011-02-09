@@ -1,0 +1,149 @@
+.navigation {
+width:980px;
+overflow:none;
+line-height:0;
+margin:0 auto;
+padding:0;
+}
+
+.navigation ol {
+border:0;
+list-style:none;
+margin:0;
+padding:0;
+}
+
+.navigation ol li {
+background:#ECECEC;
+color:#000;
+border:1px solid #CBCBCB;
+float:left;
+margin-right:2px;
+padding:4px 9px;
+}
+
+.navigation ol li:hover {
+background:#FFF;
+color:#000;
+border:1px solid #CBCBCB;
+float:left;
+margin-right:2px;
+padding:4px 9px;
+}
+
+.navigation ol li.selected {
+background:#000;
+color:#FFF;
+border:1px solid #000;
+border-bottom:4px solid #000;
+float:left;
+margin-right:2px;
+padding:4px 9px;
+}
+
+.navigation li a {
+margin-right:2px;
+color:#000;
+text-transform:uppercase;
+text-decoration:none;
+font-size:80%;
+font-weight:700;
+}
+
+.navigation li.selected a {
+margin-right:2px;
+color:#FFF;
+text-transform:uppercase;
+text-decoration:none;
+font-size:80%;
+font-weight:700;
+}
+
+.navigation ol li.packs {
+background:#FFE57F;
+color:#000;
+border:1px solid #C90;
+float:left;
+padding:0;
+}
+
+.navigation ol li.packs ol li {
+color:#000;
+float:left;
+margin-right:2px;
+background:transparent;
+border:0;
+padding:4px;
+}
+
+.navigation ol li.packs ol li.last {
+float:left;
+margin-right:0;
+background:transparent;
+border:0;
+padding:4px 10px 4px 0;
+}
+
+.navigation ol li.pimage {
+border:0;
+margin:0;
+padding:0;
+background: #FFF;
+}
+
+.navigation li.packs a:hover {
+margin-right:2px;
+color:#7B3A05;
+text-transform:uppercase;
+text-decoration:none;
+font-size:80%;
+font-weight:700;
+}
+
+.sub-navigation {
+overflow:none;
+border-top:2px solid #000;
+width:920px;
+margin:0;
+padding:0 30px;
+}
+
+.sub-navigation	span {
+background:#FFF;
+color:#000;
+border:1px solid #FFF;
+padding:4px 10px;
+}
+
+.sub-navigation	span.selected {
+background:#FC0;
+color:#000;
+margin:1px 1px 1px 0;
+padding:4px 10px;
+}
+
+.sub-navigation	a {
+color:#000;
+text-decoration:none;
+font-size:85%;
+font-weight:700;
+}
+
+.article_navigation {
+border-bottom: 1px solid #E3E3E3;
+height: 30px;
+width: 680px;
+margin-top: -10px;
+}
+
+
+.article_navigation li a {
+float: left;
+margin: 10px;
+padding: 2px;
+
+}
+
+.article_navigation li a.selected {
+background: #E3E3E3;
+}

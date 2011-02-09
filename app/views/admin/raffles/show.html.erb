@@ -1,0 +1,13 @@
+<br><br><br><br>
+
+<div class="sidebar_content clearfix">
+  <h3><%= @raffle.header %></h3>
+  <div class="partner_shout_out">
+    <img src="<%= @raffle.image1.url %>" alt="Partner Picture" />
+    <p><%= @raffle.body %></p> 
+  </div>
+</div>
+
+
+<%= link_to 'Edit this Raffle', edit_admin_raffle_path(@raffle) %> |
+<%= link_to 'Back to all Raffles', admin_raffles_path %>

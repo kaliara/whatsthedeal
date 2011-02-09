@@ -1,0 +1,86 @@
+<% @cart_item = CartItem.new %>  
+
+<h2><%=h @deal.name %></h2>  
+
+<% form_for @cart_item do |f| -%>
+  <%= hidden_field_tag :cart_item_deal_id, @deal.id %>
+  <%= f.submit 'Add to Cart' %>
+<% end -%>   
+
+<div class="deal_show_containers">
+  <div class="info_panel floated_panel">  
+    <h3>Deal Information</h3>
+      <p>
+        <label>Promotion:</label>
+        <%=h @deal.promotion.name %>
+      </p>
+
+      <p class="label_spacing">
+        <label>Code:</label>
+        <%=h @deal.code %>
+      </p>
+
+      <p>
+        <label>Price:</label>
+        <%=h @deal.price %>
+      </p>
+
+      <p class="label_spacing">
+        <label>Value:</label>
+        <%=h @deal.value %>
+      </p>
+
+      <p class="label_spacing">
+        <label>Description:</label>
+        <%=h @deal.description %>
+      </p>
+
+      <p>
+        <label>Purchase limit:</label>
+        <%=h @deal.purchase_limit %>
+      </p>
+
+      <p>
+        <label>Inventory:</label>
+        <%=h @deal.inventory %>
+      </p>
+      <p>
+        <label>Featured:</label>
+        <%=h @deal.featured? %>
+      </p>
+      <p>
+        <label>Shippable:</label>
+        <%=h @deal.shippable? %>
+      </p>
+  </div>
+
+  <div class="info_panel last floated_panel">
+    <h3>Coupon Information</h3>
+      <p>
+        <label>Coupon name:</label>
+        <%=h @deal.coupon_name %>
+      </p>
+
+      <p class="label_spacing">
+        <label>Coupon description:</label>
+        <%=h @deal.coupon_description %>
+      </p>
+
+      <p>
+        <label>Coupon expiration:</label>
+        <%=h @deal.coupon_expiration %>
+      </p>
+  </div>
+  <br style="clear:both"/>
+</div>
+
+
+<div class="bottom_link_next_page">
+<%= link_to 'Edit', edit_deal_path(@deal) %> |
+<%= link_to 'Back', deals_path %>
+</div>
+
+
+
+
+

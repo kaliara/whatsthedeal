@@ -1,0 +1,212 @@
+iframe,
+.washingtonian_sidebar,
+.nav_container,
+.login_logout,
+.five_dollar,
+.daily_deal,
+.global_announcement_container,
+select,
+.social_connections,
+.last,
+.global_announcement,
+.footer{
+  display: none;
+}
+
+.print_this{
+  width: 800px;
+  text-align: right;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+.print_this a{
+  padding: 15px 45px 15px 0;
+  background: transparent url(/images/print_icon.jpg) no-repeat center right;
+}
+
+
+body{
+  padding: 30px;
+}
+
+h2{
+  font-size: 225%;
+  font-weight: normal;
+  margin: 20px 0 40px;
+}
+h4{
+  font-size: 125%;
+  margin-bottom: 5px;
+}
+
+.print_coupon{
+  border: 1px dashed #000;
+  width: 800px;
+  margin: 15px 0;
+  position: relative;
+}
+
+.print_coupon p,
+.print_coupon h3{
+  color:#000;
+}
+
+.print_coupon_header{
+  padding: 18px;
+  text-align: right;
+}
+
+.print_coupon_header img{
+  padding: 0 0 0 15px;
+  float: left;
+  position: relative;
+  top: -10px;
+}
+
+.print_coupon_content{
+  padding: 20px;
+}
+
+.print_coupon h3{
+  text-align: center;
+  margin-top: 35px;
+  
+}
+
+.print_coupon .coupon_business{
+  margin: 20px 0 50px;
+  font-size: 115%;
+}
+.print_coupon .coupon_business p{
+  margin: 0 0 5px 0;
+}
+.print_coupon .coupon_business h5{
+  font-size: 125%;
+  margin-bottom: 5px;
+}
+
+.coupon_fine_print p{
+  margin: 10px 0;
+}
+
+.print_coupon .coupon_super_fine_print{
+  margin: 15px 0 10px;
+  font-size: 85%;
+  color: #666;
+}
+
+.print_coupon .coupon_recipient{
+  font-size: 150%;
+  margin-bottom: 5px;
+}
+
+.print_coupon .confirmation_code{
+  color: #696969;
+  margin-bottom: 10px;
+  font-size: 120%;
+}
+
+.print_coupon .map{
+  position: relative;
+  top: -10px;
+}
+.print_coupon .map img{
+  border: 2px solid #ccc;
+}
+.coupon_code_content{
+  background: #FFDDB5;
+  padding: 10px;
+  margin: 20px 0; 
+}
+.coupon_code_content .coupon_code{
+  margin-top: 10px;
+}
+.coupon_description {
+  background: #DDEBFF;
+  padding: 10px;
+  margin: 20px 0;
+  clear: both; 
+}
+.map_and_biz{
+  margin-bottom: 20px;
+}
+
+
+
+.restrictions {
+  background: #DEDFDE;
+  padding: 10px;
+}
+
+.restrictions li{
+  list-style: circle outside;
+  margin-left: 20px;  
+}
+
+.break{
+  page-break-before: always;
+}
+
+.questions h4{
+  margin-bottom:0;
+}
+
+.contact_info{
+  margin: 50px 0 0px;
+}
+
+.business_info address{
+  font-style: normal;
+  line-height: 1.2em;
+}
+.business_info b, .business_info strong{
+  font-size: 20px;
+}
+
+.multi_location{
+  float: left;
+  margin: 0 50px 20px 0;
+  width: 200px;
+}
+
+.print_coupon .redemption_status{
+  clear: both;
+  color: #194AA7;
+  padding: 7px 0 5px 25px;
+  background: #A3C1EC;
+  font-size: 1.2em;
+  line-height: 1.2em;
+  margin-bottom: 15px;
+}
+
+.redeemed_watermark{
+  height: 10000px;
+  width: 10000px;
+  position: fixed;
+  z-index: 100;
+  background: transparent url(/images/redeemed_watermark.png) repeat 0 0;
+}
+
+.mobile_usage_clause{
+  clear: both;
+  color: #A17D00;
+  border: 2px solid #A17D00;
+  padding: 5px;
+  background: #E8E08E;
+  font-size: 1.2em;
+  line-height: 1.2em;
+  margin-bottom: 15px;
+}
+
+.secondary{
+  background: transparent url(/images/promo_reminder_bg.png) repeat-x center center;
+  border: 1px solid #000;
+  font-size: 85%;
+  font-weight: bold;
+  color: #fff;
+  padding: 4px;
+  text-shadow: 0px 0px 2px #000;
+  -moz-border-radius: 5px; 
+  -webkit-border-radius: 5px;
+  cursor: pointer;
+}

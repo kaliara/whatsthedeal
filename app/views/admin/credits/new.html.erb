@@ -1,0 +1,29 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Credit Listing', admin_credits_path %></li>
+<% end %>
+
+
+<h2>New credit</h2>
+
+<% form_for([:admin,@credit]) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :promotion_code_id %><br />
+    <%= f.select :promotion_code_id, PromotionCode.find(:all, :conditions => {:listed => true}).collect{|p| [p.id.to_s + " - " + p.name + " ($#{p.value})",p.id]} %>
+  </p>
+  <br>
+  <p>
+    <%= f.label :value %> in dollars (if you want it different that the promotion code's default value)<br />
+    <%= f.text_field :value %>
+  </p>
+  <br>
+  <p>
+    <%= label_tag :user_email, 'User\'s Email' %>(you'll see an error if we can't find it)<br />
+    <%= text_field_tag :user_email, nil, :size => 40 %>
+  </p>
+  <br>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>

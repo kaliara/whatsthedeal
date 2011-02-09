@@ -1,0 +1,228 @@
+<% content_for :sub_nav do %>
+  <% @no_sub_nav = true %>
+<% end %>
+<br><br>
+
+<div class="datepicker clearfix">
+  <% form_tag do %>
+    <%= hidden_field_tag 'id', params[:id], :id => 'nothing' %>
+    <%= hidden_field_tag 'business_id', params[:business_id], :id => 'nothing' %>
+    <%= hidden_field_tag 'show_breakdowns', @show_breakdowns, :id => 'nothing' %>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <span>Date Range:</span>
+    <%= text_field_tag :start_date, @start_date.strftime("%m/%d/%Y"), :size => 10 %>
+    &nbsp;&nbsp;to&nbsp;&nbsp;
+    <%= text_field_tag :end_date, @end_date.strftime("%m/%d/%Y"), :size => 10 %>
+    <%= submit_tag 'Filter by Date' %>
+  <% end %>
+</div>
+
+<div>
+  <% form_tag do %>
+    <%= hidden_field_tag 'id', params[:id], :id => 'nothing' %>
+    <%= hidden_field_tag 'business_id', params[:business_id], :id => 'nothing' %>
+    <%= hidden_field_tag 'start_date', params[:start_date] %>
+    <%= hidden_field_tag 'end_date', params[:end_date] %>
+    <%= check_box_tag :show_breakdowns, true, @show_breakdowns, {:onclick => 'submit()'} %>
+    <%= label_tag :show_breakdowns %>
+  <% end %>
+</div>
+
+<div class="section_content clearfix">
+  <div style="float: left;">
+    <% form_tag do %>
+      <%= hidden_field_tag 'show_breakdowns', @show_breakdowns, :id => 'nothing' %>
+      <%= hidden_field_tag 'start_date', params[:start_date] %>
+      <%= hidden_field_tag 'end_date', params[:end_date] %>
+      <label>Promotion:</label> <%= select_tag :id, options_for_select([''] + Promotion.find(:all, :order => 'created_at DESC').collect{|p| [p.id.to_s + " - " + p.name, p.id]}, params[:id].to_i), :onchange => "submit()" %>
+    <% end %>
+  </div>
+  <div style="float: left; margin-left: 20px">
+    <% form_tag do %>
+    <%= hidden_field_tag 'show_breakdowns', @show_breakdowns, :id => 'nothing' %>
+      <label>Business:</label> <%= select_tag :business_id, options_for_select([''] + Business.find(:all, :order => 'name ASC').collect{|b| [b.name + " (##{b.id})", b.id]}, params[:business_id].to_i), :onchange => "submit()" %>
+    <% end %>
+  </div>
+  <div style="float: left; margin-left: 30px;padding-top:20px">
+    <%= link_to "See ALL Promotions", "?all=true" %><br>(let's not do this during rush hour)
+  </div>
+</div>
+
+<% if !params[:business_id].blank? %>
+  <h2>All Promotions for <%= Business.find(params[:business_id]).name unless params[:business_id].blank? %></h2>
+<% elsif params[:all] %>
+  <h2>All Promotions</h2>
+<% elsif params[:id].nil? %>
+  <h2>Recent Promotions</h2>
+<% end %>
+
+
+<% total_organic_purchases = 0 %>
+<% total_wash_purchases = 0 %>
+<% total_purchases = 0 %>
+<% total_early_bird_losses = 0 %>
+<% total_organic_revenue = 0 %>
+<% total_wash_revenue = 0 %>
+<% total_revenue = 0 %>
+<% total_organic_profit = 0 %>
+<% total_wash_profit = 0 %>
+<% total_profit = 0 %>
+<% total_organic_credit = 0 %>
+<% total_wash_credit = 0 %>
+<% total_credit = 0 %>
+<% total_organic_profit_post_credit = 0 %>
+<% total_wash_profit_post_credit = 0 %>
+<% total_profit_post_credit = 0 %>
+<% total_revenue = 0 %>
+<% total_cc_fees = 0 %>
+<% total_profit_post_credit_and_fees = 0 %>
+<% total_wash_cut = 0 %>
+
+
+
+<div class="section_element"> 
+  <div class="section_content">
+    <table width="950px">
+      <% @promotions.each_with_index do |promotion,i| %>
+        <% if i % 7 == 0 %>
+          <tr>
+            <th style="text-align:center">ID</th>
+            <th style="text-align:left; width:250px">Promotion Name</th>
+            <th style="text-align:center">End Date</th>
+            <% if @show_breakdowns %>
+              <th style="text-align:center">Organic Purchases</th>
+              <th style="text-align:center">Wash. Purchases</th>
+            <% end %>
+            <th style="text-align:center">Total Purchases</th>
+            <th style="text-align:center">Early Bird Losses</th>
+            <% if @show_breakdowns %>
+              <th style="text-align:center">Organic Revenue</th>
+              <th style="text-align:center">Wash. Revenue</th>
+            <% end %>
+            <th style="text-align:center">Total Revenue</th>
+            <th style="text-align:center">WTD Profit %</th>
+            <% if @show_breakdowns %>
+              <th style="text-align:center">Organic Profit</th>
+              <th style="text-align:center">Wash. Profit</th>
+            <% end %>
+            <th style="text-align:center">Pre-Credit Profit</th>
+            <% if @show_breakdowns %>
+              <th style="text-align:center">Organic Credit</th>
+              <th style="text-align:center">Wash. Credit</th>
+            <% end %>
+            <th style="text-align:center">Total Credit</th>
+            <% if @show_breakdowns %>
+              <th style="text-align:center">Organic Profit<br>(post credit)</th>
+              <th style="text-align:center">Wash. Profit<br>(post credit)</th>
+            <% end %>
+            <th style="text-align:center">Total Profit<br>(post credit)</th>
+            <th style="text-align:center">Charged to CC</th>
+            <th style="text-align:center">5% CC Fees</th>
+            <th style="text-align:center">Profit<br>(post credit + fees)</th>
+            <th style="text-align:center">Wash. Cut</th>
+          </tr>
+        <% end %>
+        
+        <% promotion = Promotion.find(promotion.id) %>
+        
+        <tr class="<%= promotion.partner_id > 0 ? 'wash_deal' : cycle('', 'odd') %>">
+          <td style="text-align:right">#<%= promotion.id %></td>
+          <td style="text-align:left;"><strong><%= promotion.name %></strong></td>
+          <td style="text-align:left;"><%= promotion.end_date.strftime "%m/%d/%Y" %></td>
+          <% if @show_breakdowns %>
+            <td style="text-align:right"><%= promotion.purchases(0) %></td>
+            <td style="text-align:right"><%= promotion.purchases(2) %></td>
+          <% end %>
+          <td style="text-align:right"><%= promotion.purchases %></td>
+          <td style="text-align:right"><%= number_to_currency promotion.early_bird_losses %></td>
+          <% if @show_breakdowns %>
+            <td style="text-align:right"><%= number_to_currency promotion.revenue(0) %></td>
+            <td style="text-align:right"><%= number_to_currency promotion.revenue(2) %></td>
+          <% end %>
+          <td style="text-align:right"><strong><%= number_to_currency promotion.revenue %></strong></td>
+          <td style="text-align:right"><%= number_to_percentage promotion.profit_percentage.to_f, :precision => 2 %></td>
+          <% if @show_breakdowns %>
+            <td style="text-align:right"><%= number_to_currency promotion.profit(0) %></td>
+            <td style="text-align:right"><%= number_to_currency promotion.profit(2) %></td>
+          <% end %>
+          <td style="text-align:right"><strong><%= number_to_currency promotion.profit %></strong></td>
+          <% if @show_breakdowns %>
+            <td style="text-align:right" class="credit"><%= number_to_currency promotion.credit_used(0) %></td>
+            <td style="text-align:right" class="credit"><%= number_to_currency promotion.credit_used(2) %></td>
+          <% end %>
+          <td style="text-align:right" class="credit"><strong><%= number_to_currency promotion.credit_used %></strong></td>
+          <% if @show_breakdowns %>
+            <td style="text-align:right" class="profit"><%= number_to_currency(promotion.profit(0) - promotion.credit_used(0)) %></td>
+            <td style="text-align:right" class="profit"><%= number_to_currency(promotion.profit(2) - promotion.credit_used(2)) %></td>
+          <% end %>
+          <td style="text-align:right" class="profit"><strong><%= number_to_currency(promotion.profit - promotion.credit_used) %></strong></td>
+          <td style="text-align:right"><%= number_to_currency(promotion.revenue - promotion.credit_used) %></td>
+          <td style="text-align:right" class="credit"><%= number_to_currency((promotion.revenue - promotion.credit_used) * Business::PROCESSING_FEE) %></td>
+          <td style="text-align:right" class="profit"><strong><%= number_to_currency(promotion.profit - ((promotion.revenue - promotion.credit_used) * Business::PROCESSING_FEE) - promotion.credit_used) %></strong></td>
+          <td style="text-align:right"><strong><%= number_to_currency((promotion.partner_id == 0 ? 0.10 : 0.75) * (promotion.profit - ((promotion.revenue - promotion.credit_used) * Business::PROCESSING_FEE) - promotion.credit_used)) %></strong></td>
+          
+          <% total_organic_purchases += promotion.purchases(0) %>
+          <% total_wash_purchases += promotion.purchases(2) %>
+          <% total_purchases += promotion.purchases %>
+          <% total_early_bird_losses += promotion.early_bird_losses %>
+          <% total_organic_revenue += promotion.revenue(0) %>
+          <% total_wash_revenue += promotion.revenue(2) %>
+          <% total_revenue += promotion.revenue %>
+          <% total_organic_profit += promotion.profit(0) %>
+          <% total_wash_profit += promotion.profit(2) %>
+          <% total_profit += promotion.profit%>
+          <% total_organic_credit += promotion.credit_used(0) %>
+          <% total_wash_credit += promotion.credit_used(2) %>
+          <% total_credit += promotion.credit_used %>
+          <% total_organic_profit_post_credit += (promotion.profit(0) - promotion.credit_used(0)) %>
+          <% total_wash_profit_post_credit += (promotion.profit(2) - promotion.credit_used(2)) %>
+          <% total_profit_post_credit += (promotion.profit - promotion.credit_used) %>
+          <% total_cc_fees += ((promotion.revenue - promotion.credit_used) * Business::PROCESSING_FEE) %>
+          <% total_profit_post_credit_and_fees += (promotion.profit - ((promotion.revenue - promotion.credit_used) * Business::PROCESSING_FEE) - promotion.credit_used) %>
+          <% total_wash_cut += ((promotion.partner_id == 0 ? 0.10 : 0.75) * (promotion.profit - ((promotion.revenue - promotion.credit_used) * Business::PROCESSING_FEE) - promotion.credit_used)) %>
+          
+        </tr>
+      <% end %>
+      <tr class="totals">
+        <th style="text-align:center" colspan="3"><strong>TOTALS</strong></th>
+        <% if @show_breakdowns %>
+          <th style="text-align:right"><%= total_organic_purchases %></th>
+          <th style="text-align:right"><%= total_wash_purchases %></th>
+        <% end %>
+        <th style="text-align:right"><%= total_purchases %></th>
+        <th style="text-align:right"><%= number_to_currency total_early_bird_losses %></th>
+        <% if @show_breakdowns %>
+          <th style="text-align:right"><%= number_to_currency total_organic_revenue %></th>
+          <th style="text-align:right"><%= number_to_currency total_wash_revenue %></th>
+        <% end %>
+        <th style="text-align:right"><strong><%= number_to_currency total_revenue %></strong></th>
+        <th style="text-align:right"></th>
+        <% if @show_breakdowns %>
+          <th style="text-align:right"><%= number_to_currency total_organic_profit %></th>
+          <th style="text-align:right"><%= number_to_currency total_wash_profit %></th>
+        <% end %>
+        <th style="text-align:right"><strong><%= number_to_currency total_profit %></strong></th>
+        <% if @show_breakdowns %>
+          <th style="text-align:right" class="credit"><%= number_to_currency total_organic_credit %></th>
+          <th style="text-align:right" class="credit"><%= number_to_currency total_wash_credit %></th>
+        <% end %>
+        <th style="text-align:right" class="credit"><strong><%= number_to_currency total_credit %></strong></th>
+        <% if @show_breakdowns %>
+          <th style="text-align:right" class="profit"><%= number_to_currency total_organic_profit_post_credit %></th>
+          <th style="text-align:right" class="profit"><%= number_to_currency total_wash_profit_post_credit %></th>
+        <% end %>
+        <th style="text-align:right" class="profit"><strong><%= number_to_currency total_profit_post_credit %></strong></th>
+        <th style="text-align:right"><%= number_to_currency total_revenue %></th>
+        <th style="text-align:right" class="credit"><%= number_to_currency total_cc_fees %></th>
+        <th style="text-align:right" class="profit"><%= number_to_currency total_profit_post_credit_and_fees %></th>
+        <th style="text-align:right"><strong><%= number_to_currency total_wash_cut %></strong></th>
+      </tr>
+      
+    </table>
+  </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  $("#start_date").datepicker();
+  $("#end_date").datepicker();
+</script>

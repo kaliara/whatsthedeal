@@ -1,0 +1,26 @@
+<div class="section_element">
+  <div class="section_header">
+    <h3>Refer a friend, Earn $5</h3>
+    </div>
+  <div class="section_content referral_info">
+    <img src="/images/refer_friend.gif" class="refer_friend">
+    <p>You love WTD, right?  You have friends, right? Let's connect the dots!  Earning money has never been so easy (unless you sweat gold).  Refer a friend to WTD and they'll get a $5 credit. Once they make their first purchase, you'll get $5 in your account.  Easy as pie.</p>
+      
+    <h4>How do I refer a friend?</h4>
+    
+    <% if current_user %>
+      <p>Start earning money now by sending the link below to your friends.</p><div class="referral_link"><%= HOST_DOMAIN %>ref/<strong><%= current_user.referral_link %></strong></div>
+
+      <div class="share_with_friends">
+        <p>Share with friends!</p>
+        <span><a href="http://www.facebook.com/share.php?u=<%= CGI::escape "#{HOST_URL}ref/#{current_user.referral_link}" %>"><img src="/images/facebook.png" /></a></span>
+        <span><a href="http://twitter.com/home?status=<%= CGI::escape "80% off on restaurants, spas, bars from @whatsthedealdc -- $5 off your first purchase at #{HOST_DOMAIN}ref/#{current_user.referral_link}" %>"><img src="/images/twitter.png" /></a></span>
+        <span><a href="mailto:friend@domain.com?subject=80% off on restaurants, spas, bars from What's The Deal&body=Get $5 off your first purchase at <%= HOST_DOMAIN %>ref/<%= current_user.referral_link %>"><img src="/images/email.gif" class="email"/></a></span>
+      </div>
+      
+    <% else %>
+      <p>Once you <%= link_away "Login or sign up", :controller => 'user_session', :action => 'new' %> up for an account you can start referring your friends!</p>
+    <% end %>
+    
+  </div>
+</div>

@@ -1,0 +1,25 @@
+
+<% content_for :page_title do %>Refer a Friend, Grab $5<% end %><div class="section_element">
+  <div class="section_header">
+    <h3><%= render_content 'referral_info_header' %></h3>
+  </div>
+  <div class="section_content referral_info">
+    <%= render_content 'referral_info_intro' %>
+    <% if current_user %>
+      <%= render_content 'referral_info_action_share' %><div class="referral_link"><%= HOST_DOMAIN %>ref/<%= current_user.referral_link %></div>
+
+      <div class="share_with_friends">
+        <p>Share with friends!</p>
+        <span><a href="http://www.facebook.com/share.php?u=<%= CGI::escape "#{HOST_URL}ref/#{current_user.referral_link}" %>"><img src="/images/facebook.png" /></a></span>
+        <span><a href="http://twitter.com/home?status=<%= CGI::escape "80% off on restaurants, spas, bars from @whatsthedealdc -- $5 off your first purchase at #{HOST_DOMAIN}ref/#{current_user.referral_link}" %>"><img src="/images/twitter.png" /></a></span>
+        <span><a href="mailto:?subject=Come join me at What's the Deal DC and get $5 off!&body=What's the Deal offers sweet discounts on restaurants, bars, theaters, and other cool stuff to do, eat, and see in the Washington DC area. I'm already a member and want you to join me! Use my referral link to sign-up and get $5 off your first purchase.%0A <%= HOST_URL %>ref/<%= current_user.referral_link %>"><img src="/images/email.gif" class="email"/></a></span>
+      </div>
+      
+    <% else %>
+      <%= render_content 'referral_info_action_login' %>
+    <% end %>
+    
+  </div>
+</div>
+
+

@@ -1,0 +1,34 @@
+<% content_for :page_title do %>My Deals<% end %>
+<%= render :partial => "/users/credit_balance", :locals => {:user => current_user} unless mobile %>
+
+<div class="section_element coupons_<%= @show_all %>"> 
+  <ul class="tabs clearfix">
+    <li id="tabs_unused"><%= link_to "Available", my_deals_path %></li>
+    <li id="tabs_used"><%= link_to "Redeemed", my_deals_used_path %></li>
+    <li id="tabs_expired"><%= link_to "Expired", my_deals_expired_path %></li>
+    <li id="tabs_gifts"><%= link_to "Gifts", my_deals_gifts_path %></li>
+  </ul>
+  <div class="section_content coupon_section clearfix clear">
+    <%= render_content 'coupon_print_help' %>
+
+    <% if @coupons.empty? %>
+      <div class="empty_my_deals">
+      <% if @show_all == "unused" %>
+        <p>Looks like you don't have any unused deals. <strong>Time to <%= link_to "start shopping", promotions_path %>!</strong></p>
+      <% elsif @show_all == "gifts" %>
+        <p>You can get great gifts for friends and still save money!<br><br><strong>Just click "Buy as Gift" on any of our <%= link_to "great deals", promotions_path %>!</strong></p>
+      <% elsif @show_all == "expired" %>
+        <p>When a coupon expires, it will show up here.</p>
+      <% else %>
+        <p>When you mark a deal as <%= @show_all %> it will show up here. Until then, enjoy the good life!</p>
+      <% end %>
+      </div>
+    <% elsif @show_all == "gifts" %>
+      <%= render :partial => (mobile ? "gifts_m" : "gifts"), :locals => {:coupons => @coupons} %>
+    <% else %>
+      <%= render :partial => (mobile ? "coupon_m" : "coupon"), :locals => {:coupons => @coupons} %>
+    <% end %>
+  </div>
+  
+  <br><br><br>
+</div>

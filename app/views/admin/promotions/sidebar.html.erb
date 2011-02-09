@@ -1,0 +1,56 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Promotions Listing', admin_promotions_path %></li>
+  <li><%= link_to 'New Promotion', new_admin_promotion_path %></li>
+<% end %>
+
+
+<h2>Side Bar Promotions</h2>
+
+<div id="updated" style="opactiy: 0">Promotion positions have been updated!</div>
+
+<table id="promotions">
+  <tr>
+    <th></th>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Start date</th>
+    <th>End date</th>
+  </tr>
+
+<% @promotions.each do |promotion| %>
+  <tr id="promotion_<%= promotion.id %>" class="<%= "featured" if promotion.featured? %> <%= "inactive" unless promotion.active? %>">
+    <td class="handle">#</td>
+    <td><%=h promotion.id %></td>
+    <td><%=h promotion.name %><%= ' <span style="color: green">(featured)</span>' if promotion.featured? %></td>
+    <td><%=h promotion.start_date.strftime("%b %e, %Y") %></td>
+    <td><%=h (promotion.end_date - 5.hours).strftime("%b %e, %Y") %></td>
+  </tr>
+<% end %>
+</table>
+
+<script type="text/javascript" charset="utf-8">
+
+ $('#promotions').sortable(
+    {
+      axis: 'y', 
+      dropOnEmpty:false, 
+      handle: '.handle', 
+      cursor: 'move',
+      items: 'tr',
+      opacity: 0.6,
+      scroll: true,
+      update: function(){
+        $.ajax({
+            type: 'post', 
+            data: $('#promotions').sortable('serialize'), 
+            dataType: 'script', 
+            complete: function(request){
+                $('#updated').css("opacity", 1);
+                $('#updated').animate({opacity: 0}, 3000);
+              },
+            url: '<%= admin_promotions_sort_path %>'})
+        }
+      });
+</script>
+
+<%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>

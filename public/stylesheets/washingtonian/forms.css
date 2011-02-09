@@ -1,0 +1,173 @@
+form {
+	padding: 0;
+	border: 0;
+	margin: 0;
+	}
+
+
+/* FORM TAGS DATA MASKS */
+
+form.cmxform fieldset { margin: 0 10px 10px 0; } 
+form.cmxform legend {
+	padding: 0 2px; 
+	font-weight: bold; 
+	_margin: 0 -7px; /* IE Win */ 
+	display: none;
+	text-align: right;
+	} 
+	
+form.cmxform label { display: inline-block; line-height: 1.8em; vertical-align: top; } 
+form.cmxform fieldset ol { margin: 0; padding: 0; } 
+form.cmxform fieldset li { list-style: none; padding: 5px 5px 5px 0; margin: 0; } 
+form.cmxform fieldset fieldset { border: none; margin: 3px 0 0; } 
+form.cmxform fieldset fieldset legend { padding: 0 0 5px; font-weight: normal; } 
+form.cmxform fieldset fieldset label { display: block; width: auto; } 
+form.cmxform em { font-weight: bold; font-style: normal; color: #f00; } 
+form.cmxform label { width: 110px; /* Width of labels */ } 
+form.cmxform fieldset fieldset label { margin-left: 113px; /* Width plus 3 (html space) */ }
+
+input {
+	border: 1px solid #CCC;
+	background: #F7F7F7;
+	padding: 2px;
+	border-color: #999 rgb(170, 179, 179) rgb(213, 221, 221) !important
+	}
+
+input.short {
+	width: 50px;
+	border: 1px solid #CCC;
+	background: #EEECE7;
+	}
+
+textarea {
+	width: 350px;
+	height: 100px;
+	border: 1px solid #CCC;
+	background: #EEECE7;
+	padding: 2px;
+	}
+
+select {
+	width: 350px;
+	border: 1px solid #CCC;
+	padding: 2px;
+	background: #EEECE7;
+	}
+
+
+select.short   {
+	width: 220px; 
+	border-top: 1px solid #999999;
+	border-left: 1px solid #999999;
+	border-bottom: 1px solid #E0E0E0;
+	border-right: 1px solid #E0E0E0;
+	background-color: #F7F7F7;
+	font: 12px arial, verdana, helvetica, sans-serif;
+	padding: 3px 1px;
+	color: #000;
+}
+
+select.shorter   {
+	width: 100px; 
+	border-top: 1px solid #999999;
+	border-left: 1px solid #999999;
+	border-bottom: 1px solid #E0E0E0;
+	border-right: 1px solid #E0E0E0;
+	background-color: #F7F7F7;
+	font: 12px arial, verdana, helvetica, sans-serif;
+	padding: 3px 1px;
+	color: #000;
+}
+
+
+button {
+	border: 1px solid #CCC;
+	padding: 4px;
+	}
+
+#searchButton {
+	border: 0;
+	padding: 0 0 0 4px;
+	width: auto;
+        height: 23px;
+	}
+	
+
+.search input {
+        width: 200px;
+        height: 19px;
+        background: #FFF;
+        border: 1px solid #666;
+        border-color: #666 rgb(153,153,153) rgb(204,204,204) !important
+	}
+
+
+/* COMMENTS */
+
+.register input,
+.post-comment input {
+	width: 350px;
+	border: 1px solid #CCC;
+	padding: 2px;
+	background: #EEECE7;
+	}
+
+
+/* FINDER */
+
+.finder li {
+	float: left; 
+	margin: 10px 10px 0 0;
+	}
+
+.finder input {
+	width: 150px;
+	border: 1px solid #CCC;
+	background: #F7F7F7;
+	padding: 2px;
+	border-color: #999 rgb(170, 179, 179) rgb(213, 221, 221) !important
+	}
+
+.finder input.submit {
+	width: 150px;
+	border: 1px solid #CCC;
+	background: #F7F7F7;
+	padding: 2px;
+	border-color: #999 rgb(170, 179, 179) rgb(213, 221, 221) !important
+	}
+
+.finder input.image {
+	width: auto;
+	border: 0;
+	background: trasparent;
+	padding: 2px;
+	border-color: #999 rgb(170, 179, 179) rgb(213, 221, 221) !important
+	}
+
+.finder input.checkbox {
+	width: auto;
+	}
+
+.finder select {
+	width: 160px;
+	border: 1px solid #CCC;
+	padding: 2px;
+	background: #EEECE7;
+	}
+
+.finder select.shorter {
+	width: 100px;
+	border: 1px solid #CCC;
+	padding: 2px;
+	background: #EEECE7;
+	}
+
+
+
+.Redfin fieldset {border: 0;}
+.Redfin input {color:#999; font-size: 12px;border: none;padding:0;}
+.Redfin input.image {height:auto;width: 58px;border:none;padding:0;}
+.Redfin input.text {width: 200px;height: 15px;border:none;padding:2px;}
+.Redfin select {border:0; padding: 1px;font-family:"Trebuchet MS", Trebuchet MS, Arial, sans serif; width: 100px;margin-right: 5px;}
+.Redfin label {display:inline;width:32px;float:left;text-align:right;font-family: arial;font-size: 12px;color:#FFF;padding: 3px}
+

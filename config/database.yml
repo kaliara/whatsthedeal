@@ -1,0 +1,28 @@
+# SQLite version 3.x
+#   gem install sqlite3-ruby (not necessary on OS X Leopard)
+development:
+  adapter: mysql
+  host: localhost
+  user: root
+  password: 
+  database: wtd_development
+  timeout: 5000
+
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
+staging:
+  adapter: mysql
+  host: localhost
+  user: root
+  password: x.ab0x.ab0
+  database: wtd_production
+  timeout: 5000
+  
+production:
+  adapter: mysql
+  host: localhost
+  user: root
+  password: x.ab0x.ab0
+  database: wtd_production
+  timeout: 5000

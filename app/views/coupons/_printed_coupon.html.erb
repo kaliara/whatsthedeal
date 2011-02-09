@@ -1,0 +1,163 @@
+<div class="back_link"><%= link_to "Back to My Deals", my_deals_path %></div>
+
+<% if coupon.used? %>
+  <style type="text/css" media="screen">
+    body{ background: transparent url(/images/redeemed_watermark.png) repeat 0 0 !important; }
+  </style>
+<% end %>
+<div class="print_coupon">
+  <% if coupon.mobile_used? %>
+    <div class="redemption_status">Redeemed via Mobile Device: <%= "<br/>" if mobile %><strong><%= coupon.redemption_date.strftime("%b %d, %Y at %l:%M %p") unless coupon.redemption_date.nil? %></strong></div>
+  <% elsif coupon.used? %>
+    <div class="redemption_status">User Marked as Redeemed: <%= "<br/>" if mobile %><strong><%= coupon.updated_at.strftime("%b %d, %Y") unless coupon.updated_at.nil? %></strong></div>
+  <% end %>
+  
+  <% if !coupon.used? and coupon.active? %>
+    <% if mobile and !coupon.mobile_used? %>
+      <p class="mobile_usage_clause">Please present this coupon to <%= coupon.deal.promotion.business.name %> <strong>before</strong> you enjoy the product or service. Thanks!</p>
+      <% form_for coupon do |f| %>  
+        <%= f.hidden_field :id, :value => "coupon_#{coupon.id}" %>
+        <%= f.hidden_field :used, :value => true %>
+        <%= f.submit "Redeem This Coupon", :confirm => 'By clicking OK you are confirming that this coupon is being redeemed.  Once confirmed, you won\'t be able to use the coupon again.', :class => 'secondary' %>
+      <% end %>
+      <br><br>
+    <% else %>  
+      <% form_for coupon do |f| %>  
+        <%= f.hidden_field :id, :value => "coupon_#{coupon.id}" %>
+        <%= f.hidden_field :used, :value => true %>
+        <%= f.submit "Mark as Redeemed", :class => 'secondary' %>
+      <% end %>
+    <% end %>
+  <% end %>
+      
+  <div class="print_coupon_header">
+    <img src="/images/logo_on_white.png" id="wtd_coupon_logo" />
+    <img src="/images/hpdc_coupon_logo.png" id="hpdc_coupon_logo" style="display: none" />
+    <p class="coupon_recipient">Customer Name: <strong><%=h coupon.recipient %></strong></p>
+    <p class="confirmation_code">Confirmation Code: <strong><%=h coupon.confirmation_code %></strong></p>
+    <p class="coupon_expiration">Expires: <%=h coupon.expiration > 3.years.from_now ? "Never!" : coupon.expiration.strftime("%m/%d/%Y") %></p>
+  </div>
+  <div class="print_coupon_content">
+    <h2><%=h coupon.name %></h2>
+
+    <div class="map_and_biz clearfix">
+      <% unless coupon.deal.promotion.id == 259 %>
+        <div class="map">
+          <% unless coupon.deal.promotion.map_replacement_image.file? %>
+            <a href="<%= "http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=#{coupon.deal.promotion.business.street1.gsub(/\s/,"+")}+#{coupon.deal.promotion.business.city.gsub(/\s/,"+")},+#{coupon.deal.promotion.business.state}+#{coupon.deal.promotion.business.zipcode}" %>"><img src="/dc/images/map_default.jpg" id="map<%= coupon.id %>" alt="Map of <%= coupon.deal.promotion.business.name %>" width="<%= mobile ? '315' : '450' %>" align="<%= 'right' unless mobile %>" target="_blank" /></a>
+          <% else %>
+            <%= image_tag coupon.deal.promotion.map_replacement_image.url %>
+          <% end %>
+        </div>
+      <% end %>
+      <div class="coupon_business">
+        <% if coupon.deal.promotion.id == 259 %>
+          <h4>Visit Any One of 5 Locations</h4><br>
+          <div class="multi_location">
+            <b><a target="_blank" href="http://www.nextstepcomfortfootwear.com">Next Step Fine Comfort Footwear</a></b>
+            <br>22895 Brambleton Plaza
+            <br>Brambleton, VA 20148
+            <br>703.542.6398
+          </div>
+          <div class="multi_location">
+            <strong><a href="http://maps.google.com/maps?q=115+South+Union+Street+Alexandria,+VA+22314&amp;oe=utf-8&amp;client=firefox-a&amp;ie=UTF8&amp;hq=&amp;hnear=115+S+Union+St,+Alexandria,+Virginia+22314&amp;gl=us&amp;ei=_VUGTcOKLI-8sQOSif3KDQ&amp;oi=geocode_result&amp;ved=0CBQQ8gEwAA&amp;z=16" title="115 South Union Street Alexandria, VA 22314 - Google Maps">Montague and Son:<br>Fine Comfort Footwear</a></strong><br>
+            115 South Union Street<br>
+            Alexandria, VA 22314<br>
+            703.548.5656
+          </div>
+          <div class="multi_location">
+            <strong><a href="http://maps.google.com/maps?q=316+Elden+Street+Herndon,+VA+20170&amp;oe=utf-8&amp;client=firefox-a&amp;ie=UTF8&amp;hq=&amp;hnear=316+Elden+St,+Herndon,+Fairfax,+Virginia+20170&amp;gl=us&amp;ei=HVYGTfndBIG-sQP1m8iIDQ&amp;oi=geocode_result&amp;ved=0CBQQ8gEwAA&amp;z=16" title="316 Elden Street Herndon, VA 20170 - Google Maps">Montague and Son:<br>Fine Comfort Footwear</a></strong><br>
+            316 Elden Street<br>
+            Herndon, VA 20170<br>
+            703.471.6688
+          </div>
+          <div class="multi_location">
+            <strong><a href="http://maps.google.com/maps?q=519+Maple+Ave.+West+Vienna,+VA+22180&amp;oe=utf-8&amp;client=firefox-a&amp;ie=UTF8&amp;hq=&amp;hnear=519+Maple+Ave+W,+Vienna,+Fairfax,+Virginia+22180&amp;gl=us&amp;ei=NlYGTfvVD5PSsAPGwqDTDQ&amp;oi=geocode_result&amp;ved=0CBcQ8gEwAA&amp;z=16" title="519 Maple Ave. West Vienna, VA 22180 - Google Maps">Montague and Son:<br>Fine Comfort Footwear</a></strong><br>
+            519 Maple Ave. West<br>
+            Vienna, VA 22180<br>
+            703.281.2475
+          </div>
+          <div class="multi_location">
+            <strong><a href="http://maps.google.com/maps?q=10462+Auto+Park+Ave.+Bethesda,+MD+20817&amp;oe=utf-8&amp;client=firefox-a&amp;ie=UTF8&amp;hq=&amp;hnear=10462+Auto+Park+Ave,+Bethesda,+Montgomery,+Maryland+20817&amp;gl=us&amp;ei=UVYGTbKTB4rSsAPHg7T9DA&amp;oi=geocode_result&amp;ved=0CBkQ8gEwAA&amp;z=16" title="10462 Auto Park Ave. Bethesda, MD 20817 - Google Maps">Montague and Son:<br>Fine Comfort Footwear</a></strong><br>
+            10462 Auto Park Ave.<br>
+            Bethesda, MD 20817<br>
+            240.395.2475
+          </div>
+        <% elsif coupon.deal.promotion.id == 247 %>
+          <h4>Visit Either Location</h4><br>
+          <div class="multi_location">
+            <b><a target="_blank" href="http://maps.google.com/maps?q=7933+Chain+Bridge+Rd+Suite+L+McLean+,+VA+22102&oe=utf-8&client=firefox-a&ie=UTF8&hq=&hnear=Chain+Bridge+Rd,+McLean,+Fairfax,+Virginia+22102&gl=us&z=16">Suissa Salon</a></b>
+            <br>7933 Chain Bridge Rd Suite L
+            <br>McLean , VA 22102
+            <br>(703) 893-5800
+            <br><a href="http://www.suissasalon.com" title="Suissa Salon">http://www.suissasalon.com</a>
+          </div>
+          <div class="multi_location">
+            <strong><a href="http://maps.google.com/maps?q=165+Maple+Ave+E+Vienna,+VA+22180&oe=utf-8&client=firefox-a&ie=UTF8&hq=&hnear=165+Maple+Ave+E,+Vienna,+Fairfax,+Virginia+22180&gl=us&z=16" title="115 South Union Street Alexandria, VA 22314 - Google Maps" target="_blank">Michel Rene For Hair</a></strong><br>
+            <br>165 Maple Ave E
+            <br>Vienna, VA 22180
+            <br>(703) 548-5656
+          </div>
+        <% elsif !coupon.deal.promotion.business.nil? %>
+          <h5><%= coupon.deal.promotion.business.name %></h5>
+          <p><%= coupon.deal.promotion.business.street1 %> <%= coupon.deal.promotion.business.street2 %></p>
+          <p><%= coupon.deal.promotion.business.city %><%= "," unless coupon.deal.promotion.business.city.blank? or coupon.deal.promotion.business.state.blank? %> <%= coupon.deal.promotion.business.state %> <%= coupon.deal.promotion.business.zipcode %></p>
+          <p><%= coupon.deal.promotion.business.phone %></p>
+          <p><%= link_to coupon.deal.promotion.business.website, coupon.deal.promotion.business.website %></p>
+        <% end %>
+      </div>
+    </div>
+    
+    <% unless coupon.description.blank? %>
+    <div class="coupon_description clear">
+      <h4>Special Notes</h4>
+      <p><%= coupon.description %></p>
+    </div>
+    <% end %>
+    
+    <% if coupon.deal.has_coupon_code? %>
+    <div class="coupon_code_content clear">
+      <h4>Your Coupon Code</h4>
+      <% unless coupon.deal.coupon_instructions.blank? %><p class="coupon_instructions"><%= coupon.deal.coupon_instructions %></p><% end %>
+      <p class="coupon_code">Coupon Code: <strong><%= coupon.coupon_code %></strong></p>
+    </div>
+    <% end %>
+
+    <% unless coupon.deal.promotion.restrictions.blank? %>
+      <div class="restrictions clear">
+        <h4>This coupon has the following restrictions:</h4>
+        <%= coupon.deal.promotion.restrictions %>
+      </div>
+    <% end %>
+
+    <div class="contact_info">
+      <p><strong>What's the Deal Contact Information:</strong> Got questions about your coupon?<br><br>Give us a call at (888) 765-3481 or email at <a href="mailto:support@sowhatsthedeal.com">support@sowhatsthedeal.com</a></p>
+    </div>
+    <div class="coupon_super_fine_print">
+      <p>The amount you paid for this coupon may be valid for five years after the date of purchase (depending on your state's law).</p>
+    </div>
+  </div>
+  <br><br>
+  <% if @mobile %>
+    <% form_for coupon do |f| %>  
+      <%= hidden_field_tag :show_all, 'used' %>
+      <%= f.hidden_field :id, :value => "coupon_#{coupon.id}" %>
+      <%= f.submit "Used It!", :class => 'secondary' if coupon.active? %>
+    <% end %>
+  <% end %>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  var geocoder;
+  var map;
+  geocoder = new google.maps.Geocoder();
+  var address = "<%= coupon.deal.promotion.business.street1 %> <%= coupon.deal.promotion.business.city %>, <%= coupon.deal.promotion.business.state %> <%= coupon.deal.promotion.business.zipcode %>";
+  geocoder.geocode( { 'address': address}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      document.getElementById('map<%= coupon.id %>').src = "http://maps.google.com/maps/api/staticmap?center=" + results[0].geometry.location.toString().slice(1,-1) + "&zoom=14&markers=" + results[0].geometry.location.toString().slice(1,-1) + "&size=450x170&sensor=false"
+    }
+    else{
+      document.getElementById('map<%= coupon.id %>').style.display="none";
+    }
+  });
+</script>

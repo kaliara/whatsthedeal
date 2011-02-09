@@ -1,0 +1,35 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Item Listing', admin_items_path %></li>
+<% end %>
+
+<%= render :partial => "/admin/shared/tiny_mce" %>
+
+<h2>Editing item</h2>
+
+<% form_for([:admin,@item], :html => {:multipart => true}) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <br><br>
+  <p>
+    <%= f.label :image1, "Main Image (315 x 222)" %><br />
+    <%= f.file_field :image1 %>
+  </p>
+  <br><br>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_area :description, :rows => 10, :cols => 100 %>
+  </p>
+  <br>
+  <p>
+    <%= f.label :end_date %><br />
+    <%= f.datetime_select :end_date %>
+  </p>
+  <br><br>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>

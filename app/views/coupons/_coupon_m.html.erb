@@ -1,0 +1,24 @@
+<% coupons.each do |coupon| %>
+  <div class="coupon_container <%= 'inactive_coupon' unless coupon.active? %> <%= "expired" if coupon.expired? %>">
+    <% unless coupon.active? %>
+      <p class="reason"><%= coupon.available_tomorrow? ? "This deal will be available tomorrow" : "This deal hasn't tipped yet, not enough buyers!" %></p>
+    <% end %>
+    <div class="coupon clearfix">
+      <div class="coupon_image">
+        <%= link_to image_tag(coupon.deal.promotion.image1.url.blank? ? "/images/deal_default_image.png" : coupon.deal.promotion.image1.url, :alt => ""), coupon_path(coupon) %>
+        <div class="expiration_date"><%= coupon.expired? ? "Expired" : "Expires" %><br><strong><%=h coupon.expiration > 3.years.from_now ? "Never!" : coupon.expiration.strftime("%m/%d/%Y") %></strong></div>
+      </div>
+      <div class="coupon_content">
+    	  <h3><%= coupon.name %></h3>
+        <div class="coupon_confirmation"><% if coupon.deal.has_coupon_code? and coupon.active? %>Coupon Code: <strong><%= coupon.coupon_code %></strong><% end %>&nbsp;</div>
+        <div class="coupon_footer clearfix">
+          <% if coupon.shippable? and coupon.active? %>
+            <%= link_to "View Shipping Details", coupon_shipping_details_path(coupon) %>
+          <% else %>
+            <%= link_to "View Coupon", coupon, :class => 'view_link' if coupon.active? and !coupon.expired? %>
+          <% end %>
+        </div>
+    	</div>
+    </div>
+  </div>
+<% end %>

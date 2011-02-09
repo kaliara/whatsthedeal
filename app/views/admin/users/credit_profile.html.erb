@@ -1,0 +1,73 @@
+<% content_for :sub_nav do %>
+  <% @no_sub_nav = true %>
+<% end %>
+<br><br>
+
+<h2>Credit Profile</h2>
+<% form_tag do %>
+  <%= label_tag :email %>
+  <%= text_field_tag :email, params[:email] %>
+  &nbsp;&nbsp;
+  <%= submit_tag 'Search' %>
+<% end %>
+
+<div class="section_element">
+  <% unless @user.nil? %>
+    <div class="section_header">
+      <h3>Credit Profile for <%= @user.email %></h3>
+    </div>
+    <div class="section_content">
+      <% unless params[:purchase].blank? %>
+        <p>The credit(s) you are looking for, should be <span class="highlight">highlighted</span> below.<br><br></p>
+      <% end %>
+    
+      <% unless @credits.empty? %>
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Value</th>
+            <th>Created On</th>
+            <th>Used?</th>
+            <th>Used On</th>
+          </tr>
+          <% @credits.each do |credit| %>
+            <tr class="<%= "highlight" if credit.purchase_id == params[:purchase].to_i %>">
+              <td><%= credit.promotion_code.name =~ /Referral from/ ? (User.exists?(credit.referrer_user_id) ? "Referral from #{link_to User.find(credit.referrer_user_id).customer.name, admin_credit_profile_path(:email => User.find(credit.referrer_user_id).email)}" : "Unknown user") :  credit.promotion_code.name %></td>
+              <td><%= number_to_currency credit.value %></td>
+              <td><%= credit.created_at.strftime("%B %e, %Y") %></td>
+              <td><%= (credit.purchase_id.nil? or credit.purchase_id <= 1) ? "No" : link_to(credit.purchase_id, admin_purchase_path(:id => credit.purchase_id)) %></td>
+              <td><%= credit.purchase.created_at.strftime("%B %e, %Y") if credit.purchase %></td>
+            </tr>
+          <% end %>
+        </table>
+      <% else %>
+        <p>This user has no credits.</p>
+      <% end %>
+    </div>
+
+
+    <div class="section_header">
+      <h3>Referral History for <%= @user.email %></h3>
+    </div>
+    <div class="section_content">
+      <% unless @referral_credits.empty? %>
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Registered On</th>
+          </tr>
+          <% @referral_credits.each do |credit| %>
+            <tr>
+              <td><%= "Referred #{User.exists?(credit.user) ? link_to(credit.user.email, admin_credit_profile_path(:email => credit.user.email)) : 'Unknown user'}" %></td>
+              <td><%= credit.user.created_at.strftime("%B %e, %Y") if User.exists?(credit.user) %></td>
+            </tr>
+          <% end %>
+        </table>
+      <% else %>
+        <p>This user has referred no one.</p>
+      <% end %>
+    </div>
+  <% else %>
+    <p>Sorry, couldn't find anyone with email address <strong><%= params[:email] %></strong></p>
+  <% end %>
+</div>

@@ -1,0 +1,45 @@
+<h2>Listing customers</h2>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>First name</th>
+    <th>Last name</th>
+    <th>Phone</th>
+    <th>Street1</th>
+    <th>Street2</th>
+    <th>City</th>
+    <th>State</th>
+    <th>Zipcode</th>
+    <th>Female</th>
+    <th>Birthdate</th>
+    <th>Newsletter subscriber</th>
+  </tr>
+
+<% @customers.each do |customer| %>
+  <tr>
+    <td><%=h customer.user_id %></td>
+    <td><%=h customer.first_name %></td>
+    <td><%=h customer.last_name %></td>
+    <td><%=h customer.phone %></td>
+    <td><%=h customer.street1 %></td>
+    <td><%=h customer.street2 %></td>
+    <td><%=h customer.city %></td>
+    <td><%=h customer.state %></td>
+    <td><%=h customer.zipcode %></td>
+    <td><%=h customer.female %></td>
+    <td><%=h customer.birthdate %></td>
+    <td><%=h customer.newsletter_subscriber %></td>
+    <td><%= link_to 'Show', customer %></td>
+    <td><%= link_to 'Edit', edit_customer_path(customer) %></td>
+    <td><%= link_to 'Destroy', customer, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<div class="bottom_link_next_page">
+<%= link_to 'New customer', new_customer_path %>
+</div>
+

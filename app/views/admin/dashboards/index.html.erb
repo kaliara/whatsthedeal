@@ -1,0 +1,84 @@
+<% content_for :sub_nav do %>
+  <% @no_sub_nav = true %>
+<% end %>
+<br><br>
+
+<div class="datepicker clearfix">
+  <% form_tag do %>
+    &nbsp;
+    <%= hidden_field_tag 'start_date', Date.commercial(Date.today.year, Date.today.cweek, 1).strftime("%m/%d/%Y"), :id => 'start_date_this_week' %>
+    <%= hidden_field_tag 'end_date', Date.commercial(Date.today.year, Date.today.cweek, 7).strftime("%m/%d/%Y"), :id => 'end_date_this_week' %>
+    <%= submit_tag 'This Week' %>
+  <% end %>
+  <% form_tag do %>
+    <span>or</span>&nbsp;
+    <%= hidden_field_tag 'start_date', (Date.today - 1.day).strftime("%m/%d/%Y"), :id => 'start_date_last_week' %>
+    <%= hidden_field_tag 'end_date', (Date.today - 1.day).strftime("%m/%d/%Y"), :id => 'end_date_last_week' %>
+    <%= submit_tag 'Yesterday' %>
+  <% end %>
+  <% form_tag do %>
+    <span>or</span>&nbsp;
+    <%= hidden_field_tag 'start_date', Date.today.strftime("%m/%d/%Y"), :id => 'start_date_today' %>
+    <%= hidden_field_tag 'end_date', Date.today.strftime("%m/%d/%Y"), :id => 'end_date_today' %>
+    <%= submit_tag 'Today' %>
+  <% end %>
+  <% form_tag do %>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <span>Specific Range:</span>
+    <%= text_field_tag 'start_date', @start_date.strftime("%m/%d/%Y"), :size => 10 %>
+    &nbsp;&nbsp;to&nbsp;&nbsp;
+    <%= text_field_tag 'end_date', @end_date.strftime("%m/%d/%Y"), :size => 10 %>
+    <%= submit_tag 'Filter by Date' %>
+  <% end %>
+</div>
+
+
+<% if @partner %>
+  <h2>Washingtonian Activity</h2>
+<% else %>
+  <h2>Overall Activity</h2>
+<% end %>
+<div class="clearfix">
+  <div class="section_element">
+    <h3><%= @start_date.strftime("%B %e") %> - <%= @end_date.strftime("%B %e") %></h3>
+    <div class="section_content">
+      <dl class="homepage totals">
+        <dt>Registrations:</dt>
+        <dd><%= @registrations.size %>&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 80%">(<strong><%= @referrals.size %></strong> were referred)</span></dd>
+        <dt>Subscriptions:</dt>
+        <dd><%= @subscriptions.size %></dd>
+        <dt>Purchases:</dt>
+        <dd><%= @purchases.size %>&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 80%">(<strong><%= @first_purchases.size %></strong> were first purchases)</span></dd>
+        <dt>Deals:</dt>
+        <dd><%= @deals.size %></dd>
+      </dl>
+    </div>
+  </div>  
+</div>
+<br><br>
+
+<h2>Purchase Information</h2>
+<div class="clearfix">
+  <div class="section_element">
+    <h3><%= @start_date.strftime("%B %e") %> - <%= @end_date.strftime("%B %e") %></h3>
+    <div class="section_content">
+      <dl class="homepage">
+        <dt>Early bird losses:</dt>                                                                                
+        <dd><%= number_to_currency @purchases.collect{|p| p.early_bird_losses}.sum %></dd>
+        <dt>Revenue (after early bird):</dt>
+        <dd><%= number_to_currency @purchases.collect{|p| p.deals_total}.sum %></dd>
+        <dt>Revenue (after credits):</dt>                                                                                
+        <dd><%= number_to_currency @purchases.collect{|p| p.total}.sum %></dd>
+        <dt>Profit:</dt>                                                                                               
+        <dd><%= number_to_currency(@purchases.collect{|p| p.profit}.sum - (@purchases.collect{|p| p.deals_total}.sum - @purchases.collect{|p| p.total}.sum)) %></dd>
+      </dl>
+    </div>
+  </div>
+</div>
+<br><br>
+
+<script type="text/javascript" charset="utf-8">
+  $("#start_date").datepicker();
+  $("#end_date").datepicker();
+  //$("#total1 strong").html($("#total2 strong").html());
+</script>

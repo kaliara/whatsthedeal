@@ -1,0 +1,65 @@
+<% content_for :page_title do %>Sign Up For Our Daily Deal!<% end %>
+<div class="section_element">
+  <div class="section_header">
+    <h3><%= render_content 'signup_daily_deal_header' %></h3>
+  </div>
+  <div class="section_content our_daily_deal">
+    
+    <div class="signup_text">
+      <%= render_content 'signup_desc2' %>
+      
+      <% if current_user %>
+        <div class="one_click_rsvp">
+          <p>Choose your lists, then click the button below and you'll be all set.</p>
+          <% form_for(@user) do |f| %>
+            <% unless current_user.gets_daily_deal_email? %>
+              <div class="label_set">
+                <%= f.check_box :gets_daily_deal_email %>&nbsp;&nbsp;
+                <%= f.label :gets_daily_deal_email, "The WTD Daily Deal Email" %>
+              </div>
+            <% end %>
+            <% unless current_user.gets_happy_hour_announcement_email? %>
+              <div class="label_set">
+                <%= f.check_box :gets_happy_hour_announcement_email %>&nbsp;&nbsp;
+                <%= f.label :gets_happy_hour_announcement_email, "Weekly Happy Hour Announcement" %>
+              </div>
+            <% end %>
+            <%= f.submit 'Subscribe Now', :class => 'primary' %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="clearfix">
+          <div class="signup_daily_deal signup_box">
+            <% form_for @user, :url => quiet_create_user_path, :onsubmit => "return checkF(this)" do |f| %>
+              <%= hidden_field_tag 'user[customer_attributes][first_name]', Customer::STOCK_FIRST_NAME %>
+              <%= hidden_field_tag 'user[customer_attributes][last_name]',  Customer::STOCK_LAST_NAME %>
+              <%= display_error_messages(f.error_messages) %>
+              <table align="center" border="0" cellpadding="5" cellspacing="0">
+                <tr>
+                  <td><%= f.label :email %></td>
+                  <td><%= f.text_field :email, :size => 25 %></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td><%= f.check_box :gets_daily_deal_email, :checked => true %>&nbsp;&nbsp;<%= f.label :gets_daily_deal_email, "The WTD Daily Deal" %>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td><%= f.check_box :gets_happy_hour_announcement_email, :checked => true %>&nbsp;&nbsp;<%= f.label :gets_happy_hour_announcement_email, "Weekly Happy Hour Announcement" %></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td><br><%= f.submit 'Happy Hour Me', :class => 'primary' %></td>
+                </tr>
+              </table>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+      
+      <%= render_content 'signup_press' %>
+    </div>
+
+  </div>
+</div>

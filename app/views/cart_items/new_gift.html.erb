@@ -1,0 +1,24 @@
+<div class="section_element">
+  <div class="section_header">
+    <h3>Gift Information</h3>
+  </div>
+
+  <div class="section_content edit_gift_form">
+    <h4 class="gift_info"><%= image_tag '/images/promo_gift.png' %> <strong><%= @cart_item.deal.coupon_name %></strong></h4>
+
+    <% form_for @cart_item do %>
+      <%= hidden_field_tag :adding_gift, true %>
+      <%= hidden_field_tag :tried_once, true %>
+      <%= hidden_field_tag "cart_items[0][deal_id]", @cart_item.deal.id %>
+
+      <div class="label_input_form">
+        <%= label_tag :quantity %>
+        <%= select_tag "cart_items[0][quantity]", options_for_select(1..@cart_item.deal.purchase_limit, @cart_item.quantity_adding) %>
+      </div>
+      
+      <%= render :partial => "gift", :locals => {:gift => @cart_item} %>
+      
+      <%= submit_tag "Add to Cart", :class => 'primary' %>
+    <% end %>
+  </div>
+</div>

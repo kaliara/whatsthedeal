@@ -1,0 +1,22 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Promotion Code Listing', admin_promotion_codes_path %></li>
+<% end %>
+
+<h3><%=h @promotion_code.name %> <%=h @promotion_code.code.blank? ? "" : "- (#{@promotion_code.code})" %></h3>
+
+<% unless @promotion_code.credits.empty? %>
+  <table>
+    <tr>
+      <th>Customer</th>
+      <th>Date Created</th>
+    </tr>
+  <% @promotion_code.credits.each do |credit| %>
+    <tr>
+      <td><%= credit.user.email %></td>
+      <td><%= credit.created_at.strftime("%b %e, %Y") %></td>
+    </tr>
+  <% end %>
+  </table>
+<% else %>
+  <p>Sorry, no credit used yet.  Get the word out!</p>
+<% end %>

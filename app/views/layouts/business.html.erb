@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>(Business) ::: <%= controller.controller_name.capitalize %> - <%= controller.action_name %></title>
+ 
+  <%= stylesheet_link_tag 'reset', 'admin' %>
+  <%= stylesheet_link_tag 'reset', 'print', :media => "print" %>
+
+  <%= stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/ui-lightness/jquery-ui.css" %>
+  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js", "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js" %>
+</head>
+<body>
+  <div class="header">
+    <% if current_user_session %>
+      <p>You <span>are logged in</span> as <%= current_user_session.user.email %>. (<%= link_to 'logout', logout_path %>)</p>
+    <% end %>
+     <h1>WTD Account <%= "for #{current_user.business.name}" if current_user and current_user.business? %></h1>
+  </div>
+  
+  <ul id="nav">
+    <li><%= link_to_unless_current "Home", business_home_path %></li>
+    <% if current_user and current_user.business? and !current_user.business.promotions.empty? %>
+      <li><%= link_to_unless_current "My Deals", business_promotions_path %></li>
+      <li><%= link_to_unless_current "Purchases", business_purchases_path %></li>
+      <li><%= link_to_unless_current "Mobile Redemptions", business_mobile_redemptions_path %></li>
+    <% end %>
+  </ul>
+
+  <% unless flash[:notice].blank? and flash[:error].blank? %>
+    <div class="flash">
+      <% unless flash[:error].blank?  %><p class="error"><%= flash[:error] %></p><% end %>
+      <% unless flash[:notice].blank? %><p class="notice"><%= flash[:notice] %></p><% end %>
+    </div>
+  <% end %>
+
+  <%= yield %>
+
+  <p class="copyright">Copyright 2011 &copy; What's the Deal, LLC</p>
+
+</body>
+</html>

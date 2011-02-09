@@ -1,0 +1,24 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Raffle Listing', admin_raffles_path %></li>
+<% end %>
+
+
+<h2>Entrants for Raffle: <%= @raffle.header %></h2>
+
+<table>
+  <tr>
+    <th></th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Email</th>
+  </tr>
+
+<% @raffle.entries.each_with_index do |entry, i| %>
+  <tr>
+    <td><%= i + 1 %></td>
+    <td><%=h entry.user.customer.first_name %></td>
+    <td><%=h entry.user.customer.last_name %></td>
+    <td><%=h entry.user.email %></td>
+  </tr>
+<% end %>
+</table>

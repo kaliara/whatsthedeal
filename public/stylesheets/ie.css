@@ -1,0 +1,168 @@
+#logo h1{
+width: 15px;
+}
+.account_info dd,
+.customer_info dd,
+.billing_newsletter_info dd{
+  float: none;
+}
+
+
+.ie_fleft {
+  float: left !important;
+}
+.ie_clear {
+  display: block;
+  clear: both;
+}
+
+.global_announcement_container{
+  bottom: 2px;
+}
+.global_announcement{
+  line-height: 2.5em;
+}
+
+.homepage_buyer_stats{
+  float: none;
+  width: 240px;
+}
+
+.primary,
+a.orange_btn{
+  padding: 2px 5px;
+}
+
+.deal_listing .primary{
+  margin-left: 40px;
+  margin-bottom: 10px;
+}
+.deal_listing .deal_details {
+  zoom: 1;
+}
+
+.secondary{
+  padding: 2px 4px;
+}
+td.quantity{
+  width: 180px;
+}
+  
+#purchase_loading span{
+ float: right;
+}
+
+.promotion_details {
+  width: 400px;
+}
+
+.you_pay dd, 
+.you_get dd, 
+.you_save dd, 
+.offers_available dt{
+  padding-left: 3px;  
+}
+
+.coupon_content h5 {
+  height: 93px;
+}
+.coupon_content .expiration_date{
+  position: static;
+}
+
+.washingtonian .main_wrapper{
+  _width: auto;
+}
+.washingtonian .promotion_details{
+  width: 445px;
+}
+
+/* Coupon START*/
+.coupon{
+	*height: 120px;
+  _zoom:1;
+}
+.coupon .coupon_image img{
+  *height: 118px;
+}
+
+.coupon_content{
+	*float: none;
+}
+
+
+/* new promotion design */
+.promotion .buying_details .checkout_buttons{
+  *clear: both;
+}
+.promotion .buying_details .checkout_buttons .primary{
+  *padding: 2px 0px;
+}
+.promotion .promotion_info_strip{
+  *clear: both;
+  *padding-top: 6px;
+  *padding-bottom: 3px;
+  *height: 35px;
+}
+.promotion .promotion_info_strip .purchases{
+  padding-top: 13px;
+  *padding-top: 16px;
+  *padding-bottom: 5px;
+}
+.promotion .promotion_info_strip .time_left{
+  padding-top: 14px;
+  *padding-top: 7px;
+  *padding-bottom: 20px;
+}
+.promotion .promotion_info_strip .deal_is_on,
+.promotion .promotion_info_strip .early_bird,
+.promotion .promotion_info_strip .reminded{
+  line-height: 1em;
+  padding-bottom: 5px;
+  *margin-top: 3px;
+}
+.promotion .reminder_container .secondary{
+  *padding: 5px 0;
+}
+.promotion_index .promotion .promotion_info_strip{
+  *clear: none;
+  *padding-top: 6px;
+  *padding-bottom: 6px;
+  *height: 25px;
+}
+.promotion_index .promotion .promotion_info_strip .purchases{
+  *padding-top: 12px;
+  *padding-bottom: 5px;
+}
+.promotion_index .promotion .promotion_info_strip .time_left{
+  *padding-top: 5px;
+  *padding-bottom: 15px;
+}
+.promotion_index .promotion .reminder_container .reminded,
+.promotion .last_chance{
+  line-height: 1em;
+  padding-bottom: 5px;
+}
+.promotion .last_chance{
+  *margin-top: 2px;
+}
+.promotion .buying_details .multi_deal .pricing_info dl dd{
+  *line-height: 1em;
+}
+
+/* new shell stuff */
+.nav_wrapper .cart_nav li a{
+  *padding-left: 0px;
+}
+.sidebar h2{
+  *margin-bottom: -10px;
+}
+.sidebar .global_announce{
+  *padding-top: 10px;
+}
+.sidebar .refer_a_friend{
+  *padding-top: 7px;
+}
+.promo_code{
+  *width: 350px;
+}

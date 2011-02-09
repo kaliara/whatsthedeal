@@ -1,0 +1,39 @@
+<% coupons.each do |coupon| %>
+  <div class="coupon_container <%= 'inactive_coupon' unless coupon.active? %> <%= "expired" if coupon.expired? %>">
+    <% unless coupon.active? %>
+      <p class="reason"><%= coupon.available_tomorrow? ? "This deal will be available tomorrow" : "This deal hasn't tipped yet, not enough buyers!" %></p>
+    <% end %>
+    <div class="coupon clearfix">
+      <div class="coupon_image">
+        <%= image_tag coupon.deal.promotion.image1.url.blank? ? "/images/deal_default_image.png" : coupon.deal.promotion.image1.url, :alt => "" %>
+      </div>
+      <div class="coupon_content">
+    	  <div class="expiration_date"><%= coupon.expired? ? "expired" : "expires" %>: <strong><%=h coupon.expiration > 3.years.from_now ? "Never!" : coupon.expiration.strftime("%m/%d/%Y") %></strong></div>
+    	  <h3><%= coupon.name %></h3>
+    	  <p><%= link_to "View Original Deal", promotion_path(coupon.deal.promotion) if coupon.active? %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "View Receipt", purchase_path(coupon.purchase, :coupon => coupon.id) if coupon.active? %></p>
+    	</div>
+  	  <div class="coupon_footer">
+        <div class="coupon_action">
+        <% if coupon.mobile_used? %>
+          <%= link_to "View Coupon", coupon_path(coupon), :class => 'view_link' if coupon.active? %>
+          <div class="used_coupon"><br>Redeemed via Mobile: <strong><%= coupon.redemption_date.strftime("%m/%d/%Y at %l:%M %p") unless coupon.redemption_date.nil? %></strong><br><br></div>
+        <% elsif coupon.shippable? and coupon.active? %>
+          <span class="shipping_notice">This is a physical coupon that will be shipped.</span> <%= link_to "Shipping Details", coupon_shipping_details_path(coupon) %>
+        <% elsif coupon.active? %>
+          <%= link_to "Print", coupon_path(coupon, :print => true) if coupon.active? or coupon.mobile_used? %>
+          <%= link_to "View Coupon", coupon_path(coupon) if coupon.active? %>
+          <% unless coupon.mobile_used? %>
+            <% form_for coupon do |f| %>  
+              <%= f.check_box :used, :id => "coupon_#{coupon.id}", :onclick => "submit();" %><%= label_tag "coupon_#{coupon.id}", "Redeemed" %>
+              <%= hidden_field_tag :show_all, @show_all %>
+            <% end %>
+          <% end %>
+        <% end %>
+        </div>
+        <% if coupon.deal.has_coupon_code? and coupon.active? %>
+          <div class="coupon_confirmation">Coupon Code: <strong><%= coupon.coupon_code %></strong></div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

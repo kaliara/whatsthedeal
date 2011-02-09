@@ -1,0 +1,75 @@
+<br><br>
+<% form_tag :action => 'index' do %>
+  Deal: <%= select_tag :promotion_id, options_for_select([""] + ["All"] + @promotions.collect{|b| [b.id.to_s + " - " + b.name, b.id]}, (@default_promotion.nil? ? params[:promotion_id].to_i : @default_promotion.id)), :onchange => "submit()" %>
+<% end %>
+<% unless @coupons.empty? %>
+  <br><br>
+  <% form_tag :action => 'export' do %>
+    <%= hidden_field_tag :promotion_id, params[:promotion_id] %>
+    <%= submit_tag 'Export to Excel' %>
+  <% end %>
+  <br><br>
+  <% form_tag nil, :method => :get do %>
+    <label for="q"><strong>Last Name</strong> or <strong>Confirmation Number</strong>:</label>
+    <%= text_field_tag 'q' %>
+    <%= submit_tag 'search' %>
+  <% end %>
+<% end %>
+<br><br>
+
+<% if @type %>
+  <h2><%= pluralize @coupons.size, "Purchases" %> matching <%= @type %> '<%= params[:q] %>'</h2>
+<% elsif params[:id].to_i > 0 or params[:promotion_id].to_i > 0 %>
+  <h2>Purchases for <%= params[:id].to_i > 0 ? Promotion.find(params[:id]).name : Promotion.find(params[:promotion_id]).name %></h2>
+<% elsif params[:promotion_id] == 'All' %>
+  <h2>All Purchases</h2>
+<% else %>
+  <h2>Recent Purchases</h2>
+<% end %>
+
+
+<% unless @coupons.empty? %>
+  <% form_tag :controller => :purchases, :action => :bulk_use do %>
+    <table class="business_table">
+      <tr>
+        <th class="align_left">Purchaser Name</th>
+        <th>Confirmation Code</th>
+        <th>Date Purchased</th>
+        <th>Deal</th>
+        <th>Purchase Price</th>
+        <th>Redeemed?</th>
+        <th>Coupon Code</th>
+      </tr>
+
+      <% @coupons.each do |coupon| %>
+        <tr>
+          <td class="align_left"><%= coupon.recipient %></td>
+          <td><%= coupon.confirmation_code %></td>
+          <td><%= coupon.created_at.strftime("%b %e, %Y") %></td>
+          <td><%= coupon.name %></td>
+          <td><%= number_to_currency coupon.deal.price %></td>
+          <% if coupon.biz_used? %>
+            <td style="color: green;"><%= "&#10004;" if coupon.biz_used? %></td>
+          <% else %>
+            <td><%= check_box_tag "coupons[#{coupon.id}]" %></td>
+          <% end %>
+          <td><%= coupon.coupon_code %></td>
+        </tr>
+      <% end %>    
+    </table>
+  
+    <div class="commit clear"><%= submit_tag "Update Coupons as 'Redeemed'" %></div>
+  <% end %>
+<% else %>
+  <div class="section_content"><br><p>
+    <% if params[:promotion_id] == 'All' or params[:promotion_id].to_i > 0 %>
+      Sorry, no purchases found.
+    <% else %>
+      Select a deal to view its purchases.
+    <% end %>
+  </p></div>
+<% end %>
+
+<div class="bottom_link_next_page">
+  <%= link_to "Back to Home", business_home_path %>
+</div>

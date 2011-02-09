@@ -1,0 +1,13 @@
+<% content_for :page_title do %>Redeem Gift Credit<% end %>
+<div class="section_element">
+  <h3>Redeem your <%= @promotion_code.name %></h3>
+  <p>Enter your gift code below (unless we have pre-filled it for you) and click Redeem to get your credit!</p>
+  <br><br>
+  <div class="promo_code">
+    <% form_for @credit do |f| -%>
+      <label>Gift Code:</label>
+      <%= text_field_tag 'code', params[:code] %>
+      <%= f.submit 'Redeem', :class => "secondary" %>
+    <% end -%>
+  </div>
+</div>

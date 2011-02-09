@@ -1,0 +1,54 @@
+<% content_for :page_title do %>All Current Deals<% end %>
+
+<% if mobile %>
+<style type="text/css" media="screen">
+  body{ background: #145c97; }
+  .main_wrapper{ padding: 0; }
+</style>
+<% end %>
+
+<div class="promotion_index">
+  <% @promotions.each do |promotion| %>
+    <div class="promotion">
+      <div class="main_details clearfix">
+        <div class="promotion_image">
+          <%= link_to image_tag(promotion.image1.url, :alt => promotion.name), promotion %>
+        </div>
+        <% if promotion.deals.active.count > 1 and !mobile %>
+          <%= link_to "See #{promotion.deals.active.count > 2 ? "All<br>#{promotion.deals.active.count}" : "Both<br>"} Offers", promotion, :class => "multi_deal_badge" %>
+        <% end %>
+        <h2 class="<%= 'mutli_deal_header' if promotion.deals.active.count > 1 %>"><%= link_to promotion.name, promotion %></h2>
+        
+        <div class="buying_details clearfix">
+          <div class="single_deal clearfix">
+            <dl class="clearfix">
+              <dt>You Pay</dt><dd><%= number_to_currency promotion.featured_deal.price, :precision => (has_cents?(promotion.featured_deal.price) ? 2 : 0) %></dd>
+            </dl>
+            <dl class="clearfix">
+              <dt>Value</dt><dd><%= number_to_currency promotion.featured_deal.value, :precision => (has_cents?(promotion.featured_deal.value) ? 2 : 0) %></dd>
+            </dl>
+          </div>
+        </div>
+        <div class="more_details_container"><%= link_to "More Details", promotion, :class => "primary" %></div>
+                
+        <div class="promotion_info_strip clearfix">
+          <div class="time_left <%= 'almost_over' if promotion.almost_over? %>">
+            <% if promotion.active %>
+              Time Left:&nbsp;<strong><%= distance_of_time_in_words_to_now(promotion.end_date) %></strong>
+            <% else %>
+              <div class="promotion_ended">Sorry, but this deal is over</div>
+            <% end %>
+          </div>
+          <div class="purchases"><strong>
+            <% if promotion.id == 291 %>
+              <%= Promotion.find(293).purchases + Promotion.find(294).purchases %>
+            <% else %>
+              <%= promotion.purchases %>
+            <% end %>
+          </strong>&nbsp;purchases</div>
+        </div>
+      </div>
+      <div class="ie_clear"></div>
+    </div>
+  <% end %>
+</div>

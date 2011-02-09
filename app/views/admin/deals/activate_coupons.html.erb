@@ -1,0 +1,7 @@
+<div class="section_content">
+  <% unless @users.empty? %>  
+    <p>See if it worked: <%= link_to @users.first.customer.name, admin_impersonate_path(:type => 'customer', :id => @users.first.customer.id) %> is an someone who just had a coupon activated.</p>
+  <% end %>
+
+  <br><br><p>Unless you see anything in the "Bad News" category, all coupons should be emailed and activated for deal: <strong><%= @deal.name %></strong></p>
+</div>

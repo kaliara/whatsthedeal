@@ -1,0 +1,351 @@
+<% content_for :page_title do %><%= @home_page ? "Home: Up to 80% off restaurants, spas, and bars!" : @promotion.name %><% end %>
+<% content_for :head do %>
+  <meta name="title" content="<%= @promotion.name %>" /> 
+  <meta name="description" content="<%= truncate(strip_tags(@promotion.body1), :length => 200) %>" /> 
+  <link rel="image_src" href="https://sowhatsthedeal.com<%= @promotion.image1.url %>" />
+  <meta property="og:title" content="<%= @promotion.name %>"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:image" content="http://sowhatsthedeal.com<%= @promotion.image1.url %>"/>
+  <meta property="og:site_name" content="What's The Deal"/>
+  <meta property="og:type" content="article"/>
+  <meta property="fb:admins" content="mburnett" />
+  <meta name="tweetmeme-title" content="<%= @promotion.name %>" />
+  
+  <% if @promotion.deals.active.size > 1 %>
+  <script type="text/javascript" charset="utf-8">
+  /*
+
+  CUSTOM FORM ELEMENTS
+
+  Created by Ryan Fait
+  www.ryanfait.com
+
+  The only things you may need to change in this file are the following
+  variables: checkboxHeight, radioHeight and selectWidth (lines 24, 25, 26)
+
+  The numbers you set for checkboxHeight and radioHeight should be one quarter
+  of the total height of the image want to use for checkboxes and radio
+  buttons. Both images should contain the four stages of both inputs stacked
+  on top of each other in this order: unchecked, unchecked-clicked, checked,
+  checked-clicked.
+
+  You may need to adjust your images a bit if there is a slight vertical
+  movement during the different stages of the button activation.
+
+  The value of selectWidth should be the width of your select list image.
+
+  Visit http://ryanfait.com/ for more information.
+
+  */
+
+  var checkboxHeight = "40";
+  var radioHeight = "25";
+  var selectWidth = "190";
+
+
+  /* No need to change anything after this */
+
+
+  document.write('<style type="text/css">input.styled { display: none; } select.styled { position: relative; width: ' + selectWidth + 'px; opacity: 0; filter: alpha(opacity=0); z-index: 5; } .disabled { opacity: 0.5; filter: alpha(opacity=50); }</style>');
+
+  var Custom = {
+  	init: function() {
+  		var inputs = document.getElementsByTagName("input"), span = Array(), textnode, option, active;
+  		for(a = 0; a < inputs.length; a++) {
+  			if((inputs[a].type == "checkbox" || inputs[a].type == "radio") && inputs[a].className == "styled") {
+  				span[a] = document.createElement("span");
+  				span[a].className = inputs[a].type;
+
+  				if(inputs[a].checked == true) {
+  					if(inputs[a].type == "checkbox") {
+  						position = "0 -" + (checkboxHeight*2) + "px";
+  						span[a].style.backgroundPosition = position;
+  					} else {
+  						position = "0 -" + (radioHeight*2) + "px";
+  						span[a].style.backgroundPosition = position;
+  					}
+  				}
+  				inputs[a].parentNode.insertBefore(span[a], inputs[a]);
+  				inputs[a].onchange = Custom.clear;
+  				if(!inputs[a].getAttribute("disabled")) {
+  					span[a].onmousedown = Custom.pushed;
+  					span[a].onmouseup = Custom.check;
+  				} else {
+  					span[a].className = span[a].className += " disabled";
+  				}
+  			}
+  		}
+  		inputs = document.getElementsByTagName("select");
+  		for(a = 0; a < inputs.length; a++) {
+  			if(inputs[a].className == "styled") {
+  				option = inputs[a].getElementsByTagName("option");
+  				active = option[0].childNodes[0].nodeValue;
+  				textnode = document.createTextNode(active);
+  				for(b = 0; b < option.length; b++) {
+  					if(option[b].selected == true) {
+  						textnode = document.createTextNode(option[b].childNodes[0].nodeValue);
+  					}
+  				}
+  				span[a] = document.createElement("span");
+  				span[a].className = "select";
+  				span[a].id = "select" + inputs[a].name;
+  				span[a].appendChild(textnode);
+  				inputs[a].parentNode.insertBefore(span[a], inputs[a]);
+  				if(!inputs[a].getAttribute("disabled")) {
+  					inputs[a].onchange = Custom.choose;
+  				} else {
+  					inputs[a].previousSibling.className = inputs[a].previousSibling.className += " disabled";
+  				}
+  			}
+  		}
+  		document.onmouseup = Custom.clear;
+  	},
+  	pushed: function() {
+  		element = this.nextSibling;
+  		if(element.checked == true && element.type == "checkbox") {
+  			this.style.backgroundPosition = "0 -" + checkboxHeight*3 + "px";
+  		} else if(element.checked == true && element.type == "radio") {
+  			this.style.backgroundPosition = "0 -" + radioHeight*3 + "px";
+  		} else if(element.checked != true && element.type == "checkbox") {
+  			this.style.backgroundPosition = "0 -" + checkboxHeight + "px";
+  		} else {
+  			this.style.backgroundPosition = "0 -" + radioHeight + "px";
+  		}
+  	},
+  	check: function() {
+  		element = this.nextSibling;
+  		if(element.checked == true && element.type == "checkbox") {
+  			this.style.backgroundPosition = "0 0";
+  			element.checked = false;
+  		} else {
+  			if(element.type == "checkbox") {
+  				this.style.backgroundPosition = "0 -" + checkboxHeight*2 + "px";
+  			} else {
+  				this.style.backgroundPosition = "0 -" + radioHeight*2 + "px";
+  				group = this.nextSibling.name;
+  				inputs = document.getElementsByTagName("input");
+  				for(a = 0; a < inputs.length; a++) {
+  					if(inputs[a].name == group && inputs[a] != this.nextSibling) {
+  						inputs[a].previousSibling.style.backgroundPosition = "0 0";
+  					}
+  				}
+  			}
+  			element.checked = true;
+  		}
+  	},
+  	clear: function() {
+  		inputs = document.getElementsByTagName("input");
+  		for(var b = 0; b < inputs.length; b++) {
+  			if(inputs[b].type == "checkbox" && inputs[b].checked == true && inputs[b].className == "styled") {
+  				inputs[b].previousSibling.style.backgroundPosition = "0 -" + checkboxHeight*2 + "px";
+  			} else if(inputs[b].type == "checkbox" && inputs[b].className == "styled") {
+  				inputs[b].previousSibling.style.backgroundPosition = "0 0";
+  			} else if(inputs[b].type == "radio" && inputs[b].checked == true && inputs[b].className == "styled") {
+  				inputs[b].previousSibling.style.backgroundPosition = "0 -" + radioHeight*2 + "px";
+  			} else if(inputs[b].type == "radio" && inputs[b].className == "styled") {
+  				inputs[b].previousSibling.style.backgroundPosition = "0 0";
+  			}
+  		}
+  	},
+  	choose: function() {
+  		option = this.getElementsByTagName("option");
+  		for(d = 0; d < option.length; d++) {
+  			if(option[d].selected == true) {
+  				document.getElementById("select" + this.name).childNodes[0].nodeValue = option[d].childNodes[0].nodeValue;
+  			}
+  		}
+  	}
+  }
+  window.onload = Custom.init;</script>
+  <% end %>
+<% end %>
+
+<div class="promotion">
+  <h2><%= @promotion.name %></h2>
+
+  <div class="main_details clearfix">
+    <% form_for @cart_item do %>
+      <%= hidden_field_tag "promotion_id", @promotion.id %>
+      <div class="promotion_image">
+        <%= image_tag @promotion.image1.url, :alt => @promotion.name %><br>
+        <%= render :partial => "social_share", :locals => {:promotion => @promotion} %>
+      </div>
+      <div class="buying_details clearfix">
+        <% if @promotion.deals.active.count > 1 %>
+          <% @promotion.deals.active.each_with_index do |deal, i| %>
+            <div class="multi_deal <%= 'first_deal' if deal.id == @promotion.deals.active.first.id %> clearfix">
+              <div class="deal_checkbox">
+                <% unless deal.sold_out? %>
+                  <%= hidden_field_tag "cart_items[#{i}][deal_id]", deal.id %>
+                  <%= check_box_tag "cart_items[#{i}][quantity]", 1, nil, :class => 'styled' unless deal.promotion.ended? %>
+                <% else %>
+                  <div class="sold_out">Sold<br>Out</div>
+                <% end %>
+              </div>
+              <div class="pricing_info">
+                <h3><%= label_tag "cart_items_#{i}_quantity", deal.name %></h3>
+                  <% unless deal.id == 411 %>
+                  <dl class="clearfix">
+                    <dt>You Pay:</dt>&nbsp;
+                    <% if deal.early_bird? %>
+                      <dd class="early_bird_discount"><span><%= number_to_currency deal.price, :precision => 0 %></span>&nbsp;<%= number_to_currency deal.adjusted_price, :precision => (has_cents?(@promotion.featured_deal.price) ? 2 : 0) %></dd>
+                    <% else %>  
+                      <dd><%= number_to_currency deal.price, :precision => (has_cents?(deal.price) ? 2 : 0) %></dd>
+                    <% end %>
+                    <dt>Value:</dt>&nbsp;<dd><%= number_to_currency deal.value, :precision => (has_cents?(deal.value) ? 2 : 0) %></dd>
+                  </dl>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <%= hidden_field_tag "cart_items[0][deal_id]", @promotion.featured_deal.id %>
+          <%= hidden_field_tag "cart_items[0][quantity]", 1 %>
+          <% unless @promotion.featured_deal.id == 411 %>
+            <div class="single_deal">
+              <dl class="clearfix">
+                <dt>You Pay</dt>
+                <% if @promotion.featured_deal.early_bird? %>
+                  <dd class="early_bird_discount"><span><%= number_to_currency @promotion.featured_deal.price, :precision => 0 %></span>&nbsp;<%= number_to_currency @promotion.featured_deal.adjusted_price, :precision => (has_cents?(@promotion.featured_deal.price) ? 2 : 0) %></dd>
+                <% else %>
+                  <dd><%= number_to_currency @promotion.featured_deal.price, :precision => (has_cents?(@promotion.featured_deal.price) ? 2 : 0) %></dd>
+                <% end %>
+              </dl>
+              <dl class="clearfix">
+                <dt>Value</dt><dd><%= number_to_currency @promotion.featured_deal.value, :precision => (has_cents?(@promotion.featured_deal.value) ? 2 : 0) %></dd>
+              </dl>
+              <dl class="clearfix">
+                <dt class="savings">Savings</dt><dd><%= number_to_percentage @promotion.featured_deal.savings, :precision => 0 %></dd>
+              </dl>
+            </div>
+          <% end %>
+        <% end %>
+        
+        <div class="checkout_buttons">
+          <% if @promotion.id == 216 %>
+            <h3>Choose a performance date</h3>
+            <ul style="font-size: 120%; line-height: 1.2em;list-style-type: disc; text-align: left; color: #E9EFF3; margin-left: 45px">
+              <li><strong><a href="/promotions/217">Wednesday Evening (11/24 @ 8pm)</a></strong></li>
+              <li><strong><a href="/promotions/220">Friday Evening (11/26 @ 8pm)</a></strong></li>
+              <li><strong><a href="/promotions/219">Saturday Matin&eacute;e (11/27 @ 3pm)</a></strong></li>
+              <li><strong><a href="/promotions/221">Saturday Evening (11/27 @ 8pm)</a></strong></li>
+              <li><strong><a href="/promotions/218">Sunday Matin&eacute;e (11/28 @ 3pm)</a></strong></li>
+            </ul>
+          <% elsif @promotion.id == 230 %>
+            <h3>Choose a performance date</h3>
+            <ul style="font-size: 120%; line-height: 1.2em;list-style-type: disc; text-align: left; color: #E9EFF3; margin-left: 45px">
+              <li><strong><a href="/promotions/236">Wednesday,&nbsp;Nov 24th 7:30 pm</a></strong></li>
+              <li><strong><a href="/promotions/237">3-Play Weekday Subscription</a></strong></li>
+            </ul>
+          <% elsif !@promotion.ended? and !@promotion.sold_out? and @promotion.id != 291 %>
+            <div class="deal_me_in"><%= submit_tag 'Deal Me In', :class => 'primary' %></div>
+            <%= submit_tag Promotion::BUY_AS_GIFT_LABEL, :class => 'buy_as_gift' %>
+          <% else %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  
+  <% unless @promotion.id == 289 %>
+    <div class="promotion_info_strip clearfix">
+      <%= render :partial => "reminder", :locals => {:promotion => @promotion} unless @promotion.sold_out? or @promotion.ended? %>
+      <% if @promotion.ended? %>
+        <div class="deal_ended">Sorry, but this deal is over</div>
+      <% else %>
+        <% if @promotion.sold_out? %>
+          <div class="almost_over deal_ended"><strong>Sorry, But This Deal is Sold Out</strong></div>
+        <% else %>
+          <div class="time_left <%= 'almost_over' if @promotion.almost_over? %>">
+            Time Left:&nbsp;&nbsp;<strong><%= distance_of_time_in_words_to_now(@promotion.end_date) unless @promotion.ended? %></strong>
+          </div>
+        <% end %>
+      <% end %>
+    
+      <div class="purchases">
+        <% if @promotion.id == 291 or @promotion.id == 293 or @promotion.id == 294 %>
+          <strong><%= Promotion.find(293).purchases + Promotion.find(294).purchases %></strong>&nbsp;&nbsp;purchased
+        <% elsif @promotion.id == 239 or @promotion.id == 240 or @promotion.id == 260 %>
+          <strong><%= @promotion.inventory - @promotion.purchases %></strong>&nbsp;&nbsp;tickets left
+        <% elsif @promotion.inventory.to_i < 999 %>
+          <strong><%= @promotion.purchases %></strong> <span class="out_of">out of</span> <strong><%= @promotion.inventory %></strong>&nbsp;&nbsp;purchased
+        <% else %>
+          <strong><%= @promotion.purchases %></strong>&nbsp;&nbsp;purchases
+        <% end %>
+      </div>
+    
+      <% if @promotion.early_bird? %>
+        <div class="early_bird">Early&nbsp;Bird</div>
+      <% elsif @promotion.inventory.to_i > 999 and !@promotion.ended? and @promotion.quota_met? %>
+        <div class="deal_is_on">Deal&nbsp;Is&nbsp;On!</div>
+      <% else %>
+      <% end %>
+    </div>
+  <% else %>  
+    <br><br><br>
+  <% end %>
+  
+  <div class="promotion_tabs">
+    <%= link_to 'Summary', '#summary', :class => 'tab active_tab', :id => 'tab_summary', :onclick => "showTab('summary'); return false;" %>
+    <%= link_to 'Details', '#details', :class => 'tab', :id => 'tab_details', :onclick => "showTab('details'); return false;" %>
+    <%= link_to 'Reviews', '#reviews', :class => 'tab', :id => 'tab_reviews', :onclick => "showTab('reviews'); return false;" %>
+    <%= link_to 'Fine Print', '#restrictions', :class => 'tab', :id => 'tab_restrictions', :onclick => "showTab('restrictions'); return false;" %>
+    
+    <div class="tab_content clearfix">
+      <div id="tab_content_summary">
+        <div class="promotion_map">
+          <% unless @promotion.map_replacement_image.file? %>
+            <%= link_to image_tag("http://maps.google.com/maps/api/staticmap?center=#{@promotion.business.street1.gsub(/\s/,"+")}+#{@promotion.business.city.gsub(/\s/,"+")},+#{@promotion.business.state}+#{@promotion.business.zipcode}&zoom=14&markers=#{@promotion.business.street1.gsub(/\s/,"+")}+#{@promotion.business.city.gsub(/\s/,"+")},+#{@promotion.business.state}+#{@promotion.business.zipcode}&size=265x265&sensor=false", :alt => "Map of #{@promotion.business.name}", :width => 265,  :height => 265), "http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=#{@promotion.business.street1.gsub(/\s/,"+")}+#{@promotion.business.city.gsub(/\s/,"+")},+#{@promotion.business.state}+#{@promotion.business.zipcode}", :target => '_blank' %>
+          <% else %>
+            <%= image_tag @promotion.map_replacement_image.url %>
+          <% end %>
+        </div>
+        <div class="promotion_summary">
+          <%= @promotion.summary %>
+          <br><br>
+          <%= render :partial => "business_address", :locals => {:promotion => @promotion} %>
+        </div>
+        <div class="ie_clear"></div>
+      </div>
+      
+      <div id="tab_content_details" style="display:none">
+        <%= @promotion.body1 %>
+        <div class="ie_clear"></div>
+      </div>
+      
+      <div id="tab_content_reviews" style="display:none">
+        <%= @promotion.body2 %>
+        <div class="ie_clear"></div>
+      </div>
+
+      <div id="tab_content_restrictions" style="display:none">
+        <%= @promotion.restrictions %>
+        <div class="ie_clear"></div>
+      </div>
+      
+      <div class="ie_clear"></div>
+    </div>
+    
+    <div class="promotion_montage">
+      <%= image_tag @promotion.image2.url %>
+    </div>
+  </div>
+</div>
+
+
+
+<script type="text/javascript" charset="utf-8">
+  function showTab(tab){
+    $('#tab_content_summary').hide();
+    $('#tab_content_details').hide();
+    $('#tab_content_reviews').hide();
+    $('#tab_content_restrictions').hide();
+    $('#tab_content_' + tab).show();
+    $('.tab').removeClass('active_tab');
+    $('#tab_' + tab).addClass('active_tab');
+  }
+  
+  <% if params[:tab] %>
+    showTab('<%= params[:tab] %>');
+  <% end %>
+</script>

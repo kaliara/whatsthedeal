@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title><%= yield :page_title %></title>
+  <link href="http://www.sloopymenus.com/css/7/styles.css" rel="stylesheet" type="text/css">
+  <%= stylesheet_link_tag 'reset', 'style', 'sloopy' %>
+  <!--[if lte IE 7]><%= stylesheet_link_tag 'ie' %><![endif]-->
+  <%= yield :head %>
+</head>
+
+
+<body>
+
+    <table width="775" cellspacing="0" cellpadding="0" border="0" id="Table1">
+    	<tbody><tr>
+    		<td><a href="http://www.sloopymenus.com/"><img width="149" height="99" border="0" src="http://www.sloopymenus.com/images/7/L2_logo.gif" id="Header_Logo"/></a></td>
+    		<td><table width="626" cellspacing="0" cellpadding="2" border="0" id="Table2" class="domainColor">
+    				<tbody><tr>
+    					<td class="domainColor" style="padding:2px"><img src="http://www.sloopymenus.com/resimages/7/4439Formaggio20100408164232.ML.formaggio.jpg" border="0">
+    					</td>
+    				</tr>
+    			</tbody></table>
+    		</td>
+    	</tr>
+    </tbody></table>
+  <% unless controller.action_name == 'new' %>
+    <table width="775" cellspacing="0" cellpadding="0" border="0">
+    	<tbody><tr>
+    		<td><img width="21" height="60" border="0" src="http://www.sloopymenus.com/images/7/L2Nav_left.gif" id="Header_HomeNavLeft"/></td>
+        <td><a href="http://www.sloopymenus.com/index.aspx"><image src="http://www.sloopymenus.com/images/7/L2Nav_home_off.gif" /></a></td>
+        <td><a href="http://www.sloopymenus.com/Delivery.aspx"><image src="http://www.sloopymenus.com/images/7/L2Nav_delivery_off.gif" /></a></td>
+        <td><a href="http://www.sloopymenus.com/Takeout.aspx"><image src="http://www.sloopymenus.com/images/7/L2Nav_takeout_off.gif" /></a></td>
+        <td><a href="http://www.sloopymenus.com/DineIn.aspx"><image src="http://www.sloopymenus.com/images/7/L2Nav_dinein_off.gif" /></a></td>
+        <td><a href="http://www.sloopymenus.com/OrderOnline.aspx"><image src="http://www.sloopymenus.com/images/7/L2Nav_order_off.gif" /></a></td>
+        <td><a href="http://www.sloopymenus.com/FoodSpecials.aspx"><image src="http://www.sloopymenus.com/images/7/L2Nav_specials_off.gif" /></a></td>
+        <td><a href="http://www.sloopymenus.com/Search.aspx"><image src="http://www.sloopymenus.com/images/7/L2Nav_barspecials_off.gif" /></a></td>
+        <td><a href="http://www.sloopymenus.com/Search.aspx"><image src="http://www.sloopymenus.com/images/7/L2Nav_search_off.gif" /></a></td>
+    		<td><img width="26" height="60" border="0" src="http://www.sloopymenus.com/images/7/L2Nav_right.gif" id="Header_HomeNavRight"/></td>
+    	</tr>
+    </tbody></table>
+  <% end %>
+
+  <div class="wtd_content">
+    <div class="main_wrapper wrapper clearfix">  
+
+      <div class="page_content">
+        <%= yield :errors %>
+
+        <% unless flash[:notice].blank? and flash[:error].blank? %>
+          <div class="flash">
+            <% unless flash[:notice].blank? %><p class="notice"><%= flash[:notice] %></p><% end %>
+            <% unless flash[:error].blank?  %><p class="error"><%= flash[:error] %></p><% end %>
+          </div>
+        <% end %>
+    
+        <%= yield %>
+      </div>
+   
+    </div>
+  </div>
+  
+  <script type="text/javascript">
+    var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+    document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+    try {
+    var pageTracker = _gat._getTracker("UA-9745141-1");
+    pageTracker._trackPageview();
+    } catch(err) {}
+
+    <% if session[:new_purchase] %>
+      pageTracker._trackPageview("/goals/sloopy_purchase");
+      <% session[:new_purchase] = nil %>
+    <% end %>
+  </script>
+  
+</body>
+</html>

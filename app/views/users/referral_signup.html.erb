@@ -1,0 +1,87 @@
+<% content_for :head do %>
+  <meta name="title" content="$5 off your first purchase at What's the Deal" /> 
+  <meta name="description" content="80% off on restaurants, spas, bars from @whatsthedealdc" /> 
+  <link rel="image_src" href="http://sowhatsthedeal.com/images/logo.png" />
+  
+  <!-- open graph stuff -->
+  <meta property="og:title" content="$5 off your first purchase at What's the Deal"/>
+  <meta property="og:site_name" content="What's The Deal"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="http://sowhatsthedeal.com/referral_signup"/>
+  <meta property="og:image" content="http://sowhatsthedeal.com/images/logo.png"/>
+  <meta property="fb:admins" content="mburnett" />
+<% end %>
+
+<% content_for :page_title do %>Register For A New Account<% end %>
+<h2>What's The Deal DC</h2>
+<div class="section_element">
+  <div class="section_header">
+    <h3><%= render_content 'referral_signup_header' %></h3>
+  </div>
+  
+  <div class="section_content our_daily_deal">
+
+    
+    <%= render_content 'referral_signup_desc' %>
+
+    <% form_for @user do |f| %>
+      <%= display_error_messages(f.error_messages) %>
+    
+      <div class="label_input_form">
+        <%= f.label :email %>
+        <%= f.text_field :email, :class => "text" %>
+      </div>
+      <div class="label_input_form">
+        <%= f.label :email_confirmation %>
+        <%= f.text_field :email_confirmation, :class => "text" %>
+      </div>
+      <div class="label_input_form">
+        <%= f.label :password %>
+        <%= f.password_field :password, :class => "text" %>
+      </div>
+      <div class="label_input_form">
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation, :class => "text" %>
+      </div>
+
+      <% f.fields_for :customer do |cf| %>
+        <div class="label_input_form">
+          <%= cf.label :first_name %>
+          <%= cf.text_field :first_name, :class => "text" %>
+        </div>
+        <div class="label_input_form">
+          <%= cf.label :last_name %>
+          <%= cf.text_field :last_name, :class => "text" %>
+        </div>
+        <div class="label_input_form">
+          <%= cf.label :zipcode, 'Zip Code' %>
+          <%= cf.text_field :zipcode, :class => "text" %>
+        </div>
+        <div class="label_input_form">  
+          <%= cf.label :gender %>
+          <div class="radio_buttons">        
+            <%= cf.radio_button :female, true, :id => 'user_customer_attributes_female' %>
+            <%= cf.label :female %>
+            <%= cf.radio_button :female, false, :id => 'user_customer_attributes_male' %>
+            <%= cf.label :male %>
+          </div>          
+        </div>  
+      <% end %>
+      <div class="label_input_form">
+        <%= f.label :gets_daily_deal_email, "Daily Deal Subscriber" %>
+        <%= f.check_box :gets_daily_deal_email, :checked => true %>
+      </div>
+      <div class="label_input_form">
+        <%= f.label :gets_happy_hour_announcement_email, "Happy Hour Announcement" %>
+        <%= f.check_box :gets_happy_hour_announcement_email, :checked => true %>
+      </div>
+      
+      <div class="form_action">
+        <%= f.submit 'Create', :class => "primary small_primary" %>
+      </div>
+
+    <% end %>
+
+    <%= render_content 'referral_signup_bottom_page' %>
+  </div>
+</div>

@@ -1,0 +1,155 @@
+body{
+/*  background: #0161b7;*/
+}
+
+.page_content{
+/*  background-color: #01396a;*/
+/*  float: right;*/
+float: left;
+}
+
+.signup_form{
+  width: 300px;
+  margin: auto;
+}
+
+.notice{
+  font-size: 16px;
+}
+
+.promotion{
+/*  background: none;*/
+}
+.promotion .promotion_tabs .tab{
+/*  background: #4280ad url(/images/halfpricedc/promo_tab_bg.png) repeat-x center bottom;*/
+}
+.promotion .promotion_tabs .active_tab{
+/*  background: #03538E;*/
+}
+.promotion .promotion_info_strip,
+.promotion .promotion_tabs .active_tab,
+.promotion .tab_content{
+/*  background-color: #03538e;*/
+}
+.promotion .buying_details .single_deal dl dt{
+/*  background: transparent url(/images/halfpricedc/promo_arrow.png) no-repeat right center;*/
+}
+.promotion .buying_details .single_deal dl dt.savings {
+/*  background:transparent url(/images/halfpricedc/promo_equals.png) no-repeat right center;*/
+}
+.promotion_index .promotion .buying_details .single_deal dl dt{
+/*  background: transparent url(/images/halfpricedc/promo_arrow_small.png) no-repeat center right;*/
+}
+
+
+/* sidebar */
+.signup_login{
+  float: none;
+}
+.signup_login p{
+  font-size: 110%;
+  line-height: 1.2em;
+  margin-bottom: 10px;
+}
+.sidebar{
+/*  float: left;*/
+}
+
+.deal_preview, .deal_preview p,
+.sidebar, .sidebar p,
+.sidebar_content{
+/*  color: #444;*/
+}
+.sidebar_content{
+/*  background: #fff;*/
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  padding-top: 10px;
+}
+.sidebar_content h2{
+  float: none;
+  font-size: 125%;
+  text-transform: uppercase;
+  background-color: #01314A;
+  -moz-border-radius: 0px;
+  -webkit-border-radius: 0px;
+  padding:7px 12px 4px;
+  position:relative;
+  right:9px;
+  text-transform:uppercase;
+  top:2px;
+  width: 260px;
+}
+.daily_deal{
+  float: none;
+  margin-top: 0;
+  text-align: center;
+}
+.daily_deal h2{
+  text-align: left;
+}
+.daily_deal p{
+  font-size: 100%;
+}
+a.five_dollar{
+  color: #65B0FF;
+}
+.credit_balance{
+/*  right: 0;*/
+/*  left: -300px;*/
+  top: 20px;
+}
+.signup_login{
+  padding: 0 10px;
+}
+.logged_in_as{
+  margin-bottom: 10px;
+}
+
+
+/* header */
+.halfpricedc_header{
+  text-align: center;
+  margin: 15px auto 20px;
+}
+.halfpricedc_header #nav{
+  background: #fff;
+  padding: 15px 15px 25px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  margin-bottom: 10px;
+}
+.halfpricedc_header #nav .main_nav li{
+  margin-right: 20px;
+  font-size: 95%;
+}
+.halfpricedc_header #nav .main_nav a{
+  color: #65B0FF;
+}
+.halfpricedc_header .main_nav{
+  background: none;
+}
+
+.primary, a.orange_btn{
+/*  background: transparent url(/images/halfpricedc/promo_deal_me_in_bg.png) repeat-x center left;*/
+}
+
+
+.deal_on, .deal_preview dd {
+/*  color:#000000;*/
+  font-weight:bold;
+}
+
+strong,
+.num_cart_items, .total_price, 
+.new_total_price, 
+.credit_balance_total,
+.referral_link,
+.promotion .promotion_info_strip .deal_is_on{
+/*  color: #dfc101;*/
+}
+
+.promotion .promotion_info_strip .deal_is_on{
+/*  border-color: #dfc101;*/
+/*  background: transparent url(/images/halfpricedc/promo_thumbs_up.png) no-repeat 3px 3px;*/
+}

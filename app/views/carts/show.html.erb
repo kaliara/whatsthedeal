@@ -1,0 +1,29 @@
+<% content_for :page_title do %>Shopping Cart<% end %>
+<div class="section_element clear">
+  <%= render :partial => "cart" %>
+  
+  <div class="table_footer clearfix">
+    <% unless cart.empty? %>
+      <span class="check_out"><%= button_to "Checkout", new_purchase_path, :class => "primary" %></span>
+      <p class="note">If they meet their minimum, the coupons above will be available at midnight tonight.</p>
+    <% end %>
+  </div>
+  
+  <% unless @other_promotions.nil? or @other_promotions.empty? %>  
+    <h3>Check out our other great deals</h3>
+    <div class="cart_other_deals clearfix">
+      <% @other_promotions.each do |promotion| %>
+        <div class="cart_other_deal">
+          <%= image_tag promotion.image1.url %><br><br>
+          <%= link_to (truncate(promotion.featured_deal.name + " at " + promotion.business.name, :length => 100)), promotion_path(promotion, :clicked_other_promotion => true) %>
+          <% form_for @cart_item do |f| -%>
+            <%= hidden_field_tag "cart_items[0][deal_id]", promotion.featured_deal.id %>
+            <%= hidden_field_tag "added_more_great_deal_to_cart", true %>
+            <%= hidden_field_tag "cart_items[0][quantity]", 1 %>
+            <%= f.submit 'Add to Cart', :class => "primary" %>                  
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

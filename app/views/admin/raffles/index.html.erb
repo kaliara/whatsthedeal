@@ -1,0 +1,26 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'New Raffle', new_admin_raffle_path %></li>
+<% end %>
+
+
+<h2>Raffles</h2>
+
+<table>
+  <tr>
+    <th>Header</th>
+    <th>Rotation Start date</th>
+    <th>Rotation End date</th>
+  </tr>
+
+<% @raffles.each do |raffle| %>
+  <tr class="<%= "inactive" unless raffle.in_rotation? %>">
+    <td><%=h raffle.header %></td>
+    <td><%=h raffle.rotation_start_date.strftime("%b %d, %Y") %></td>
+    <td><%=h raffle.rotation_end_date.strftime("%b %d, %Y") %></td>
+    <td><%= link_to 'Entrants', admin_raffle_entrants_path(raffle) %></td>
+    <td><%= link_to 'Show', admin_raffle_path(raffle) %></td>
+    <td><%= link_to 'Edit', edit_admin_raffle_path(raffle) %></td>
+    <td><%= link_to 'Destroy', admin_raffle_path(raffle), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>

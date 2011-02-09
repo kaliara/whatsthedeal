@@ -1,0 +1,141 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Credit Profile', admin_credit_profile_path(:email => @customer.user.email) %></li>
+  <li><%= link_to 'Impersonate this Customer', admin_impersonate_path(:type => 'customer', :id => @customer.id) %></li>
+  <li><%= link_to 'Edit this Customer', edit_admin_customer_path(@customer) %></li>
+  <li><%= link_to 'Customer Listing', admin_customers_path %></li>
+<% end %>
+
+
+<h2>Customer Account (<%= @user.email %>)</h2>
+
+<div class="section_element">
+  <div class="credit_balance">
+    <h3>WTD Credit</h3>
+    <div class="section_content">
+    <p class="credit_balance_total"><%= number_to_currency @user.credit_total  %></p>
+    <div class="referral_link"><%= HOST_DOMAIN %>ref/<strong><%= @user.referral_link %></strong></div>
+    </div>
+  </div>
+</div>
+
+
+<% unless @user.coupons.empty? %>
+  
+  <div class="section_element">
+    <div class="section_header icon_header">
+      <h3>Customer Coupons</h3>
+    </div>
+
+    <div class="section_content">
+      <% unless @active_coupons.empty? %>  
+        <div class="active clearfix clear">
+          <h4>Active</h4>
+          <% @active_coupons.each do |coupon| %>
+            <div class="coupon_container">
+          	  <div class="coupon">
+          		  <div class="coupon_content">
+          			  <h5><%= link_to coupon.name, admin_coupon_path(coupon.id) %></h5>
+          			  <p class="expiration_date">Expires: <%=h coupon.expiration.strftime("%m/%d/%Y") %></p>
+          		  </div>
+          	  </div>
+            </div>
+          <% end %>
+          
+        </div>
+      <% end %>
+
+      <% unless @inactive_coupons.empty? %>  
+        <div class="awaiting clearfix clear">
+          <h4>Inactive</h4>
+          <% @inactive_coupons.each do |coupon| %>
+            <div class="coupon_container <%= coupon.available_tomorrow? ? 'awaiting_time' : 'awaiting_buyers' %>">
+          	  <div class="coupon">
+          		  <div class="coupon_content">
+          			  <h5><%= link_to coupon.name, admin_coupon_path(coupon.id) %></h5>
+          			  <p class="expiration_date">Expires: <%=h coupon.expiration.strftime("%m/%d/%Y") %></p>
+          		  </div>
+          	  </div>
+              <div class="coupon_action"><%= coupon.available_tomorrow? ? "Available Tomorrow" : "More Buyers Needed" %></div>
+            </div>
+          <% end %>
+          
+        </div>
+      <% end %>
+
+      <% unless @printed_coupons.empty? %>  
+        <div class="printed clearfix clear">
+          <h4>Printed</h4>
+          <% @printed_coupons.each do |coupon| %>
+            <div class="coupon_container">
+          	  <div class="coupon">
+          		  <div class="coupon_content">
+          			  <h5><%= link_to coupon.name, admin_coupon_path(coupon) %></h5>
+          			  <p class="expiration_date">Expires: <%=h coupon.expiration.strftime("%m/%d/%Y") %></p>
+          		  </div>
+          	  </div>
+          	</div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<% unless @user.purchases.empty? %>
+  <div class="section_element">
+    <div class="section_header icon_header">
+      <div class="icon purchase_icon"></div>
+      <h3>Customer Purchases</h3>
+    </div>
+    
+    <div class="section_content">
+      <table class="simple_table">
+        <tr>
+          <th>Date</th>
+          <th>Total</th>
+          <th>Deals Bought</th>
+        </tr>
+        <% @user.purchases.each do |purchase| %>
+          <tr>
+            <td><%= purchase.created_at.strftime("%m/%d/%Y") %></td>
+            <td><%= number_to_currency purchase.total, :precision => 0 %></td>
+            <td class="center"><a href="<%= admin_purchase_path(purchase) %>"><%= purchase.coupons[0..[2,purchase.coupons.count].min].collect{|c| truncate(c.name, :length => 20)} %> <%= "(#{purchase.coupons.count} total)" %></a></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>
+<% end %>
+
+
+<div class="section_element">
+  <div class="section_header icon_header">
+    <h3>Customer Information</h3>  
+  </div>
+
+  <div class="section_content">
+    <div class="clearfix">
+    <dl class="account_info clearfix">
+      <dt>Email:</dt>
+      <dd class="ie_fleft"><%= @user.email %></dd>
+      <dt>Name:</dt>
+      <dd><%=h @user.customer.first_name %> <%=h @user.customer.last_name %></dd>
+    </dl>
+
+    
+    <dl class="billing_newsletter_info">
+      <dt>Billing Address:</dt>
+      <dd class="ie_fleft">
+      <% if @user.customer.has_billing_address? %>
+        <%=h @user.customer.billing_street1 %> <%=h @user.customer.billing_street2 %>
+        <br>
+        <%=h @user.customer.billing_city %>, <%=h @user.customer.billing_state %> <%=h @user.customer.billing_zipcode %>
+      <% else %>
+        &nbsp;
+      <% end %>
+      </dd>
+      <dt class="last">Daily Deal Subscriber: </dt>
+      <dd><%=h @user.gets_daily_deal_email? ? "Yes" : "No" %></dd>
+    </dl>
+  </div>
+</div>

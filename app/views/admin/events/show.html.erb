@@ -1,0 +1,303 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'RSVP List', admin_event_rsvp_list_path(@event) %></li>
+  <li><%= link_to 'Edit this Event', edit_admin_event_path(@event) %></li>
+  <li><%= link_to 'Event Listing', admin_events_path %></li>
+<% end %>
+
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false">
+</script>
+
+
+<h2>Event Page</h2>
+<%= link_to "Preview", admin_event_preview_path(@event) %> or <%= link_to "Live page", event_path(@event) %> 
+<br><br><br><br><br>
+
+<h2>Sidebar Panel</h2>
+<%= link_to "Preview", admin_event_sidebar_preview_path(@event) %> or <%= link_to "Live page (home page)", root_path %> 
+
+<br><br><br><br><br>
+<h2>Announcement Email</h2>
+
+<p>Click in the box, do a "select all" then copy!</p>
+<textarea id="announcement_email_text">loading...</textarea>
+
+<div id="announcement_email">
+  <!-- yahoo fixes -->
+  <style type="text/css">
+     td.main .yshortcuts { color: #1279af }
+     .featured_deal td.main .yshortcuts { color: #3fc7ff;}
+     .footer .yshortcuts { color: #94BFF2;}
+  </style>
+
+ <!-- hotmail fixes -->
+  <style type="text/css">  
+     #mpf0_MsgContainer{display: block !important;}
+  </style>
+
+
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#0059a9">
+    <tr>
+      <td align="center">
+        <table width="600" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td>
+              <table width="600" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td align="left" valign="top" style="font-size:0;"><a href="http://sowhatsthedeal.com<%= @google_tracking %>"><img src="http://sowhatsthedeal.com/emails/new_logo.png" alt="What's the Deal - " width="144" height="77" border="0"></a></td>
+                  <td align="left" valign="top" style="font-size:0;"><img src="http://sowhatsthedeal.com/emails/new_banner.png" alt="Today's Deal is" width="330" height="77"></td>
+                  <td align="left" valign="top">
+                    <table border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td align="left" valign="top" style="font-size:0;"><a href="http://sowhatsthedeal.com/promotions<%= @google_tracking %>"><img src="http://sowhatsthedeal.com/emails/new_currentdeals_link.png" width="126" height="38" border="0" style="border: none;"></a></td>
+                      </tr>
+                      <tr>
+                        <td align="left" valign="top" style="font-size:0;"><a href="http://sowhatsthedeal.com/my_account<%= @google_tracking %>"><img src="http://sowhatsthedeal.com/emails/new_myaccount_link.png" width="126" height="39" border="0" style="border: none;"></a></td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <table width="600" border="0" cellspacing="0" cellpadding="0" class="featured_deal" style="background-color: #013049;">
+                 <tr>
+                    <td class="main" align="left" valign="top" width="600" style="padding:10px">
+                      <table width="580" class="deal_highlights" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td colspan="3" align="center"><h1 style="font-family: 'Myriad', sans-serif;font-size: 28px;font-weight: normal;margin: 0 0 5px 0;padding:10px"><a href="<%= event_url @event %><%= @google_tracking %>" style="color: #3fc7ff !important;font-family: 'Myriad', sans-serif;font-size: 28px;font-weight: normal;text-decoration: underline;"><%= @event.header %></a></h1></td>
+                        </tr>
+
+                        <tr>
+                          <td width="4" style="padding:1px"> </td>
+                          <td width="220" valign="top">
+                            <a href="<%= promotion_url @event %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;"><img src="http://sowhatsthedeal.com<%= @event.image %>" alt="<%= @event.business.name %> Deal" border="0" width="280" height="197" style="border: 7px solid #ffffff;"></a>
+                          </td>
+                          <td align="right" width="245">
+                            <a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%= @event.business.street1.gsub(/\s/,"+") %>+<%= @event.business.city.gsub(/\s/,"+") %>,+<%= @event.business.state %>+<%= @event.business.zipcode %>" target="_blank" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;"><img src="THIS DIDN'T LOAD CORRECTLY'" id="map" alt="Map of <%= @event.business.name %>" width="245" height="197"  style="margin-right: 5px;border: 7px solid #ffffff;"></a>
+                          </td>
+                        </tr>
+                     </table>
+
+                     <table cellspacing="0" cellpadding="0">
+                       <tr>
+                         <td valign="top" width="290" style="padding:5px">
+                           <h4 style="color: #adc5d9;font-family: 'Myriad', sans-serif;font-size: 14px;font-weight: normal;margin: 7px 0 10px 0;padding: 0;"><%= @event.start_date.strftime("%B %d").upcase %></h4>
+                           <p style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #cfcfcf;margin: 0 0 16px 0;padding: 0;"><%= truncate strip_tags(@event.description), :length => 300 %></p>
+                           <p align="right" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #cfcfcf;margin: 0 0 16px 0;padding: 0;"><a href="<%= event_url @event %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;">READ MORE »</a></p>
+                        </td>
+                        <td width="245" align="center" valign="top" style="padding:5px 5px 5px 20px">
+                          <p class="address" style="font-family: Lucida, sans-serif;font-size: 14px;font-weight: normal;color: #ffffff;padding: 0;margin-top:10px;text-align:center;"><strong><%= @event.business.name %></strong> <%= "(" + link_to("website", @event.business.website, :target => "_blank", :style => "font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;") + ")" unless @event.business.website.blank? %><br><%= @event.business.street1 %><br><%= @event.business.city %>, <%= @event.business.state %> <%= @event.business.zipcode %></p>
+                          <h4 style="color: #adc5d9;font-family: 'Myriad', sans-serif;font-size: 14px;font-weight: normal;margin: 7px 0 0 0;padding: 0;">DATE: <strong style="color: #ffffff;"><%= (@event.end_date).strftime("%A, %b %d") %></strong></h4>
+                          <h4 style="color: #adc5d9;font-family: 'Myriad', sans-serif;font-size: 14px;font-weight: normal;margin: 7px 0 0 0;padding: 0;">TIME: <strong style="color: #ffffff;"><%= @event.start_date.strftime("%I").to_i %>-<%= @event.end_date.strftime("%I").to_i %><%= @event.end_date.strftime("%p") %></strong></h4>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+               </tr>
+            </table>
+          </td>
+        </tr>
+
+      <% unless @side_promotions.empty? %>
+        <tr class="separator">
+          <td height="3" style="background-color: #999999;font-size: 6px;line-height: 6px;"></td>
+        </tr>
+
+        <tr>
+          <td>
+            <table width="600" border="0" cellspacing="0" cellpadding="0" class="more_deals" style="background-color: #ffffff;">
+               <tr>
+                  <td class="main" align="left" valign="top" width="600" style="padding:10px">
+                    <h2 style="color: #666666;font-family: 'Myriad', sans-serif;font-size: 22px;font-weight: normal;margin: 0 0 4px 0;padding: 0 0 4px 0;">Haven't checked out our deals recently?  - (<a href="http://sowhatsthedeal.com/promotions<%= @google_tracking %>" style="color: #1279AF;font-family: Lucida, sans-serif;font-size: 22px;font-weight: normal;">see all deals</a>)</h2>
+                    <table width="580" border="0" cellspacing="0" cellpadding="0" class="deal_items">
+                      <tr>
+                      <% @side_promotions.each_with_index do |side_promotion, i| %>
+                        <td width="180" align="center" valign="top" style="<%= i == 1 ? "padding: 0 20px 20px;" : "padding-bottom: 20px;" %>">
+                          <a href="<%= promotion_url side_promotion %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: bold;color: #1279af;"><img src="http://sowhatsthedeal.com<%= side_promotion.image1.url %>" border="0" width="170" height="120" style="border: 3px solid #999999;display: block;margin-bottom: 7px;"></a>
+                          <a href="<%= promotion_url side_promotion %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: bold;color: #1279af;"><%= side_promotion.name %></a><% if (side_promotion.end_date - Time.now < 36.hours) %><span style="color: red;text-decoration: none;font: bold 13px/1em Helvetica, Arial,sans-serif;"> - last day</span><% end %>
+                        </td>
+                      <% end %>
+                      </tr>
+                    </table>
+                  </td>
+               </tr>
+            </table>
+          </td>
+        </tr>
+      <% end %>
+
+      </table>
+
+      <br><br>
+
+      <table width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#014164" class="footer" style="margin-bottom: 20px">
+        <tr>
+          <td style="padding:15px">
+            <p style="color: #CFCFCF;font-family: Lucida, sans-serif;font-size: 10px;font-weight: normal;line-height: 15px;margin: 0 0 10px 0;text-align: left;">Questions? Comments? Random rants? Visit our <a href="http://sowhatsthedeal.com/faq<%= @google_tracking %>" style="color: #94BFF2;font-family: Lucida, sans-serif;font-size: 10px;font-weight: normal;">Frequently Asked Questions</a> section, e-mail us at <a href="mailto:support@sowhatsthedeal.com" style="color: #94BFF2;font-family: Lucida, sans-serif;font-size: 10px;font-weight: normal;">support@sowhatsthedeal.com</a> or call us: (888) 765-3481.</p>
+
+            <p style="color: #CFCFCF;font-family: Lucida, sans-serif;font-size: 10px;font-weight: normal;line-height: 15px;margin: 0 0 10px 0;text-align: left;">Please add <a href="mailto:sales@e.sowhatsthedeal.com" style="color: #94BFF2;font-family: Lucida, sans-serif;font-size: 10px;font-weight: normal;">sales@e.sowhatsthedeal.com</a> to your address book or safe sender list so our emails get to your inbox. This email was sent by What's the Deal, LLC | 1921 Florida Ave, NW | Washington, DC  20009 | US.</p>
+
+            <p style="color: #CFCFCF;font-family: Lucida, sans-serif;font-size: 10px;font-weight: normal;line-height: 15px;margin: 0 0 10px 0;text-align: left;">You are receiving this e-mail because you signed up for a WTD Mailing list. If you no longer wish to receive messages from us, you can <a href="%%%removemark%%%" style="color: #94BFF2;font-family: Lucida, sans-serif;font-size: 10px;font-weight: normal;">unsubscribe</a>.</p>
+          </td>
+        </tr>
+      </table>
+    </td>
+    </tr>
+  </table>
+  <br><br>
+</div>
+
+<br><br><br><br><br>
+
+
+<h2>Welcome Message</h2>
+
+<p>Click in the box, do a "select all" then copy!</p>
+<textarea id="thanks_email_text">loading...</textarea>
+
+<div id="thanks_email">
+  <table align="center" style="text-align: left; border-collapse: collapse; border-left-width: 0px;" width="580">
+    <tbody>
+      <tr class="banner">
+        <td align="middle" bgcolor="#0c3050" colspan="3" style="padding: 0px;" valign="bottom">
+          <a href="http://sowhatsthedeal.com"><img align="left" alt="" src="http://www.sowhatsthedeal.com/emails/logo3.png" style="border: medium none ; margin: 0px;" /></a><img alt="Welcome to What's The Deal" src="http://www.sowhatsthedeal.com/emails/banner3.png" style="color: rgb(255, 255, 255); font-size: 2em;" /></td>
+      </tr>
+      
+      <tr>
+        <td style="padding: 0pt; vertical-align: top;">
+          <table border="0" style="border-left-width: 0pt; border-collapse: collapse; border-spacing: 0pt;" width="100%">
+            <tbody>
+              <tr>
+                <td colspan="3" style="padding: 0pt; vertical-align: top;">
+                  <h2 style="text-align: center; padding-top: 10px;">
+                    <font class="Apple-style-span" color="#65b0ff">You&#39;re all set for the <%= @event.header %></font></h2>
+                </td>
+              </tr>
+              <tr>
+                <td class="section_content" style="border: 1px solid rgb(12, 48, 80); padding: 15px; vertical-align: top; background-color: rgb(255, 255, 255);">
+                  <p style="font-family: Helvetica,Arial,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 14px; line-height: 1em; font-size-adjust: none; font-stretch: normal; margin-bottom: 5px;">
+                    <span style="color: rgb(0, 0, 102);font-size: 14px;font-family: arial,helvetica,sans-serif;line-height: 21px;">Congrats,&nbsp;<b>%%%fname%%%</b>, you&#39;re all set for the <strong><%= @event.header %></strong> on <%= @event.start_date.strftime("%A, %B #{@event.start_date.day.ordinalize}") %>. The party goes from <%= @event.start_date.strftime("%I").to_i %>-<%= @event.end_date.strftime("%I").to_i %><%= @event.end_date.strftime("%p") %> with XXXXXXXXXXXXXXXXXXX.</span></p>
+                  <p style="font-family: Helvetica,Arial,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 14px; line-height: 1em; font-size-adjust: none; font-stretch: normal; margin-bottom: 5px; text-align: center;">
+                    <img src="http://sowhatsthedeal.com<%= @event.page_image %>" /></p>
+                  <% unless @event.business.nil? %>
+                  <p style="font-family: Helvetica,Arial,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 14px; line-height: 1em; font-size-adjust: none; font-stretch: normal; margin-bottom: 5px; text-align: center;">
+                    <span style="color: rgb(0, 0, 128);font-size: 12px;font-family: arial,helvetica,sans-serif;">
+                      <b><%= @event.business.name %></b>
+                      <%= "<br>" + @event.business.street1 unless @event.business.street1.blank? %>
+                      <%= "<br>" + @event.business.street2 unless @event.business.street2.blank? %>
+                      <%= "<br>" + @event.business.city %>, <%= @event.business.state %> <%= @event.business.zipcode %>
+                      <%= "<br>" + link_to(@event.business.website, @event.business.website, :target => "_blank") unless @event.business.website.blank? %>
+                    </span>
+                  <% end %>
+                  </p>
+                  <p style="text-align: left; font-family: Helvetica,Arial,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 14px; line-height: 1em; font-size-adjust: none; font-stretch: normal; margin-bottom: 5px;">
+                    <span class="Apple-style-span" color="#000066;line-height: 21px;">See you there!</span></p>
+                  <p style="text-align: left; font-family: Helvetica,Arial,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 14px; line-height: 1em; font-size-adjust: none; font-stretch: normal; margin-bottom: 5px;">
+                    <span style="color: rgb(0, 0, 102);line-height: 21px;">- The (mostly) friendly folks at What&#39;s the Deal</span></p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<br><br><br><br><br>
+
+<h2>Reminder Email</h2>
+<p>Click in the box, do a "select all" then copy!</p>
+<textarea id="reminder_email_text">loading...</textarea>
+
+<div id="reminder_email">
+  <table align="center" style="text-align: left;border-collapse: collapse; border-left-width: 0px; " width="580">
+  	<tbody>
+  		<tr class="banner">
+				<td align="middle" bgcolor="#0c3050" colspan="3" style="padding: 0px;" valign="bottom">
+					<a href="http://sowhatsthedeal.com"><img align="left" alt="" src="http://www.sowhatsthedeal.com/emails/logo3.png" style="border: medium none ; margin: 0px;" /></a><img alt="Welcome to What's The Deal" src="http://www.sowhatsthedeal.com/emails/banner3.png" style="color: rgb(255, 255, 255); font-size: 2em;" /></td>
+			</tr>
+  		<tr>
+  			<td style="padding: 0;vertical-align: top;">
+  				<table border="0" style="border-left-width: 0;border-collapse: collapse;border-spacing: 0;" width="100%">
+  					<tbody>
+  						<tr>
+  							<td colspan="3" style="padding: 0;vertical-align: top;">
+  								<h2 style="text-align: center;padding-top: 10px;">
+  									<font color="#65B0FF">See you at <%= @event.business.name %></font> <span class="Apple-style-span" style="color: rgb(101, 176, 255); ">Tonight</span><span class="Apple-style-span" style="color: rgb(101, 176, 255); ">&nbsp;</span></h2>
+
+  							</td>
+  						</tr>
+  						<tr>
+  							<td class="section_content" style="padding: 15px;vertical-align: top;background-color: #FFF;border: 1px solid #0C3050;">
+  								<p style="font: normal normal normal 14px/1em Helvetica, Arial, sans-serif; margin-bottom: 5px; ">
+  									<font color="#052452"><span style="line-height: 21px;">Just a friendly reminder that you RSVP&#39;d for the WTD<strong> Happy Hour at <%= @event.business.name %> tonight</strong>.<b><font><span style="font-weight: normal;">&nbsp;&nbsp;Upon check-in </span></font></b><font>(</font><b><font>from <%= @event.start_date.strftime("%I").to_i %>-<%= @event.end_date.strftime("%I").to_i %><%= @event.end_date.strftime("%p") %></font></b><font>), <span style="font-weight: normal;">you&#39;ll receive XXXXXXXXXXXX</span></font></span></font></p>
+
+  								<p style="font: normal normal normal 14px/1em Helvetica, Arial, sans-serif; margin-bottom: 5px; ">
+  									<font color="#052452"><span style="line-height: 21px;"><b><font><span style="font-weight: normal;">And remember, just for showing up you get entered into our </span></font></b></span></font><strong><span style="color:#ffa500;"><span style="line-height: 21px;"><span style="font-weight: bold;">raffle for a $20 WTD credit</span></span></span></strong><font color="#052452"><span style="line-height: 21px;"><b><font><span style="font-weight: normal;">, to be announced on our homepage.</span></font></b></span></font></p>
+  								<p style="font: normal normal normal 14px/1em Helvetica, Arial, sans-serif; margin-bottom: 5px; text-align: center; ">
+  									<img src="http://sowhatsthedeal.com<%= @event.page_image %>" /></p>
+  								<div style="text-align: center;">
+  									&nbsp;</div>
+
+  								<% unless @event.business.nil? %>
+									<p style="font-family: Helvetica,Arial,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 14px; line-height: 1em; font-size-adjust: none; font-stretch: normal; margin-bottom: 5px; text-align: center;">
+										<span style="color: rgb(0, 0, 128);font-size: 12px;font-family: arial,helvetica,sans-serif;">
+										  <b><%= @event.business.name %></b>
+                      <%= "<br>" + @event.business.street1 unless @event.business.street1.blank? %>
+                      <%= "<br>" + @event.business.street2 unless @event.business.street2.blank? %>
+                      <%= "<br>" + @event.business.city %>, <%= @event.business.state %> <%= @event.business.zipcode %>
+                      <%= "<br>" + link_to(@event.business.website, @event.business.website, :target => "_blank") unless @event.business.website.blank? %>
+										</span>
+									<% end %>
+									</p>
+  								<p style="font: normal normal normal 14px/1em Helvetica, Arial, sans-serif; margin-bottom: 5px; ">
+  									<span style="line-height: 21px; color: rgb(5, 36, 82); "><b>What&#39;s the Deal</b> is proud to put on free Happy Hours and bring amazing deals to Washington DC. &nbsp;Haven&#39;t checked out our deals recently (or ever - gasp!)? &nbsp;</span></p>
+
+  								<p style="font: normal normal normal 14px/1em Helvetica, Arial, sans-serif; margin-bottom: 5px; ">
+  									<span style="line-height: 21px; color: rgb(5, 36, 82); ">Current deals include <%= link_to @promotions[0].name, promotion_url(@promotions[0]) %>, <%= link_to @promotions[1].name, promotion_url(@promotions[1]) %> and up to <%= link_to @promotions[2].name, promotion_url(@promotions[2]) %>.</span></p>
+  								<p style="font: normal normal normal 14px/1em Helvetica, Arial, sans-serif; margin-bottom: 5px; ">
+  									See all <strong><a href="http://sowhatsthedeal.com/promotions">Current Deals</a></strong><a href="http://sowhatsthedeal.com/promotions"></a>.</p>
+
+  								<p style="font: normal normal normal 14px/1em Helvetica, Arial, sans-serif; margin-bottom: 5px; ">
+  									<span style="line-height: 21px; color: rgb(5, 36, 82); ">See you tonight.</span></p>
+  								<p style="font: normal normal normal 14px/1em Helvetica, Arial, sans-serif; 
+  margin-bottom: 5px; ">
+  									<span style="line-height: 21px; color: rgb(5, 36, 82); ">-- The (mostly) Friendly Folks at What&#39;s the Deal</span></p>
+  							</td>
+  						</tr>
+  					</tbody>
+
+  				</table>
+  			</td>
+  		</tr>
+  		<tr>
+  			<td colspan="3" style="padding: 0;vertical-align: top;">
+  				&nbsp;</td>
+  		</tr>
+  	</tbody>
+  </table>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  var geocoder;
+  var map;
+  geocoder = new google.maps.Geocoder();
+  var address = "<%= @event.business.street1 %> <%= @event.business.city %>, <%= @event.business.state %> <%= @event.business.zipcode %>";
+  geocoder.geocode( { 'address': address}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      document.getElementById('map').src = "http://maps.google.com/maps/api/staticmap?center=" + results[0].geometry.location.toString().slice(1,-1) + "&zoom=14&markers=" + results[0].geometry.location.toString().slice(1,-1) + "&size=245x197&sensor=false"
+    } else {
+      alert("Google Maps could not find the address because: " + status);
+    }
+  });
+</script>
+
+
+<script type="text/javascript" charset="utf-8">
+  document.getElementById('reminder_email_text').value = document.getElementById('reminder_email').innerHTML
+  document.getElementById('thanks_email_text').value = document.getElementById('thanks_email').innerHTML
+  document.getElementById('announcement_email_text').value = document.getElementById('announcement_email').innerHTML
+</script>

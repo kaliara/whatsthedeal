@@ -1,0 +1,746 @@
+body {
+  font: normal 14px/1em Helvetica, Arial,sans-serif;
+  color: #fff;
+  background: #01314A;
+  margin: 0;
+  padding: 0;
+  
+  /* TAKE THIS OUT */
+  overflow-x: hidden;
+}
+
+p{
+  color: #FFF;
+}
+
+
+h1{
+  color: #FFF;
+  font-family: 'Myriad Pro', Myriad, Helvetica, sans-serif;
+  line-height: 1em;
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  font-weight: normal;
+  margin-top: 10px; 
+}
+
+h2{
+  color: #FFF;
+  font-family: 'Myriad Pro', Myriad, Helvetica, sans-serif;
+  font-weight: normal;
+  padding-top: 15px;
+  font-size: 2.17em;
+  line-height: 1.1em;
+  margin-bottom: 5px;
+}
+
+h3{
+  font-size: 1.67em;
+  color:    #E9EFF3;
+  padding-bottom: 5px;
+  font-family: 'Myriad Pro', Myriad, Helvetica, sans-serif;
+  font-weight: normal;
+  line-height: 1em;
+}
+
+h4{
+  color:    #FFF;
+  padding-bottom: 5px;
+  font: normal 1.2em/1.2em 'Myriad Pro', Myriad, Helvetica, sans-serif;
+}
+
+h5{
+	font-size: 			1em;
+	padding-top:  3px;
+	padding-bottom: 3px;
+	line-height: 1.2em;
+}
+
+h6{
+  font-size: 0.85em;
+  font-weight: normal;
+}
+
+dl, dt, dd {
+  display: inline;
+}
+
+th {
+  color: #FFF;
+  padding: 5px;
+  background-color: #082534;
+}
+td { 
+  padding: 5px;
+  background-color: #FFF;
+}
+
+a,
+a:visited{
+  color: #65b0ff;
+  text-decoration: none;
+}
+a:hover,
+a:active{
+  color: #5391D2;
+  text-decoration: underline;
+}
+
+address{
+  color: #666;
+  margin-bottom: 5px;
+  font-style: normal;
+  padding-top: 15px;
+  line-height: 115%;
+}
+
+input[type='text'],
+input[type='email'],
+input[type='password']{
+  font-size: 18px;
+  width: 200px;
+}
+label{
+  color: #AAC5DB;
+}
+
+.main_wrapper{
+  padding: 10px 10px 10px 5px;
+}
+
+/*  Nav START*/
+.header{
+  background: #145c97;
+  font-size: 1.15em;
+  padding: 3px 0;
+}
+.header #logo{
+  float: left;
+  margin-right: 5px;
+  position: relative;
+  top: 3px;
+  left: 3px;
+}
+ul.main_nav{
+  font-weight: normal;
+  float: left;
+  display: inline;
+  width: 155px;
+  margin-left: 5px;
+}
+ul.main_nav li{
+	float:			left;
+	list-style:	none;
+	display:		inline;
+}
+
+.account_nav{
+  float: right;
+  display: inline;
+  margin-right: 5px;
+}
+
+ul.main_nav li a, 
+.account_nav a{
+  display: block;
+  padding: 5px 0;
+}
+ul.main_nav li.current a,
+.account_nav a.current{
+  color: #fff;
+  font-weight: bold;
+}
+
+
+
+/* flash notices and errors */
+.flash {
+  margin-bottom: 15px;
+}
+
+.notice{
+  clear: both;
+  color: #E98E31;
+  padding: 7px 0 5px 25px;
+  background: transparent url('/images/icon_notice.png') no-repeat 0 6px;
+  font-size: 1.2em;
+  line-height: 1.2em;
+}
+
+.error,
+.errorExplanation,
+.print_warning{
+  background: #DEAEAC url('/images/icon_error.png') no-repeat 10px 14px;
+  padding: 16px 15px 14px 36px;
+  border: 4px solid #CA5C60;
+  color: #000;
+}
+.errorExplanation h2{
+  font-size: 1.5em;
+}
+
+.errorExplanation p,
+.errorExplanation h2{
+  color: #000;
+  padding: 5px 0;
+}
+
+.errorExplanation li{
+  color: #000;
+  padding-left: 15px;
+  list-style: circle inside;
+}
+.error p,
+.error li,{
+  color: #000;
+}
+
+.error a{
+  font-weight: bold;
+  text-decoration: underline;
+  color: #003A6B;
+}
+
+.error a:hover{
+  color: #5391D2;
+}
+
+.fieldWithErrors{
+  color: red;
+  font-weight: bold;
+}
+.fieldWithErrors .text{
+  background: #FFBEBF;
+}
+
+/* Form Fields*/
+.label_input_form{
+  margin-bottom: 10px;
+}
+.label_input_form .radio_buttons label {
+  display: inline;
+  margin-right: 25px;
+}
+.label_input_form .radio_buttons input {
+  margin-left: 0;
+}
+.label_input_form label{
+  display: block;
+  text-align: left;
+}
+.forget_password{
+  text-align: right;
+}
+.remember_me{
+  margin-left: 10px;
+}
+.remember_me label{
+  float: none;
+  width: auto;
+  position: static;
+  display: inline;
+}
+
+
+.form_action{
+  text-align: right;
+}
+
+
+
+/* login page */
+.login_page .section_header{
+  text-align: center;
+}
+.login_page .section_header .logo{
+  width: 125px;
+}
+.login_page .section_header h3{
+  margin: 10px 0 15px 0;
+}
+.simple_form{
+  width: 220px;
+  margin: 0 auto 10px;
+}
+.simple_form .form_action{
+  text-align: right;
+}
+
+/* buttons */
+.primary{
+  background: transparent url(/images/promo_deal_me_in_bg.png) repeat-x center left;
+  border: 1px solid #000;
+  outline: none;
+  color: #FFF;
+  font-size: 1.5em;
+  padding: 6px 12px;
+  -moz-box-shadow: 0px 0px 3px #111;
+  -webkit-box-shadow: 0px 0px 3px #111;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
+
+/* tabs */
+.tabs{
+  margin-bottom: 15px;
+}
+.tabs li{
+  display: inline;
+  float: left;
+  text-align: center;
+  color: #333;
+  margin-right: 5px;
+  font-size: 110%;
+}
+.tabs li a{
+  background: #fff;
+  padding: 7px 7px;
+  display: block;
+  -moz-border-radius: 5px 5px 0 0;
+  -webkit-border-radius: 5px 5px 0 0;
+}
+.coupons_unused  .tabs #tabs_unused a,
+.coupons_used    .tabs #tabs_used a,
+.coupons_expired .tabs #tabs_expired a,
+.coupons_gifts   .tabs #tabs_gifts a{
+  background: #ddd;
+  font-weight: bold;
+  color: #000;
+  text-decoration: none;
+  cursor: default;
+}
+
+
+/* my deals */
+.coupon_section{
+  color: #666;
+}
+.coupon_image{
+  width: 100px;
+  float: left;
+  margin-right: 5px;
+  text-align: center;
+}
+.coupon_image img{
+  width: 90px;
+}
+.coupon_content{
+  float: left;
+  width: 190px;
+}
+.coupon{
+  background: #fff;
+	border: solid 2px #BEBDBC;
+	padding: 2px;
+	background: #fff url('/images/bg_coupon.png') repeat-x bottom center;
+	margin-bottom: 15px;
+	position: relative;
+}
+.coupon h3{
+  color: #000;
+  font-size: 1.2em;
+  height: 38px;
+}
+.expiration_date{
+  padding: 5px;
+  line-height: 1.2em;
+}
+.expired .expiration_date {
+	color: #c00;
+}
+.inactive_coupon .coupon{
+  opacity: 0.25;
+}
+.coupon_container{
+  position: relative;
+}
+.coupon_container .reason{
+  position: absolute;
+  top: 35%;
+  text-align: center;
+  font-size: 200%;
+  font-weight: bold;
+  color: #000;
+  z-index: 2;
+}
+.coupon_footer{
+  background: #0C3050;
+  font-size: 1.2em;
+  padding: 5px;
+}
+.coupon_footer label{
+  color: #fff;
+  position: relative;
+  top: 7px;
+}
+.coupon_confirmation{
+  color: #A7BACF;
+  font-size: 90%;
+  margin: 3px 0 13px;
+}
+.coupon_confirmation strong{
+  color: #000;
+}
+.coupon .view_link{
+  float: right;
+  margin: 3px 7px;
+}
+.secondary{
+  background: transparent url(/images/promo_reminder_bg.png) repeat-x center center;
+  border: 1px solid #000;
+  font-size: 85%;
+  font-weight: bold;
+  color: #fff;
+  padding: 4px;
+  text-shadow: 0px 0px 2px #000;
+  -moz-border-radius: 5px; 
+  -webkit-border-radius: 5px;
+}
+.promotion .last_chance{
+  background: transparent url(/images/promo_hourglass.png) no-repeat 4px 3px;
+  border: 1px solid #E03038;
+  color: #E03038;
+  line-height: 1.25em;
+  padding: 5px 5px 3px 19px;
+  text-align: left;
+}
+
+.used_coupon{
+  padding: 7px 5px 12px;
+  font-size: 80%;
+  color: #ddd;
+}
+
+.gift_coupon .coupon h3{
+  margin-bottom: 5px;
+}
+.gift_coupon .coupon{
+  padding-top: 5px;
+}
+.gift_coupon p{
+  color: #000;
+  font-size: 90%;
+}
+.gift_coupon .gift_content{
+  clear: both;
+  padding: 5px;
+}
+
+/* printed coupon */
+body.printed{
+  background: #fff;
+  color: #000;
+}
+.print_coupon{
+  border: none;
+  padding: 10px;
+  width: 320px;
+}
+.print_coupon_header{
+  text-align: left;
+  padding: 0;
+  margin-bottom: 10px;
+}
+.print_coupon h2{
+  margin-top: 0;
+  color: #000;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center;
+}
+.print_coupon h4{
+  color: #000;
+}
+.print_coupon .coupon_business h5{
+  margin-bottom: 0;
+}
+.print_coupon_header img{
+  position: static;
+  float: none;
+  padding: 0;
+}
+.print_coupon_content{
+  padding: 0;
+}
+.print_coupon .map{
+  position: static;
+}
+.print_coupon .coupon_business{
+  margin: 10px 0 20px;
+}
+.print_coupon .contact_info{
+  margin-top: 25px;
+}
+.print_coupon .secondary{
+  font-size: 115%;
+}
+
+/* promotion show */
+.promotion h2{
+  font-size: 145%;
+  margin-bottom: 10px;
+  text-align: center;
+}
+.promotion h3{
+  font-size: 1.15em;
+  padding-bottom: 0;
+}
+.promotion .promotion_image img, 
+.promotion .promotion_montage img{
+  width: 305px;
+  margin-bottom: 10px;
+  border: 2px solid #9CAFB9;
+}
+.promotion input[type='checkbox']{
+  width: 30px;
+  height: 30px;
+}
+.promotion .deal_checkbox{
+  float: left;
+  margin-right: 5px;
+}
+.promotion .buying_details{
+  margin-bottom: 15px;
+}
+.promotion .buying_details .single_deal dl{
+  clear: both;
+  display: block;
+  margin-bottom: 5px;
+}
+.promotion .buying_details .single_deal dl dt{
+  font-size: 21px;
+  color: #aac5db;
+  text-transform: uppercase;
+  padding: 10px 50px 10px 0;
+  background: transparent url(/images/promo_arrow.png) no-repeat center right;
+  text-align: right;
+  float: left;
+  width: 145px;
+}
+.promotion .buying_details .single_deal dl dt.savings{
+  background: transparent url(/images/promo_equals.png) no-repeat center right;
+}
+.promotion .buying_details .single_deal dl dd{
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+  padding: 10px 0 10px 5px;
+  text-align: left;
+  float: left;
+}
+.promotion .buying_details .single_deal dl dd.early_bird_discount{
+  color: #099aff;
+}
+.promotion .buying_details .single_deal dl dd.early_bird_discount span{
+  text-decoration: line-through;
+  color: #989898;
+  font-size: 75%;
+  font-weight: normal;
+}
+
+.promotion .multi_deal{
+  margin-bottom: 15px;
+}
+.promotion .buying_details .multi_deal .pricing_info dl{
+  margin-bottom: 10px;
+}
+.promotion .buying_details .multi_deal .pricing_info dl dt{
+  color: #678aa1;
+  text-transform: uppercase;
+}
+.promotion .buying_details .multi_deal .pricing_info dl dd{
+  font-weight: bold;
+  color: #fff;
+  margin-right: 10px;
+}
+.promotion .buying_details .multi_deal .pricing_info h3{
+  color: #aac5db;
+  font-weight: normal;
+  font-family: 'Myriad Pro', Myriad, Helvetica, sans-serif;
+  text-align: left;
+}
+.promotion .buying_details .multi_deal .pricing_info dl dd.early_bird_discount{
+  color: #099aff;
+  margin-right: 7px;
+}
+.promotion .buying_details .multi_deal .pricing_info dl dd.early_bird_discount span{
+  text-decoration: line-through;
+  color: #989898;
+  font-size: 85%;
+  font-weight: normal;
+}
+.promotion .buying_details .multi_deal .sold_out{
+  color: red;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 80%;
+}
+
+.promotion .buying_details .single_deal dl dd.early_bird_discount{
+  color: #099aff;
+}
+.promotion .buying_details .single_deal dl dd.early_bird_discount span{
+  text-decoration: line-through;
+  color: #989898;
+  font-size: 75%;
+  font-weight: normal;
+}
+.promotion .checkout_buttons{
+  text-align: center;
+}
+.promotion .checkout_buttons .deal_me_in{
+  font-size: 135%;
+}
+
+.promotion .promotion_info_strip{
+  font-size: 90%;
+  line-height: 0;
+  padding: 9px 11px;
+  margin-bottom: 40px;
+  background: #082534;
+  color: #aac5db;
+  -moz-border-radius: 7px; 
+  -webkit-border-radius: 7px; 
+}
+.promotion .promotion_info_strip strong{
+  color: #fff;
+}
+.promotion .promotion_info_strip .purchases{
+  float: left;
+  text-align: left;
+  text-transform: uppercase;
+  margin-right: 5px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+}
+.promotion .promotion_info_strip .purchases .out_of{
+  font-size: 75%;
+  text-transform: none;
+  vertical-align: top;
+}
+.promotion .promotion_info_strip .deal_ended{
+  float: right;
+  text-align: right;
+  margin-left: 10px;
+  margin-top: 1px;
+  padding: 5px 5px 3px;
+  border: 1px solid #E03038;
+  color: #E03038;
+  line-height: 1.25em;
+  font-size: 90%;
+}
+.promotion .promotion_info_strip .time_left{
+  float: right;
+  text-align: right;
+  text-transform: uppercase;
+  margin-left: 10px;
+  margin-right: 0;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  vertical-align: top;
+}
+.promotion .reminder_container{
+  margin: 0 auto 15px;
+  width: 120px;
+}
+.promotion .more_details_container{
+  float: none;
+  margin: 15px auto 20px;
+  width: 150px;
+}
+.promotion .more_details_container .primary:hover{
+  color: #fff;
+}
+.promotion .reminder_container .secondary{
+  font-size: 120%;
+}
+.promotion .reminder_container .reminded{
+  border: 1px solid #51B757;
+  color: #51B757;
+  padding: 5px 5px 3px;
+  line-height: 1.25em;
+}
+.promotion .promotion_info_strip .almost_over strong{
+  color: #C72E3C;
+}
+
+.promotion_index h2{
+  padding: 0;
+}
+.promotion_index .promotion{
+  margin-bottom: 20px;
+  background: #01314A;
+  padding: 10px 5px;
+}
+.promotion_index .promotion .promotion_info_strip{
+  margin-bottom: 10px;
+}
+.promotion_index .buying_details{
+  margin-bottom: 5px;
+}
+
+
+/* tabs */
+.promotion .promotion_tabs .tab{
+  background: #5080A6;
+  font-size: 80%;
+  padding: 10px 7px 7px;
+  margin-right: 2px;
+  text-transform: uppercase;
+  color: #c6e0ed;
+  -moz-border-radius: 10px 10px 0 0; 
+  -webkit-border-radius: 10px 10px 0 0; 
+}
+.promotion .promotion_tabs .active_tab{
+  background: #082534;
+  color: #fff;
+  text-decoration: none;
+  cursor: default;
+}
+.promotion .tab_content{
+  font-size: 90%;
+  color: #ddd;
+  background: #082534;
+  padding: 25px 15px 15px 20px;
+  margin: 6px 0 20px;
+  -moz-border-radius: 0 15px 15px 15px; 
+  -webkit-border-radius: 0 15px 15px 15px; 
+}
+
+.promotion .tab_content .promotion_map{
+  border: 5px solid #fff;
+}
+.promotion .tab_content .promotion_summary{
+  margin-right: 15px;
+}
+.promotion .tab_content ul{
+  list-style-type: disc;
+  list-style-position: outside;
+  margin-left: 15px;
+}
+.promotion .tab_content ul li{
+  margin-bottom: 7px;
+  line-height: 1.2em;
+}
+.promotion .tab_content address{
+  text-align: center;
+  margin-bottom: 10px;
+  padding: 0;
+  color: #fff;
+}
+
+.promotion .tab_content p{
+  color: #ddd;
+  line-height:130%;
+  margin-bottom: 10px;
+}
+
+.back_link{
+  margin: 10px 10px 0;
+  font-size: 1.2em;
+}
+.mobile_footer{
+  text-align: center;
+}

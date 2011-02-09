@@ -1,0 +1,57 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Raffle Listing', admin_raffles_path %></li>
+<% end %>
+
+<%= render :partial => "/admin/shared/tiny_mce" %>
+
+<h2>New Raffle</h2>
+
+<div style="margin:20px">
+  <h4><strong>STEP 1:</strong> Go create a new mailboto subscription list and subscription form</h4><br>
+  <h4><strong>STEP 2:</strong> View the web preview of the <strong>subscription form</strong> and copy the two-digit ID from the URL (should be between 50 and 200)</h4>
+  <img src="http://sowhatsthedeal.com/images/help_list_id.png">
+  <br><br>
+  <h4><strong>STEP 3:</strong> (fill in fields below)</h4>
+</div>
+
+
+<% form_for([:admin,@raffle], :html => {:multipart => true}) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :subscription_list_id %> (from step 2 above)<br />
+    <%= f.text_field :subscription_list_id %> (use <strong>44</strong> for MASTER list)
+  </p>
+  <br>
+  <p>
+    <%= f.label :business_id %><br />
+    <%= f.select :business_id, Business.find(:all, :order => 'name ASC').collect{|b| [b.name, b.id]} %>
+  </p>
+  <br><br>
+  <p>
+    <%= f.label :header %><br />
+    <%= f.text_field :header %>
+  </p>
+  <br><br>
+  <p>
+    <%= f.label :image1, 'Main Image' %><br />
+    <%= f.file_field :image1 %>
+  </p>
+  <p>
+    <%= f.label :body %><br />
+    <%= f.text_area :body, :rows => 10, :cols => 100 %>
+  </p>
+  <br><br>
+  <p>
+    <%= f.label :rotation_start_date %><br />
+    <%= f.datetime_select :rotation_start_date %>
+  </p>
+  <p>
+    <%= f.label :rotation_end_date %><br />
+    <%= f.datetime_select :rotation_end_date %>
+  </p>
+  <br><br>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>

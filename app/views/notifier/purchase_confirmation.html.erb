@@ -1,0 +1,81 @@
+<table width="580" style="border-collapse: collapse;border-spacing: 0;">
+  
+  <tr class="banner">
+    <td bgcolor="#114D95" colspan="3" valign="top" align="center" style="background-image url('http: //www.sowhatsthedeal.com/emails/banner.png');vertical-align: top;padding: 0;text-align: center;">
+      <img src="http://www.sowhatsthedeal.com/emails/logo.png" align="left"> <br><span style="font-size:2em; color:#fff">WTD Purchase Receipt</span>
+    </td>
+  </tr>
+
+  <tr>
+    <td style="vertical-align: top;padding: 0;">
+  <table class="border" style="border-collapse: collapse;border-spacing: 0;border: 1px solid #0C3050;">
+  <tr class="section_header" style="background-color: #0C3050;">
+        <td colspan="3" style="vertical-align: top;padding: 0;"><h2 style="text-align: center;padding-top: 10px;text-transform: uppercase;font-size: 1.08em;color: #FFF;">Purchase Details</h2></td>
+  </tr>
+  
+  <tr>
+      <td colspan="3" style="vertical-align: top;padding: 0;">
+        <ul style="list-style: none;margin: 15px 0 0 20px;padding: 0;">
+        <li><span><label style="margin-right: 10px;">Invoice number:</label><strong style="color: #F5A73A;"><%= @purchase.invoice_number %></strong></span></li>
+        <li><span><label style="margin-right: 10px;">Purchase Date:</label><strong style="color: #F5A73A;"><%= @purchase.created_at.strftime("%m/%d/%Y") %></strong></span></li>
+        <li><span><label style="margin-right: 10px;">Deals Purchased:</label><strong style="color: #F5A73A;"><%= @purchase.coupons.count %></strong></span></li>       
+        <% unless @purchase.credits.empty? %>
+          <li><span><label style="margin-right: 10px;">WTD Credit used:</label><strong style="color: #F5A73A;"><%= number_to_currency([@purchase.credits.collect{|c| c.value}.to_a.sum, @purchase.deals_total].min, :precision => 0)%></strong></span></li>
+        <% end %>
+        <li><span><label style="margin-right: 10px;">Total<%= " (after credits)" unless @purchase.credits.empty? %>:</label><strong style="color: #F5A73A;"><%= number_to_currency @purchase.total %></strong></span></li>
+        
+        </ul>
+      </td>
+  </tr>
+              
+  <tr>
+    <td colspan="3" style="vertical-align: top;padding: 0;">
+      <table class="simple_table" width="100%" style="border-collapse: collapse;border-spacing: 0;width: 100%;margin: 10px 0 10px 10px;">
+        <tr>
+          <th style="background-color: #FFF;color: #0D304F;font-family: Georgia, sans-serif;text-align: left;padding: 10px;">Name</th>
+          <th style="background-color: #FFF;color: #0D304F;font-family: Georgia, sans-serif;text-align: left;padding: 10px;">Expiration</th>
+          <td style="vertical-align: top;padding: 10px;"></td>
+        </tr>
+
+        <% @purchase.coupons.each do |coupon| %>
+          <tr>
+            <td style="vertical-align: top;padding: 10px;"><%= coupon.name %></td>
+            <td style="vertical-align: top;padding: 10px;"><%= coupon.expiration.strftime("%m/%d/%Y") %></td>
+          </tr>
+        <% end %>
+      </table>
+    </td>
+  </tr>
+    
+          
+  <tr>
+    <td colspan="3" class="quick_note" style="vertical-align: top;padding: 0;text-align: center;padding-top: 10px;"><b>*Quick note: Your credit card will not be charged unless we get enough people.  Once the minimum is met, your coupons will be available in your account within 24 hours.*</b></td>
+  </tr>
+  <tr>
+    <td class="section_content no_border" style="vertical-align: top;padding: 15px;background-color: #FFF;border: 1px solid #0C3050;border-top: 0;">You can see more details about your purchase by logging into your account: <a href="<%= HOST_URL %>login" style="color: #65b0ff;text-decoration: none;">Login into your Account</a></td>
+  </tr>
+  </table>
+  </td>
+  </tr>
+  <tr>
+    <td colspan="3" style="vertical-align: top;padding: 0;"> <br>&nbsp;</td>
+  </tr>
+  
+  <tr>
+    <td style="vertical-align: top;padding: 0;">
+  <table class="border" style="border-collapse: collapse;border-spacing: 0;border: 1px solid #0C3050;">
+  <tr class="section_header" style="background-color: #0C3050;">
+    <td colspan="3" style="vertical-align: top;padding: 0;"><h2 style="text-align: center;padding-top: 10px;text-transform: uppercase;font-size: 1.08em;color: #FFF;">Refer a Friend, Grab $5</h2></td>
+  </tr>
+  <tr>   
+    <td style="vertical-align: top;padding: 0;"><h3 style="margin-top: 20px;color: #0D304F;padding-left: 15px;margin-bottom: 5px;">Want to get $5 off your next purchase?</h3></td>
+  </tr>
+  <tr>
+    <td class="section_content no_border" colspan="3" style="vertical-align: top;padding: 15px;background-color: #FFF;border: 1px solid #0C3050;border-top: 0;">Refer a friend to What's the Deal and get a credit for $5 on any deal from WTD. Your personalized referral link is: <div class="referral_link" style="background: #F7C85C;padding: 10px;color: #65b0ff;margin-top: 10px;text-align: center;letter-spacing: 2px;"><b><%= HOST_DOMAIN %>ref/<%= @user.referral_link %></b></div></td>
+    
+  </tr>
+ </table>
+ </td>
+ </tr>
+  
+</table>

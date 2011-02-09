@@ -1,0 +1,296 @@
+<% content_for :page_title do %>My Account<% end %>
+<% content_for :head do %>
+<script type="text/javascript" charset="utf-8">
+/*
+
+CUSTOM FORM ELEMENTS
+
+Created by Ryan Fait
+www.ryanfait.com
+
+The only things you may need to change in this file are the following
+variables: checkboxHeight, radioHeight and selectWidth (lines 24, 25, 26)
+
+The numbers you set for checkboxHeight and radioHeight should be one quarter
+of the total height of the image want to use for checkboxes and radio
+buttons. Both images should contain the four stages of both inputs stacked
+on top of each other in this order: unchecked, unchecked-clicked, checked,
+checked-clicked.
+
+You may need to adjust your images a bit if there is a slight vertical
+movement during the different stages of the button activation.
+
+The value of selectWidth should be the width of your select list image.
+
+Visit http://ryanfait.com/ for more information.
+
+*/
+
+var checkboxHeight = "40";
+var radioHeight = "25";
+var selectWidth = "190";
+
+
+/* No need to change anything after this */
+
+
+document.write('<style type="text/css">input.styled { display: none; } select.styled { position: relative; width: ' + selectWidth + 'px; opacity: 0; filter: alpha(opacity=0); z-index: 5; } .disabled { opacity: 0.5; filter: alpha(opacity=50); }</style>');
+
+var Custom = {
+	init: function() {
+		var inputs = document.getElementsByTagName("input"), span = Array(), textnode, option, active;
+		for(a = 0; a < inputs.length; a++) {
+			if((inputs[a].type == "checkbox" || inputs[a].type == "radio") && inputs[a].className == "styled") {
+				span[a] = document.createElement("span");
+				span[a].className = inputs[a].type;
+
+				if(inputs[a].checked == true) {
+					if(inputs[a].type == "checkbox") {
+						position = "0 -" + (checkboxHeight*2) + "px";
+						span[a].style.backgroundPosition = position;
+					} else {
+						position = "0 -" + (radioHeight*2) + "px";
+						span[a].style.backgroundPosition = position;
+					}
+				}
+				inputs[a].parentNode.insertBefore(span[a], inputs[a]);
+				inputs[a].onchange = Custom.clear;
+				if(!inputs[a].getAttribute("disabled")) {
+					span[a].onmousedown = Custom.pushed;
+					span[a].onmouseup = Custom.check;
+				} else {
+					span[a].className = span[a].className += " disabled";
+				}
+			}
+		}
+		inputs = document.getElementsByTagName("select");
+		for(a = 0; a < inputs.length; a++) {
+			if(inputs[a].className == "styled") {
+				option = inputs[a].getElementsByTagName("option");
+				active = option[0].childNodes[0].nodeValue;
+				textnode = document.createTextNode(active);
+				for(b = 0; b < option.length; b++) {
+					if(option[b].selected == true) {
+						textnode = document.createTextNode(option[b].childNodes[0].nodeValue);
+					}
+				}
+				span[a] = document.createElement("span");
+				span[a].className = "select";
+				span[a].id = "select" + inputs[a].name;
+				span[a].appendChild(textnode);
+				inputs[a].parentNode.insertBefore(span[a], inputs[a]);
+				if(!inputs[a].getAttribute("disabled")) {
+					inputs[a].onchange = Custom.choose;
+				} else {
+					inputs[a].previousSibling.className = inputs[a].previousSibling.className += " disabled";
+				}
+			}
+		}
+		document.onmouseup = Custom.clear;
+	},
+	pushed: function() {
+		element = this.nextSibling;
+		if(element.checked == true && element.type == "checkbox") {
+			this.style.backgroundPosition = "0 -" + checkboxHeight*3 + "px";
+		} else if(element.checked == true && element.type == "radio") {
+			this.style.backgroundPosition = "0 -" + radioHeight*3 + "px";
+		} else if(element.checked != true && element.type == "checkbox") {
+			this.style.backgroundPosition = "0 -" + checkboxHeight + "px";
+		} else {
+			this.style.backgroundPosition = "0 -" + radioHeight + "px";
+		}
+	},
+	check: function() {
+		element = this.nextSibling;
+		if(element.checked == true && element.type == "checkbox") {
+			this.style.backgroundPosition = "0 0";
+			element.checked = false;
+		} else {
+			if(element.type == "checkbox") {
+				this.style.backgroundPosition = "0 -" + checkboxHeight*2 + "px";
+			} else {
+				this.style.backgroundPosition = "0 -" + radioHeight*2 + "px";
+				group = this.nextSibling.name;
+				inputs = document.getElementsByTagName("input");
+				for(a = 0; a < inputs.length; a++) {
+					if(inputs[a].name == group && inputs[a] != this.nextSibling) {
+						inputs[a].previousSibling.style.backgroundPosition = "0 0";
+					}
+				}
+			}
+			element.checked = true;
+		}
+	},
+	clear: function() {
+		inputs = document.getElementsByTagName("input");
+		for(var b = 0; b < inputs.length; b++) {
+			if(inputs[b].type == "checkbox" && inputs[b].checked == true && inputs[b].className == "styled") {
+				inputs[b].previousSibling.style.backgroundPosition = "0 -" + checkboxHeight*2 + "px";
+			} else if(inputs[b].type == "checkbox" && inputs[b].className == "styled") {
+				inputs[b].previousSibling.style.backgroundPosition = "0 0";
+			} else if(inputs[b].type == "radio" && inputs[b].checked == true && inputs[b].className == "styled") {
+				inputs[b].previousSibling.style.backgroundPosition = "0 -" + radioHeight*2 + "px";
+			} else if(inputs[b].type == "radio" && inputs[b].className == "styled") {
+				inputs[b].previousSibling.style.backgroundPosition = "0 0";
+			}
+		}
+	},
+	choose: function() {
+		option = this.getElementsByTagName("option");
+		for(d = 0; d < option.length; d++) {
+			if(option[d].selected == true) {
+				document.getElementById("select" + this.name).childNodes[0].nodeValue = option[d].childNodes[0].nodeValue;
+			}
+		}
+	}
+}
+window.onload = Custom.init;</script>
+<% end %>
+<%= render :partial => "/users/credit_balance", :locals => {:user => @user} %>
+
+
+<h2>My Account</h2>
+<div class="section_element account_<%= @tab %>"> 
+  <ul class="tabs clearfix">
+    <li id="tabs_personal"><%= link_to "Personal Information", my_account_path %></li>
+    <li id="tabs_email"><%= link_to "Email Preferences", my_account_email_path %></li>
+  </ul>
+  
+  <% form_for(@user) do |f| %>
+    <div class="section_content account_section clearfix clear">
+      <%= display_error_messages(f.error_messages) %>
+      <%= hidden_field_tag :tab, @tab %>
+      
+      <% if @tab == "personal" %>
+        <h4 class="first">Contact Information</h4>
+        <% f.fields_for :customer do |cf| %>
+        <div class="label_input_form <%= 'fieldWithErrors' if @user.customer.first_name == Customer::STOCK_FIRST_NAME %>">
+          <%= cf.label :first_name %>
+          <%= cf.text_field :first_name, :class => "text" %>
+        </div>  
+
+        <div class="label_input_form <%= 'fieldWithErrors' if @user.customer.last_name == Customer::STOCK_LAST_NAME %>">  
+          <%= cf.label :last_name %>
+          <%= cf.text_field :last_name, :class => "text" %>
+        </div>
+        <% end %>
+
+        <div class="label_input_form">  
+          <%= f.label :email %>
+          <%= f.text_field :email, :class => "text" %>
+        </div>
+
+        <div class="label_input_form <%= 'fieldWithErrors' unless @user.changed_password? %>">  
+          <%= f.label :password %>
+          <span>&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;&nbsp;&nbsp;(<%= link_to "change", change_password_path %>)</span>
+        </div>  
+      
+        <h4>Billing Information</h4>
+        <div class="clearfix">
+          <dl class="billing_newsletter_info credit_card_file">
+            <dt>Credit Card</dt>
+            <dd class="ie_fleft">
+              <% if @user.payment_profile %>
+              XXXXXXXXX<%= @user.payment_profile.billing_cc_last_four %> (<%= link_to "remove", payment_profile_path(@user.payment_profile), :confirm => 'Are you sure you want to remove this credit card?
+
+              Note: this will NOT affect any purchase you have already made', :method => :delete %>)
+              <% else %>
+              We have none on file, but you can add one during checkout.
+              <% end %>
+            </dd>
+            <dt class="last"></dt>
+            <dd></dd>
+          </dl>
+        </div>
+      
+      
+        <h4>Demographic Information</h4>
+        <% f.fields_for :customer do |cf| %>
+        <div class="label_input_form">
+          <%= cf.label :zipcode, 'Zip Code' %>
+          <%= cf.text_field :zipcode, :class => "text" %>
+        </div>
+
+        <div class="label_input_form">
+          <%= cf.label :birthdate %>
+          <%= cf.date_select :birthdate, :end_year => (13.years.ago).year, :start_year => 1910, :default => {:year => (35.years.ago).year}, :order => [:month, :day, :year] %> 
+        </div>
+
+        <div class="label_input_form">  
+          <%= cf.label :gender %>
+          <div class="radio_buttons">        
+            <%= cf.radio_button :female, true, :id => 'user_customer_attributes_female' %>
+            <%= cf.label :female %>
+            <%= cf.radio_button :female, false, :id => 'user_customer_attributes_male' %>
+            <%= cf.label :male %>
+          </div>          
+        </div>  
+
+        <div class="label_input_form">  
+          <%= cf.label :children %>
+          <div class="radio_buttons">        
+            <%= cf.radio_button :number_of_kids, 0, :id => 'user_customer_attributes_nope_kids' %>
+            <%= cf.label :nope_kids, "Nope" %>
+            <%= cf.radio_button :number_of_kids, 1, :id => 'user_customer_attributes_one_kid' %>
+            <%= cf.label :one_kid, "One" %>
+            <%= cf.radio_button :number_of_kids, 2, :id => 'user_customer_attributes_two_kids' %>
+            <%= cf.label :two_kids, "Two" %>
+            <%= cf.radio_button :number_of_kids, 3, :id => 'user_customer_attributes_three_kids' %>
+            <%= cf.label :three_kids, "Three or more" %>
+          </div>          
+        </div>  
+
+        <div class="label_input_form">  
+          <%= cf.label :employment_status, "Employment Status" %>
+          <%= cf.select :employment_status, Customer::EMPLOYMENT_STATUSES, { :include_blank => true } %>
+        </div>  
+
+        <div class="label_input_form">   
+          <%= cf.label :annual_income %>
+          <%= cf.select :annual_income, Customer::INCOME_RANGES, { :include_blank => true } %>
+        </div>
+
+        <div class="label_input_form">   
+          <%= cf.label :employment_zipcode, "Employment Zip Code" %>
+          <%= cf.text_field :employment_zipcode, :class => 'zip_code' %>
+        </div>
+        <% end %>
+      <% else %>
+        <div class="email_preferences">
+          <table>
+            <tr>
+              <th>Email Description</th>
+              <th>I want it!</th>
+            </tr>
+            <tr>
+              <td><strong>WTD Daily Deal Email</strong>: daily email with the newest offer from WTD</td> <td class="checkboxes"><%= f.check_box :gets_daily_deal_email, :class => 'styled' %></td>
+            </tr>
+            <tr>
+              <td><strong>Weekly Happy Hour Announcement</strong>: informing you of the upcoming happy hour</td> <td class="checkboxes"><%= f.check_box :gets_happy_hour_announcement_email, :class => 'styled' %></td>
+            </tr>
+            <tr>
+              <td><strong>Referral Notification</strong>: you got credit for referring someone</td> <td class="checkboxes"><%= f.check_box :gets_referral_notification_email, :class => 'styled' %></td>
+            </tr>
+            <tr>
+              <td><strong>Coupons Ready</strong>: when a deal has tipped and your coupons can be used</td> <td class="checkboxes"><%= f.check_box :gets_coupon_ready_email, :class => 'styled' %></td>
+            </tr>
+            <tr>
+              <td><strong>Coupons Expiring</strong>: a reminder 10 days before coupon expiration</td> <td class="checkboxes"><%= f.check_box :gets_coupon_expiring_email, :class => 'styled' %></td>
+            </tr>
+          </table>
+        </div>
+      <% end %>
+    
+    </div>
+  
+    <div class="update_profile_set clear">
+      <span><%= link_to 'Cancel', root_path, :tabindex => 100 %></span>
+      <span><%= f.submit 'Update', :class => "secondary" %></span>
+      <br><br><br><br>
+    </div>
+
+  <% end %>
+
+</div>
+
+</div>

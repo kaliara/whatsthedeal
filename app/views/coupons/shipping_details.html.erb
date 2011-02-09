@@ -1,0 +1,39 @@
+<% content_for :page_title do %>Shipping Details for your <%= @coupon.deal.promotion.business.name %> Coupon<% end %>
+<h2>Shipping Details for your <%= @coupon.deal.promotion.business.name %> Coupon</h2>
+
+  <div class="section_element">  
+    <div class="section_content">
+      <div class="purchase_show_content clearfix">
+        <dl class="purchase_show_payment_info clearfix">
+          <h4>We are shipping this coupon to you</h4>
+          <p>WTD is shipping your coupon to the address entered during checkout (listed below). You cannot print or use this voucher electronically. Shipping usually takes 5-10 business days after the date of purchase.</p>
+          <br><br>
+          <strong>
+          <dt>Coupon:</dt>
+          <dd><%=h @coupon.name %></dd>
+          <dt>Purchase date:</dt>
+          <dd><%=h @coupon.created_at.to_date %></dd>
+          <br><br>
+          <dt>Shipping Name:</dt>
+          <dd><%=h @purchase.shipping_name %></dd>
+          <dt>Address:</dt>
+          <dd><%=h @purchase.shipping_address1 %> <%=h @purchase.shipping_address2 %></dd>
+          <dt>City:</dt>
+          <dd><%=h @purchase.shipping_city %></dd>
+          <dt>State:</dt>
+          <dd><%=h @purchase.shipping_state %></dd>
+          <dt>Zip Code:</dt>
+          <dd><%=h @purchase.shipping_zipcode %></dd>
+          </strong>
+        </dl>
+        <br><br><br>
+        <h4>Something look off?</h4>
+        <p>Let us know by emailing <a href="mailto:support@sowhatsthedeal.com">support@sowhatsthedeal.com</a>.<br>Please include the purchase invoice number (<strong><%= @purchase.invoice_number %></strong>) in your message.</p>
+      </div>
+    
+    </div>  
+  </div>
+
+  <%= link_to 'Back to My Deals', my_deals_path %>
+  
+</div>

@@ -1,0 +1,11 @@
+<div class="social_buttons clearfix">
+  <div class="facebook_like">
+    <iframe src="https://www.facebook.com/plugins/like.php?href=<%= CGI::escape promotion_url(@promotion) %>&amp;layout=button_count&amp;show_faces=false&amp;width=200&amp;action=like&amp;font&amp;colorscheme=light&amp;height=35" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+  </div>
+  <div class="twitter_share">
+    <a href="https://twitter.com/share" class="twitter-share-button" data-url="<%= promotion_url(promotion) %>" data-text="<%= promotion.name %>" data-count="none" data-via="whatsthedeal">Tweet</a>
+  </div>
+  <div class="facebook_share">
+    <a name="fb_share" type="button" share_url="<%= promotion_url(@promotion) %>">SHARE</a> 
+  </div>
+</div>

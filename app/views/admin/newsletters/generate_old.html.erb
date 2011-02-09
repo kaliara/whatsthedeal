@@ -1,0 +1,248 @@
+<html>
+  <body>
+    <p>Click in the box, do a "select all" then copy!</p>
+    <textarea id="fe_text">loading...</textarea>
+
+
+    <div id="email">
+      <table width="100%">
+        <tr>
+          <td style="padding:0 10px 10px;background-color:#005bab" align="center">
+            <table width="580" style="border-collapse: collapse;border-spacing: 0;border-left-width: 0;">
+              <tr class="banner" style="font-size:0;">
+                <td colspan="3" bgcolor="#114D95" style="padding: 0;vertical-align: top;text-align: center;font-size:0;">
+                  <span style="color:#fff"><a href="http://sowhatsthedeal.com/<%= @google_tracking %>"><img src="https://sowhatsthedeal.com/emails/logo2.gif" border="0" align="left" style="margin:0"></a><img src="https://sowhatsthedeal.com/emails/banner2.gif" alt="What's The Deal DC"  align="left" style="margin:0;font-size:24px"></span>
+                  <a href="http://www.facebook.com/pages/Washington-DC/Whats-the-Deal/113164707517" style="color:#fff;font-size:0;"><img src="https://sowhatsthedeal.com/emails/facebook.gif" alt="Share on Facebook" border="0" style="color:#fff;font-size:14px"></a>
+                  <a href="http://www.twitter.com/whatsthedealdc" style="color:#fff;font-size:0;"><img src="https://sowhatsthedeal.com/emails/twitter.gif" alt="Share on Twitter" border="0" style="color:#fff;font-size:14px"></a>
+                  <a href="http://feeds.feedburner.com/sowhatsthedeal/washington" style="color:#fff;font-size:0;"><img src="https://sowhatsthedeal.com/emails/rss.gif" alt="RSS Feed" border="0" style="color:#fff;font-size:14px"></a>
+                </td>
+              </tr>
+  
+  
+              <tr>
+                <td style="padding: 0;vertical-align: top;" align="left">
+                <table width="100%" border="0" style="border-left-width: 0;border-collapse: collapse;border-spacing: 0;">
+                  <tr>
+                    <td colspan="3" style="background-color:#eee;padding: 0;vertical-align: top;"><h2 style="font-weight:normal;text-align: center;padding-top: 10px;margin:5px 5px 10px;"><a href="<%= promotion_url @promotion %><%= @google_tracking %>" style="color: #65b0ff;"><%= @promotion.name %></a></h2></td>
+                  </tr>
+      
+                  <tr>
+                    <td style="background-color:#eee; padding-top:5px;padding-bottom:5px;"  align="left" valign="top">
+                      <table width="100%" cellpadding="0" cellspacing="0">
+                        <tr>
+                          <td colspan="2" style="padding-bottom:10px;color:#000;font-weight:bold" align="center">
+                            <table cellpadding="0" cellspacing="0">
+                              <tr style="font-size:0">
+                                <td><img src="https://sowhatsthedeal.com/emails/box_top_left.gif"></td>
+                                <td><img src="https://sowhatsthedeal.com/emails/box_top_mid.gif"></td>
+                                <td><img src="https://sowhatsthedeal.com/emails/box_top_right.gif"></td>
+                              </tr>
+                              <tr style="font-size:0">
+                                <td><img src="https://sowhatsthedeal.com/emails/box_mid_left.gif"></td>
+                                <td style="background-color:#7dc6f5; padding-bottom:3px;color:#0F4371;font-family:Helvetica,Arial,sans-serif;font-weight:normal;" align="center"><font size="2">You Pay:</font> <span style="color:#fff; font-family:georgia,sans-serif;"><font size="<%= has_cents?(@promotion.featured_deal.price) ? "3" : "4" %>"><%= has_cents?(@promotion.featured_deal.price) ? number_to_currency(@promotion.featured_deal.price, :precision => 2) : number_to_currency(@promotion.featured_deal.price, :precision => 0) %></font></span></td>
+                                <td><img src="https://sowhatsthedeal.com/emails/box_mid_right.gif"></td>
+                              </tr>
+                              <tr style="font-size:0">
+                                <td><img src="https://sowhatsthedeal.com/emails/box_btm_left.gif"></td>
+                                <td><img src="https://sowhatsthedeal.com/emails/box_btm_mid.gif"></td>
+                                <td><img src="https://sowhatsthedeal.com/emails/box_btm_right.gif"></td>
+                              </tr>
+                            </table>
+                    
+                          </td>
+              
+                        </tr>
+                        <tr>
+                          <td style="padding-left:10px;">
+                            <table cellpadding="0" cellspacing="0">
+                              <tr style="font-size:0">
+                                <td><img src="https://sowhatsthedeal.com/emails/arrow_top_left.gif"></td>
+                                <td><img src="https://sowhatsthedeal.com/emails/arrow_top_mid.gif"></td>
+                                <td><img src="https://sowhatsthedeal.com/emails/arrow_top_right.gif"></td>
+                              </tr>
+                              <tr style="font-size:0">
+                                <td><img src="https://sowhatsthedeal.com/emails/arrow_mid_left.gif"></td>
+                                <td style="background-color:#7dc6f5; text-align:center;color:#0F4371;font-family:Helvetica,Arial,sans-serif;font-weight:normal;" valign="top"><font size="1">Value:</font> <span style="color:#fff; font-family:georgia,sans-serif;"><font size="<%= has_cents?(@promotion.featured_deal.value) ? "2" : "3" %>"><%= has_cents?(@promotion.featured_deal.value) ? number_to_currency(@promotion.featured_deal.value, :precision => 2) : number_to_currency(@promotion.featured_deal.value, :precision => 0) %></font></span></td>
+                                <td><img src="https://sowhatsthedeal.com/emails/arrow_mid_right.gif"></td>
+                              </tr>
+                              <tr style="font-size:0">
+                                <td><img src="https://sowhatsthedeal.com/emails/arrow_btm_left.gif"></td>
+                                <td><img src="https://sowhatsthedeal.com/emails/arrow_btm_mid.gif"></td>
+                                <td><img src="https://sowhatsthedeal.com/emails/arrow_btm_right.gif"></td>
+                              </tr>
+                            </table>
+                          </td>
+              
+                          <td style="padding-right:0px">
+                            <table cellpadding="0" cellspacing="0">
+                              <tr style="font-size:0">
+                                <td><img src="https://sowhatsthedeal.com/emails/badge_top_left.gif"></td>
+                                <td><img src="https://sowhatsthedeal.com/emails/badge_top_mid.gif"></td>
+                                <td><img src="https://sowhatsthedeal.com/emails/badge_top_right.gif"></td>
+                              </tr>
+                              <tr style="font-size:0">
+                                <td><img src="https://sowhatsthedeal.com/emails/badge_mid_left.gif"></td>
+                                <td style="background-color:#f1a242;color:#0F4371;font-family:Helvetica,Arial,sans-serif;font-weight:normal;" align="center" valign="top"><font size="1">You Save:</font> <span style="color:#fff; font-family:georgia,sans-serif;font-size:125%"><font size="3"><%= number_to_percentage @promotion.featured_deal.savings, :precision => 0 %></font></span></td>
+                                <td><img src="https://sowhatsthedeal.com/emails/badge_mid_right.gif"></td>
+                              </tr>
+                              <tr style="font-size:0">
+                                <td><img src="https://sowhatsthedeal.com/emails/badge_btm_left.gif"></td>
+                                <td><img src="https://sowhatsthedeal.com/emails/badge_btm_mid.gif"></td>
+                                <td><img src="https://sowhatsthedeal.com/emails/badge_btm_right.gif"></td>
+                              </tr>
+                            </table>
+                          </td>
+              
+                        </tr>
+                
+                        <tr>
+                          <td colspan="2" align="center" style="padding-top:5px">
+                            <div class="business_info" style="font-family:Helvetica,Arial,sans-serif;border-top:1px dashed #ccc;margin:0;padding-bottom:0px;text-align:center;width:235px;color#666;padding-top:10px">
+                              <font size="2"><b><%= @promotion.business.name %></b>
+                              <%= "<br>" + @promotion.business.street1 unless @promotion.business.street1.blank? %>
+                              <%= "<br>" + @promotion.business.city + "," %> <%= @promotion.business.state %> <%= @promotion.business.zipcode %>
+                              <%= "<br>" + link_to(@promotion.business.website, @promotion.business.website, :target => "_blank") unless @promotion.business.website.blank? %></a></font>
+                            </div>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td colspan="2" style="font-family:Helvetica,Arial,sans-serif;padding:10px 5px; text-align:center"><font size="2"><a href="<%= promotion_url(@promotion) %><%= @google_tracking %>"><img src="https://sowhatsthedeal.com/emails/more_details.gif" alt="More Details" border="0"></a></font></td>
+                        </tr>
+                
+                      </table>
+                    </td>
+        
+                    <td colspan="2" style="padding:0 10px 10px 0;background-color:#eee" align="right" valign="top">
+                      <img src="https://sowhatsthedeal.com<%= @promotion.image1.url %>" width="305">
+                    </td>
+                  </tr>
+                </table>
+        
+                <table align="left" width="100%" border="0" style="border-left-width: 0;border-top:10px #005BAB solid;border-collapse: collapse;border-spacing: 0;">
+                  <tr>
+                    <td colspan="3" class="section_content" style="padding: 10px;vertical-align: top;background-color: #FFF;">
+              
+                      <table align="left">
+                        <tr>
+                          <td align="left" valign="top" style="padding-right:10px">
+                            <p style="text-transform:uppercase;color:#666;margin-bottom:0;font-family:helvetica, arial, sans-serif"><font size="2"><%= @promotion.start_date.strftime("%b %d, %Y") %></font></p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td align="left" style="padding-right:10px">
+                            <h3 style="margin: 7px 0 10px; font-weight:bold;"><%= @promotion.header %></h3>
+                            <div style="font: normal 13px/1em Helvetica, Arial,sans-serif;margin-bottom: 5px;color: #052452;line-height: 150%;">
+                              <font size="2"><%= @promotion.body1 %> <%= link_to("READ MORE", (promotion_url @promotion) + @google_tracking) %></font>
+                            </div>
+                          </td>
+                          <td style="padding: 0;vertical-align: top;" width="200">
+                            <% unless @side_promotions.empty? %>
+                              <table align="left" style="border-collapse: collapse;border-spacing: 0;border-left-width: 0;margin-bottom:10px;margin-top:10px">
+                                <tr class="section_header">
+                                  <th valign="middle" style="padding: 0;background-color: #0C3050;border-left:1px solid #0C3050;"><h2 style="text-align: center;padding: 10px 0 5px;text-transform: uppercase;color: #FFF;margin:0;font-weight:normal;"><font size="3">More Great Deals</font></h2></th>
+                                </tr>
+                                <tr>
+                                  <td class="section_content partner_shout_out" style="padding: 5px;vertical-align: top;background-color: #FFF;border: 1px solid #0C3050;width: 215px;">
+                                    <table>
+                                      <% @side_promotions.each do |side_promotion| %>
+                                        <tr>
+                                          <td valign="top" style="color: #052452;line-height: 150%">
+                                            <a href="<%= promotion_url side_promotion %><%= @google_tracking %>"><img src="https://sowhatsthedeal.com<%= side_promotion.image1.url %>" align="left" width="62" style="padding-bottom:5px" border="0"></a>
+                                          </td>
+                                          <td align="left" valign="top">
+                                            <a href="<%= promotion_url side_promotion %><%= @google_tracking %>" style="color: #0033C5;text-decoration: none;font: normal 13px/1em Helvetica, Arial,sans-serif;"><font size="2"><%= side_promotion.name %></font></a><span style="color: red;text-decoration: none;font: bold 13px/1em Helvetica, Arial,sans-serif;"><%= " - last day" if (side_promotion.end_date - Time.now < 36.hours) %></span><br><br>
+                                          </td>
+                                        </tr>
+                                      <% end %>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </table>
+                            <% end %>
+                          </td>
+                        </tr>
+                
+                
+                        <tr>
+                          <td colspan="2">
+                            <table width="100%" cellpadding="0" cellspacing="0" style="border-collapse: collapse;border-spacing: 0;border-left-width: 0;margin-bottom:10px">
+                              <tr class="section_header">
+                                <% unless @event.nil? %>
+                                <th valign="middle" style="padding: 0 5px;background-color: #0C3050;border-left:1px solid #0C3050;"><h2 style="text-align: center;padding:10px 0 5px;text-transform: uppercase;color: #FFF;margin:0; font-weight:normal;"><font size="3"><%= @event.header %></font></h2></th>
+                                <% end %>
+                                <% unless @event.nil? or @shoutout.nil? %>
+                                  <td width="5"></td>
+                                <% end %>
+                                <% unless @shoutout.nil? %>
+                                  <th valign="middle" style="padding: 0 5px;background-color: #0C3050;border-left:1px solid #0C3050;"><h2 style="text-align: center;padding:10px 0 5px;text-transform: uppercase;color: #FFF;margin:0; font-weight:normal;"><font size="3"><%= @shoutout.header %></font></h2></th>
+                                <% end %>
+                              </tr>
+                        
+                              <tr>
+                                <% unless @event.nil? %>
+                                  <td style="vertical-align: top;background-color: #FFF;width: 215px;border: 1px solid #0C3050;">
+                                    <table style="">
+                                      <tr>
+                                        <td style="color: #052452;line-height: 150%" valign="top">
+                                          <img src="https://sowhatsthedeal.com<%= @event.image %>" align="left" width="100" style="padding-bottom:5px" border="0">
+                                        </td>
+                                        <td align="left" valign="top" style="font: normal 13px/1.2em Helvetica, Arial,sans-serif;color:#666;padding:0 5px;">
+                                          <font size="2"><div style="margin:5px 0; font-weight:bold;color:#000;"><%= @event.header %></div></font><font size="1"><%= @event.description %></font>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                <% end %>
+                                <% unless @event.nil? or @shoutout.nil? %>
+                                  <td width="5"></td>
+                                <% end %>
+                                <% unless @shoutout.nil? %>
+                                  <td style="vertical-align: top;background-color: #FFF;width: 215px;border: 1px solid #0C3050;">
+                                    <table>
+                                      <tr>
+                                        <td style="color: #052452;line-height: 150%" valign="top">
+                                          <img src="https://sowhatsthedeal.com<%= @shoutout.image %>" align="left" width="100" style="padding-bottom:5px" border="0">
+                                        </td>
+                                        <td align="left" valign="top" style="font: normal 13px/1.2em Helvetica, Arial,sans-serif;color:#666;padding:0 5px;">
+                                          <font size="2"><div style="margin:5px 0; font-weight:bold;color:#000;"><%= @shoutout.header %></div></font><font size="1"><%= @shoutout.description %></font>
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </td>
+                                <% end %>
+                              </tr>
+                        
+                            </table>
+                          </td>
+                        </tr>
+
+                      </table>
+                    </td>
+                  </tr>
+                
+                </table>
+              
+                </td>
+              </tr>
+            
+          
+              <tr>
+                <td colspan="3" style="padding: 0;vertical-align: top;"><br> </td>
+              </tr>
+      
+      
+      
+            </table>
+          </td>
+        </tr>
+      </table>
+
+      <br><br><br><br>
+    </div>
+
+    <script type="text/javascript" charset="utf-8">
+      document.getElementById('fe_text').value = document.getElementById('email').innerHTML
+    </script>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+<div class="header clearfix">
+  <%= link_to image_tag('/images/mobile/logo.png'), root_url, :id => 'logo' %>
+  <ul class="main_nav">
+    <li class="<%= 'current' if current_page? promotions_path %>"><%= link_to "More Great Deals", promotions_path %></li>
+    <li class="<%= 'current' if current_page? events_path %>"><%= link_to "Events", events_path %></li>
+  </ul>
+
+  <ul class="account_nav">
+    <% if current_user and current_user.customer? %>
+      <li><%= link_to "My Deals", my_deals_path, :class => ((current_page?(my_deals_path) or current_page?(my_deals_used_path) or current_page?(my_deals_expired_path) or current_page?(my_deals_gifts_path)) ? 'current' : nil) %></li>
+      <li><%= link_to 'Logout', logout_path, :confirm => "Are you sure you want to Logout?" %></li>
+    <% else %>  
+      <li><%= link_to 'Login', login_path %></li>
+    <% end %>
+  </ul>
+</div>

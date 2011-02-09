@@ -1,0 +1,15 @@
+<div class="section_element">
+  <div class="section_header">
+    <h3>Edit Gift Information</h3>
+  </div>
+
+  <div class="section_content edit_gift_form">
+    <h4 class="gift_info"><%= image_tag '/images/promo_gift.png' %> <%= @coupon.name %></h4>
+
+    <% form_tag update_coupon_gift_path(@coupon) do %>
+      <%= render :partial => "/cart_items/gift", :locals => {:gift => @coupon} %>
+
+      <%= submit_tag "Update Gift", :class => 'primary' %>
+    <% end %>
+  </div>
+</div>

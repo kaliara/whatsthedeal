@@ -1,0 +1,31 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag "http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/themes/redmond/jquery-ui.css" %>
+  <%= javascript_include_tag "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js", "http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js", "application.js" %>
+<% end %>
+<br><br>
+<div class="label_input_form">
+  <%= label_tag :gift_from, 'From:' %>
+  <%= text_field_tag :gift_from, gift.gift_from %>
+</div>
+<div class="label_input_form">
+  <%= label_tag :gift_name, 'To (name):' %>
+  <%= text_field_tag :gift_name, gift.gift_name.blank? ? params[:gift_name] : gift.gift_name %> <span class="note">(gift must redeemed by this person)</span>
+</div>
+<div class="label_input_form">
+  <%= label_tag :gift_email, 'To (email):' %>
+  <%= text_field_tag :gift_email, gift.gift_email.blank? ? params[:gift_email] : gift.gift_email %> <span class="note">(gift will be sent to this email address)</span>
+</div>
+<div class="label_input_form">
+  <%= label_tag :gift_message, 'Message:' %>
+  <%= text_area_tag :gift_message, gift.gift_message.blank? ? params[:gift_message] : gift.gift_message, :cols => 30, :rows => 10 %>
+</div>
+<div class="label_input_form">
+  <%= label_tag :gift_send_date, 'Date to Send Gift:' %>
+  <%= text_field_tag :gift_send_date, gift.gift_send_date.blank? ? (params[:gift_send_date] || (Date.today + 1.day).strftime("%m/%d/%Y")) : gift.gift_send_date.strftime("%m/%d/%Y"), :size => 10 %><span class="note">(gift is emailed to recipient on this date at 11:00 am)</span>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  $("#gift_send_date").datepicker();
+  //$(".gift_send_option").val('date');
+  //$("#gift_send_immediately").click(function(){$("#gift_send_date")})
+</script>

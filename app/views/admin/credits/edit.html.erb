@@ -1,0 +1,37 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Credit Listing', admin_credits_path %></li>
+<% end %>
+
+<h2>Editing credit</h2>
+
+<% form_for([:admin,@credit]) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :promotion_code_id %><br />
+    <%= f.select :promotion_code_id, PromotionCode.find(:all, :conditions => {:listed => true}).collect{|p| [p.id.to_s + " - " + p.name,p.id]} %>
+  </p>
+  <p>
+    <%= f.label :user_id %><br />
+    <%= f.text_field :user_id %>
+  </p>
+  <p>
+    <%= f.label :referrer_user_id %><br />
+    <%= f.text_field :referrer_user_id %>
+  </p>
+  <p>
+    <%= f.label :value %><br />
+    <%= f.text_field :value %>
+  </p>
+  <p>
+    <%= f.label :cart_id %><br />
+    <%= f.text_field :cart_id %>
+  </p>
+  <p>
+    <%= f.label :purchase_id %><br />
+    <%= f.text_field :purchase_id %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>

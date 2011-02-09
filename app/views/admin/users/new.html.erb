@@ -1,0 +1,25 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'User Listing', admin_users_path %></li>
+<% end %>
+
+<h2>New User (not the same as a customer)</h2>
+
+<% form_for([:admin,@user]) do |f| %>
+  <%= f.error_messages %>
+  
+  <p>
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= f.label :password %><br />
+    <%= f.text_field :password %>
+  </p>
+  <p>
+    <%= f.label :password_confirmation %><br />
+    <%= f.text_field :password_confirmation %>
+  </p>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>

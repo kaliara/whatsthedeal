@@ -1,0 +1,72 @@
+<% content_for :page_title do %><%= @item.name %><% end %>
+<% content_for :head do %>
+  <meta name="title" content="<%= @item.name %>" /> 
+  <meta name="description" content="<%= @item.name %>" /> 
+  <link rel="image_src" href="https://sowhatsthedeal.com<%= @item.image1.url %>" />
+  <meta property="og:title" content="<%= @item.name %>"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:image" content="http://sowhatsthedeal.com<%= @item.image1.url %>"/>
+  <meta property="og:site_name" content="What's The Deal"/>
+  <meta property="og:type" content="article"/>
+  <meta property="fb:admins" content="mburnett" />
+  <meta name="tweetmeme-title" content="<%= @item.name %>" />
+  
+  <script type="text/javascript" src="http://static.ak.fbcdn.net/connect.php/js/FB.Share"></script>
+  <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+<% end %>
+
+<div class="promotion auction_item">
+  <h2><%= @item.name %></h2>
+
+  <div class="main_details clearfix">
+    <% form_tag place_bid_path do %>
+      <%= hidden_field_tag "item_id", @item.id %>
+      <div class="promotion_image">
+        <%= image_tag @item.image1.url, :alt => @item.name %><br>
+      </div>
+      <div class="buying_details clearfix">
+        <div class="single_deal">
+          <dl class="clearfix">
+            <dt>High Bid</dt>
+            <dd><%= number_to_currency(@item.high_bid.nil? ? 0 : @item.high_bid.amount) %></dd>
+          </dl>
+          <dl class="clearfix">
+            <dt>Bidder</dt><dd><%= @item.high_bid.nil? ? 'No Bids' : @item.high_bidder %></dd>
+          </dl>
+        </div>
+      
+        <div class="checkout_buttons">
+          <div class="bid_amount"><%= label_tag 'bid_amount', 'Bid Amount in $' %> <%= text_field_tag 'bid_amount', 0 %></div>
+          <div class="deal_me_in"><%= submit_tag 'Place Bid', :class => 'primary' %></div>
+          <div class="bid_note">winner contacted about payment after auction</div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  
+  <div class="promotion_info_strip clearfix">
+    <% if @item.ended? %>
+      <div class="deal_ended">Sorry, but this auction is over</div>
+    <% else %>
+      <div class="time_left <%= 'almost_over' if @item.almost_over? %>">
+        Time Left:&nbsp;&nbsp;<strong><%= distance_of_time_in_words_to_now(@item.end_date) %></strong>
+      </div>
+    <% end %>
+    
+    <div class="purchases">
+      <strong><%= @item.bids.count %></strong>&nbsp;&nbsp;bids placed&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+    
+    <div class="deal_is_on">A WTD Charity&nbsp;Auction!</div>
+  </div>
+  
+  
+  <div class="promotion_tabs">
+    <div class="tab_content clearfix">
+      <div id="tab_content_details">
+        <%= @item.description %>
+        <div class="ie_clear"></div>
+      </div>
+    </div>
+  </div>
+</div>

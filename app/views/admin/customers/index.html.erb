@@ -1,0 +1,46 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'New Customer', logout_path %> (log out and redirect to normal registration)</li>
+<% end %>
+
+<% form_tag nil, :method => :get do %>
+  <label for="q"><strong>Email</strong> or <strong>First/Last Name</strong>:</label>
+  <%= text_field_tag 'q' %>
+  <%= submit_tag 'search' %>
+<% end %>
+<br><br>
+
+<% if @type %>
+  <h2><%= pluralize @customers.size, "Customer" %> matching <%= @type %> '<%= params[:q] %>'</h2>
+<% else %>
+  <h2>Last 20 Customers</h2>
+<% end %>
+
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Email</th>
+    <th>First name</th>
+    <th>Last name</th>
+    <th>City</th>
+    <th>State</th>
+    <th>Gender</th>
+    <th>Newsletter subscriber</th>
+  </tr>
+
+<% @customers.each do |customer| %>
+  <tr>
+    <td><%=h customer.user_id %></td>
+    <td><%=h customer.user.email unless customer.user.nil? %></td>
+    <td><%=h customer.first_name %></td>
+    <td><%=h customer.last_name %></td>
+    <td><%=h customer.city %></td>
+    <td><%=h customer.state %></td>
+    <td><%=h customer.female? ? "Female" : "Male" %></td>
+    <td><%=h customer.user.gets_daily_deal_email? ? 'true' : "" %></td>
+    <td><%= link_to 'Impersonate', admin_impersonate_path(:type => 'customer', :id => customer.id) %>&nbsp;&nbsp;&nbsp;</td>
+    <td><%= link_to 'Show', admin_customer_path(customer) %></td>
+    <td><%= link_to 'Edit', edit_admin_customer_path(customer) %></td>
+  </tr>
+<% end %>
+</table>

@@ -1,0 +1,49 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Content Listing', admin_contents_path %></li>
+<% end %>
+
+<%= render :partial => "/admin/shared/tiny_mce" %>
+
+<h2>Edit content</h2>
+
+<% form_for([:admin,@content]) do |f| %>
+  <%= f.error_messages %>
+
+  <!-- <p>
+      <%= f.label :rotation_category %><br>
+      <%=  %>
+      <%= select_tag :content_rotation_category, options_for_select([['-- None --', 0]] + Content::ROTATION_CATEGORIES.collect{|rc| [rc[0].humanize,rc[1]]}, :selected => @content.rotation_category), :name => 'content[rotation_category]', :onchange => "toggleRotationInfo(this.value)" %><br><br>
+    </p> -->
+  
+  <p id="rotation_item" style="<%= "display:none" unless @content.rotation_category > 0 %>">
+    <%= f.label :rotation_item %> (should be next number in sequence, i.e. <strong>3</strong> for <em>event3</em>)<br>
+    <%= f.text_field :rotation_item %><br><br>
+  </p>
+  
+  <p>
+    <%= f.label :name %> <span id="rotation_helper" style="<%= "display:none" unless @content.rotation_category > 0 %>">(use name structure with 'rotation item' from above, i.e. <em>event_title3</em>)</span><br />
+    <%= f.text_field :name %><br><br>
+  </p>
+  <p>
+    <%= f.label :value %><br />
+    <%= f.text_area :value, :cols => 30 %><br><br>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  function toggleRotationInfo(val){
+    if (val > 0){
+      document.getElementById('rotation_item').style.display='block'
+      document.getElementById('rotation_helper').style.display='inline'
+    }
+    else{
+      document.getElementById('rotation_item').style.display='none'
+      document.getElementById('rotation_helper').style.display='none'
+    }
+      
+  }
+  
+</script>

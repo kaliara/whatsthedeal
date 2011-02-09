@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<itemset>
+  <item>
+    <id><%= @featured_promotion.id %></id>
+    <market>washington_dc</market>
+    <neighborhood></neighborhood>
+    <url><%= promotion_url @featured_promotion %>/ptc/lon</url>
+    <image_url>http://sowhatsthedeal.com<%= @featured_promotion.image1.url %></image_url>
+    <title><%= @featured_promotion.name %></title>
+    <highlights><%= @featured_promotion.featured_deal.name %></highlights>
+    <restrictions><%= @featured_promotion.restrictions %></restrictions>
+    <description><%= truncate strip_tags(@featured_promotion.body1), :length => 190 %></description>
+    <value><%= @featured_promotion.featured_deal.value %></value>
+    <price><%= @featured_promotion.featured_deal.price %></price>
+    <required_qty><%= @featured_promotion.quota %></required_qty>
+    <purchased_qty><%= @featured_promotion.purchases %></purchased_qty>
+    <ending_time><%= @featured_promotion.end_date %></ending_time>
+    <category></category>
+    <subcategory></subcategory>
+    <merchant><%= @featured_promotion.business.name %></merchant>
+    <address><%= @featured_promotion.business.street1 %> <%= @featured_promotion.business.street2 %></address>
+    <city><%= @featured_promotion.business.city %></city>
+    <state><%= @featured_promotion.business.state %></state>
+    <zip><%= @featured_promotion.business.zipcode %></zip>
+    <country>US</country>
+    <phone><%= @featured_promotion.business.phone %></phone>
+    <latitude></latitude>
+    <longitude></longitude>
+  </item>
+  <% @other_promotions.each do |promotion| %>
+  <item>
+    <id><%= promotion.id %></id>
+    <market>washington_dc</market>
+    <neighborhood></neighborhood>
+    <url><%= promotion_url promotion %>/ptc/lon</url>
+    <image_url>http://sowhatsthedeal.com<%= promotion.image1.url %></image_url>
+    <title><%= promotion.name %></title>
+    <highlights><%= promotion.featured_deal.name %></highlights>
+    <restrictions><%= promotion.restrictions %></restrictions>
+    <description><%= truncate strip_tags(promotion.body1), :length => 190 %></description>
+    <value><%= promotion.featured_deal.value %></value>
+    <price><%= promotion.featured_deal.price %></price>
+    <required_qty><%= promotion.quota %></required_qty>
+    <purchased_qty><%= promotion.purchases %></purchased_qty>
+    <ending_time><%= promotion.end_date %></ending_time>
+    <category></category>
+    <subcategory></subcategory>
+    <merchant><%= promotion.business.name %></merchant>
+    <address><%= promotion.business.street1 %> <%= promotion.business.street2 %></address>
+    <city><%= promotion.business.city %></city>
+    <state><%= promotion.business.state %></state>
+    <zip><%= promotion.business.zipcode %></zip>
+    <country>US</country>
+    <phone><%= promotion.business.phone %></phone>
+    <latitude></latitude>
+    <longitude></longitude>
+  </item>
+  <% end %>
+</itemset>

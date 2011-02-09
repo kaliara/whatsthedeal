@@ -1,0 +1,38 @@
+<% content_for :sub_nav do %>
+  <% @no_sub_nav = true %>
+<% end %>
+
+
+<% form_tag nil, :method => :get do %>
+  <label for="q"><strong>Email</strong> or <strong>Invoice Number</strong>:</label>
+  <%= text_field_tag 'q' %>
+  <%= submit_tag 'search' %>
+<% end %>
+<br><br>
+
+<% if @type %>
+  <h2><%= pluralize @purchases.size, 'Purchase' %> matching <%= @type %> '<%= params[:q] %>'</h2>
+<% else %>
+  <h2>Last 20 Purchases</h2>
+<% end %>
+
+<table>
+  <tr>
+    <th>Invoice number</th>
+    <th>When <span style="font-size:60%"><%= Time.zone %></span></th>
+    <th>User</th>
+    <th>Deals Purchased</th>
+    <th>Total</th>
+  </tr>
+
+<% @purchases.each do |purchase| %>
+  <tr>
+    <td><%=h purchase.invoice_number %></td>
+    <td><%= purchase.created_at.strftime("%b %e, %Y &nbsp;&nbsp;&nbsp; %I:%M%p ") %></td>
+    <td><%=h purchase.user.email %></td>
+    <td><%=h purchase.coupons.size %></td>
+    <td><%=h number_to_currency(purchase.total) %></td>
+    <td><%= link_to 'Show', admin_purchase_path(purchase) %></td>
+  </tr>
+<% end %>
+</table>

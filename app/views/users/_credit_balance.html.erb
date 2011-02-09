@@ -1,0 +1,12 @@
+<div class="credit_balance">
+  <h3><%= render_content 'credit_balance_header' %></h3>
+  <p class="credit_balance_total"><%= number_to_currency user.credit_total %></p>
+  <p class="referral_message"><%= render_content 'credit_balance_desc' %></p>
+  <div class="referral_link"><%= partner == 3 ? "hpdc.wtddc.com" : "sowhatsthedeal.com" %>/ref/<%= user.referral_link %></div>
+  <div class="share_with_friends">
+    <p>Share with friends!</p>
+    <span><a target="_blank" href="http://www.facebook.com/share.php?u=<%= CGI::escape "#{partner == 3 ? "http://hpdc.wtddc.com/" : HOST_URL}ref/#{user.referral_link}" %>"><img src="/images/facebook.png" /></a></span>
+    <span><a target="_blank" href="http://twitter.com/home?status=<%= CGI::escape "80% off on restaurants, spas, bars from @whatsthedealdc -- $5 off your first purchase at #{partner == 3 ? "hpdc.wtddc.com/" : HOST_DOMAIN}ref/#{user.referral_link}" %>"><img src="/images/twitter.png" /></a></span>
+    <span><a href="mailto:?subject=Come join me at What's the Deal DC and get $5 off!&body=What's the Deal offers sweet discounts on restaurants, bars, theaters, and other cool stuff to do, eat, and see in the Washington DC area. I'm already a member and want you to join me! Use my referral link to sign-up and get $5 off your first purchase.%0A <%= partner == 3 ? "http://hpdc.wtddc.com/" : HOST_URL %>ref/<%= user.referral_link %>"><img src="/images/email.gif" class="email"/></a></span>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>What's The Deal - <%= "*************** PLAYTIME on #{RAILS_ENV.upcase} *************** - " if (RAILS_ENV == 'staging' or RAILS_ENV == 'development') %><%= yield :page_title %></title>
+  <% if mobile %>
+    <%= stylesheet_link_tag 'reset', 'mobile' %>
+  <% else %>
+    <%= stylesheet_link_tag 'reset', 'style' %>
+    <%= stylesheet_link_tag 'reset', 'print', :media => "print" %>
+    <!--[if IE]><%= stylesheet_link_tag 'ie' %><![endif]-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://dealsurf.com/tracker.js?aid=4c570bd9b7441"></script>
+  <% end %>
+  <%= yield :head %>
+  <link rel="apple-touch-icon-precomposed" href="http://sowhatsthedeal.com/apple-touch-icon-precomposed.png"  type="image/png" />
+</head>
+
+
+<body>
+  <%= render :partial => (mobile ? '/layouts/header_m' : '/layouts/header') %>
+  
+  <div class="main_wrapper wrapper clearfix">  
+
+    <div class="page_content clearfix">
+      <%= yield :errors %>
+      
+      <% unless flash[:notice].blank? and flash[:error].blank? %>
+        <div class="flash">
+          <% unless flash[:notice].blank? %><p class="notice"><%= flash[:notice] %></p><% end %>
+          <% unless flash[:error].blank?  %><p class="error"><%= flash[:error] %></p><% end %>
+        </div>
+      <% end %>
+
+      <%= yield %>
+    </div>
+
+  </div> 
+
+   <%= render :partial => '/layouts/footer' unless mobile %>  
+   <%= render :partial => '/layouts/scripts' %>  
+</body>
+</html>

@@ -1,0 +1,141 @@
+<h2>Payment Info</h2>
+
+<% unless current_user %>
+  <p>Already have an account? <%=  link_away("Login into my account", :controller => 'user_session', :action => 'new') %>.</p>
+<% end %>
+
+
+<% form_for :user, @user, :url => {:action => 'payment_send'} do |f| %>
+  <%= f.error_messages %>
+
+  <h3>Credit Card Information</h3>
+  <div style="float:right">
+    <p>We accept visa, mastercard and american express</p>
+  </div>
+  <p>
+    <%= label_tag :name_on_card %><br />
+    <%= text_field_tag :name_on_card %>
+  </p>  
+  <p>
+    <%= label_tag :cart_type %><br />
+    <%= select_tag :card_type, options_for_select([["Visa","visa"], ["MasterCard","mastercard"], ["American Express","american_express"]]) %>
+  </p>
+  <p>   
+    <%= label_tag :number %><br />
+    <%= text_field_tag :number %>
+  </p>  
+  <p>   
+    <%= label_tag :card_verification, "Card Verification Value (CVV)" %><br />
+    <%= text_field_tag :card_verification %>
+  </p>  
+  <p>
+    <%= label_tag :card_expires_on %><br />
+    <%= date_select :card_expires_on, :discard_day => true, :start_year => Date.today.year, :end_year => (Date.today.year+10), :add_month_numbers => true %>
+  </p>
+
+    
+  <h3>Billing Address</h3>
+  <div style="float:right; width:300px">
+    <% if @user.customer.has_billing_address? %>
+      <p>Your billing information was pulled from your profile. You can set your default billing address by updating your profile.</p>
+    <% else %>
+      <p>It doesn't look like you have a complete billing address in your profile. So you will have to fill it in here. You can skip this step in the future by updating your profile.</p>
+    <% end %>
+  </div>
+  <% f.fields_for :customer do |cf| %>
+    <p>
+      <%= cf.label :billing_street1, 'Street 1' %><br />
+      <%= cf.text_field :billing_street1 %>
+    </p>
+    <p>
+      <%= cf.label :billing_street2, 'Street 2' %><br />
+      <%= cf.text_field :billing_street2 %>
+    </p>
+    <p>
+      <%= cf.label :billing_city, 'City' %><br />
+      <%= cf.text_field :billing_city %>
+    </p>
+    <p>
+      <%= cf.label :billing_state, 'State' %><br />
+      <%= cf.select :billing_state, Customer::STATES %>
+    </p>
+    <p>
+      <%= cf.label :billing_zipcode, 'Zip Code' %><br />
+      <%= cf.text_field :billing_zipcode %>
+    </p>
+    
+    <% if cart.shippable_item? %>
+      <h3>Shipping Address</h3>
+      <div style="float:right; width:300px">
+        <% if @user.customer.has_shipping_address? %>
+          <p>Your shipping information was pulled from your profile. You can set your default shipping address by updating your profile.</p>
+        <% else %>
+          <p>It doesn't look like you have a complete shipping address in your profile. So you will have to fill it in here. You can skip this step in the future by updating your profile.</p>
+        <% end %>
+      </div>
+      <p>
+        <%= cf.label :shipping_street1, 'Street 1' %><br />
+        <%= cf.text_field :shipping_street1 %>
+      </p>
+      <p>
+        <%= cf.label :shipping_street2, 'Street 2' %><br />
+        <%= cf.text_field :shipping_street2 %>
+      </p>
+      <p>
+        <%= cf.label :shipping_city, 'City' %><br />
+        <%= cf.text_field :shipping_city %>
+      </p>
+      <p>
+        <%= cf.label :shipping_state, 'State' %><br />
+        <%= cf.select :shipping_state, Customer::STATES %>
+      </p>
+      <p>
+        <%= cf.label :shipping_zipcode, 'Zip Code' %><br />
+        <%= cf.text_field :shipping_zipcode %>
+      </p>
+    <% end %>
+  <% end %>
+  
+  <% unless current_user %>
+    <h3>Account Information</h3>
+    <div style="float:right">
+      <p>You need an account to access your coupons when they become available</p>
+    </div>
+    <% f.fields_for :customer do |cf| %>
+      <p>
+        <%= cf.label :first_name %><br />
+        <%= cf.text_field :first_name %>
+      </p>
+      <p>
+        <%= cf.label :last_name %><br />
+        <%= cf.text_field :last_name %>
+      </p>
+      <p>
+    <% end %>
+    <p>
+      <%= f.label :email %><br />
+      <%= f.text_field :email %>
+    </p>
+    <p>
+      <%= f.label :password %><br />
+      <%= f.password_field :password %>
+    </p>
+    <p>
+      <%= f.label :password_confirmation %><br />
+      <%= f.password_field :password_confirmation %>
+    </p>
+    
+    <% f.fields_for :customer do |cf| %>    
+      <p>
+        <%= cf.label :newsletter_subscriber %><br />
+        <%= cf.check_box :newsletter_subscriber, :checked => true %>
+      </p>
+    <% end %>
+  <% end %>
+  
+  <p>You will have a chance to verify your order before confirming your purchase.</p>
+  <p>
+    <%= f.submit 'Continue' %>
+  </p>
+<% end %>
+

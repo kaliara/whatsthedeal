@@ -1,0 +1,67 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Show this Promotion', special_preview_path(:id => @promotion.id, :password => Promotion::PREVIEW_PASSWORD) %></li>
+  <li><%= link_to 'Edit this Promotion', edit_admin_promotion_path(:id => @promotion.id) %></li>
+  <li><%= link_to 'Show Deals', admin_deals_path(:promotion_id => @promotion.id) %></li>
+  <li>&nbsp;&nbsp;</li>
+  <li><%= link_to 'Promotions Listing', admin_promotions_path %></li>
+  <li><%= link_to 'Live promotions', admin_promotions_path(:live => true) %></li>
+<% end %>
+
+<h2><%= @promotion.name %></h2>
+<br>
+<% form_for([:admin,@promotion]) do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :ad_description4, 'Alternate Promo Name 1 (for 300x250)' %><br />
+    <%= f.text_field :ad_description4 %>
+  </p>
+  <br>
+  <p>
+    <%= f.label :ad_description5, 'Alternate Promo Name 2 (for 160x600)' %><br />
+    <%= f.text_field :ad_description5 %>
+  </p>
+  <br>
+  <p>
+    <%= f.label :ad_description6, 'Alternate Promo Name 3 (for 200x200)' %><br />
+    <%= f.text_field :ad_description6 %>
+  </p>
+  <br>
+  <p>
+    <%= f.label :ad_description7, 'Alternate Promo Name 4 (for 210x90)' %><br />
+    <%= f.text_field :ad_description7 %>
+  </p>
+  <br>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+<br><br>
+<div class="section_content">
+  <h4>300x250</h4>
+  <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="300" height="250" id="api_preview" align="middle">
+  <param name="allowScriptAccess" value="sameDomain" />
+  <param name="allowFullScreen" value="false" />
+  <param name="movie" value="http://sowhatsthedeal.com/images/api_preview.swf?clickTAG=http://sowhatsthedeal.com" /><param name="quality" value="high" /><param name="bgcolor" value="#2963a4" /> <embed src="http://sowhatsthedeal.com/images/api_preview.swf?clickTAG=http://sowhatsthedeal.com" quality="high" bgcolor="#2963a4" width="300" height="250" name="api_preview" align="middle" allowScriptAccess="sameDomain" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer" />
+  </object>
+  <br><br><br>
+  <h4>160x600</h4>
+  <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="160" height="600" id="api2_preview" align="middle">
+  <param name="allowScriptAccess" value="sameDomain" />
+  <param name="allowFullScreen" value="false" />
+  <param name="movie" value="http://sowhatsthedeal.com/images/api2_preview.swf?clickTAG=http://sowhatsthedeal.com" /><param name="quality" value="high" /><param name="bgcolor" value="#2963a4" /> <embed src="http://sowhatsthedeal.com/images/api2_preview.swf?clickTAG=http://sowhatsthedeal.com" quality="high" bgcolor="#2963a4" width="160" height="600" name="api2_preview" align="middle" allowScriptAccess="sameDomain" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer" />
+  </object>
+  <br><br><br>
+  <h4>200x200</h4>
+  <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="200" height="200" id="api3_preview" align="middle">
+  <param name="allowScriptAccess" value="sameDomain" />
+  <param name="allowFullScreen" value="false" />
+  <param name="movie" value="http://sowhatsthedeal.com/images/api3_preview.swf?clickTAG=http://sowhatsthedeal.com" /><param name="quality" value="high" /><param name="bgcolor" value="#2963a4" /> <embed src="http://sowhatsthedeal.com/images/api3_preview.swf?clickTAG=http://sowhatsthedeal.com" quality="high" bgcolor="#2963a4" width="200" height="200" name="api3_preview" align="middle" allowScriptAccess="sameDomain" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer" />
+  </object>
+  <br><br><br>
+  <h4>210x90</h4>
+  <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="210" height="90" id="api4_preview" align="middle">
+  <param name="allowScriptAccess" value="sameDomain" />
+  <param name="allowFullScreen" value="false" />
+  <param name="movie" value="http://sowhatsthedeal.com/images/api4_preview.swf?clickTAG=http://sowhatsthedeal.com" /><param name="quality" value="high" /><param name="bgcolor" value="#2963a4" /> <embed src="http://sowhatsthedeal.com/images/api4_preview.swf?clickTAG=http://sowhatsthedeal.com" quality="high" bgcolor="#2963a4" width="210" height="90" name="api4_preview" align="middle" allowScriptAccess="sameDomain" allowFullScreen="false" type="application/x-shockwave-flash" pluginspage="http://www.adobe.com/go/getflashplayer" />
+  </object>
+</div>

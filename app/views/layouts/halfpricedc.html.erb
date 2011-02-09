@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>Half Price DC - Powered by Whats The Deal - <%= "*************** PLAYTIME on #{RAILS_ENV.upcase} *************** - " if (RAILS_ENV == 'staging' or RAILS_ENV == 'development') %><%= yield :page_title %></title>
+  <%= stylesheet_link_tag 'reset', 'style', 'halfpricedc' %>
+  <%= stylesheet_link_tag 'reset', 'print', :media => "print" %>
+  <!--[if IE]><%= stylesheet_link_tag 'ie' %><![endif]-->
+  <%= javascript_include_tag 'jquery', :cache => true %>
+  <% unless https? %>
+    <script type="text/javascript" src="http://static.ak.fbcdn.net/connect.php/js/FB.Share"></script>
+    <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+  <% end %>
+  <%= yield :head %>
+</head>
+
+
+<body>
+  <%= render :partial => '/layouts/halfpricedc_header' %>
+  
+  <div class="halfpricedc">
+    
+    <div class="main_wrapper wrapper clearfix">  
+
+      <%= render :partial => "/layouts/halfpricedc_sidebar" %>
+      
+      <div class="page_content <%= "more_great_deals" if current_page?(promotions_path) %>">
+        <%= yield :errors %>
+    
+        <% unless flash[:notice].blank? and flash[:error].blank? %>
+          <div class="flash">
+            <% unless flash[:notice].blank? %><p class="notice"><%= flash[:notice] %></p><% end %>
+            <% unless flash[:error].blank?  %><p class="error"><%= flash[:error] %></p><% end %>
+          </div>
+        <% end %>
+        <%= yield %>
+      </div>
+  
+    </div> 
+
+    <%#= render :partial => '/layouts/footer'%>  
+    <%= render :partial => '/layouts/scripts'%>  
+  </div>
+</body>
+
+
+</html>

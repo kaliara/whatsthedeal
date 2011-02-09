@@ -1,0 +1,9 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Cart Listing', admin_carts_path %></li>
+<% end %>
+
+<h3>Cleared Carts</h3>
+
+<div class="section_content">
+  Just cleared <%= @carts_cleared %> carts! <%= @carts_cleared > 30 ? "Wow, that's a lot.  Pat yourself on that back." : "Hmmm, that's not too many.  Just wasn't your day I guess." %>
+</div>

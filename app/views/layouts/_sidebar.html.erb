@@ -1,0 +1,109 @@
+<div class="sidebar">
+  <% if content_exists?('global_announcement_desc') %>
+    <h2><%= render_content 'global_announcement_title' %></h2>
+    <div class="sidebar_content global_announce"><p><%= render_content 'global_announcement_desc' %></p></div>
+  <% end %>
+  
+  <% unless current_user and current_user.gets_daily_deal_email? %>
+    <h2>The Daily Deal</h2>
+    <div class="sidebar_content get_daily_deal">
+      <p>Great DC deals delivered to your inbox!</p>
+      <% form_for :user, :url => quiet_create_user_path, :html => {:method => :post} do |f| %>
+        <%= f.hidden_field :gets_daily_deal_email, :value => 1 %>
+        <%= hidden_field_tag 'user[customer_attributes][first_name]', Customer::STOCK_FIRST_NAME %>
+        <%= hidden_field_tag 'user[customer_attributes][last_name]',  Customer::STOCK_LAST_NAME %>
+        <%= f.text_field :email, :value => '', :class => 'daily_deal_textfield' %>
+  	    <%= f.submit 'Signup', :class => 'primary small_primary' %>
+  	  <% end %>
+    </div>
+  <% end %>
+
+  <% unless @side_promotions.blank? %>
+    <h2><%= link_to "More Great Deals", promotions_path %></h2>
+    <div class="sidebar_content">
+      <% @side_promotions.each do |promotion| %>
+        <div class="deal_preview clearfix">
+          <img src="<%= promotion.image1.url %>" class="deal_thumbnail" />
+          <h4><%= link_to truncate(promotion.name, :length => 50), promotion_url(promotion), :title => promotion.name %></h4>
+          <dl><dt>Days Left: </dt><dd><%= ((promotion.end_date - Time.now.utc)/86400) < 1 ? "< 1" : ((promotion.end_date - Time.now.utc)/86400).floor %></dd></dl>
+          <dl class="last">Purchases: <dt></dt><dd>
+            <% if promotion.id == 291 %>
+              <%= Promotion.find(293).purchases + Promotion.find(294).purchases %>
+            <% else %>
+              <%= promotion.purchases %>
+            <% end %>
+          </dd></dl>
+        </div>
+      <% end %>
+    
+      <span class="see_all_deal"><%= link_to "See All Current Deals", promotions_url %></span>
+    </div>
+  <% end %>
+  
+  <h2><a href="/promotions/map">Deals Near Me</a><br/></h2>
+  <div class="sidebar_content">
+    <p><strong>Find out what deals are available near you.</strong></p>
+    <br/>
+    <a href="/promotions/map"><img style="width: 265px; display: block;" alt="Deals Near Me" src="/images/map_preview.png"/></a>
+  </div>
+
+  <% unless current_page?(events_url) or current_page?(:controller => 'events', :action => 'show') %>
+    <% unless Event.in_rotation.empty? and Shoutout.in_rotation.empty? %>
+      <h2>Events &amp; Shoutouts</h2>
+    <% end %>
+  
+    <% unless Event.in_rotation.empty? %>
+      <% @event = Event.in_rotation[rand(Event.in_rotation.size).to_i] %>
+      <div class="sidebar_content clearfix">
+        <h3><%= link_to @event.header, @event %></h3>
+        <div class="event">
+          <%= link_to image_tag(@event.image1.url, :alt => @event.header), @event %>
+          <p><%= @event.description %>&nbsp;<%= link_to @event.read_more_text, @event %></p> 
+        </div>
+      </div>
+    <% end %>
+
+    <% unless Shoutout.in_rotation.empty? %>
+      <% @shoutout = Shoutout.in_rotation[rand(Shoutout.in_rotation.size).to_i] %>
+      <div class="sidebar_content clearfix">
+        <h3><%= @shoutout.header %></h3>
+        <div class="partner_shout_out">
+          <img src="<%= @shoutout.image1.url %>" alt="Partner Picture" />
+          <p><%= @shoutout.description %></p> 
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+  
+  <% unless https? %>
+    <div class="sidebar_content">
+      <h2>Connect With Us</h2>
+      <div class="social_buttons clearfix">
+        <div class="facebook_like">
+          <iframe src="http://www.facebook.com/plugins/like.php?href=http://www.facebook.com/pages/Washington-DC/Whats-the-Deal/113164707517&amp;layout=standard&amp;show_faces=true&amp;width=200&amp;action=like&amp;font&amp;colorscheme=light&amp;height=35" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+        </div>
+        <div class="social_pages">
+          <a href="http://www.facebook.com/pages/Washington-DC/Whats-the-Deal/113164707517" id="footer_facebook">Facebook</a>&nbsp;&nbsp;&nbsp;
+          <a href="http://www.twitter.com/whatsthedealdc" id="footer_twitter">Twitter</a>&nbsp;&nbsp;&nbsp;
+          <a href="http://feeds.feedburner.com/sowhatsthedeal/washington" class="footer_rss">RSS</a>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  
+  <div class="sidebar_content last">
+    <h2>Share With Friends</h2>
+    <div class="refer_a_friend"><%= link_to "Refer a friend, grab $5", referral_info_url, :class => "five_dollar" %></div>
+    <% if current_user and !https? %>
+      <div class="social_buttons clearfix">
+        <div class="twitter_share">
+          <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://sowhatsthedeal.com/ref/<%= current_user.referral_link %>" data-text="Up to 80% off bars, restaurants, theater and other fun things in DC" data-count="none" data-via="whatsthedeal">Tweet</a>
+        </div>
+        <div class="facebook_share">
+          <a name="fb_share" type="button" share_url="sowhatsthedeal.com/ref/<%= current_user.referral_link %>?foo=bar">SHARE</a> 
+        </div>
+      </div>
+    <% end %>
+  </div>
+  
+</div>

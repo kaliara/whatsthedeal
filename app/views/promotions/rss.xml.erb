@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+<channel>
+  <title>What's The Deal</title>
+  <link>http://sowhatsthedeal.com</link>
+  <description>This week's featured deal</description>
+  <lastBuildDate><%= @promotions.first.created_at %></lastBuildDate>
+  <language>en-us</language>
+
+  <% @promotions.each do |promotion| %>
+    <item>
+      <title><%= promotion.name.gsub(/\&/, "&amp;").gsub(/\</, "&lt;").gsub(/\>/, "&gt;") %></title>
+      <link><%= promotion_url promotion %></link>
+      <guid><%= promotion_url promotion %></guid>
+      <pubDate><%= promotion.created_at %></pubDate>
+      <description><%= strip_tags(promotion.body1).gsub(/\&/, "&amp;").gsub(/\</, "&lt;").gsub(/\>/, "&gt;") %></description>
+    </item>
+  <% end %>
+  
+</channel>
+</rss>

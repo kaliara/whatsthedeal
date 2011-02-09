@@ -1,0 +1,83 @@
+<% content_for :sub_nav do %>
+  <% @no_sub_nav = true %>
+<% end %>
+<br><br>
+
+<div class="datepicker clearfix">
+  <% form_tag do %>
+    &nbsp;
+    <%= hidden_field_tag 'start_date', Date.commercial(Date.today.year, Date.today.cweek, 1).strftime("%m/%d/%Y"), :id => 'start_date_this_week' %>
+    <%= hidden_field_tag 'end_date', Date.commercial(Date.today.year, Date.today.cweek, 7).strftime("%m/%d/%Y"), :id => 'end_date_this_week' %>
+    <%= submit_tag 'This Week' %>
+  <% end %>
+  <% form_tag do %>
+    <span>or</span>&nbsp;
+    <%= hidden_field_tag 'start_date', (Date.today - 1.day).strftime("%m/%d/%Y"), :id => 'start_date_last_week' %>
+    <%= hidden_field_tag 'end_date', (Date.today - 1.day).strftime("%m/%d/%Y"), :id => 'end_date_last_week' %>
+    <%= submit_tag 'Yesterday' %>
+  <% end %>
+  <% form_tag do %>
+    <span>or</span>&nbsp;
+    <%= hidden_field_tag 'start_date', Date.today.strftime("%m/%d/%Y"), :id => 'start_date_today' %>
+    <%= hidden_field_tag 'end_date', Date.today.strftime("%m/%d/%Y"), :id => 'end_date_today' %>
+    <%= submit_tag 'Today' %>
+  <% end %>
+  <% form_tag do %>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <span>Specific Range:</span>
+    <%= text_field_tag 'start_date', @start_date.strftime("%m/%d/%Y"), :size => 10 %>
+    &nbsp;&nbsp;to&nbsp;&nbsp;
+    <%= text_field_tag 'end_date', @end_date.strftime("%m/%d/%Y"), :size => 10 %>
+    <%= submit_tag 'Filter by Date' %>
+  <% end %>
+</div>
+
+
+<h2>Affiliate Performance</h2>
+<div class="clearfix">
+  <div class="section_element">
+    <h3><%= @start_date.strftime("%B %e") %> - <%= @end_date.strftime("%B %e") %></h3>
+    <div class="section_content">
+      <table>
+        <tr>
+          <th>Affiliate</th>
+          <th># of Subscribers</th>
+          <th>$ per Subscriber</th>
+          <th>Subscriber Total $$</th>
+          <td width="50"></td>
+          <th>$ in Qualified Purchasers</th>
+          <th>Profit Share %</th>
+          <th>Purchases Total $$</th>
+          <td width="100"></td>
+          <th>Earnings Total</th>
+        </tr>
+        <% @businesses.each do |business| %>
+        <%
+           subscribers = business.origins.collect{|o| o.subscribers(@start_date, @end_date).size}.sum
+           qualified_purchasers_profit = business.origins.collect{|o| o.purchases_profit(@start_date, @end_date)}.sum
+        %>
+          <tr>
+            <td><%= business.name %></td>
+            <td><%= subscribers %></td>
+            <td><%= number_to_currency business.subscriber_rate %></td>
+            <td><strong><%= number_to_currency subscribers * business.subscriber_rate %></strong></td>
+            <td width="50"></td>
+            <td><%= number_to_currency qualified_purchasers_profit %></td>
+            <td><%= number_to_percentage business.purchaser_rate, :precision => 2 %></td>
+            <td><strong><%= number_to_currency qualified_purchasers_profit * business.purchaser_rate / 100.00 %></strong></td>
+            <td width="100"></td>
+            <td class="total"><%= number_to_currency((subscribers * business.subscriber_rate) + (qualified_purchasers_profit * business.purchaser_rate / 100.00)) %></td>
+          </tr>
+        <% end %>
+      </table>
+    </div>
+  </div>  
+</div>
+<br><br>
+
+
+<script type="text/javascript" charset="utf-8">
+  $("#start_date").datepicker();
+  $("#end_date").datepicker();
+  //$("#total1 strong").html($("#total2 strong").html());
+</script>

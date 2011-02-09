@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<promotion id="<%= @promotion.id %>">
+  <name><%= @promotion.name.gsub(/\&/, "&amp;").gsub(/\</, "&lt;").gsub(/\>/, "&gt;") unless @promotion.name.nil? %></name>
+  <deal><%= @promotion.featured_deal.name.gsub(/\&/, "&amp;").gsub(/\</, "&lt;").gsub(/\>/, "&gt;") unless @promotion.featured_deal.name.nil? %></deal>
+  <description><%= @promotion.ad_description.gsub(/\&/, "&amp;").gsub(/\</, "&lt;").gsub(/\>/, "&gt;") unless @promotion.ad_description.nil? %></description>
+  <image>http://sowhatsthedeal.com<%= @promotion.ad_image1.url %></image>
+  <url><%= promotion_url @promotion %></url>
+  <value><%= number_to_currency @promotion.featured_deal.value, :precision => has_cents?(@promotion.featured_deal.value) ? 2 : 0 %></value>
+  <price><%= number_to_currency @promotion.featured_deal.price, :precision => has_cents?(@promotion.featured_deal.price) ? 2 : 0 %></price>
+  <time_left><%= distance_of_time_in_words_to_now @promotion.end_date %></time_left>
+  <w_description><%= @promotion.ad_description2.gsub(/\&/, "&amp;").gsub(/\</, "&lt;").gsub(/\>/, "&gt;") unless @promotion.ad_description2.nil? %></w_description>
+  <w_image>http://sowhatsthedeal.com<%= @promotion.ad_image2 %></w_image>
+  <w_one_liner><%= @promotion.ad_description3.gsub(/\&/, "&amp;").gsub(/\</, "&lt;").gsub(/\>/, "&gt;") unless @promotion.ad_description3.nil? %></w_one_liner>
+  <w_image2>http://sowhatsthedeal.com<%= @promotion.ad_image3 %></w_image2>
+  <savings><%= number_to_percentage (1 - (@promotion.featured_deal.price / @promotion.featured_deal.value).to_f) * 100, :precision => 0 %></savings>
+  <date><%= Time.zone.now.strftime("%B %d") %></date>
+  <alt_promo_name1><%= @promotion.ad_description4.gsub(/\&/, "&amp;").gsub(/\</, "&lt;").gsub(/\>/, "&gt;") unless @promotion.ad_description4.nil? %></alt_promo_name1>
+  <alt_promo_name2><%= @promotion.ad_description5.gsub(/\&/, "&amp;").gsub(/\</, "&lt;").gsub(/\>/, "&gt;") unless @promotion.ad_description5.nil? %></alt_promo_name2>
+  <alt_promo_name3><%= @promotion.ad_description6.gsub(/\&/, "&amp;").gsub(/\</, "&lt;").gsub(/\>/, "&gt;") unless @promotion.ad_description6.nil? %></alt_promo_name3>
+  <alt_promo_name4><%= @promotion.ad_description7.gsub(/\&/, "&amp;").gsub(/\</, "&lt;").gsub(/\>/, "&gt;") unless @promotion.ad_description7.nil? %></alt_promo_name4>
+</promotion>

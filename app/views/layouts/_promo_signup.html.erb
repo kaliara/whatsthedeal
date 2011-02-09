@@ -1,0 +1,14 @@
+<div class="sidebar promo_signup">
+  <h2>Get the Daily Deal</h2>
+  <p style="clear:both">Great DC deals delivered to your inbox!</p>
+  <div class="arrow"></div>
+  <div class="sidebar_content last get_daily_deal">
+    <% form_for :user, :url => quiet_create_user_path, :html => {:method => :post} do |f| %>
+      <%= f.hidden_field :gets_daily_deal_email, :value => 1 %>
+      <%= hidden_field_tag 'user[customer_attributes][first_name]', Customer::STOCK_FIRST_NAME %>
+      <%= hidden_field_tag 'user[customer_attributes][last_name]',  Customer::STOCK_LAST_NAME %>
+      <%= f.text_field :email, :value => '', :class => 'daily_deal_textfield' %>
+	    <%= f.submit 'Signup', :class => 'primary small_primary' %>
+	  <% end %>
+  </div>
+</div>

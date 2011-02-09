@@ -1,0 +1,25 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'New Event', new_admin_event_path %></li>
+<% end %>
+
+<h2>Events</h2>
+
+<table>
+  <tr>
+    <th>Header</th>
+    <th>Rotation Start date</th>
+    <th>Rotation End date</th>
+  </tr>
+
+<% @events.each do |event| %>
+  <tr class="<%= "inactive" unless event.in_rotation? %>">
+    <td><%=h event.header %></td>
+    <td><%=h event.rotation_start_date.strftime("%b %d, %Y") %></td>
+    <td><%=h event.rotation_end_date.strftime("%b %d, %Y") %></td>
+    <td><%= link_to 'RSVP List', admin_event_rsvp_list_path(event) %></td>
+    <td><%= link_to 'Show', admin_event_path(event) %></td>
+    <td><%= link_to 'Edit', edit_admin_event_path(event) %></td>
+    <td><%= link_to 'Destroy', admin_event_path(event), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>

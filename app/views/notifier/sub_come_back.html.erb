@@ -1,0 +1,111 @@
+<html>
+	<body>
+		<table bgcolor="#0059a9" border="0" cellpadding="0" cellspacing="0" width="100%">
+			<tbody>
+				<tr>
+					<td align="center">
+						<table border="0" cellpadding="0" cellspacing="0" width="600">
+							<tbody>
+								<tr>
+									<td>
+										<table border="0" cellpadding="0" cellspacing="0" width="600">
+											<tbody>
+												<tr>
+													<td align="left" style="font-size: 0pt;" valign="top">
+														<a href="http://sowhatsthedeal.com"><img alt="What's the Deal - " border="0" height="77" src="http://sowhatsthedeal.com/emails/new_logo.png" width="144" /></a></td>
+													<td align="left" style="font-size: 0pt;" valign="top">
+														<img alt="Today's Deal is" height="77" src="http://sowhatsthedeal.com/emails/new_banner.png" width="330" /></td>
+													<td align="left" valign="top">
+														<table border="0" cellpadding="0" cellspacing="0">
+															<tbody>
+																<tr>
+																	<td align="left" style="font-size: 0pt;" valign="top">
+																		<a href="http://sowhatsthedeal.com/promotions"><img border="0" height="38" src="http://sowhatsthedeal.com/emails/new_currentdeals_link.png" style="border: medium none ;" width="126" /></a></td>
+																</tr>
+																<tr>
+																	<td align="left" style="font-size: 0pt;" valign="top">
+																		<a href="http://sowhatsthedeal.com/my_account"><img border="0" height="39" src="http://sowhatsthedeal.com/emails/new_myaccount_link.png" style="border: medium none ;" width="126" /></a></td>
+																</tr>
+															</tbody>
+														</table>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<table border="0" cellpadding="0" cellspacing="0" class="featured_deal" style="background-color: rgb(1, 48, 73);" width="600">
+											<tbody>
+												<tr>
+													<td align="left" class="main" style="padding: 10px;" valign="top" width="600">
+													  <p style="margin: 0pt 0pt 16px; padding: 0pt; font-family: Lucida,sans-serif; font-size: 18px; font-weight: normal; color: rgb(238, 238, 238); line-height: 1.2em;">
+														  <strong>Try WTD and use your <span style="color: rgb(255, 165, 0);">FREE credit</span>.</strong></p>
+  													<p style="margin: 0pt 0pt 16px; padding: 0pt; font-family: Lucida,sans-serif; font-size: 14px; font-weight: normal; color: rgb(238, 238, 238); line-height: 1.2em;">
+  															We noticed it's been a while since you kicked it with WTD (and we're really self conscious). Like cookies and cream, peanut butter and jelly, and Sonny &amp; Cher (pre-divorce), you and WTD make a great team and we'd love another chance to prove it.</p>
+														<% if !@user.credits.empty? and @user.credits.last.created_at < 5.hours.ago %>
+  														<p style="margin: 0pt 0pt 16px; padding: 0pt; font-family: Lucida,sans-serif; font-size: 14px; font-weight: normal; color: rgb(238, 238, 238); line-height: 1.2em;">
+  															Shop anytime in the next 2 weeks and <span style="color: rgb(255, 165, 0);"><strong style="color: rgb(245, 167, 58);">use your $<%= @user.credit_total.to_i %> credit towards any first purchase</strong></span>. Be sure to log into your account with this (<strong style="color: #fff"><%= @user.email %></strong>)!
+														<% else %>
+  														<p style="margin: 0pt 0pt 16px; padding: 0pt; font-family: Lucida,sans-serif; font-size: 14px; font-weight: normal; color: rgb(238, 238, 238); line-height: 1.2em;">
+  															Shop again anytime in the next 2 weeks and <span style="color: rgb(255, 165, 0);"><strong style="color: rgb(245, 167, 58);">get $3 off your purchase</strong></span>. In fact, we've already loaded the credit into your account (<strong style="color: #fff);"><%= @user.email %></strong>)!</p>
+  													<% end %>
+  													
+  													<% unless @user.changed_password? %>
+  													  <p style="margin: 10px; padding: 10px; background:#CEE7F9">
+  													    We've created an account for you at WTD which can be accessed with the following login:<br><br>
+                                email: <strong><%= @user.email %></strong><br>
+                                password: <strong><%= @user.temporary_password %></strong>
+                                <br><br>
+                                <a href="http://sowhatsthedeal.com/login" style="font-weight: bold; color: rgb(18, 121, 175);">Log in now.</a>
+  													  </p>
+														<% end %>
+														
+														<p style="margin: 25px 0pt 16px; padding: 0pt; font-family: Lucida,sans-serif; font-size: 14px; font-weight: normal; color: rgb(238, 238, 238); line-height: 1.2em;">
+															Save <strong><span style="color: rgb(255, 165, 0);">even more</span></strong> on great local deals with this special offer:</p>
+														<table border="0" cellpadding="0" cellspacing="0" class="deal_items" width="580">
+															<tbody>
+																<tr>
+																	<td align="center" style="padding-bottom: 20px;" valign="top" width="180">
+																		<a href="http://sowhatsthedeal.com/promotions/189?utm_source=comebackemail&amp;utm_medium=email&amp;utm_campaign=comeback" style="font-family: Lucida,sans-serif; font-size: 12px; font-weight: bold; color: rgb(18, 121, 175);"></a><a href="http://sowhatsthedeal.com/promotions/189?utm_source=comebackemail&amp;utm_medium=email&amp;utm_campaign=comeback" style="font-family: Lucida,sans-serif; font-size: 12px; font-weight: bold; color: rgb(18, 121, 175);"><img border="0" height="120" src="http://sowhatsthedeal.com/dc/promotions/189/image1.png?1287444217" style="border: 3px solid rgb(153, 153, 153); display: block; margin-bottom: 7px;" width="170" /></a><a href="http://sowhatsthedeal.com/promotions/189?utm_source=comebackemail&amp;utm_medium=email&amp;utm_campaign=comeback" style="font-family: Lucida,sans-serif; font-size: 12px; font-weight: bold; color: rgb(18, 121, 175);">$<%= [65 - @user.credit_total.to_i, 0].max %> for a One Month Unlimited Membership at Centered Yoga</a></td>
+																	<td align="center" style="padding: 0pt 20px 20px;" valign="top" width="180">
+																		<a href="http://sowhatsthedeal.com/promotions/192?utm_source=comebackemail&amp;utm_medium=email&amp;utm_campaign=comeback" style="font-family: Lucida,sans-serif; font-size: 12px; font-weight: bold; color: rgb(18, 121, 175);"></a><a href="http://sowhatsthedeal.com/promotions/192?utm_source=comebackemail&amp;utm_medium=email&amp;utm_campaign=comeback" style="font-family: Lucida,sans-serif; font-size: 12px; font-weight: bold; color: rgb(18, 121, 175);"><img border="0" height="120" src="http://sowhatsthedeal.com/dc/promotions/192/image1.jpg?1287442787" style="border: 3px solid rgb(153, 153, 153); display: block; margin-bottom: 7px;" width="170" /></a><a href="http://sowhatsthedeal.com/promotions/192?utm_source=comebackemail&amp;utm_medium=email&amp;utm_campaign=comeback" style="font-family: Lucida,sans-serif; font-size: 12px; font-weight: bold; color: rgb(18, 121, 175);">$<%= [20 - @user.credit_total.to_i, 0].max %> for $40 Worth of Food and Drink at Maddy's in Dupont</a></td>
+																	<td align="center" style="padding-bottom: 20px;" valign="top" width="180">
+																		<a href="http://sowhatsthedeal.com/promotions/200?utm_source=comebackemail&amp;utm_medium=email&amp;utm_campaign=dailydeal" style="font-family: Lucida,sans-serif; font-size: 12px; font-weight: bold; color: rgb(18, 121, 175);"></a><a href="http://sowhatsthedeal.com/promotions/200?utm_source=comebackemail&amp;utm_medium=email&amp;utm_campaign=comeback" style="font-family: Lucida,sans-serif; font-size: 12px; font-weight: bold; color: rgb(18, 121, 175);"><img border="0" height="120" src="http://sowhatsthedeal.com/dc/promotions/200/image1.jpg?1287442599" style="border: 3px solid rgb(153, 153, 153); display: block; margin-bottom: 7px;" width="170" /></a><a href="http://sowhatsthedeal.com/promotions/200?utm_source=comebackemail&amp;utm_medium=email&amp;utm_campaign=comeback" style="font-family: Lucida,sans-serif; font-size: 12px; font-weight: bold; color: rgb(18, 121, 175);">$<%= [10 - @user.credit_total.to_i, 0].max %> for $20 Worth of Sandwiches, Hummus, and Drinks at Shawarma Spot</a></td>
+																</tr>
+															</tbody>
+														</table>
+														<p style="margin: 25px 0pt 16px; padding: 0pt; font-family: Lucida,sans-serif; font-size: 14px; font-weight: normal; color: rgb(238, 238, 238); line-height: 1.2em;">
+															<a href="http://sowhatsthedeal.com/my_deals" style="color: rgb(18, 121, 175);"><strong>Click here</strong></a> to start saving!</p>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<br />
+						<br />
+						<table bgcolor="#014164" border="0" cellpadding="0" cellspacing="0" class="footer" style="margin-bottom: 20px;" width="600">
+							<tbody>
+								<tr>
+									<td style="padding: 15px;">
+										<p style="margin: 0pt 0pt 10px; color: rgb(207, 207, 207); font-family: Lucida,sans-serif; font-size: 10px; font-weight: normal; line-height: 15px; text-align: left;">
+											Questions? Comments? Random rants? Visit our <a href="http://sowhatsthedeal.com/faq" style="color: rgb(148, 191, 242); font-family: Lucida,sans-serif; font-size: 10px; font-weight: normal;">Frequently Asked Questions</a> section, e-mail us at <a href="mailto:support@sowhatsthedeal.com" style="color: rgb(148, 191, 242); font-family: Lucida,sans-serif; font-size: 10px; font-weight: normal;">support@sowhatsthedeal.com</a> or call us: (888) 765-3481.</p>
+										<p style="margin: 0pt 0pt 10px; color: rgb(207, 207, 207); font-family: Lucida,sans-serif; font-size: 10px; font-weight: normal; line-height: 15px; text-align: left;">
+											Please add <a href="mailto:sales@e.sowhatsthedeal.com" style="color: rgb(148, 191, 242); font-family: Lucida,sans-serif; font-size: 10px; font-weight: normal;">sales@e.sowhatsthedeal.com</a> to your address book or safe sender list so our emails get to your inbox. This email was sent by What's the Deal, LLC | 1921 Florida Ave, NW | Washington, DC 20009 | US.</p>
+										<p style="margin: 0pt 0pt 10px; color: rgb(207, 207, 207); font-family: Lucida,sans-serif; font-size: 10px; font-weight: normal; line-height: 15px; text-align: left;">You are receiving this e-mail because you signed up for a WTD Mailing list. If you no longer wish to receive messages from us, you can <a href="http://sowhatsthedeal.com/my_account_email" style="color: rgb(148, 191, 242); font-family: Lucida,sans-serif; font-size: 10px; font-weight: normal;">update your email preferences</a>.</p>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<br />
+		<br />
+	</body>
+</html>

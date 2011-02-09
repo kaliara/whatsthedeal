@@ -1,0 +1,32 @@
+<br><br>
+<h2>Listing promotions</h2>
+
+<table class="business_table">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Deals</th>
+    <th><strong>Purchases</strong></th>
+    <th>Quota</th>
+    <th>Live on WTD?</th>
+    <th>End date</th>
+  </tr>
+
+<% @promotions.each do |promotion| %>
+  <tr>
+    <td><%=h promotion.id %></td>
+    <td class="align_left"><%= link_to promotion.name, "/promotions/#{promotion.id}/special_preview" %></td>
+    <td><%=h promotion.deals.count %></td>
+    <td><strong><%= link_to promotion.purchases, :controller => 'purchases', :action => 'show', :id => promotion.id %></strong></td>
+    <td><%=h promotion.quota %></td>
+    <td><%=h promotion.active? ? "Yes" : "No" %></td>
+    <td class="last"><%=h (promotion.end_date - 5.hours).strftime("%b %e, %Y") %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<div class="bottom_link_next_page">
+  <%= link_to "Back to Home", business_home_path %>
+</div>

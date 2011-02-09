@@ -1,0 +1,78 @@
+<% content_for :sub_nav do %>
+  <% @no_sub_nav = true %>
+<% end %>
+<br><br>
+
+<div class="datepicker clearfix">
+  <% form_tag do %>
+    &nbsp;
+    <%= hidden_field_tag 'start_date', Date.commercial(Date.today.year, Date.today.cweek, 1).strftime("%m/%d/%Y"), :id => 'start_date_this_week' %>
+    <%= hidden_field_tag 'end_date', Date.commercial(Date.today.year, Date.today.cweek, 7).strftime("%m/%d/%Y"), :id => 'end_date_this_week' %>
+    <%= submit_tag 'This Week' %>
+  <% end %>
+  <% form_tag do %>
+    <span>or</span>&nbsp;
+    <%= hidden_field_tag 'start_date', (Date.today - 1.day).strftime("%m/%d/%Y"), :id => 'start_date_last_week' %>
+    <%= hidden_field_tag 'end_date', (Date.today - 1.day).strftime("%m/%d/%Y"), :id => 'end_date_last_week' %>
+    <%= submit_tag 'Yesterday' %>
+  <% end %>
+  <% form_tag do %>
+    <span>or</span>&nbsp;
+    <%= hidden_field_tag 'start_date', Date.today.strftime("%m/%d/%Y"), :id => 'start_date_today' %>
+    <%= hidden_field_tag 'end_date', Date.today.strftime("%m/%d/%Y"), :id => 'end_date_today' %>
+    <%= submit_tag 'Today' %>
+  <% end %>
+  <% form_tag do %>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <span>Specific Range:</span>
+    <%= text_field_tag 'start_date', @start_date.strftime("%m/%d/%Y"), :size => 10 %>
+    &nbsp;&nbsp;to&nbsp;&nbsp;
+    <%= text_field_tag 'end_date', @end_date.strftime("%m/%d/%Y"), :size => 10 %>
+    <%= submit_tag 'Filter by Date' %>
+  <% end %>
+</div>
+
+
+<h2>Affiliate Lifetime Purchases</h2>
+<div class="clearfix">
+  <h3><%= @start_date.strftime("%B %e") %> - <%= @end_date.strftime("%B %e") %></h3>
+  <div class="section_content">
+    <table>
+      <tr>
+        <th width="200">Affiliate</th>
+        <th># of Unique Users</th>
+        <th># of Subscribers</th>
+        <th># of Purchases</th>
+        <th>Lifetime Revenue</th>
+        <th>Lifetime Profit</th>
+        <td width="100"></td>
+        <th width="200">Amount Paid to Affiliate</th>
+      </tr>
+      <% @businesses.each do |business| %>
+        <%
+          affiliate_origins = Origin.find(:all, :conditions => {:business_id => business.id}).collect{|o| o.id}
+          subscribers = User.find(:all, :conditions => {:gets_daily_deal_email => true, :origin_id => affiliate_origins}).delete_if{|s| s.created_at < @start_date or s.created_at > @end_date}.size
+          lifetime_users = User.find(:all, :conditions => {:origin_id => affiliate_origins}).delete_if{|s| s.created_at < @start_date or s.created_at > @end_date}.uniq
+          lifetime_purchases = lifetime_users.collect{|u| u.purchases}.flatten.delete_if{|s| s.created_at < @start_date or s.created_at > @end_date}
+          lifetime_purchases_total = lifetime_purchases.collect{|p| p.total}.sum
+          lifetime_purchases_profit = lifetime_purchases.collect{|p| p.profit}.sum
+        %>
+        <tr>
+          <td><%= business.name %></td>
+          <td style="text-align: center"><%= lifetime_users.size %></td>
+          <td style="text-align: center"><%= subscribers %></td>
+          <td style="text-align: center"><%= lifetime_purchases.size %></td>
+          <td class="total"><strong><%= number_to_currency lifetime_purchases_total %></strong></td>
+          <td><strong><%= number_to_currency lifetime_purchases_profit %></strong></td>
+          <td width="100"></td>
+          <td><%= number_to_currency((subscribers * business.subscriber_rate) + (lifetime_purchases_profit * business.purchaser_rate / 100.00)) %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>  
+
+<script type="text/javascript" charset="utf-8">
+  $("#start_date").datepicker();
+  $("#end_date").datepicker();
+</script>

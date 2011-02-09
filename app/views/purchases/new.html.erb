@@ -1,0 +1,251 @@
+<% content_for :page_title do %>Ready to Purchase!<% end %>
+
+<% unless @other_promotions.nil? or @other_promotions.empty? %>  
+  <div class="cart_other_deals_sidebar clearfix">
+    <h3>Check out our other great deals</h3>
+    <% @other_promotions.each do |promotion| %>
+      <div class="cart_other_deal clearfix">
+        <%= image_tag promotion.image1.url %><br>
+        <%= link_to (truncate(promotion.featured_deal.name + " at " + promotion.business.name, :length => 100)), promotion_path(promotion, :clicked_other_promotion => true) %>
+        <% form_for @cart_item do |f| -%>
+          <%= hidden_field_tag "cart_items[0][deal_id]", promotion.featured_deal.id %>
+          <%= hidden_field_tag "added_more_great_deal_to_cart", true %>
+          <%= hidden_field_tag "cart_items[0][quantity]", 1 %>
+          <%= f.submit 'Add to Cart', :class => "primary" %>                  
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<div class="section_element">
+  <%= render :partial => "/carts/cart" %>
+</div>
+
+<%# if @last_credit and @last_credit.created_at < 2.minutes.ago %>
+  <div class="section_element">
+    <div class="have_promo_code" style="<%= 'display: none' unless params[:code].blank? %>"><%= link_to "Have a Promo Code?", "#", :onclick => "$('.promo_code').show(); $('.have_promo_code').hide(); return false;" %></div>
+    <div class="promo_code" style="<%= 'display: none' if params[:code].blank? %>">
+      <% form_for @credit do |f| -%>
+        <label><%= render_content('promo_code_box_label') %></label>
+        <%= text_field_tag 'code', params[:code], :size => 19 %>
+        <%= f.submit 'Apply', :class => "secondary" %>
+      <% end -%>
+    </div>
+  </div>
+<%# end %>
+
+
+
+<% form_for @purchase, :url => {:action => 'create'}, :html => {:onsubmit => "getElementById('purchase_loading').style.display=''; getElementById('confirm_purchase_submit').style.display='none';"} do |f| %>
+  <%= display_error_messages(f.error_messages) %>
+  
+  <%= f.hidden_field :invoice_number, :value => Time.now.strftime("%y%m%d%H%M%S") %>
+  <%= f.hidden_field :customer_ip, :value => request.remote_ip %>
+  <%= f.hidden_field :customer_email, :value  => current_user.email %>
+  <%= f.hidden_field :description, :value => (cart.cart_items.collect{|c| "#{c.deal.name}(#{c.quantity})"}).join(',') %>
+
+  <% if cart.total > 0 %>
+    <% unless @existing_payment_profile %>
+      <div class="clearfix">
+        <div class="section_element">
+          <div class="section_header">
+            <h3>Credit Card Information</h3>
+          </div>
+          <% f.fields_for :payment_profile do |ppf| %>
+            <div class="section_content clearfix">
+              <div class="sidebar_text">
+                <p>We accept Visa, MasterCard, <br>and American Express.</p>
+                <p>
+                  <img src="/images/visa.gif"><img src="/images/mastercard.gif"><img src="/images/americanexpress.gif"><br><br><br>
+                  <span class="note">3 digits on back of card (MC/Visa) or 4 digits on front of card (AMEX)</span>
+                </p>
+              </div>
+
+              <% ppf.fields_for :credit_card do |ccf| %>
+                <div class="label_input_form">
+                  <%= ccf.label :first_name %>
+                  <%= ccf.text_field :first_name, :value => ((params[:purchase].blank? or params[:purchase][:payment_profile_attributes].blank? or  params[:purchase][:payment_profile_attributes][:credit_card][:first_name].blank?) ? @user.customer.first_name : params[:purchase][:payment_profile_attributes][:credit_card][:first_name]), :class => "text" %>
+                </div>
+
+                <div class="label_input_form">
+                  <%= ccf.label :last_name %>
+                  <%= ccf.text_field :last_name, :value => ((params[:purchase].blank? or params[:purchase][:payment_profile_attributes].blank? or params[:purchase][:payment_profile_attributes][:credit_card][:last_name].blank?) ? @user.customer.last_name : params[:purchase][:payment_profile_attributes][:credit_card][:last_name]), :class => "text" %>
+                </div>
+                <div class="label_input_form">   
+                  <%= ccf.label :number, 'Card Number' %>
+                  <%= ccf.text_field :number, :value => (params[:purchase][:payment_profile_attributes][:credit_card][:number] unless (params[:purchase].blank? or params[:purchase][:payment_profile_attributes].blank? or params[:purchase][:payment_profile_attributes][:credit_card].blank?)), :class => "text" %>
+                </div>  
+                <div class="label_input_form">   
+                  <%= ccf.label :verification_value, "Card Verification Code" %>
+                  <%= ccf.text_field :verification_value, :value => (params[:purchase][:payment_profile_attributes][:credit_card][:verification_value] unless (params[:purchase].blank? or params[:purchase][:payment_profile_attributes].blank? or params[:purchase][:payment_profile_attributes][:credit_card].blank?)) %>
+                </div>  
+                <div class="label_input_form">
+                  <%= ccf.label :month, 'Expiration Month' %>
+                  <%= ccf.select :month, 1..12, :selected => (params[:purchase][:payment_profile_attributes][:credit_card][:month].to_i unless (params[:purchase].blank? or params[:purchase][:payment_profile_attributes].blank? or params[:purchase][:payment_profile_attributes][:credit_card].blank?)) %>
+                </div>
+                <div class="label_input_form">
+                  <%= ccf.label :year, 'Expiration Year' %>
+                  <%= ccf.select :year, Date.today.year..15.years.from_now.year, :selected => (params[:purchase][:payment_profile_attributes][:credit_card][:year].to_i unless (params[:purchase].blank? or params[:purchase][:payment_profile_attributes].blank? or params[:purchase][:payment_profile_attributes][:credit_card].blank?)) %>
+                </div>
+                
+                <div class="save_card_info">   
+                  <%= hidden_field_tag :store_billing_info, 0 %>
+                  <%= check_box_tag :store_billing_info, 1, @store_billing_info, :id => 'store_billing_info_true' %>
+                  <%= label_tag :store_billing_info, 'Save this card to my profile', :for => 'store_billing_info_true' %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+  
+      <div class="clearfix">
+        <div class="section_element">
+          <div class="section_header">
+            <h3>Billing Address</h3>
+          </div>
+          <% f.fields_for :payment_profile, :url => {:action => 'create'} do |ppf| %>
+            <div class="section_content">
+              <% ppf.fields_for :billing_address do |bf| %>
+                 <div class="label_input_form">
+                  <%= bf.label :address1, 'Street 1' %>
+                  <%= bf.text_field :address1, :value => (params[:purchase][:payment_profile_attributes][:billing_address][:address1] unless (params[:purchase].blank? or params[:purchase][:payment_profile_attributes].blank? or params[:purchase][:payment_profile_attributes][:billing_address].blank?)), :class => "text" %>
+                </div>  
+                <div class="label_input_form">   
+                  <%= bf.label :address2, 'Street 2' %>
+                  <%= bf.text_field :address2, :value => (params[:purchase][:payment_profile_attributes][:billing_address][:address2] unless (params[:purchase].blank? or params[:purchase][:payment_profile_attributes].blank? or params[:purchase][:payment_profile_attributes][:billing_address].blank?)), :class => "text" %>
+                </div>  
+                <div class="label_input_form">   
+                  <%= bf.label :city, 'City' %>
+                  <%= bf.text_field :city, :value => (params[:purchase][:payment_profile_attributes][:billing_address][:city] unless (params[:purchase].blank? or params[:purchase][:payment_profile_attributes].blank? or params[:purchase][:payment_profile_attributes][:billing_address].blank?)), :class => "text" %>
+                </div>  
+                <div class="label_input_form">   
+                  <%= bf.label :state, 'State' %>
+                  <%= bf.select :state, Customer::STATES, :selected => (params[:purchase][:payment_profile_attributes][:billing_address][:state] unless (params[:purchase].blank? or params[:purchase][:payment_profile_attributes].blank? or params[:purchase][:payment_profile_attributes][:billing_address].blank?)) %>
+                </div>  
+                <div class="label_input_form">   
+                  <%= bf.label :zip, 'Zip Code' %>
+                  <%= bf.text_field :zip, :value => (params[:purchase][:payment_profile_attributes][:billing_address][:zip] unless (params[:purchase].blank? or params[:purchase][:payment_profile_attributes].blank? or params[:purchase][:payment_profile_attributes][:billing_address].blank?)), :class => "zip_code" %>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="sidebar_text">
+          <p><%= render_content 'cart_sidebar_billing_address_desc' %></p>
+        </div>
+      </div>
+    <% else %>
+      <div class="clearfix">
+        <div class="section_element">
+          <div class="section_header">
+            <h3>Payment Information</h3>
+          </div>
+          <div class="section_content">
+            <p>We will use the following payment information:<br><br></p>
+            <p><strong><label>Card Number</label>: XXXXXXXX<%= @existing_payment_profile.billing_cc_last_four %> &nbsp;&nbsp;Billing Zip</label>: <%= @existing_payment_profile.billing_zip %></strong>&nbsp;&nbsp;(<%= link_to("Change/Remove Credit Card", payment_profile_path(@purchase.payment_profile), :confirm => 'Are you sure?', :method => :delete) %>)</p>
+            <%= hidden_field_tag :store_billing_info, 1 %>
+            <% f.fields_for :payment_profile, :url => {:action => 'create'} do |ppf| %>
+              <% ppf.fields_for :billing_address do |bf| %>
+                <% ppf.fields_for :credit_card do |ccf| %>
+                  <%= ccf.hidden_field :first_name, :value => current_user.customer.first_name %>
+                  <%= ccf.hidden_field :last_name,  :value => current_user.customer.last_name %>
+                <% end %>
+                <%= bf.hidden_field :address1, :value => @existing_payment_profile.billing_address1 %>
+                <%= bf.hidden_field :address2, :value => @existing_payment_profile.billing_address2 %>
+                <%= bf.hidden_field :city,     :value => @existing_payment_profile.billing_city %>
+                <%= bf.hidden_field :state,    :value => @existing_payment_profile.billing_state %>
+                <%= bf.hidden_field :zip,      :value => @existing_payment_profile.billing_zip %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% else %>  
+    <div class="clearfix">
+      <div class="section_element">
+        <div class="section_header">
+          <h3>Customer Information</h3>
+        </div>
+        <div class="section_content">
+          <div class="label_input_form">
+            <%= f.label :first_name %>
+            <%= f.text_field :first_name, :value => @current_user.customer.first_name, :class => "text" %>
+          </div>
+          <div class="label_input_form">
+            <%= f.label :last_name %>
+            <%= f.text_field :last_name, :value => @current_user.customer.last_name, :class => "text" %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  
+  <% if cart.shippable_item? %>
+    <div class="clearfix">      
+      <div class="section_element">
+        <div class="section_header">
+          <h3 class="<%= "fieldWithErrors" if !@user.nil? and @user.customer.errors.size > 0 %>">Shipping Address</h3>
+        </div>
+        <div class="section_content clearfix">
+          <div class="cart_shipping_info <%= "fieldWithErrors" if !@user.nil? and  @user.customer.errors.size > 0 %>"><%= render_content 'cart_billing_shipping_desc' %><br/><%= link_to "Copy from billing info", "#", :onclick => "copyBillingInfo(); return false;", :class => "secondary" %></div>
+          <% fields_for @user do |uf| %>    
+            <% uf.fields_for @user.customer do |cf| %>
+              <div class="label_input_form">
+                <%= cf.label :shipping_name, 'Ship To Name' %>
+                <%= cf.text_field :shipping_name, :class => "text" %>
+              </div>
+              <div class="label_input_form">
+                <%= cf.label :shipping_street1, 'Street 1' %>
+                <%= cf.text_field :shipping_street1, :class => "text" %>
+              </div>
+              <div class="label_input_form">
+                <%= cf.label :shipping_street2, 'Street 2' %>
+                <%= cf.text_field :shipping_street2, :class => "text" %>
+              </div>
+              <div class="label_input_form">
+                <%= cf.label :shipping_city, 'City' %>
+                <%= cf.text_field :shipping_city, :class => "text" %>
+              </div>
+              <div class="label_input_form">
+                <%= cf.label :shipping_state, 'State' %>
+                <%= cf.select :shipping_state, Customer::STATES %>
+              </div>
+              <div class="label_input_form">
+                <%= cf.label :shipping_zipcode, 'Zip Code' %>
+                <%= cf.text_field :shipping_zipcode, :class => "zip_code" %>
+              </div>
+              <div class="save_card_info">   
+                <%= hidden_field_tag :update_shipping_info, 0 %>
+                <%= check_box_tag :update_shipping_info, 1, @update_shipping_info, :id => 'update_shipping_info_true' %>
+                <%= label_tag :update_shipping_info_true, 'Save as Default Shipping Address' %>
+              </div>
+            <% end %>
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  
+  <p class="notice">We've streamlined the checkout process to make things more efficient. By clicking below, you're purchasing the items in your cart (above).</p>
+  <div class="section_element tright clearfix clear">
+    <%= f.submit "Confirm Purchase", :class => 'confirm_purchase primary', :id => 'confirm_purchase_submit' %>
+    <div id="purchase_loading" style="display:none"><%= f.submit "Confirm Purchase", :class => 'confirm_purchase primary disabled', :disabled => true %><span>&nbsp;</span></div>
+  </div>
+  
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  function copyBillingInfo(){
+    $('#user_customer_shipping_name').val($('#purchase_payment_profile_attributes_credit_card_first_name').val() + " " + $('#purchase_payment_profile_attributes_credit_card_last_name').val());
+    $('#user_customer_shipping_street1').val($('#purchase_payment_profile_attributes_billing_address_address1').val());
+    $('#user_customer_shipping_street2').val($('#purchase_payment_profile_attributes_billing_address_address2').val());
+    $('#user_customer_shipping_city').val($('#purchase_payment_profile_attributes_billing_address_city').val());
+    $('#user_customer_shipping_state').val($('#purchase_payment_profile_attributes_billing_address_state').val());
+    $('#user_customer_shipping_zipcode').val($('#purchase_payment_profile_attributes_billing_address_zip').val());
+  }
+</script>

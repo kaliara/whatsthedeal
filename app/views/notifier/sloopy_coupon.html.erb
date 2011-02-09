@@ -1,0 +1,59 @@
+<table width="580" style="border-collapse: collapse;border-spacing: 0;">
+  
+  <tr>
+    <td style="vertical-align: top;padding: 0;">
+      <table class="border" style="border-collapse: collapse;border-spacing: 0;border: 1px solid #AC1A15;">
+        <tr class="section_header" style="background-color: #de0e0e;">
+          <td><img src="http://sowhatsthedeal.com/images/sloopy/sloopy_logo.gif" /></td>
+          <td colspan="2" style="vertical-align: top;padding: 0;">
+            <h2 style="text-align: center;padding-top: 10px;text-transform: uppercase;font-size: 1.08em;color: #FFF;">Your Sloopy/WTD Coupon</h2>
+          </td>
+        </tr>
+  
+  <tr>
+      <td colspan="3" style="vertical-align: top;padding: 0;" align="center">
+        <% @purchase.coupons.each do |coupon| %>
+          <div class="print_coupon" style="border: 1px dashed #000;width: 400px;background-color: #FFF;margin: 15px 0 25px;">    
+              <div class="print_coupon_content" style="padding: 10px;text-align:left">
+                <h3 style="font-size: 1.67em;color: #000;padding-bottom: 5px;font-family: georgia, sans-serif;font-weight: normal;line-height: 1em;text-align: center;margin-top: 15px;"><%= @purchase.first_name %> <%= @purchase.last_name %></h3>
+
+                <p class="coupon_description" style="color: #000;margin: 20px 25px 20px;">This coupon entitles the customer to <%= coupon.name %> at <%= coupon.deal.promotion.business.name %>.</p>
+
+                  <div class="restrictions" style="margin: 5px 25px 35px;">
+                    <strong>This coupon has the following restrictions:</strong>
+                    <%= coupon.deal.promotion.restrictions %>
+                  </div>
+
+                <div class="coupon_fine_print" style="text-align: center;line-height: 80%;">
+                  <p style="color: #000;margin: 10px 0;">This coupon is for <strong><%= @purchase.first_name %> <%= @purchase.last_name %></strong> (<strong><%= coupon.user.email %></strong>)</p>
+                  <p style="color: #000;margin: 10px 0;">Coupon Expires <%= coupon.expiration.strftime("%m/%d/%Y") %></p>
+                  <p class="confirmation_code" style="color: #696969;margin: 10px 0;"><label>Confirmation Code:</label> <%= coupon.confirmation_code %></p><br>
+                  <% unless coupon.deal.promotion.business.nil? %>
+                    <p style="color: #000;margin: 10px 0;"><%= coupon.deal.promotion.business.street1 %> <%= coupon.deal.promotion.business.street2 %> <%= coupon.deal.promotion.business.city %>, <%= coupon.deal.promotion.business.state %> <%= coupon.deal.promotion.business.zipcode %></p>
+                    <p style="color: #000;margin: 10px 0;"><%= coupon.deal.promotion.business.phone %> - <%= coupon.deal.promotion.business.website %></p>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+      </td>
+  </tr>
+              
+  <tr>
+    <td colspan="3" class="quick_note" style="vertical-align: top;padding: 0;text-align: center;padding-top: 10px;">
+      <p><b>This email contains your coupons, so be sure print them out.</b></p>
+      <p>Is there a problem with your coupon?  If so, contact customer support at: <a href="mailto:support@sowhatsthedeal.com" style="color: #65b0ff;text-decoration: none;">support@sowhatsthedeal.com</a></p>
+    </td>
+  </tr>
+  </table>
+  </td>
+  </tr>
+  <tr>
+    <td colspan="3" style="vertical-align: top;padding: 0;"> <br>&nbsp;</td>
+  </tr>
+  
+ </table>
+ </td>
+ </tr>
+  
+</table>

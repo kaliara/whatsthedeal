@@ -1,0 +1,222 @@
+body{
+  background: #333 url("http://www.sloopymenus.com/images/7/bk.gif");
+  color: #FFF;
+  padding: 10px 8px;
+}
+
+a, a:visited {
+  color: #4875C5;
+  text-decoration:none;
+}
+
+.section_content,
+.actionable .section_content{
+  background: none;
+}
+
+.actionable{
+  -moz-box-shadow: none;
+}
+
+.buyable_deal h3,
+.promotion_text h1,
+.promotion_text p,
+.promotion_stats dd  {
+  color: #FFF;
+}
+
+.you_pay{
+  background: transparent url(/images/sloopy/sloopy_you_pay_bg.gif) no-repeat left top;
+  color: #333;
+  margin-right: 10px;
+  width: 155px;
+  padding: 18px 41px 37px 0px;
+}
+
+.you_get{
+  background: transparent url(/images/sloopy/sloopy_you_get_bg.gif) no-repeat left top;
+  color: #252525;
+  margin-right: 10px;
+  width: 156px;
+  padding: 18px 45px 37px 0px;
+}
+
+.quantity_selector{
+  background: transparent url(/images/sloopy/sloopy_buy_bg.gif) no-repeat left top;
+  color: #FFF;
+  padding: 15px 0 0px;
+  width: 155px;
+  margin-top: 0;
+  float: right;
+  margin: 0 53px 0 0;
+   
+}
+
+.time_left {
+  background: transparent url(/images/sloopy/sloopy_clock.gif) no-repeat left top;
+}
+
+.deals_purchased {
+  background: transparent url(/images/sloopy/sloopy_cart.gif) no-repeat left top;
+  padding:10px 0 10px 60px;
+}
+
+.primary{
+  background: transparent url(/images/sloopy/sloopy_dealmein_btn.gif) no-repeat left top;
+  width: 100px;
+  margin: 15px 0;
+  padding: 3px 0;
+  font-size: 1.1em;
+  text-transform: uppercase;
+  border: 1px solid #6C100D;
+}
+
+.confirm_purchase{
+  background: transparent url(/images/sloopy/sloopy_bg_button_primary.png) repeat-x left center;
+  cursor: pointer;
+  width: 155px;
+  padding: 5px 0;
+}
+
+hr.dotted {
+  display: none;
+}
+
+.you_pay dt, .you_get dt{
+  font-size: 1.2em;
+}
+
+.you_pay dd, .you_get dd{
+  font-size: 3em;
+}
+
+.promotion_stats_container{
+  width: 470px;
+  margin: 0 auto;
+}
+
+.buyable_deal h3{
+  margin-bottom: 10px;
+  font-weight: normal;
+}
+
+.section_content{
+  padding-left: 0;
+}
+
+h2{
+  font-size: 2.5em;
+}
+
+.main_wrapper{
+  width: 620px;
+  padding: 10px 20px;
+  margin:0;
+}
+
+.buyable_deal .quantity_message{
+  color: #FFF;
+  margin-top: 45px;
+}
+
+.shopping_cart td{
+  color: #0C3050;
+}
+
+.section_header,
+.shopping_cart th{
+  background-color: #B21B16;
+}
+
+
+.sidebar_text{
+  float: none;
+  margin: 0 0 20px;
+  width: 100%;
+}
+
+.sidebar_text p{
+  color: #FFF;
+  text-align: center;
+  font-style: italic;
+}
+
+table.shopping_cart {
+  margin-bottom: 20px;
+}
+
+.label_input_form label {
+  width: 195px;
+}
+
+.sloopy_thanks p{
+  margin: 20px 10px;
+  font-size: 1.2em;
+  line-height: 150%;
+}
+
+.sloopy_thanks p.last{
+  text-align: center;
+  padding-top: 40px;
+}
+
+.sloopy_thanks strong{
+  color: #F49F31;
+  font-weight: normal;
+}
+
+h3.sloopy{
+  margin-bottom: 15px;
+  font-size: 1.65em;
+}
+  
+.promotion_text ul li {
+  color: #eee;
+}
+
+
+/* fixes for sloopy */
+td{
+  padding: 0;
+  vertical-align: top;
+}
+
+.wtd_content{
+  background: #333;
+  width: 776px;
+}
+.sloopy_description{
+  width: 745px;
+  margin-top: 0;
+}
+
+.featured_deal_title{
+  padding-top: 0;
+}
+.sloopy_header{
+  margin-top:0;
+}
+.you_pay, .you_get, .you_save {
+  margin-bottom: 0;
+}
+.buyers_needed{
+  background-image: url("/images/sloopy/sloopy_people.gif");
+  padding-left: 28px;
+  padding-right: 28px;
+}
+
+.sloopy_text p, 
+.sloopy_text h2,  
+.sloopy_text h3,    
+.sloopy_text li {
+  color: #ccc;
+  line-height: 1.5em;
+}
+.sloopy_text h4{
+  color: #fff;
+  margin: 10px 0 5px;
+}
+.sloopy_info{
+  right: -110px;
+  position: absolute;
+}

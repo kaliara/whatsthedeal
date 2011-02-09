@@ -1,0 +1,33 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'New user', new_admin_user_path %></li>
+<% end %>
+
+<% form_tag nil, :method => :get do %>
+  <label for="q"><strong>Email</strong> or <strong>ID</strong>:</label>
+  <%= text_field_tag 'q' %>
+  <%= submit_tag 'search' %>
+<% end %>
+<br><br>
+
+<% if @type %>
+  <h2>User matching <%= @type %> '<%= params[:q] %>'</h2>
+<% else %>
+  <h2>Last 20 Users</h2>
+<% end %>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Email</th>
+    <th>Registered</th>
+  </tr>
+
+<% @users.each do |user| %>
+  <tr>
+    <td><%=h user.id %></td>
+    <td><%=h user.email %></td>
+    <td><%= user.created_at.strftime("%b %e, %Y at %I:%M %p") %></td>
+    <td><%= link_to 'Edit', edit_admin_user_path(user) %></td>
+  </tr>
+<% end %>
+</table>

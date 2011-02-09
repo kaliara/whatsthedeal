@@ -1,0 +1,127 @@
+.packadge-block,.section-block {
+width:660px;
+overflow:hidden;
+padding-left:30px;
+}
+
+.section-block2 {
+/*width:400px; ccro 05/10/2010 */
+overflow:hidden;
+padding-left:30px;
+}
+
+.section-block,.section-block2 {
+margin-bottom:30px;
+}
+
+.section-block,.section-block2 h2.fs10 {
+color:#9E9713;
+margin-bottom:10px;
+}
+
+.list-entry,.dailybuzz-start-entry {
+border-bottom:1px solid #E5E5E5;
+margin:0 0 15px;
+padding:0 0 15px;
+}
+
+.packadge-block .fs5,.list-entry .fs5,.dailybuzz-start-entry .fs5 {
+color:#000;
+line-height:150%;
+}
+
+.packadge-block .fs10,.list-entry .fs10,.dailybuzz-start-entry .fs10 {
+color:#000;
+line-height:100%;
+}
+
+.box-related-articles,.box-featured-articles {
+background:#FFF url(../images/box/featured_articles.gif) no-repeat;
+border-top:1px dotted #A6A6A6;
+border-bottom:1px dotted #A6A6A6;
+margin:0 0 10px;
+padding:40px 0 10px;
+}
+
+.box-related-articles img,.box-featured-articles img {
+float:left;
+width:100px;
+height:70px;
+overflow:hidden;
+padding:0 10px 5px 0;
+}
+
+.box-related-articles a,.box-featured-articles a {
+color:#666;
+}
+
+.box-related-articles ol,.box-featured-articles ol {
+clear:both;
+}
+
+.box-related-articles .story .fs10,.box-featured-articles .story .fs10 {
+padding-top:5px;
+font-size:95%;
+}
+
+.box-related-articles .story .fs10 a,.box-featured-articles .story .fs10 a {
+color:#333;
+text-decoration:none;
+font-weight:700;
+font-family:Georgia, "Times New Roman", Times, serif;
+}
+
+.box-related-articles .fs1,.box-featured-articles .fs1 {
+color:#656565;
+line-height:140%;
+padding-bottom:5px;
+}
+
+.box-related-articles li a,.box-featured-articles li a {
+font-family:Georgia, "Times New Roman", Times, serif;
+color:#6487A5;
+text-indent:1em;
+}
+
+.box-related-articles li,.box-featured-articles li {
+background:transparent url(../images/box/top_stories_bullet.gif) no-repeat;
+text-indent:1em;
+}
+
+.box-related-articles {
+background:#FFF url(../images/box/related_articles.gif) no-repeat;
+border-top:0;
+padding:40px 0 10px;
+}
+
+.page-block p {
+font-size:107%;
+font-family:Georgia, "Times New Roman", Times, serif;
+color:#333;
+margin-bottom:10px;
+line-height:150%;
+}
+
+.page-block p strong {
+font-weight:700;
+}
+
+.page-block p em {
+font-style:italic;
+}
+
+.page-block h3,.page-block h4 {
+font-size:107%;
+font-family:Georgia, "Times New Roman", Times, serif;
+color:#333;
+font-weight:700;
+margin-bottom:10px;
+}
+
+.article .footer .actions {
+color:#333;
+}
+
+.box-featured-articles a {
+color:#6488A6;
+}

@@ -1,0 +1,231 @@
+<% content_for :head do %>
+  <meta name="title" content="<%= @event.header %>" /> 
+  <meta name="description" content="<%= truncate(strip_tags(@event.description), :length => 200) %>" /> 
+  <link rel="image_src" href="http://sowhatsthedeal.com<%= @event.image1.url %>" />
+  
+  <!-- open graph stuff -->
+  <meta property="og:title" content="<%= @event.header %>"/>
+  <meta property="og:site_name" content="What's The Deal"/>
+  <meta property="og:type" content="activity"/>
+  <meta property="og:url" content="<%= event_url @event %>"/>
+  <meta property="og:image" content="http://sowhatsthedeal.com<%= @event.image1.url %>"/>
+  <meta property="fb:admins" content="mburnett" />
+<% end %>
+<%- content_for :page_title do %><%= @event.header %><% end %>
+
+<div class="section_element">
+  <div class="section_header">
+    <h3><%= @event.header %></h3>
+  </div>
+  <div class="section_content">
+    <p style="text-align: center; margin: 10px 0"><img src="<%= @event.image2.url %>" alt="Event Image" /></p>
+    
+    <div class="event_social_share">
+      <div class="twitter_rt">
+        <script type="text/javascript">
+          tweetmeme_url = '<%= event_url @event %>';
+          tweetmeme_style = 'compact';
+          tweetmeme_source = 'whatsthedealdc'
+        </script>
+        <script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script>
+      </div>
+      <div class="fb_like">
+        <iframe src="http://www.facebook.com/plugins/like.php?href=<%= CGI::escape event_url(@event) %>&amp;layout=button_count&amp;show_faces=false&amp;width=200&amp;action=like&amp;font&amp;colorscheme=dark&amp;height=35" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+      </div>
+    </div>
+    
+    <p><%= @event.page_body %></p> 
+    
+    <p align="center" style="margin: 20px 0" id="rsvp"> 
+      <b><%= @event.business.name %></b>
+      <%= "<br>" + @event.business.street1 unless @event.business.street1.blank? %>
+      <%= "<br>" + @event.business.street2 unless @event.business.street2.blank? %>
+      <%= "<br>" + @event.business.city %>, <%= @event.business.state %> <%= @event.business.zipcode %>
+      <%= "<br>" + @event.business.phone unless @event.business.phone.blank? %>
+      <%= "<br>" + @event.business.email unless @event.business.email.blank? %>
+      <%= "<br>" + link_to(@event.business.website, @event.business.website, :target => "_blank") unless @event.business.website.blank? %>
+    </p> 
+    
+    <% if current_user and current_user.attending?(@event) %>
+      <p class="already_rsvp">Silly rabbit, you're already RSVP'd for this event! We'll send you a confirmation email with the details as well as a reminder on the night of the event.</p>
+    <% elsif @event.full_attendance? %>
+      <p class="event_full"><strong>Sorry, but this event has filled up!</strong></p>
+      <% if current_user %>
+        <p class="event_full">Make sure that you are subscribed to the "Happy Hour Announcement" email <br>by <%= link_to "editing your email preferences", my_account_email_path %> and don't miss out on another Happy Hour.</p>
+      <% else %>
+        <p class="event_full"><%= link_to "Create an account", register_path %> and subscribe to our "Happy Hour Announcement" email <br>to make sure you never miss out on another happy hour.</p>
+      <% end %>
+    <% else %>
+      <% if current_user %>
+        <div class="one_click_rsvp">
+          <h3>RSVP To This Event</h3>
+          <p>Click the button below <br>and you'll be all set for:<br> <strong><%= @event.header %></strong></p>
+          <% form_tag attendees_path do %>
+            <%= hidden_field_tag :event_id, @event.id %>
+            <%= submit_tag 'One Click RSVP', :class => 'primary green' %>
+            <% unless current_user.customer and current_user.customer.has_name? %>
+              <div class="label_set">
+                <%= label_tag :first_name %>
+                <%= text_field_tag :first_name %>
+              </div>
+              <div class="label_set">
+                <%= label_tag :last_name %>
+                <%= text_field_tag :last_name %>
+              </div>
+            <% end %>
+            <% unless current_user.gets_daily_deal_email? %>
+              <div class="label_set">
+                <%= check_box_tag :gets_daily_deal_email, true, true %>&nbsp;&nbsp;
+                <%= label_tag :gets_daily_deal_email, "The WTD Daily Deal Email" %>
+              </div>
+            <% end %>
+            <% unless current_user.gets_happy_hour_announcement_email? %>
+              <div class="label_set">
+                <%= check_box_tag :gets_happy_hour_announcement_email, true, true %>&nbsp;&nbsp;
+                <%= label_tag :gets_happy_hour_announcement_email, "Weekly Happy Hour Announcement" %>
+              </div>
+            <% end %>
+            <% unless @event.survey_question.blank? %>
+              <div class="label_set">
+                <%= check_box_tag :survey_question_value, true, true %>&nbsp;&nbsp;
+                <%= label_tag :survey_question_value, @event.survey_question %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="clearfix">
+          <h3 class="event_rsvp">Log in or create an account to RSVP for this event</h3>
+          <div class="signup_box login_box">
+            <% form_for @user_session, :url => user_session_path do |f| %>
+              <%= display_error_messages(f.error_messages) %>
+              <%= hidden_field_tag :return_uri, attendees_path(:anchor => 'rsvp') %>
+              <table align="center" border="0" cellpadding="5" cellspacing="0">
+                <tr>
+                  <td><%= f.label :email %></td>
+                  <td><%= f.text_field :email, :size => 18 %></td>
+                </tr>
+                <tr>
+                  <td><%= f.label :password %></td>
+                  <td><%= f.password_field :password, :size => 18 %></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td><%= f.check_box :remember_me %>&nbsp;&nbsp;<%= f.label :remember_me %></td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td><%= f.submit "Login", :class => "primary green" %></td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td align="right"><%= link_to "Forgot Password?", forgot_password_path %></td>
+                </tr>
+              </table>
+            <% end %>
+          </div>
+    
+          <div class="signup_box">
+            <% form_for @user, :url => quiet_create_user_path, :onsubmit => "return checkF(this)" do |f| %>
+              <%= display_error_messages(f.error_messages) %>
+              <%= hidden_field_tag :return_uri, create_event_attendee_path(:event_id => @event) %>
+              <%= hidden_field_tag :flash_notice, "Thanks, we have your RSVP for #{@event.header}. We'll send you a confirmation email with the details as well as a reminder on the night of the event." %>
+              <table align="center" border="0" cellpadding="5" cellspacing="0">
+              <% f.fields_for :customer do |cf| %>
+                <tr>
+                  <td><%= cf.label :first_name %>*</td>
+                  <td><%= cf.text_field :first_name, :size => 25 %></td>
+                </tr>
+                <tr>
+                  <td><%= cf.label :last_name %>*</td>
+                  <td><%= cf.text_field :last_name, :size => 25 %></td>
+                </tr>
+              <% end %>
+                <tr>
+                  <td><%= f.label :email %>*</td>
+                  <td><%= f.text_field :email, :size => 25 %></td>
+                </tr>
+              <% f.fields_for :customer do |cf| %>
+                <tr>
+                  <td><%= cf.label :zipcode, 'Zip Code' %></td>
+                  <td><%= cf.text_field :zipcode, :size => 10 %></td>
+                </tr>
+              <% end %>
+                <tr>
+                  <td></td>
+                  <td><%= f.check_box :gets_daily_deal_email, :checked => true %>&nbsp;&nbsp;<%= f.label :gets_daily_deal_email, "The WTD Daily Deal" %>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td><%= f.check_box :gets_happy_hour_announcement_email, :checked => true %>&nbsp;&nbsp;<%= f.label :gets_happy_hour_announcement_email, "Weekly Happy Hour Announcement" %></td>
+                </tr>
+                <% unless @event.survey_question.blank? %>
+                <tr>
+                  <td></td>
+                  <td><%= check_box_tag :survey_question_value, true, true %>&nbsp;&nbsp;<%= label_tag :survey_question_value, @event.survey_question %></td>
+                </tr>
+                <% end %>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td><br><%= f.submit 'Happy Hour Me', :class => 'primary' %></td>
+                </tr>
+              </table>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<script language="JavaScript" type="text/javascript">
+<!--
+  function check(e){
+  	if(document.images){
+  		re = /(@.*@)|(\.\.)|(^\.)|(^@)|(@$)|(\.$)|(@\.)/;
+  		re_two = /^.+\@(\[?)[a-zA-Z0-9\-\.]+\.([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+  		if(!e.match(re) && e.match(re_two)){
+  			return(-1);	
+  		}
+  	}
+  }
+// -->
+</script>
+
+<script language="JavaScript" type="text/javascript">
+<!--
+  function ged(noDays){
+  	var today = new Date();
+  	var expr = new Date(today.getTime() + noDays*24*60*60*1000);
+  	return  expr.toGMTString();
+  }
+
+  function checkF(f){
+
+  if(f.fname.value.length < 1){
+  	alert("Please enter your first name.");
+  	f.fname.style.background = "#FFFF00";
+  	f.fname.focus();
+  	return (false);
+  }
+	
+  if(!check(f.email.value)){
+  	alert("Invalid email address detected.");
+  	f.email.style.background = "#FFFF00";
+  	f.email.focus();
+  	return (false);
+  }
+
+  if(f.c4.value.length < 5){
+  	alert("Please enter your zip code.");
+  	f.c4.style.background = "#FFFF00";
+  	f.c4.focus();
+  	return (false);
+  }
+
+  document.cookie = "uls90=1; path=/; expires=" + ged(90);
+
+  }
+// -->
+</script>

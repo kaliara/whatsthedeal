@@ -1,0 +1,12 @@
+<br><br>
+<div class"section_element">
+  <h3 class="sloopy">Thanks for purchasing from What's the Deal, a Sloopy menus partner.</h3>
+   <div class="section_header"><h3>Purchase Confirmation</h3>
+    </div>
+    <div class="sloopy_thanks">     
+      <p>You purchased <strong><%= @purchase.coupons.first.name %></strong> from <b><%= @purchase.coupons.first.deal.promotion.business.name %></b> <%= "(quantity: #{@purchase.coupons.size})" if @purchase.coupons.size > 1 %> for <strong><%= number_to_currency @purchase.deals_total %></strong>. Your credit card will be charged once the minimum number of purchases has been met.</p>
+      <p>You will receive your coupon via email (sent to <%= @purchase.user.email %>) on <%= (@purchase.coupons.first.deal.promotion.end_date + 1.days).strftime("%b %d, %Y") %>.</p>
+      <p>To make sure that the email makes it to your inbox, and not the junk/spam folder, add  <strong>support@sowhatsthedeal.com</strong> to your contacts or safe senders list.</p>
+      <p class="last"><strong>Questions?</strong> E-mail us at <a href="mailto:sloopy@sowhatsthedeal.com">sloopy@sowhatsthedeal.com</a></p>
+    </div>
+</div>

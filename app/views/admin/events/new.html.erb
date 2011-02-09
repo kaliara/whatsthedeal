@@ -1,0 +1,97 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Event Listing', admin_events_path %></li>
+<% end %>
+
+<%= render :partial => "/admin/shared/tiny_mce" %>
+
+<h2>New event</h2>
+
+<div style="margin:20px">
+  <h4><strong>STEP 1:</strong> Go create a new mailboto subscription list and subscription form</h4><br>
+  <h4><strong>STEP 2:</strong> View the web preview of the <strong>subscription form</strong> and copy the two-digit ID from the URL (should be between 50 and 200)</h4>
+  <img src="http://sowhatsthedeal.com/images/help_list_id.png">
+  <br><br>
+  <h4><strong>STEP 3:</strong> (fill in fields below)</h4>
+</div>
+
+<% form_for([:admin,@event], :html => {:multipart => true}) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :subscription_list_id %> (from step 2 above)<br />
+    <%= f.text_field :subscription_list_id, :value => "" %> (use <strong>44</strong> for MASTER list)
+  </p>
+  <br>
+  <p>
+    <%= f.label :business_id %><br />
+    <%= f.select :business_id, Business.find(:all, :order => 'name ASC').collect{|b| [b.name, b.id]} %>
+  </p>
+  <br><br>
+  <p>
+    <%= f.label :header %> (used in sidebar panel and email header)<br />
+    <%= f.text_field :header %>
+  </p>
+  <br><br>
+  <h3>Sidebar Panel</h3>
+  <p>
+    <%= f.label :image1, 'Main Image' %><br />
+    <%= f.file_field :image1 %>
+  </p>
+  <p>
+    <%= f.label :description %><br />
+    <%= f.text_area :description, :rows => 10, :cols => 100 %>
+  </p>
+  <br>
+  <p>
+    <%= f.label :rotation_start_date %><br />
+    <%= f.datetime_select :rotation_start_date %>
+  </p>
+  <p>
+    <%= f.label :rotation_end_date %><br />
+    <%= f.datetime_select :rotation_end_date %>
+  </p>
+  <br><br>
+  <h3>Signup Page</h3>
+  <p>
+    <%= f.label :image2, 'Page Image' %><br />
+    <%= f.file_field :image2 %>
+  </p>
+  <br>
+  <p>
+    <%= f.label :page_body %><br />
+    <%= f.text_area :page_body, :rows => 10, :cols => 100 %>
+  </p>
+  <br>
+  <p>
+    <%= f.label :start_date %><br />
+    <%= f.datetime_select :start_date %>
+  </p>
+  <p>
+    <%= f.label :end_date %><br />
+    <%= f.datetime_select :end_date %>
+  </p>
+  <br>
+  <p>
+    <%= f.label :read_more_text %><br />
+    <%= f.text_field :read_more_text %>
+  </p>
+  <br>
+  <p>
+    <%= f.label :attendees_max %> (0 = no max)<br />
+    <%= f.text_field :attendees_max %>
+  </p>
+  <br>
+  <p>
+    <%= f.check_box :hidden %>
+    <%= f.label :hidden %> (hides from sidebar, but not actual page)<br />
+  </p>
+  <br><br>
+  <p>
+    <%= label_tag :survey_question %><br />
+    <%= text_field_tag :survey_question %>
+  </p>
+  <br><br>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>

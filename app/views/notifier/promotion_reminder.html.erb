@@ -1,0 +1,159 @@
+<% Time.zone = "Eastern Time (US & Canada)" %>
+<% @google_tracking = "?utm_medium=email&utm_campaign=promotionreminder" %>
+
+<div id="email">
+
+    <!-- yahoo fixes -->
+    <style type="text/css">
+       td.main .yshortcuts { color: #1279af }
+       .featured_deal td.main .yshortcuts { color: #3fc7ff;}
+       .footer .yshortcuts { color: #94BFF2;}
+    </style>
+
+   <!-- hotmail fixes -->
+    <style type="text/css">  
+       #mpf0_MsgContainer{display: block !important;}
+    </style>
+
+
+  <body style="background-color: #0059a9;margin: 0;padding: 0;">
+  <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#0059a9">
+    <tr>
+      <td align="center">
+        <table width="600" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td>
+              <table width="600" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td align="left" valign="top" style="font-size:0;"><a href="http://sowhatsthedeal.com<%= @google_tracking %>"><img src="http://sowhatsthedeal.com/emails/new_logo.png" alt="What's the Deal - " width="144" height="77" border="0"></a></td>
+                  <td align="left" valign="top" style="font-size:0;"><img src="http://sowhatsthedeal.com/emails/new_banner.png" alt="Deal is" width="330" height="77"></td>
+                  <td align="left" valign="top">
+                    <table border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td align="left" valign="top" style="font-size:0;"><a href="http://sowhatsthedeal.com/promotions<%= @google_tracking %>"><img src="http://sowhatsthedeal.com/emails/new_currentdeals_link.png" width="126" height="38" border="0" style="border: none;"></a></td>
+                      </tr>
+                      <tr>
+                        <td align="left" valign="top" style="font-size:0;"><a href="http://sowhatsthedeal.com/my_account<%= @google_tracking %>"><img src="http://sowhatsthedeal.com/emails/new_myaccount_link.png" width="126" height="39" border="0" style="border: none;"></a></td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <table width="600" border="0" cellspacing="0" cellpadding="0" class="featured_deal" style="background-color: #013049;">
+                 <tr>
+                    <td class="main" align="left" valign="top" width="600" style="padding:10px">
+                      <p style="color: #adc5d9;font-family: 'Myriad', sans-serif;font-size: 14px;font-weight: normal;margin: 0;padding: 15px 0;text-align:center"><strong>Note:</strong> This reminder is being sent because you requested it and <strong>will only be sent once</strong>.</p>
+                      <table width="580" class="deal_highlights" cellspacing="0" cellpadding="0" style="background-color: #012437;">
+                        <tr>
+                          <td colspan="3" align="center"><h1 style="font-family: 'Myriad', sans-serif;font-size: 28px;font-weight: normal;margin: 0 0 5px 0;padding:10px"><a href="<%= promotion_url @promotion %><%= @google_tracking %>" style="color: #3fc7ff !important;font-family: 'Myriad', sans-serif;font-size: 28px;font-weight: normal;text-decoration: underline;"><%= @promotion.name %></a></h1></td>
+                        </tr>
+
+                        <tr>
+                          <td width="4" style="padding:1px"> </td>
+                          <td width="220" valign="top" style="padding:10px">
+                            <table cellspacing="0" cellpadding="0">
+                              <tr>
+                                <td width="129" align="right"><h3 style="color: #adc5d9;font-family: 'Myriad', sans-serif;font-size: 24px;font-weight: normal;margin: 6px 0 2px 0;padding: 0;">YOU PAY</h3></td><td width="43" style="padding: 0 7px"><img src="http://sowhatsthedeal.com/emails/new_arrow.png" width="43" height="26" alt="" class="no_border" style="border: none;"></td><td><h3 style="font-family: 'Myriad', sans-serif;font-size: 24px;font-weight: normal;margin: 6px 0 2px 0;padding: 0;color: #adc5d9;"><strong style="color: #ffffff;"><%= has_cents?(@promotion.featured_deal.price) ? number_to_currency(@promotion.featured_deal.price, :precision => 2) : number_to_currency(@promotion.featured_deal.price, :precision => 0) %></strong></h3></td>
+                              </tr>
+                              <tr class="value">
+                                <td width="129" align="right"><h3 style="color: #adc5d9;font-family: 'Myriad', sans-serif;font-size: 24px;font-weight: normal;margin: 18px 0 15px 0;padding: 0;">VALUE</h3></td><td width="43" valign="middle" style="padding: 0 7px"><img src="http://sowhatsthedeal.com/emails/new_arrow.png" width="43" height="26" alt="" class="no_border" style="border: none;"></td><td><h3 style="font-family: 'Myriad', sans-serif;font-size: 24px;font-weight: normal;margin: 18px 0 15px 0;padding: 0;color: #adc5d9;"><strong style="color: #ffffff;"><%= has_cents?(@promotion.featured_deal.value) ? number_to_currency(@promotion.featured_deal.value, :precision => 2) : number_to_currency(@promotion.featured_deal.value, :precision => 0) %></strong></h3></td>
+                              </tr>
+                              <tr class="savings">
+                                <td width="129" align="right"><h3 style="color: #adc5d9;font-family: 'Myriad', sans-serif;font-size: 24px;font-weight: normal;margin: 2px 0 25px 0;padding: 0;">SAVINGS</h3></td><td width="43" valign="top" style="padding: 0 7px"><img src="http://sowhatsthedeal.com/emails/new_equals.png" width="43" height="26" alt="" class="no_border" style="border: none;"></td><td><h3 style="font-family: 'Myriad', sans-serif;font-size: 24px;font-weight: normal;margin: 2px 0 25px 0;padding: 0;color: #adc5d9;"><strong style="color: #ffffff;"><%= number_to_percentage (1 - @promotion.featured_deal.price.to_f / @promotion.featured_deal.value.to_f) * 100, :precision => 0 %></strong></h3></td>
+                              </tr>
+                              <tr>
+                                <td width="245" align="center" colspan="3"><a href="<%= promotion_url @promotion %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;"><img src="http://sowhatsthedeal.com/emails/new_moredetails_btn.png" alt="More Details" border="0" class="more_details" style="border: none;"></a></td>
+                              </tr>
+                            </table>
+                          </td>
+                          <td align="right" width="316" style="padding:10px">
+                            <a href="<%= promotion_url @promotion %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;"><img src="http://sowhatsthedeal.com<%= @promotion.image1.url %>" alt="<%= @promotion.business.name %> Deal" border="0" width="280" height="197" style="border: 7px solid #ffffff;"></a>
+                          </td>
+                        </tr>
+                     </table>
+
+                     <table cellspacing="0" cellpadding="0">
+                       <tr>
+                        <td valign="bottom" width="245" height="31" style="padding:5px;text-align:center">
+                          <h4 style="color: #adc5d9;font-family: 'Myriad', sans-serif;font-size: 14px;font-weight: normal;margin: 0;padding: 0 0 7px;">DEAL ENDS: <strong style="color: #ffffff;"><%= (@promotion.end_date - 5.minutes).strftime("%A, %b %d") %></strong></h4>
+                        </td>
+                        <td width="325" align="center" valign="bottom" height="31" style="padding:5px">
+                           <span class="address" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #ffffff;padding: 0;"><strong><%= @promotion.business.name %></strong> <%= "(" + link_to("website", @promotion.business.website, :target => "_blank", :style => "font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;") + ")" unless @promotion.business.website.blank? %><br><%= @promotion.business.street1 %> <%= @promotion.business.city %>, <%= @promotion.business.state %> <%= @promotion.business.zipcode %></span>
+                        </td>
+                       </tr>
+                       <tr>
+                        <td width="245" valign="top" style="padding: 5px 0 20px">
+                          <table>
+                            <tr>
+                              <td valign="top" width="245" style="padding:20px 0; background:#012437; border: 1px solid #3d6073; text-align:center;">
+                                 <p style="font-family: Lucida, sans-serif;font-size: 18px;font-weight: normal;color: #ffffff;margin: 0 0 7px 0;padding: 0;">USERS WHO'VE SAVED:</p>
+                                 <p style="font-family: Lucida, sans-serif;font-size: 18px;font-weight: normal;color: #ffffff;margin: 0 0 16px 0;padding: 0;"><span style="font-size: 36px;  color: #f99200"><%= @promotion.purchases %></span></p>
+                                 <br>
+                                <p style="color: #adc5d9;font-family: 'Myriad', sans-serif;font-size: 20px;font-weight: normal;margin: 7px 0 0 0;padding: 0;">This is your last chance,<br>don't miss out!</p>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                        <td width="325" align="right" valign="top" style="padding:5px">
+                          <a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%= @promotion.business.street1.gsub(/\s/,"+") %>+<%= @promotion.business.city.gsub(/\s/,"+") %>,+<%= @promotion.business.state %>+<%= @promotion.business.zipcode %>" target="_blank" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;"><img src="http://maps.google.com/maps/api/staticmap?center=<%= @promotion.business.street1.gsub(/\s/,"+") %>+<%= @promotion.business.city.gsub(/\s/,"+") %>,+<%= @promotion.business.state %>+<%= @promotion.business.zipcode %>&zoom=14&markers=<%= @promotion.business.street1.gsub(/\s/,"+") %>+<%= @promotion.business.city.gsub(/\s/,"+") %>,+<%= @promotion.business.state %>+<%= @promotion.business.zipcode %>&size=280x190&sensor=false" id="map" alt="Map of <%= @promotion.business.name %>" width="280" height="190" align="right" style="margin-right: 5px;border: 7px solid #ffffff;"></a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+               </tr>
+            </table>
+          </td>
+        </tr>
+
+        <tr class="separator">
+          <td height="3" style="background-color: #999999;font-size: 6px;line-height: 6px;"></td>
+        </tr>
+
+        <tr>
+          <td>
+            <table width="600" border="0" cellspacing="0" cellpadding="0" class="events" style="background-color: #ddd;">
+              <tr>
+                <td class="main" align="left" valign="top" width="600" style="padding:20px">
+                  <h5 style="color: #333333;font-family: 'Myriad', sans-serif;font-size: 16px;text-transform: uppercase;margin: 0 0 5px 0;text-align:center;">WANT TO <span style="color: #05b209">SAVE $5</span> ON THIS DEAL?</h5>
+                  <% if User.exists?(:email => @reminder.email) %>
+                    <p style="font-family: Lucida, sans-serif;font-size: 14px;font-weight: normal;color: #666666;margin: 0;padding: 0 0 10px;margin-bottom: 0; text-align: center">Refer a friend to What's the Deal and get a credit for $5 on any deal from WTD. <br>Your personalized referral link is:</p>
+                    <p style="font-family: Lucida, sans-serif;font-size: 16px;font-weight: normal;color: #2286bc;margin: 0;padding: 10px;margin-bottom: 0; text-align: center; background:#ffffff">sowhatsthedeal.com/ref/<%= User.find_by_email(@reminder.email).referral_link %></p>
+                  <% else %>
+                    <p style="font-family: Lucida, sans-serif;font-size: 14px;font-weight: normal;color: #666666;margin: 0 0 16px 0;padding: 0;margin-bottom: 0; text-align: center"><a href="http://sowhatsthedeal.com/signup<%= @google_tracking %>">Create an account</a>, then refer a friend to What's the Deal and get a credit for $5 on any deal from WTD.</p>
+                  <% end %>
+                  <br><br>
+                  <h5 style="color: #333333;font-family: 'Myriad', sans-serif;font-size: 16px;text-transform: uppercase;margin: 0 0 5px 0;text-align:center;">SHARE WITH FRIENDS</h5>
+                  <div style="text-align: center">
+                    <span><a target="_blank" href="http://www.facebook.com/share.php?u=<%= CGI::escape promotion_url(@promotion) %>"><img src="http://sowhatsthedeal.com/images/facebook.png" alt="Facebook" border="0" /></a></span>&nbsp;&nbsp;&nbsp;
+                    <span><a target="_blank" href="http://twitter.com/home?status=<%= CGI::escape(@promotion.name + " at " + promotion_url(@promotion)) %>"><img src="http://sowhatsthedeal.com/images/twitter.png" alt="Twitter" border="0" /></a></span>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+        
+      </table>
+
+      <br><br>
+      
+      <table width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#014164" class="footer" style="margin-bottom: 20px">
+        <tr>
+          <td style="padding:15px">
+            <p style="color: #CFCFCF;font-family: Lucida, sans-serif;font-size: 10px;font-weight: normal;line-height: 15px;margin: 0 0 10px 0;text-align: left;">Questions? Comments? Random rants? Visit our <a href="http://sowhatsthedeal.com/faq<%= @google_tracking %>" style="color: #94BFF2;font-family: Lucida, sans-serif;font-size: 10px;font-weight: normal;">Frequently Asked Questions</a> section, e-mail us at <a href="mailto:support@sowhatsthedeal.com" style="color: #94BFF2;font-family: Lucida, sans-serif;font-size: 10px;font-weight: normal;">support@sowhatsthedeal.com</a> or call us: (888) 765-3481.</p>
+
+            <p style="color: #CFCFCF;font-family: Lucida, sans-serif;font-size: 10px;font-weight: normal;line-height: 15px;margin: 0 0 10px 0;text-align: left;">Please add <a href="mailto:sales@e.sowhatsthedeal.com" style="color: #94BFF2;font-family: Lucida, sans-serif;font-size: 10px;font-weight: normal;">sales@e.sowhatsthedeal.com</a> to your address book or safe sender list so our emails get to your inbox. This email was sent by What's the Deal, LLC | 1921 Florida Ave, NW | Washington, DC  20009 | US.</p>
+          </td>
+        </tr>
+      </table>
+    </td>
+    </tr>
+  </table>
+  <br><br>
+
+  </body>
+</div>

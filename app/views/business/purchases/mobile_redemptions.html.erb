@@ -1,0 +1,90 @@
+<br><br>
+<% form_tag :action => 'mobile_redemptions' do %>
+  Deal: <%= select_tag :promotion_id, options_for_select([""] + ["All",0] + @promotions.collect{|b| [b.id.to_s + " - " + b.name, b.id]}, (@default_promotion.nil? ? params[:promotion_id].to_i : @default_promotion.id)), :onchange => "submit()" %>
+<% end %>
+<br>
+
+<div class="datepicker clearfix">
+  <% form_tag do %>
+    &nbsp;
+    <%= hidden_field_tag 'promotion_id', params[:promotion_id] %>
+    
+    <%= hidden_field_tag 'start_date', Date.commercial(Date.today.year, Date.today.cweek, 1).strftime("%m/%d/%Y"), :id => 'start_date_this_week' %>
+    <%= hidden_field_tag 'end_date', Date.commercial(Date.today.year, Date.today.cweek, 7).strftime("%m/%d/%Y"), :id => 'end_date_this_week' %>
+    <%= submit_tag 'This Week' %>
+  <% end %>
+  <% form_tag do %>
+    <span>or</span>&nbsp;
+    <%= hidden_field_tag 'promotion_id', params[:promotion_id] %>
+    
+    <%= hidden_field_tag 'start_date', (Date.today - 1.day).strftime("%m/%d/%Y"), :id => 'start_date_last_week' %>
+    <%= hidden_field_tag 'end_date', (Date.today - 1.day).strftime("%m/%d/%Y"), :id => 'end_date_last_week' %>
+    <%= submit_tag 'Yesterday' %>
+  <% end %>
+  <% form_tag do %>
+    <span>or</span>&nbsp;
+    <%= hidden_field_tag 'promotion_id', params[:promotion_id] %>
+    
+    <%= hidden_field_tag 'start_date', Date.today.strftime("%m/%d/%Y"), :id => 'start_date_today' %>
+    <%= hidden_field_tag 'end_date', Date.today.strftime("%m/%d/%Y"), :id => 'end_date_today' %>
+    <%= submit_tag 'Today' %>
+  <% end %>
+  <% form_tag do %>
+  <%= hidden_field_tag 'promotion_id', params[:promotion_id] %>
+  
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <span>Specific Range:</span>
+    <%= text_field_tag 'start_date', @start_date.strftime("%m/%d/%Y"), :size => 10 %>
+    &nbsp;&nbsp;to&nbsp;&nbsp;
+    <%= text_field_tag 'end_date', @end_date.strftime("%m/%d/%Y"), :size => 10 %>
+    <%= submit_tag 'Filter by Date' %>
+  <% end %>
+</div>
+<br>
+
+<h2>Mobile Redemptions for <%= @start_date.strftime("%b %d") + " to" if (@end_date - @start_date > 0) %> <%= @end_date.strftime("%b %d %Y") %></h2>
+
+<% unless @coupons.empty? %>
+  <% form_tag :controller => :purchases, :action => :bulk_use do %>
+    <table class="business_table">
+      <tr>
+        <th class="align_left">Purchaser Name</th>
+        <th>Confirmation Code</th>
+        <th>Redemption Date</th>
+        <th>Deal</th>
+        <th>Purchase Price</th>
+        <th>Coupon Code</th>
+      </tr>
+
+      <% @coupons.each do |coupon| %>
+        <tr>
+          <td class="align_left"><%= coupon.recipient %></td>
+          <td><%= coupon.confirmation_code %></td>
+          <td><%= coupon.redemption_date.strftime("%b %e, %Y at %l:%M %p") %></td>
+          <td><%= coupon.name %></td>
+          <td><%= number_to_currency coupon.deal.price %></td>
+          <td><%= coupon.coupon_code %></td>
+        </tr>
+      <% end %>    
+    </table>
+  
+  <% end %>
+<% else %>
+  <div class="section_content"><br><p>
+    <% if params[:promotion_id] == 'All' or params[:promotion_id].to_i > 0 %>
+      Sorry, no mobile redemptions.  Choose a different date range or deal.
+    <% else %>
+      Select a deal to see mobile redemptions.
+    <% end %>
+  </p></div>
+<% end %>
+
+<div class="bottom_link_next_page">
+  <%= link_to "Back to Home", business_home_path %>
+</div>
+
+
+<script type="text/javascript" charset="utf-8">
+  $("#start_date").datepicker();
+  $("#end_date").datepicker();
+</script>

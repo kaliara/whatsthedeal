@@ -1,0 +1,91 @@
+<% content_for :page_title do %>Login or Register For A New Account<% end %>
+
+<% if session[:return_to] == new_purchase_path %>
+  <div class="section_element featured actionable">
+    <div class="section_content new_user_welcome">
+      <%= render_content 'login_desc' %>
+    </div>  
+  </div>
+<% end %>
+
+<div class="section_element">
+  <div class="section_header">
+    <h3>Login to My Account</h3>
+  </div>
+
+  <div class="section_content">
+    <% form_for @user_session, :url => user_session_path do |f| %>
+      <%= display_error_messages(f.error_messages) %>
+      <div class="label_input_form">
+        <%= f.label :email %>
+        <%= f.text_field :email, :tabindex => 1, :class => "text" %>
+      </div>
+      <div class="label_input_form">
+        <%= f.label :password %>
+        <%= f.password_field :password, :tabindex => 2, :class => "text" %>
+      </div>
+      <div class="label_input_form forget_password clearfix">
+        <%= link_to "Forgot Password?", forgot_password_path %>
+      </div>
+      <div class="label_input_form remember_me">
+        <%= f.check_box :remember_me, :tabindex => 3 %>
+        <%= f.label :remember_me %>
+      </div>
+      <div class="form_action">
+        <p><%= f.submit "Login", :class => "primary small_primary", :tabindex => 4 %></p>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+
+<div class="section_element">
+  <div class="section_header">
+    <h3>Register for A New Account</h3>
+  </div>
+
+  <div class="section_content">
+    <% form_for @user do |f| %>
+      <% f.fields_for :customer do |cf| %>
+        <div class="label_input_form">
+          <%= cf.label :first_name %>
+          <%= cf.text_field :first_name, :class => "text" %>
+        </div>
+        <div class="label_input_form">
+          <%= cf.label :last_name %>
+          <%= cf.text_field :last_name, :class => "text" %>
+        </div>
+      <% end %>
+
+      <div class="label_input_form">
+        <%= f.label :email %>
+        <%= f.text_field :email, :class => "text" %>
+      </div>
+      <div class="label_input_form">
+        <%= f.label :password %>
+        <%= f.password_field :password, :class => "text" %>
+      </div>
+      <div class="label_input_form">
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation, :class => "text" %>
+      </div>
+
+      <div class="label_input_form">
+        <%= label_tag 'Referral Code (Optional):' %>
+        <%= text_field_tag :referral_code, session[:stored_promotion_code_id].blank? ? params[:referral_code] : PromotionCode.find(session[:stored_promotion_code_id]).code, :class => "text" %>
+      </div>
+
+      <div class="label_input_form">
+        <%= f.label :gets_daily_deal_email, "Daily Deal Subscriber" %>
+        <%= f.check_box :gets_daily_deal_email, :checked => true %>
+      </div>
+      <div class="label_input_form">
+        <%= f.label :gets_happy_hour_announcement_email, "Happy Hour Announcement" %>
+        <%= f.check_box :gets_happy_hour_announcement_email, :checked => true %>
+      </div>
+      <div class="form_action">
+      <%= f.submit 'Register', :class => "primary small_primary" %>
+      </div>
+    <% end %>
+  </div>
+</div>

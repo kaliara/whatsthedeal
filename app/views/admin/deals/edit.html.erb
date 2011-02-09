@@ -1,0 +1,108 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Deal Listing', admin_deals_path %></li>
+<% end %>
+
+<%= render :partial => "/admin/shared/tiny_mce" %>
+
+<h2>Edit Deal</h2>
+
+<% form_for([:admin, @deal]) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :promotion_id %><br />
+    <%= f.select :promotion_id, Promotion.all.collect{|p| [p.id.to_s + " - " + p.name, p.id]} %>
+  </p>
+  <br><br>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :price %><br />
+    <%= f.text_field :price %>
+  </p>
+  <p>
+    <%= f.label :early_bird_discount %><br />
+    <%= f.text_field :early_bird_discount %>
+  </p>
+  <p>
+    <%= f.label :value %><br />
+    <%= f.text_field :value %>
+  </p>
+  <p>
+    <%= f.label :code, 'Deal Code' %> (should be unique)<br />
+    <%= f.text_field :code %>
+  </p>
+  <p>
+    <%= f.check_box :featured %>
+    <%= f.label :featured %>
+  </p>
+  <p>
+    <%= f.check_box :active %>
+    <%= f.label :active %>
+  </p>
+  <p>
+    <%= f.check_box :shippable %>
+    <%= f.label :shippable %>
+  </p>
+  <br><br>
+  <h4>Buying Limitations</h4>
+  <br>
+  <p>
+    <%= f.label :purchase_limit %><br />
+    <%= f.select :purchase_limit, 1..10 %>
+  </p>
+  <p>
+    <%= f.label :inventory %><br />
+    <%= f.text_field :inventory %>
+  </p>
+  <br><br>
+  <h4>Coupon Details</h4>
+  <br>
+  <p>
+    <%= f.label :coupon_name %><br />
+    <%= f.text_field :coupon_name %>
+  </p>
+  <p>
+    <%= f.label :coupon_description %><br />
+    <%= f.text_area :coupon_description %>
+  </p>
+  <p>
+    <%= f.label :coupon_expiration %><br />
+    <%= f.date_select :coupon_expiration, :start_year => (Date.today - 2.years).year, :default => {:year => (1.year.from_now).year, :month => Date.today.month, :day => Date.today.day}, :order => [:month, :day, :year] %>
+  </p>
+  <br>
+  <p>
+    <%= f.label :coupon_instructions %><br />
+    <%= f.text_area :coupon_instructions, :rows => 5 %>
+  </p>
+  <br>
+  <p>
+    <%= f.check_box :has_coupon_code, :onclick => "getElementById('coupon_code').style.display='block';" %>
+    <%= f.label :has_coupon_code %>
+  </p>
+  <div id="coupon_code" style="<%= "display:none" unless @deal.has_coupon_code? %>">
+    <p>
+      <%= f.label :coupon_code_prefix %> (or for Hard-coded)<br />
+      <%= f.text_field :coupon_code_prefix %>
+    </p>
+    <p>
+      <%= f.label :coupon_code_start %> (where codes start)<br />
+      <%= f.text_field :coupon_code_start %>
+    </p>
+    <p>
+      <%= f.label :coupon_code_delta %> (how much they increment)<br />
+      <%= f.text_field :coupon_code_delta %>
+    </p>
+    <p>
+      <%= f.label :coupon_code_number_base %> (16 = hexidecimal, 10 = decimal)<br />
+      <%= f.text_field :coupon_code_number_base %>
+    </p>
+  </div>
+  
+  <br><br>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>

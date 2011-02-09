@@ -1,0 +1,113 @@
+<% content_for :page_title do %>Edit My Account<% end %>
+<h2>Editing My Account</h2>
+
+<% form_for(@user) do |f| %>
+  <%= display_error_messages(f.error_messages) %>
+
+  <div class="section_element">
+    <div class="section_header">
+      <h3>Contact Information</h3>
+    </div>
+
+    <div class="section_content">
+      <% f.fields_for :customer do |cf| %>
+      <div class="label_input_form">
+        <%= cf.label :first_name %>
+        <%= cf.text_field :first_name, :class => "text" %>
+      </div>  
+
+      <div class="label_input_form">  
+        <%= cf.label :last_name %>
+        <%= cf.text_field :last_name, :class => "text" %>
+      </div>
+      <% end %>
+
+      <div class="label_input_form">  
+        <%= f.label :email %>
+        <%= f.text_field :email, :class => "text" %>
+      </div>
+      
+      <div class="label_input_form">  
+        <%= f.label :password %>
+        <%= f.password_field :password, :class => "text" %>
+      </div>  
+
+      <div class="label_input_form">  
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation, :class => "text" %>
+      </div>  
+
+    </div>
+  </div>
+
+  <div class="sidebar_text">
+      <%= render_content 'customer_edit_shipping_sidebar_desc' %>
+  </div>
+
+  <div class="section_element">
+    <div class="section_header">
+      <h3>Other Information</h3>
+    </div>
+
+    <div class="section_content">
+      <% f.fields_for :customer do |cf| %>
+      <div class="label_input_form">
+        <%= cf.label :zipcode, 'Zip Code' %>
+        <%= cf.text_field :zipcode, :class => "text" %>
+      </div>
+      
+      <div class="label_input_form">
+        <%= cf.label :birthdate %>
+        <%= cf.date_select :birthdate, :end_year => (13.years.ago).year, :start_year => 1910, :default => {:year => (35.years.ago).year}, :order => [:month, :day, :year] %> 
+      </div>
+
+      <div class="label_input_form">  
+        <%= cf.label :gender %>
+        <div class="radio_buttons">        
+          <%= cf.radio_button :female, true, :id => 'user_customer_attributes_female' %>
+          <%= cf.label :female %>
+          <%= cf.radio_button :female, false, :id => 'user_customer_attributes_male' %>
+          <%= cf.label :male %>
+        </div>          
+      </div>  
+
+      <div class="label_input_form">  
+        <%= cf.label :children %>
+        <div class="radio_buttons">        
+          <%= cf.radio_button :number_of_kids, 0, :id => 'user_customer_attributes_nope_kids' %>
+          <%= cf.label :nope_kids, "Nope" %>
+          <%= cf.radio_button :number_of_kids, 1, :id => 'user_customer_attributes_one_kid' %>
+          <%= cf.label :one_kid, "One" %>
+          <%= cf.radio_button :number_of_kids, 2, :id => 'user_customer_attributes_two_kids' %>
+          <%= cf.label :two_kids, "Two" %>
+          <%= cf.radio_button :number_of_kids, 3, :id => 'user_customer_attributes_three_kids' %>
+          <%= cf.label :three_kids, "Three or more" %>
+        </div>          
+      </div>  
+
+      <div class="label_input_form">  
+        <%= cf.label :employment_status, "Employment Status" %>
+        <%= cf.select :employment_status, Customer::EMPLOYMENT_STATUSES, { :include_blank => true } %>
+      </div>  
+      
+      <div class="label_input_form">   
+        <%= cf.label :annual_income %>
+        <%= cf.select :annual_income, Customer::INCOME_RANGES, { :include_blank => true } %>
+      </div>
+
+      <div class="label_input_form">   
+        <%= cf.label :employment_zipcode, "Employment Zip Code" %>
+        <%= cf.text_field :employment_zipcode, :class => 'zip_code' %>
+      </div>
+      <% end %>
+    </div>
+
+    <div class="update_profile_set">
+      <span><%= link_to 'Cancel', my_account_path, :tabindex => 100 %></span>
+      <span><%= f.submit 'Update', :class => "secondary" %></span>
+    </div>
+
+  </div>
+
+<% end %>
+

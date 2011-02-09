@@ -1,0 +1,25 @@
+<% coupons.each do |coupon| %>
+  <div class="coupon_container  gift_coupon <%= 'inactive_coupon' unless coupon.active? %> <%= "expired" if coupon.expired? %>">
+    <% unless coupon.active? %>
+      <p class="reason"><%= coupon.available_tomorrow? ? "This deal will be available tomorrow" : "This deal hasn't tipped yet, not enough buyers!" %></p>
+    <% end %>
+    <div class="coupon clearfix">
+      <div class="coupon_image">
+        <%= image_tag coupon.deal.promotion.image1.url.blank? ? "/images/deal_default_image.png" : coupon.deal.promotion.image1.url, :alt => "" %>
+      </div>
+      <div class="coupon_content">
+        <% unless coupon.active? or coupon.available_tomorrow? %><p class="not_active">Note, we cannot send this gift until the deal tips! <strong>We'll send the gift by email on <%= coupon.gift_send_date.strftime "%b %e" %> or when the deal tips, which ever happens last</strong>.</p><% end %>
+    	  <h3>Gift For: <strong><%= coupon.gift_name %> </strong> <%= "(#{link_to("edit", edit_coupon_gift_path(coupon))})" unless coupon.emailed? %></h3>
+        <% if coupon.deal.has_coupon_code? and coupon.active? %>
+          <div class="coupon_confirmation">Coupon Code: <strong><%= coupon.coupon_code %></strong></div>
+        <% end %>
+        <p><strong><%= coupon.expired? ? "Expired" : "Expires" %></strong>: <%=h coupon.expiration > 3.years.from_now ? "Never!" : coupon.expiration.strftime("%m/%d/%Y") %></p>
+      </div>
+      <br class="clear">
+    	<div class="gift_content">
+    	  <p><strong><%= coupon.emailed? ? "Sent" : "Will Send" %> To</strong>: <%= coupon.gift_email %></p>
+    	  <p class="<%= "sent_gift" if coupon.emailed? %>"><strong><%= coupon.emailed? ? "Sent" : "Will Send" %> On</strong>: <%= coupon.gift_send_date.strftime "%b %e, %Y" %> @ 11:00am</p>
+    	</div>
+    </div>
+  </div>
+<% end %>

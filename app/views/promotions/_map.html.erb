@@ -1,0 +1,47 @@
+<% content_for :head do %>
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+  <script type="text/javascript" charset="utf-8">
+    var map;
+    var info_windows = new Array();
+    var markers = new Array();
+    function loadMap() {
+      var latlng = new google.maps.LatLng(<%= session[:location_latitude] %>, <%= session[:location_longitude] %>);
+      var myOptions = {
+        zoom: 11,
+        panControl: false,
+        mapTypeControlOptions: { style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
+        center: latlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+      var marker_home = new google.maps.Marker({position: new google.maps.LatLng(<%= session[:location_latitude] %>, <%= session[:location_longitude] %>), map: map, icon: '/images/map_marker_home.png'});
+    }
+    function resetInfoWindows(){
+      for (i in info_windows) {
+        info_windows[i].close();
+      }
+    }
+    function resetMarkers(){
+      for (i in markers) {
+        markers[i].setOptions({icon: '/images/map_marker_off.png'});
+      }
+    }
+  </script>
+<% end %>
+
+<div id="map_canvas" style="width: <%= defined?(width) ? width.to_s + "px" : "100%" %>; height: <%= defined?(height) ? height.to_s + "px" : "100%" %>"><br><br><br><span class="loading_message">Loading your map of deals...</span></div>
+<script type="text/javascript" charset="utf-8">
+  loadMap();
+  <% promotions.each do |promotion| %>
+    <% unless promotion.business.latitude.blank? or promotion.business.longitude.blank? %>
+        var marker_<%= promotion.id %> = new google.maps.Marker({position: new google.maps.LatLng(<%= promotion.business.latitude %>, <%= promotion.business.longitude %>), map: map, icon: '/images/map_marker_off.png'});
+        var info_window_<%= promotion.id %> = new google.maps.InfoWindow({ 
+          content: '<%= render(:partial => "/promotions/map_item_content", :locals => {:promotion => promotion, :height => defined?(height) ? height : 500, :width => defined?(width) ? width : 500}).gsub(/\n/,"") %>',
+          maxWidth: <%= defined?(height) and height >= 400 ? 275 : 150 %>
+        });
+        google.maps.event.addListener(marker_<%= promotion.id %>, 'click', function(){ resetMarkers(); resetInfoWindows(); marker_<%= promotion.id %>.setOptions({icon: '/images/map_marker_on.png'}); info_window_<%= promotion.id %>.open(map, marker_<%= promotion.id %>); $('.promotion_listing_sidebar .mapped_promotions a.current').removeClass('current'); $('#promotion_listing_sidebar_link_<%= promotion.id %>').addClass('current'); });
+        markers.push(marker_<%= promotion.id %>);
+        info_windows.push(info_window_<%= promotion.id %>);
+    <% end %>
+  <% end %>  
+</script>

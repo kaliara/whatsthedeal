@@ -1,0 +1,109 @@
+body { background-color: #EDEDED; color: #333; margin:0;}
+
+body, p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size:   13px;
+  line-height: 18px;
+}
+
+a { color: #1556FF; font-weight:bold; text-decoration: none;}
+a:visited { color:#1556FF; }
+a:hover { color: #fff; background-color:#000; }
+
+.clear {
+  clear: both;
+}
+
+.fieldWithErrors {
+  padding: 2px;
+  background-color: red;
+  display: table;
+}
+
+.header{
+  color:#FFF;
+  background-color:#454545;
+  height: 60px;
+  padding: 2px;
+  border-bottom: solid 4px #1E1E1E;
+}
+.header p{
+  color: #B7B7B7;
+  float: right;
+  margin-right: 20px;
+  font-weight: normal;
+  font-size: 15px;
+}
+
+.header p a{
+  color:#FFF;
+  font-weight: normal;
+}
+
+#nav{
+  background-color: #A0A0A0;
+  font-size: 70%;
+}
+
+#nav li, .my_cart li{
+  color: #FFF;
+  padding-left: 11px;
+  padding-right: 11px;
+}
+
+#nav li a, .my_cart li a{
+  color: #6D6D6D;
+}
+
+h1{
+  color: #FFF;
+  font-weight: normal;
+  margin-left: 20px;
+}
+
+h3{
+  background-color: #434343;
+}
+
+h2{
+  color: #717171;
+}
+
+th{
+  background-color: #717171;
+}
+
+
+.bottom_link_next_page{
+  background-color: #D2D2D2;
+  height: 20px;
+  margin-top: 60px;
+  padding: 14px;
+}
+
+.new_deal a{
+  color: #FF9800;
+}
+
+.info_panel{
+  background-color:#777;
+}
+
+.info_panel label{
+  color: #A9A9A9;
+}
+
+.info_panel p{
+  padding: 5px 15px;
+}
+
+.info_panel_deals{
+  background-color:#2D3742;
+}
+.purchase_invoice th{
+  background-color: #285A92;
+}
+
+.invoice_table table{
+  width: 100%;
+}

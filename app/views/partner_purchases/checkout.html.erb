@@ -1,0 +1,420 @@
+<script>
+$(function() {
+    $('#id_quantity').change(function(){
+        var price = <%= @promotion.featured_deal.price %>;
+        var quantity = $(this).val();
+        var total_amount = price * quantity;
+        $('#total_amount').html('$'+total_amount);
+        $('#buy_button').val('buy for $'+total_amount);
+    });
+
+    $('#buy_form').submit(function(){
+        $.blockUI({ message: '<div style="margin:20px; font-size: 16px; text-align:center;">Please wait while we process your order ... <br/><br/><img src="https://instacdn.s3.amazonaws.com/gif/57ca1a2085d82f0574e3ef740b9a5ead.gif" /></div>' });
+    });
+});
+</script>
+
+
+	<div class="content">
+    	<div class="left_column">
+            
+<div class="left_container_header"></div>
+<div class="left_container_middle">
+
+<div class="clearboth"></div>
+
+<div class="stats_bar"></div>
+<div class="stats_bg_color">
+    <div class="stat_form" style="font-size: 24px; line-height: 28px; padding-top: 8px;">
+      <%= @promotion.featured_deal.name %>
+     </div>
+</div>     
+<div class="clearboth"></div>    
+
+
+
+<div  id="payment_form" class="transaction_form form_container">
+
+  
+  
+    <form id="buy_form" action="" method="POST">
+
+        <div id="your_purchase_div">
+            <div class="form_title">Your Purchase</div>
+            <table id="your_purchase_table">
+            <tr>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Price</th>
+
+                <th>Total</th>
+            <tr>
+            <tr>
+                <td><%= @promotion.featured_deal.name %></td>
+                <td>
+                    <select id="id_quantity" name="quantity" size="1">
+<option value="1" selected="selected">1</option>
+<option value="2">2</option>
+
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+<option value="10">10</option>
+<option value="11">11</option>
+
+<option value="12">12</option>
+<option value="13">13</option>
+<option value="14">14</option>
+<option value="15">15</option>
+<option value="16">16</option>
+<option value="17">17</option>
+<option value="18">18</option>
+<option value="19">19</option>
+<option value="20">20</option>
+
+</select>
+                </td>
+                <td><%= number_to_currency @promotion.featured_deal.price, :precision => 0 %></td>
+                <td class="total" id="total_amount"><%= number_to_currency @promotion.featured_deal.price, :precision => 0 %></td>
+            <tr>
+            </table>
+        </div>
+
+
+        <div class="form_title">Where should we email your
+        
+        tickets?
+        
+        </div>
+
+        <div class="float_left form_label">Email:</div>
+        <div><input id="id_email" type="text" name="email" value="allmail@gmail.com" size="50" /></div>
+        
+        <div class="clearboth"></div>
+        <div class="float_left form_label">Re-enter Email:</div>
+        <div><input id="id_email_reentry" type="text" name="email_reentry" value="allmail@gmail.com" size="50" /></div>
+        
+        <div class="clearboth"></div>
+
+        <input name="join_list" type="hidden" value="join_list" />
+
+        <div class="form_title">Billing Address</div>
+
+
+        <div class="float_left form_label">Street Address:</div>
+        <div><input id="id_street" maxlength="128" type="text" name="street" size="50" /></div>
+        
+        <div class="clearboth"></div>
+
+        <div class="float_left form_label">City:</div>
+        <div><input id="id_city" maxlength="128" type="text" name="city" size="50" /></div>     
+        
+        <div class="clearboth"></div>
+
+        <div class="float_left form_label">State:</div>
+        <div class="form_dropdown"><select id="id_state" name="state" size="1">
+<option value="Alabama">Alabama</option>
+<option value="Alaska">Alaska</option>
+<option value="Arizona">Arizona</option>
+
+<option value="Arkansas">Arkansas</option>
+<option value="California" selected="selected">California</option>
+<option value="Colorado">Colorado</option>
+<option value="Connecticut">Connecticut</option>
+<option value="Delaware">Delaware</option>
+<option value="Florida">Florida</option>
+<option value="Georgia">Georgia</option>
+<option value="Hawaii">Hawaii</option>
+<option value="Idaho">Idaho</option>
+
+<option value="Illinois">Illinois</option>
+<option value="Indiana">Indiana</option>
+<option value="Iowa">Iowa</option>
+<option value="Kansas">Kansas</option>
+<option value="Kentucky">Kentucky</option>
+<option value="Louisiana">Louisiana</option>
+<option value="Maine">Maine</option>
+<option value="Maryland">Maryland</option>
+<option value="Massachusetts">Massachusetts</option>
+
+<option value="Michigan">Michigan</option>
+<option value="Minnesota">Minnesota</option>
+<option value="Mississippi">Mississippi</option>
+<option value="Missouri">Missouri</option>
+<option value="Montana">Montana</option>
+<option value="Nebraska">Nebraska</option>
+<option value="Nevada">Nevada</option>
+<option value="New Hampshire">New Hampshire</option>
+<option value="New Jersey">New Jersey</option>
+
+<option value="New Mexico">New Mexico</option>
+<option value="New York">New York</option>
+<option value="North Carolina">North Carolina</option>
+<option value="North Dakota">North Dakota</option>
+<option value="Ohio">Ohio</option>
+<option value="Oklahoma">Oklahoma</option>
+<option value="Oregon">Oregon</option>
+<option value="Pennsylvania">Pennsylvania</option>
+<option value="Puerto Rico">Puerto Rico</option>
+
+<option value="Rhode Island">Rhode Island</option>
+<option value="South Carolina">South Carolina</option>
+<option value="South Dakota">South Dakota</option>
+<option value="Tennessee">Tennessee</option>
+<option value="Texas">Texas</option>
+<option value="Utah">Utah</option>
+<option value="Vermont">Vermont</option>
+<option value="Virginia">Virginia</option>
+<option value="Washington">Washington</option>
+
+<option value="Washington D.C.">Washington D.C.</option>
+<option value="West Virginia">West Virginia</option>
+<option value="Wisconsin">Wisconsin</option>
+<option value="Wyoming">Wyoming</option>
+</select></div>
+        
+        <div class="clearboth"></div>
+
+        <div class="float_left form_label">Zip:</div>
+        <div><input id="id_zip" maxlength="128" type="text" name="zip" size="9" /></div>
+
+        
+
+        <div class="clearboth"></div>
+        <div class="ccards_title">
+            <div class="label">
+                Credit Card
+            </div>
+            
+        </div>
+        <div class="clearboth"></div>
+
+        <div class="float_left form_label">Name on Credit Card:</div>
+
+        <div><input id="id_card_holder_name" maxlength="128" type="text" name="card_holder_name" size="50" /></div>
+        
+        <div class="clearboth"></div>
+
+        <div class="float_left form_label">Card Type:</div>
+        <div class="form_dropdown"><select id="id_card_type" name="card_type" size="1">
+<option value="visa">Visa</option>
+<option value="mastercard">Master Card</option>
+<option value="amex">American Express</option>
+<option value="discover">Discover</option>
+
+</select></div>
+        
+        <div class="clearboth"></div>
+
+        <div class="float_left form_label">Credit Card Number:</div>
+	
+	<div><input name="card_num"
+        
+        value=""
+        
+        maxlength="128" type="text" id="id_card_num" size="20" class="float_left" /><div class="ccards float_left"> 
+                <img src="https://instacdn.s3.amazonaws.com/png/99b328b9490cdb65d93cc55b337c065a.png" />
+            </div></div>
+        <div class="clearboth"></div>
+        
+        <div class="clearboth"></div>
+
+        <div class="float_left form_label">Security Code:</div>
+	
+	<div class="float_left"><input name="security_code" value="" maxlength="4" type="text" id="id_security_code" size="5" /></div>
+	<div class="form_tip float_left">
+        
+        Last 3-4 digits on the back of your card.
+        
+        </div>
+        <div class="clearboth"></div>
+
+        <div class="float_left form_label">Expiration Date</div>
+        <div class="form_dropdown">
+
+          <select id="id_exp_month" name="exp_month" size="1">
+<option value="01">January</option>
+<option value="02">February</option>
+<option value="03">March</option>
+<option value="04">April</option>
+<option value="05">May</option>
+<option value="06">June</option>
+<option value="07">July</option>
+<option value="08">August</option>
+
+<option value="09">September</option>
+<option value="10">October</option>
+<option value="11">November</option>
+<option value="12">December</option>
+</select>
+          <select id="id_exp_year" name="exp_year" size="1">
+<option value="2010">2010</option>
+<option value="2011">2011</option>
+<option value="2012">2012</option>
+
+<option value="2013">2013</option>
+<option value="2014">2014</option>
+<option value="2015">2015</option>
+<option value="2016">2016</option>
+<option value="2017">2017</option>
+<option value="2018">2018</option>
+<option value="2019">2019</option>
+<option value="2020">2020</option>
+</select>
+
+        </div>
+        
+        
+        <div class="clearboth"></div>
+
+        
+
+        
+        <input id="buy_button" type="submit" name="submit" class="button_small btn_buy btn_color" onclick="alert('This is the part where we make money!');return false" value="buy for <%= number_to_currency @promotion.featured_deal.price, :precision => 0 %>"/>
+        
+        
+
+    </form>
+</div>
+<img style="height:0px;width:0px;" src="https://instacdn.s3.amazonaws.com/gif/57ca1a2085d82f0574e3ef740b9a5ead.gif" />
+
+<div class="clearboth"></div>   
+</div>
+<div class="clearboth"></div>
+<div class="left_container_footer"></div>
+
+
+
+
+
+
+              
+
+</div>
+<div class="right_column">
+       
+
+
+
+ 
+
+  <div class="right_container_header"></div>
+    <div class="right_container_middle">
+    <div class="rightside_header">
+
+    Redeem by 
+    <%= @promotion.featured_deal.coupon_expiration.strftime("%B&nbsp;%d") %>
+
+    </div>
+    <div class="tweets">
+
+    <ul class="tweets">
+        <li>
+            <b>
+
+                Use your coupon at
+
+
+                <%= @promotion.business.name %>
+
+       before <%= @promotion.featured_deal.coupon_expiration.strftime("%B&nbsp;%d") %>.
+            </b>
+
+
+            Just print your 
+            coupon
+            and bring it in. 
+
+        </li> 
+    </ul>
+    </div>
+
+  </div>
+  <div class="clearboth"></div>
+  <div class="right_container_footer"></div>
+
+
+
+  <div class="right_container_header"></div>
+    <div class="right_container_middle">
+    <div class="rightside_header">What Happens After I Buy?</div>
+    <div class="tweets">
+    <ul class="tweets">
+
+        <li>
+
+            <b>
+            You get your coupon via email by <%= (@promotion.end_date - 1.day).strftime("%B&nbsp;%d") %>.
+            </b>
+            We will charge 
+            <%= number_to_currency @promotion.featured_deal.price, :precision => 0 %>
+            to your credit card.
+
+        </li> 
+    </ul>
+    </div>
+  </div>
+  <div class="clearboth"></div>
+  <div class="right_container_footer"></div>
+
+
+
+  <div class="right_container_header"></div>
+       <div class="right_container_middle">
+
+       <div class="rightside_header">
+           Is Paying Online Secure?
+       </div>
+       <div class="tweets">
+       <ul class="tweets">
+           <li>
+
+               <b>Absolutely!</b> We use 128 bit SSL encryption to
+               protect your credit card information.
+           </li> 
+       </ul>
+
+       <div class="clearboth"></div>
+       </div>
+   </div>
+   <div class="clearboth"></div>
+   <div class="right_container_footer"></div>
+
+
+
+
+  <div class="right_container_header"></div>
+    <div class="right_container_middle">
+    <div class="rightside_header">
+
+        Refunds Until Tickets Are Issued
+
+    </div>
+
+    <div class="tweets">
+    <ul class="tweets">
+        <li>
+            <img src="http://cf.instacdn.com/png/3e15ba2e8293200ab764e6e31c434969.png" class="float_right guarantee" width="76" height="75" />
+            We want you to be happy. If you're
+            not, we will refund your <%= number_to_currency @promotion.featured_deal.price, :precision => 0 %> purchase
+
+            price up until you receive your tickets via email.
+            Tickets will be emailed by <%= (@promotion.end_date - 1).strftime("%B&nbsp;%d") %>.
+            <b>Once tickets are issued, no refunds or exchanges.</b>
+
+
+            Call us at 866-364-0031 or
+            email
+            <a href="mailto:deals@teampick.com">deals@teampick.com</a>.
+        </li>
+
+    </ul>
+    <div class="clearboth"></div>
+    </div>
+  </div>
+  <div class="clearboth"></div>
+  <div class="right_container_footer"></div>

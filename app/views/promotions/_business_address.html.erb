@@ -1,0 +1,63 @@
+<div class="business_info">
+  <address>
+    <% if @promotion.id == 194 %>
+      <b><%= @promotion.business.name %></b>
+      <%= "<br>" + link_to(@promotion.business.website, @promotion.business.website, :target => "_blank") unless @promotion.business.website.blank? %>
+      <br>(703) 519-8020
+      <br><br>
+
+      <b style="font-size: 18px;"><a href="http://www.firehook.com/locations.html" title="FireHook Locations" target="_blank">Locations</a></b><br>
+      <br>
+      <b>Virginia</b>
+      <p>105 S. Union Street<br>Alexandria, VA 22314</p>
+      <p>430 South Washington St.<br>Alexandria, VA 22314</p>
+      <p>1800 Tysons Boulevard<br>Tysons Corner, VA 22102</p>
+      <p>14701 Flint Lee Road<br>Chantilly VA 20151</p>
+      <br><br>
+      <b>Washington, DC</b>
+      <p>1909 Q. Street, NW<br>Washington DC 20009</p>
+      <p>3411 Connecticut Ave, NW<br>Washington, DC 20015</p>
+      <p>912 17th Street, NW<br>Washington DC 20006</p>
+      <p>215 Pennsylvania, SE<br>Washington DC 20004</p>
+      <p>441 4th Street NW<br>Washington DC 20001</p>
+      <p>555 13th Street, NW<br>Washington DC 20004</p>
+      <p>401 F Street NW<br>Washington DC 20001</p>
+    <% else %>
+      <b><%= @promotion.business.website.blank? ? @promotion.business.name : link_to(@promotion.business.name, @promotion.business.website, :target => "_blank") %></b>
+      <%= "<br>" + @promotion.business.street1 unless @promotion.business.street1.blank? %>
+      <%= "<br>" + @promotion.business.street2 unless @promotion.business.street2.blank? %>
+      <%= "<br>" + @promotion.business.city unless @promotion.business.city.blank? %><%= "," unless @promotion.business.city.blank? and @promotion.business.state.blank? %> <%= @promotion.business.state %> <%= @promotion.business.zipcode %>
+      <%= "<br>" + @promotion.business.phone unless @promotion.business.phone.blank? %>
+      <%= "<br>" + @promotion.business.email unless @promotion.business.email.blank? %>
+      
+      <% if @promotion.id == 247 %>
+        <br><br>
+        <strong><a href="http://www.yelp.com/biz/michel-rene-for-hair-vienna" title="Michel Rene For Hair - Vienna, VA">Michel Rene For Hair</a></strong><br>
+        165 Maple Ave E<br>
+        Vienna, VA 22180<br>
+        (703) 548-5656
+      <% elsif @promotion.id == 259 %>
+        <br><br>
+        <strong><a href="http://maps.google.com/maps?q=115+South+Union+Street+Alexandria,+VA+22314&amp;oe=utf-8&amp;client=firefox-a&amp;ie=UTF8&amp;hq=&amp;hnear=115+S+Union+St,+Alexandria,+Virginia+22314&amp;gl=us&amp;ei=_VUGTcOKLI-8sQOSif3KDQ&amp;oi=geocode_result&amp;ved=0CBQQ8gEwAA&amp;z=16" title="115 South Union Street Alexandria, VA 22314 - Google Maps">Montague and Son:<br>Fine Comfort Footwear</a></strong><br>
+        115 South Union Street<br>
+        Alexandria, VA 22314<br>
+        703.548.5656
+        <br><br>
+        <strong><a href="http://maps.google.com/maps?q=316+Elden+Street+Herndon,+VA+20170&amp;oe=utf-8&amp;client=firefox-a&amp;ie=UTF8&amp;hq=&amp;hnear=316+Elden+St,+Herndon,+Fairfax,+Virginia+20170&amp;gl=us&amp;ei=HVYGTfndBIG-sQP1m8iIDQ&amp;oi=geocode_result&amp;ved=0CBQQ8gEwAA&amp;z=16" title="316 Elden Street Herndon, VA 20170 - Google Maps">Montague and Son:<br>Fine Comfort Footwear</a></strong><br>
+        316 Elden Street<br>
+        Herndon, VA 20170<br>
+        703.471.6688
+        <br><br>
+        <strong><a href="http://maps.google.com/maps?q=519+Maple+Ave.+West+Vienna,+VA+22180&amp;oe=utf-8&amp;client=firefox-a&amp;ie=UTF8&amp;hq=&amp;hnear=519+Maple+Ave+W,+Vienna,+Fairfax,+Virginia+22180&amp;gl=us&amp;ei=NlYGTfvVD5PSsAPGwqDTDQ&amp;oi=geocode_result&amp;ved=0CBcQ8gEwAA&amp;z=16" title="519 Maple Ave. West Vienna, VA 22180 - Google Maps">Montague and Son:<br>Fine Comfort Footwear</a></strong><br>
+        519 Maple Ave. West<br>
+        Vienna, VA 22180<br>
+        703.281.2475
+        <br><br>
+        <strong><a href="http://maps.google.com/maps?q=10462+Auto+Park+Ave.+Bethesda,+MD+20817&amp;oe=utf-8&amp;client=firefox-a&amp;ie=UTF8&amp;hq=&amp;hnear=10462+Auto+Park+Ave,+Bethesda,+Montgomery,+Maryland+20817&amp;gl=us&amp;ei=UVYGTbKTB4rSsAPHg7T9DA&amp;oi=geocode_result&amp;ved=0CBkQ8gEwAA&amp;z=16" title="10462 Auto Park Ave. Bethesda, MD 20817 - Google Maps">Montague and Son:<br>Fine Comfort Footwear</a></strong><br>
+        10462 Auto Park Ave.<br>
+        Bethesda, MD 20817<br>
+        240.395.2475
+      <% end %>
+    <% end %>
+  </address>
+</div>

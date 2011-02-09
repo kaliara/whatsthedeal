@@ -1,0 +1,93 @@
+<% unless (RAILS_ENV == 'staging' or RAILS_ENV == 'development') %>
+  <%= yield :scripts %>
+  
+  <!-- Quantcast tag -->
+  <script type="text/javascript"> _qoptions={ qacct:"p-4eBNeUHWu038k" }; </script> <script type="text/javascript" src="https://edge.quantserve.com/quant.js"></script> <noscript> <img src="https://pixel.quantserve.com/pixel/p-4eBNeUHWu038k.gif" style="display: none;" border="0" height="1" width="1" alt="Quantcast"/> </noscript>
+
+  <% if session[:new_subscriber] %>
+    <!-- intermark conversion -->
+    <iframe src="https://www.cpaclicks.com/pix/frame.asp?type=l&cid=6350&opt=OPT_INFO" width="0" height="0" frameborder="0"></iframe>
+
+    <!-- epic cpa stuff -->
+    <iframe src='https://l.azjmp.com/f.php?o=11601&e=' width='1' height='1' frameborder='0'></iframe>
+    
+    <!-- local offer lounge -->
+    <iframe src="https://www.lontrk.com/confirm?type=registration&aid=1013&ref=<%= session[:new_subscriber_email] %>&market=washington_dc" scrolling="no" frameborder="0" width="1" height="1"></iframe>
+  <% end %>
+
+  <script type="text/javascript">
+  var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+  document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+  </script>
+  <script type="text/javascript">
+  try {
+  var pageTracker = _gat._getTracker("UA-9745141-1");
+  } catch(err) {}
+
+  // actions
+  <% if session[:viewed_promotion] %>
+    pageTracker._trackPageview("/action/viewed_promotion");
+    <% session[:viewed_promotion] = nil %>
+  <% end %>  
+  <% if session[:clicked_other_promotion] %>
+    pageTracker._trackPageview("/action/clicked_other_promotion");
+    <% session[:clicked_other_promotion] = nil %>
+  <% end %>  
+  <% if session[:add_to_cart] %>
+    pageTracker._trackPageview("/action/add_to_cart");
+    <% session[:add_to_cart] = nil %>
+  <% end %>  
+  <% if session[:added_more_great_deal_to_cart] %>
+    pageTracker._trackPageview("/action/added_more_great_deal_to_cart");
+    <% session[:added_more_great_deal_to_cart] = nil %>
+  <% end %>  
+  <% if session[:added_early_bird_deal_to_cart] %>
+    pageTracker._trackPageview("/action/added_early_bird_deal_to_cart");
+    <% session[:added_early_bird_deal_to_cart] = nil %>
+  <% end %>  
+  <% if session[:remove_from_cart] %>
+    pageTracker._trackPageview("/action/remove_from_cart");
+    <% session[:remove_from_cart] = nil %>
+  <% end %>  
+  <% if session[:add_reminder] %>
+    pageTracker._trackPageview("/action/add_reminder");
+    <% session[:add_reminder] = nil %>
+  <% end %>  
+  <% if session[:remove_reminder] %>
+    pageTracker._trackPageview("/action/remove_reminder");
+    <% session[:remove_reminder] = nil %>
+  <% end %>  
+  <% if session[:clicked_promotion_map] %>
+    pageTracker._trackPageview("/action/clicked_promotion_map");
+    pageTracker._setCustomVar(2,'UsedPromotionMap', 'true', 1);
+    <% session[:clicked_promotion_map] = nil %>
+  <% end %>
+
+  // goals
+  <% if session[:new_subscriber] %>
+    pageTracker._trackPageview("/goals/subscriber");
+    ds_Action(_DS_SIGNUP);    // dealsurf
+    <% session[:new_subscriber] = nil %>
+  <% end %>
+  <% if session[:new_user] %>
+    pageTracker._trackPageview("/goals/register");
+    <% session[:new_user] = nil %>
+  <% end %>
+  <% if session[:new_purchase] %>
+    pageTracker._trackPageview("/goals/purchase");
+    ds_Action(_DS_PURCHASE);  // dealsurf
+    <% session[:new_purchase] = nil %>
+  <% end %>
+  
+  // User Segmentation in Google Analytics
+  <% if partner > 0 %>
+    pageTracker._setCustomVar(1,'Partner', 'Washingtonian', 1);
+  <% else %>
+    pageTracker._setCustomVar(1,'Partner', 'none', 1);
+  <% end %>
+  
+  try {
+  pageTracker._trackPageview();
+  } catch(err) {}
+  </script>
+<% end %>

@@ -1,0 +1,20 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'New Item', new_admin_item_path %></li>
+<% end %>
+
+
+<h2>Items</h2>
+
+<table>
+  <tr>
+    <th>Name</th>
+  </tr>
+
+<% @items.each do |item| %>
+  <tr>
+    <td><%=h item.name %></td>
+    <td><%= link_to 'Edit', edit_admin_item_path(item) %></td>
+    <td><%= link_to 'Destroy', admin_item_path(item), :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>

@@ -1,0 +1,343 @@
+<style type="text/css" media="screen">
+  .deal_copy strong span, .deal_copy span strong{
+    color: #BF1E2E !important;
+  }
+</style>
+
+<div class="content">
+  	<div class="left_column">
+          
+<div class="left_container_header"></div>
+
+<div class="left_container_middle">
+  <div class="float_left deal_header">
+
+      
+      <div id="deal-button">
+
+          
+          <a class="button btn_color" href="/teampick/checkout" id="buy-button"><strong>buy now</strong><br /><span class="deal_price"><%= number_to_currency @promotion.featured_deal.price, :precision => 0 %></span></a>
+          
+          
+
+
+      </div>
+
+      <div class="offer_text">
+          <%= @promotion.featured_deal.name %>
+      </div>
+
+      
+
+      
+      
+  </div>
+  
+  <div  style="height:10px;" class="clearboth"></div>
+  
+  <div class="stats_bar"></div>
+  <div class="stats_bg_color">
+
+      
+      <div class="stat1">
+      price<br /><strong class="deal_price"><%= number_to_currency @promotion.featured_deal.price, :precision => 0 %></strong>
+      </div>
+
+      <div class="stat1">
+      value<br /><strong class="deal_value"><%= number_to_currency @promotion.featured_deal.value, :precision => 0 %></strong>  
+      </div>
+      <div class="stat1 last_stat">
+
+
+  redeem <br />
+        <strong>
+            <%= @promotion.featured_deal.coupon_expiration.strftime("%b %d") %>
+        </strong>
+
+
+      </div>
+      <div class="stat_time_header" id="time-remaining">
+      
+      Buy before <%= @promotion.end_date.strftime("%B %d") %>
+      
+      </div>
+      <div class="time_container" id="time-container">
+      </div>
+      
+
+      
+
+  </div>
+  
+  <div  style="height:20px;" class="clearboth"></div>
+
+
+  <div class="business_content">
+  
+  <div class="business_info float_left">
+      <div class="photo_viewer">
+          <div class="main_photo"><%= image_tag @promotion.image1.url, :width => 349 %></div>
+      </div>
+      
+      
+  </div>
+  
+  <div class="details_container float_right">
+      <div id="share_box">
+
+              <strong>Share This Deal With Your Friends</strong>
+              <div id="share">
+                  <ul>
+                      <li class="first">
+                      <a target="_blank" href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.teampick.com%2Fdeal%2Fpenn_state_vs_indiana%2F%3Futm_medium%3Dshare%26utm_source%3Dfacebook&amp;t=%2499+Club+Level+Party+Deck+Tickets+to+Penn+State+vs.+Indiana+for+only+%2460">
+                      <img src="http://cf.instacdn.com/png/81ac7e9196142a074369b2540afb2ac2.png" />
+                      </a>
+                      </li>
+
+                      <li>
+                      <a target="_blank" href="http://twitter.com/home?status=%2499+Club+Level+Party+Deck+Tickets+to+Penn+State+vs.+Indiana+for+only+%2460+http%3A%2F%2Fbit.ly%2Fb3mjHg">
+                      <img src="http://cf.instacdn.com/png/ca511c5ab52eeebe82f09fba3d84dd34.png" />
+                      </a></li>
+                  </ul>
+              </div>
+        
+            
+      </div>
+
+      
+      
+      <div id="address_box">
+
+          <div class="details_top"><div></div></div>
+          <div class="details_middle">
+              <strong>
+                  <span class="merchant_name"><%= @promotion.business.name %></span>
+              </strong>
+              <div><span class="contact1"><%= @promotion.business.street1 %><%= "<br/>" + @promotion.business.street2 unless @promotion.business.street2.blank? %></span></div> 
+              <div><span class="contact2"><%= @promotion.business.city %>, <%= @promotion.business.state %> <%= @promotion.business.zipcode %></span></div>
+          </div>
+
+          <div class="details_bottom"><div></div></div>    
+      </div>           
+      
+      
+
+      <div id="details_box" >
+          <div class="details_top"><div></div></div>
+          <div class="details_middle">
+              <strong>The Details</strong>
+              <div id="details">
+                  <ul>
+                    <%= @promotion.restrictions %>
+                  </ul>
+              </div>
+          </div>
+
+          <div class="details_bottom"><div></div></div>    
+      </div>
+
+
+  </div>
+
+  <div class="deal_copy_header_spacer"><br/></div>
+  <div class="deal_copy">
+    <%= @promotion.body1 %>
+  </div>
+
+  <br/>
+
+  </div>
+
+  <div class="clearboth"></div>   
+
+</div>
+<div class="clearboth"></div>
+<div class="left_container_footer"></div>
+
+      </div>
+      <div class="right_column">
+          
+
+
+
+
+
+
+
+
+<div class="right_container_header-tp"></div>
+  <div class="right_container_middle-tp">
+  <div class="rightside_header">
+      Join our mailing list
+  </div>
+  <div class="tweets-partner">
+  <ul class="tweets-partner">
+      <li> <span class="highlight">Get 50% off deals</span> 
+      for the best 
+      DC
+      restaurants, bars, game tickets and more!</li>
+
+      <li><a href="/signup/" class="button_signup" ></a></li>
+  </ul>
+  </div> 
+  </div>
+  <div class="clearboth"></div>
+<div class="right_container_footer-tp"></div>
+
+
+<!-- nationals_tickets -->
+
+
+<div class="right_container_header"></div>
+
+  <div class="right_container_middle">
+  <div class="rightside_header">
+      
+      Buy Before
+    <%= @promotion.end_date.strftime("%B&nbsp;%d") %>
+      
+  </div>
+  <div class="tweets">
+  <ul class="tweets">
+      <li>
+          <b>
+          
+          Buy this deal before
+          <%= @promotion.end_date.strftime("%B&nbsp;%d") %>,
+
+    redeem before
+    <%= @promotion.featured_deal.coupon_expiration.strftime("%B&nbsp;%d") %>
+
+          
+          </b>
+
+          at <%= @promotion.business.name %>.
+    
+      </li> 
+  </ul>
+  </div>
+</div>
+<div class="clearboth"></div>
+<div class="right_container_footer"></div>
+
+
+
+
+<!-- nationals_tickets -->
+
+
+
+
+
+
+<div class="right_container_header"></div>
+  <div class="right_container_middle">
+  <div class="rightside_header">
+
+  Redeem by 
+  <%= @promotion.featured_deal.coupon_expiration.strftime("%B&nbsp;%d") %>
+
+  </div>
+  <div class="tweets">
+
+  <ul class="tweets">
+      <li>
+          <b>
+              
+              Use your coupon at
+              
+
+              <%= @promotion.business.name %>
+
+     before <%= @promotion.featured_deal.coupon_expiration.strftime("%B&nbsp;%d") %>.
+          </b>
+
+          
+          Just print your 
+          coupon
+          and bring it in. 
+          
+      </li> 
+  </ul>
+  </div>
+
+</div>
+<div class="clearboth"></div>
+<div class="right_container_footer"></div>
+
+
+
+
+
+<div class="right_container_header"></div>
+  <div class="right_container_middle">
+  <div class="rightside_header">What Happens After I Buy?</div>
+  <div class="tweets">
+  <ul class="tweets">
+
+      <li>
+          
+          <b>
+          You get your coupon via email by <%= (@promotion.end_date - 1.day).strftime("%B&nbsp;%d") %>.
+          </b>
+          We will charge 
+          <%= number_to_currency @promotion.featured_deal.price, :precision => 0 %>
+          to your credit card.
+          
+      </li> 
+  </ul>
+  </div>
+</div>
+<div class="clearboth"></div>
+<div class="right_container_footer"></div>
+
+
+
+
+
+
+
+
+
+
+<div class="right_container_header"></div>
+  <div class="right_container_middle">
+  <div class="rightside_header">
+      
+      Refunds Until Tickets Are Issued
+      
+  </div>
+
+  <div class="tweets">
+  <ul class="tweets">
+      <li>
+          <img src="http://cf.instacdn.com/png/3e15ba2e8293200ab764e6e31c434969.png" class="float_right guarantee" width="76" height="75" />
+          We want you to be happy. If you're
+          not, we will refund your <%= number_to_currency @promotion.featured_deal.price, :precision => 0 %> purchase
+          
+          price up until you receive your tickets via email.
+          Tickets will be emailed by <%= (@promotion.end_date - 1).strftime("%B&nbsp;%d") %>.
+          <b>Once tickets are issued, no refunds or exchanges.</b>
+          
+
+          Call us at 866-364-0031 or
+          email
+          <a href="mailto:deals@teampick.com">deals@teampick.com</a>.
+      </li>
+
+  </ul>
+  <div class="clearboth"></div>
+  </div>
+</div>
+<div class="clearboth"></div>
+<div class="right_container_footer"></div>
+
+
+
+
+<!-- nationals_tickets -->
+
+
+<script type="text/javascript">
+countdown(<%= @promotion.end_date.year %>,<%= @promotion.end_date.month %>,<%= @promotion.end_date.day %>);
+</script>   

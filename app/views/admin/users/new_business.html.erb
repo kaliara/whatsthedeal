@@ -1,0 +1,60 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Business Listing', businesses_path %></li>
+<% end %>
+
+<h2>New Business</h2>
+
+<% form_for(@user) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </p>
+  <p>
+    <%= f.label :password %><br />
+    <%= f.password_field :password %>
+  </p>
+  <p>
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation %>
+  </p>
+  
+  <% f.fields_for :business do |cf| %>
+    <p>
+      <%= cf.label :name %><br />
+      <%= cf.text_field :name %>
+    </p>
+    <p>
+      <%= cf.label :phone %><br />
+      <%= cf.text_field :phone %>
+    </p>
+    <p>
+      <%= cf.label :street1 %><br />
+      <%= cf.text_field :street1 %>
+    </p>
+    <p>
+      <%= cf.label :street2 %><br />
+      <%= cf.text_field :street2 %>
+    </p>
+    <p>
+      <%= cf.label :city %><br />
+      <%= cf.text_field :city %>
+    </p>
+    <p>
+      <%= cf.label :state %><br />
+      <%= cf.select :state, Customer::STATES %>
+    </p>
+    <p>
+      <%= cf.label :zipcode %><br />
+      <%= cf.text_field :zipcode %>
+    </p>
+    <p>
+      <%= cf.label :website %><br />
+      <%= cf.text_field :website %>
+    </p>
+  <% end %>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>

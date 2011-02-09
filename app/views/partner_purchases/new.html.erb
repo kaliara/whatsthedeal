@@ -1,0 +1,137 @@
+<% content_for :page_title do %>Sloopymenus.com | Special Deal Purchase<% end %>
+
+<h2>Order Review</h2>
+<div class="section_element clear clearfix">
+  <table class="shopping_cart">
+    
+    <tr>
+      <th class="shopping_cart_items"></th>
+      <th class="quantity">Quantity</th>
+      <th class="price">Total</th>
+    </tr>
+    <% cart.cart_items.each do |cart_item| %>
+      <tr>
+        <% form_for(cart_item) do |f| %>
+          <td class="deal_name"><%= cart_item.deal.name %> <%= "<span>(#{number_to_currency cart_item.deal.price} each)</span>" if cart_item.quantity > 1 %></td>
+          <td class="quantity quantity_show"><%= cart_item.quantity %>&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to 'Remove', :action => 'empty_cart', :confirm => "Remove #{cart_item.deal.name} from cart?", :method => :delete, :class => 'remove' %>
+          </td>
+          <td class="price"><%= number_to_currency (cart_item.deal.price * cart_item.quantity) %></td>
+        <% end %>
+      </tr>
+    <% end %>
+
+  </table>
+</div>
+
+<br><br><br><br><br><br>
+
+<div class="sloopy_thanks">     
+  <p><strong>You will receive your coupon on <%= (cart.cart_items.first.deal.promotion.end_date + 1.days).strftime("%b %d, %Y") %>  via email.</strong></p>
+</div>
+
+<br>
+
+<h2>Payment Information</h2>
+<% form_for :purchase, @purchase, :url => {:controller => 'partner_purchases', :action => 'create'}, :html => {:onsubmit => "getElementById('purchase_loading').style.display=''; getElementById('confirm_purchase_submit').style.display='none';"} do |f| %>
+  <%= display_error_messages(f.error_messages) %>
+  
+  <%= f.hidden_field :invoice_number, :value => Time.now.strftime("%y%m%d%H%M%S") %>
+  <%= f.hidden_field :customer_ip, :value => request.remote_ip %>
+  <%= f.hidden_field :description, :value => (cart.cart_items.collect{|c| "#{c.deal.name}(#{c.quantity})"}).join(',') %>
+
+  <div class="clearfix">
+        
+    <div class="section_element">
+      <div class="section_header">
+        <h3>Email Address</h3>
+      </div>
+      <div class="section_content">
+        <div class="sidebar_text">
+          <p>This is where we will send your coupon.</p>
+        </div>
+         <div class="label_input_form">
+          <%= f.label :customer_email, 'Email Address' %>
+          <%= f.text_field :customer_email, :class => "text" %>
+        </div>  
+        <div class="label_input_form">   
+          <%= label_tag :customer_email_confirm, 'Email Confirmation' %>
+          <%= text_field_tag :customer_email_confirm, params[:customer_email_confirm], :class => "text" %>
+        </div>  
+      </div>
+    </div>
+
+  </div>
+  
+  <div class="clearfix">
+    <div class="section_element">
+      <div class="section_header">
+        <h3>Credit Card Information</h3>
+      </div>
+      <div class="section_content">
+        <div class="sidebar_text">
+          <p><%= render_content 'cart_sidebar_creditcard_desc' %></p>
+          <p><img src="/images/visa.gif"><img src="/images/mastercard.gif"><img src="/images/americanexpress.gif"></p>
+        </div>
+        <div class="label_input_form">
+          <%= f.label :first_name %>
+          <%= f.text_field :first_name, :class => "text" %>
+        </div>
+        <div class="label_input_form">
+          <%= f.label :last_name %>
+          <%= f.text_field :last_name, :class => "text" %>
+        </div>
+        <div class="label_input_form">   
+          <%= f.label :card_number %>
+          <%= f.text_field :card_number, :class => "text" %>
+        </div>  
+        <div class="label_input_form">   
+          <%= f.label :card_verification, "Card Verification Value (CVV)" %>
+          <%= f.text_field :card_verification %>
+        </div>  
+        <div class="label_input_form">
+          <%= label_tag :card_expiration %>
+          <%= f.select :card_expires_on_month, 1..12 %>&nbsp;&nbsp;<%= f.select :card_expires_on_year, Date.today.year..10.years.from_now.year %>
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  <div class="clearfix">
+    <div class="section_element">
+      <div class="section_header">
+        <h3>Billing Address</h3>
+      </div>
+      <div class="section_content">
+         <div class="label_input_form">
+          <%= f.label :billing_street1, 'Street 1' %>
+          <%= f.text_field :billing_street1, :class => "text" %>
+        </div>  
+        <div class="label_input_form">   
+          <%= f.label :billing_street2, 'Street 2' %>
+          <%= f.text_field :billing_street2, :class => "text" %>
+        </div>  
+        <div class="label_input_form">   
+          <%= f.label :billing_city, 'City' %>
+          <%= f.text_field :billing_city, :class => "text" %>
+        </div>  
+        <div class="label_input_form">   
+          <%= f.label :billing_state, 'State' %>
+          <%= f.select :billing_state, Customer::STATES %>
+        </div>  
+        <div class="label_input_form">   
+          <%= f.label :billing_zipcode, 'Zip Code' %>
+          <%= f.text_field :billing_zipcode, :class => "zip_code" %>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+  <div class="section_element tright">
+    <%= f.submit "Confirm Purchase", :class => 'confirm_purchase primary' %>
+  </div>
+  
+
+<% end %>

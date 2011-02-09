@@ -1,0 +1,13 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Deal Listing', admin_deals_path %></li>
+<% end %>
+
+
+<% form_tag :controller => 'admin/deals', :action => 'coupon_codes', :deal_id => @deal.id do %>
+  <%= hidden_field_tag :deal_id, @deal.id %>
+  <label>How many codes to generate:</label> <%= text_field_tag :num %> <%= submit_tag 'Generate' %>
+<% end %>
+
+<br><br>
+
+<ol><%= @coupon_codes.collect{|cc| "<li>" + cc + "</li>" } %></ol>

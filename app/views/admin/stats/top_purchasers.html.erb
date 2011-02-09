@@ -1,0 +1,39 @@
+<% content_for :sub_nav do %>
+  <% @no_sub_nav = true %>
+<% end %>
+<br><br>
+
+<h2>Top Purchasers (of Unique Promotions)</h2>
+
+<table>
+  <tr>
+    <th>Rank</th>
+    <th>Name</th>
+    <th>Email</th>
+    <th>User ID</th>
+    <th># of Promotions Purchased</th>
+    <th>Zip Code</th>
+    <th>Last Purchase</th>
+    <th>$ Spent on Deals</th>
+    <th># of Users Referred</th>
+  </tr>
+  
+  <% counter = 0 %>
+  <% @top_peeps.each do |id, promotions| %>
+    <% unless counter > 199 or id == 1 %>
+      <% user = User.find(id) %>
+      <tr>
+        <td style="font-weight:bold">#<%= counter + 1 %></td>
+        <td><%= link_to user.customer.name, admin_customer_path(user.customer) %></td>
+        <td><%= user.email %></td>
+        <td><%= id %></td>
+        <td class="center"><%= promotions %></td>
+        <td><%= user.purchases.first.billing_zipcode %></td>
+        <td><%= user.purchases.first.created_at.strftime("%B %e, %Y") %></td>
+        <td><%= number_to_currency user.purchases.collect{|p| p.total}.sum %></td>
+        <td><%= user.referrals.size %></td>
+      </tr>
+      <% counter += 1 %>
+    <% end %>
+  <% end %>
+</table>

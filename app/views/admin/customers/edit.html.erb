@@ -1,0 +1,174 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Impersonate this Customer', admin_impersonate_path(:type => 'customer', :id => @user.customer.id) %></li>
+  <li><%= link_to 'Show this Customer', admin_customer_path(@user.customer) %></li>
+  <li><%= link_to 'Customer Listing', admin_customers_path %></li>
+<% end %>
+
+<h2>Editing Customer</h2>
+
+<% form_for([:admin,@user], :url => admin_customer_path(@user.customer)) do |f| %>
+  <%= f.error_messages %>
+
+  <div class="section_element">
+    <div class="section_header">
+      <h3>Contact Information</h3>
+    </div>
+
+    <div class="section_content">
+      <% f.fields_for :customer do |cf| %>
+      <div class="label_input_form">
+        <%= cf.label :first_name %>
+        <%= cf.text_field :first_name, :class => "text" %>
+      </div>  
+
+      <div class="label_input_form">  
+        <%= cf.label :last_name %>
+        <%= cf.text_field :last_name, :class => "text" %>
+      </div>
+      <% end %>
+
+      <div class="label_input_form">  
+        <%= f.label :email %>
+        <%= f.text_field :email, :class => "text" %>
+      </div>
+      
+      <div class="label_input_form">  
+        <%= f.label :password %>
+        <%= f.password_field :password, :class => "text" %>
+      </div>  
+
+      <div class="label_input_form">  
+        <%= f.label :password_confirmation %>
+        <%= f.password_field :password_confirmation, :class => "text" %>
+      </div>  
+
+    </div>
+  </div>
+
+
+  <div class="section_element">
+    <div class="section_header">
+      <h3>Billing Address</h3>
+    </div>
+
+    <div class="section_content">
+      <% f.fields_for :customer do |cf| %>
+      <div class="label_input_form">   
+        <%= cf.label :billing_street1, 'Street 1' %>
+        <%= cf.text_field :billing_street1, :class => "text" %>
+      </div>  
+      <div class="label_input_form">  
+        <%= cf.label :billing_street2, 'Street 2' %>
+        <%= cf.text_field :billing_street2, :class => "text" %>
+      </div>  
+      <div class="label_input_form">
+        <%= cf.label :billing_city, 'City' %>
+        <%= cf.text_field :billing_city, :class => "text" %>
+      </div>  
+      <div class="label_input_form">
+        <%= cf.label :billing_state, 'State' %>
+        <%= cf.select :billing_state, Customer::STATES %>
+      </div>  
+      <div class="label_input_form">
+        <%= cf.label :billing_zipcode, 'Zip Code' %>
+        <%= cf.text_field :billing_zipcode, :class => "zip_code" %>
+      </div>
+      <div class="label_input_form">   
+        <%= cf.label :phone %>
+        <%= cf.text_field :phone, :class => "phone" %>
+      </div>  
+      <% end %>
+    </div>
+  </div>
+
+  <div class="section_element">
+    <div class="section_header">
+      <h3>Shipping Address</h3>
+    </div>
+
+    <div class="section_content">
+      <% f.fields_for :customer do |cf| %>
+      <div class="label_input_form">   
+        <%= cf.label :shipping_street1, 'Street 1' %>
+        <%= cf.text_field :shipping_street1, :class => "text" %>
+      </div>  
+      <div class="label_input_form">   
+        <%= cf.label :shipping_street2, 'Street 2' %>
+        <%= cf.text_field :shipping_street2, :class => "text" %>
+      </div>  
+      <div class="label_input_form">
+        <%= cf.label :shipping_city, 'City' %>
+        <%= cf.text_field :shipping_city, :class => "text" %>
+      </div>  
+      <div class="label_input_form">
+        <%= cf.label :shipping_state, 'State' %>
+        <%= cf.select :shipping_state, Customer::STATES %>
+      </div>  
+      <div class="label_input_form">
+        <%= cf.label :shipping_zipcode, 'Zip Code' %>
+        <%= cf.text_field :shipping_zipcode, :class => "zip_code" %>
+      </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="section_element">
+    <div class="section_header">
+      <h3>Other Information</h3>
+    </div>
+
+    <div class="section_content">
+      <% f.fields_for :customer do |cf| %>
+      <div class="label_input_form">
+        <%= cf.label :birthdate %>
+        <%= cf.date_select :birthdate, :end_year => (13.years.ago).year, :start_year => 1910, :default => {:year => (35.years.ago).year}, :order => [:month, :day, :year] %> 
+      </div>
+
+      <div class="label_input_form">  
+        <%= cf.label :gender %>
+        <div class="radio_buttons">        
+          <%= cf.radio_button :female, true, :id => 'user_customer_attributes_female' %>
+          <%= cf.label :female %>
+          <%= cf.radio_button :female, false, :id => 'user_customer_attributes_male' %>
+          <%= cf.label :male %>
+        </div>          
+      </div>  
+
+      <div class="label_input_form">  
+        <%= cf.label :children %>
+        <div class="radio_buttons">        
+          <%= cf.radio_button :number_of_kids, 0, :id => 'user_customer_attributes_nope_kids' %>
+          <%= cf.label :nope_kids, "Nope" %>
+          <%= cf.radio_button :number_of_kids, 1, :id => 'user_customer_attributes_one_kid' %>
+          <%= cf.label :one_kid, "One" %>
+          <%= cf.radio_button :number_of_kids, 2, :id => 'user_customer_attributes_two_kids' %>
+          <%= cf.label :two_kids, "Two" %>
+          <%= cf.radio_button :number_of_kids, 3, :id => 'user_customer_attributes_three_kids' %>
+          <%= cf.label :three_kids, "Three or more" %>
+        </div>          
+      </div>  
+
+      <div class="label_input_form">  
+        <%= cf.label :employment_status, "Employment Status" %>
+        <%= cf.select :employment_status, Customer::EMPLOYMENT_STATUSES, { :include_blank => true } %>
+      </div>  
+      
+      <div class="label_input_form">   
+        <%= cf.label :annual_income %>
+        <%= cf.select :annual_income, Customer::INCOME_RANGES, { :include_blank => true } %>
+      </div>
+
+      <div class="label_input_form">   
+        <%= cf.label :employment_zipcode, "Employment Zip Code" %>
+        <%= cf.text_field :employment_zipcode, :class => 'zip_code' %>
+      </div>
+      <% end %>
+    </div>
+
+    <div class="update_profile_set">
+      <span><%= f.submit 'Update' %></span>
+    </div>
+
+  </div>
+
+<% end %>

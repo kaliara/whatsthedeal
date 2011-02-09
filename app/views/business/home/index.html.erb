@@ -1,0 +1,159 @@
+<% @businesses.each do |business| %>
+  <div class="business_dashboard">
+    <h1><%= business.name %></h1>
+
+    <% if business.has_deals? %>
+      <h2>Deals</h2>
+
+      <% business.promotions.each do |promotion| %>
+        <div class="section_element"> 
+          <div class="section_header">
+            <h3><strong><%= promotion.name %></strong></h3>
+          </div>
+  
+          <div class="section_content">
+            <% unless promotion.deals.empty? %>
+              <table width="800">
+                <tr>
+                  <th style="text-align:center">Deal Name</th>
+                  <th style="text-align:center">Purchased</th>
+                  <th style="text-align:center">Purchase Price</th>
+                  <th style="text-align:center">Total $$ Collected</th>
+                  <th style="text-align:center">% to <%= business.name %></th>
+                  <th style="text-align:center">$$ to <%= business.name %></th>
+                </tr>
+                <% promotion.deals.each do |deal| %>
+                  <tr>
+                    <td><%= deal.name %></td>
+                    <td style="text-align:right"><%= deal.coupons.count %></td>
+                    <td style="text-align:right"><%= number_to_currency deal.price %></td>
+                    <td style="text-align:right"><%= number_to_currency (deal.price * deal.coupons.count).to_f %></td>
+                    <td style="text-align:right"><%= number_to_percentage (100.00 - promotion.profit_percentage.to_f, :precision => 2) %></td>
+                    <td style="text-align:right"><%= number_to_currency (deal.price * deal.coupons.count * (1 - (promotion.profit_percentage.to_f / 100)), :precision => 2)  %></td>
+                  </tr>
+                <% end %>
+                <tr>
+                  <th colspan="5" style="text-align:right; padding-right:20px;"><% unless promotion.coupons.empty? %>(<%= link_to "Purchases", :controller => 'purchases', :action => 'show', :id => promotion.id %>)<% end %> <%= promotion.purchases %></th>
+                  <th colspan="5" style="text-align:right; padding-right:20px;"><%= number_to_currency promotion.business_profit, :precision => 2 %></th>
+                </tr>
+              </table>
+            <% else %>
+              <p class="empty_deals">Sorry, no purchases for this deal yet</p>
+            <% end %>
+          </div>
+        </div>
+    
+        <br>
+      <% end %>
+
+    <% end %>
+
+
+
+    <% if business.has_affiliate_tracking? %>
+      <% 
+        subscriber_grand_total = 0
+        purchaser_grand_total = 0
+      %>
+  
+      <div class="section_element"> 
+        <div class="section_header">
+          <h3><strong>Referral Totals</strong> (<%= @affiliate_start_date.strftime("%B %e") %> - <%= @affiliate_end_date.strftime("%B %e") %>)</h3>
+          <div class="datepicker clearfix">
+            <% form_tag do %>
+              &nbsp;
+              <%= hidden_field_tag 'affiliate_start_date', Date.commercial(Date.today.year, Date.today.cweek, 1).strftime("%m/%d/%Y"), :id => 'affiliate_start_date_this_week' %>
+              <%= hidden_field_tag 'affiliate_end_date', Date.commercial(Date.today.year, Date.today.cweek, 7).strftime("%m/%d/%Y"), :id => 'affiliate_end_date_this_week' %>
+              <%= submit_tag 'This Week' %>
+            <% end %>
+            <% form_tag do %>
+              <span>or</span>&nbsp;
+              <%= hidden_field_tag 'affiliate_start_date', Date.commercial(Date.today.year, (Date.today.cweek.to_i - 1), 1).strftime("%m/%d/%Y"), :id => 'affiliate_start_date_last_week' %>
+              <%= hidden_field_tag 'affiliate_end_date', Date.commercial(Date.today.year, (Date.today.cweek.to_i - 1), 7).strftime("%m/%d/%Y"), :id => 'affiliate_end_date_last_week' %>
+              <%= submit_tag 'Last Week' %>
+            <% end %>
+            <% form_tag do %>
+              <span>or</span>&nbsp;
+              <%= hidden_field_tag 'affiliate_start_date', Date.today.strftime("%m/%d/%Y"), :id => 'affiliate_start_date_today' %>
+              <%= hidden_field_tag 'affiliate_end_date', Date.today.strftime("%m/%d/%Y"), :id => 'affiliate_end_date_today' %>
+              <%= submit_tag 'Today' %>
+            <% end %>
+            <% form_tag do %>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <span>Specific Range:</span>
+              <%= text_field_tag 'affiliate_start_date', @affiliate_start_date.strftime("%m/%d/%Y"), :size => 10 %>
+              &nbsp;&nbsp;to&nbsp;&nbsp;
+              <%= text_field_tag 'affiliate_end_date', @affiliate_end_date.strftime("%m/%d/%Y"), :size => 10 %>
+              <%= submit_tag 'Filter by Date' %>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="section_content">
+          
+          <h4 id="total1" class="super_grand_total">Grand Total: <strong>Calculating...</strong></h4>
+          
+          <table>
+            <tr>
+              <td><h4><strong>Subscribers</strong></h4></td>
+              <th>Total Subscribers</th>
+              <th>Price Per Subscribers</th>
+              <th>&nbsp;</th>
+              <th>&nbsp;</th>
+              <th>Total</th>
+            </tr>
+            <% business.origins.each do |origin| %>
+              <% subscriber_grand_total += origin.subscribers(@affiliate_start_date, @affiliate_end_date).size.to_f * business.subscriber_rate %>
+              <tr>
+                <th><%= origin.name %></th>
+                <td><%= origin.subscribers(@affiliate_start_date, @affiliate_end_date).size %></td>
+                <td><%= number_to_currency business.subscriber_rate %></td>
+                <td></td>
+                <td></td>
+                <td class="total"><%= number_to_currency (origin.subscribers(@affiliate_start_date, @affiliate_end_date).size.to_f * business.subscriber_rate) %></td>
+              </tr>
+            <% end %>
+            <tr><td></td><td class="grand_total" colspan='4'>Subtotal for Referred Subscribers</td><td class="grand_total"><%= number_to_currency subscriber_grand_total %></td></tr>
+        
+            <tr><td colspan='4'>&nbsp;</td></tr>
+            <tr><td colspan='4'>&nbsp;</td></tr>
+
+            <% unless business.id == Business::INTERMARK %>
+              <tr>
+                <td><h4><strong>Purchasers</strong></h4></td>
+                <th>Total Purchasers</th>
+                <th>Purchases Total</th>
+                <th>WTD Profit</th>
+                <th><%= business.name %> Profit Share</th>
+                <th>Total</th>
+              </tr>
+              <% business.origins.each do |origin| %>
+                <% purchaser_grand_total += (business.purchaser_rate.to_f / 100.00 * (origin.purchases_profit(@affiliate_start_date, @affiliate_end_date).to_f - ((origin.purchases_profit(@affiliate_start_date, @affiliate_end_date).to_f > 0 ? Business::PROCESSING_FEE : 0) * origin.purchases_total(@affiliate_start_date, @affiliate_end_date))))  %>
+                <tr>
+                  <th><%= origin.name %></th>
+                  <td><%= origin.qualified_purchases(@affiliate_start_date, @affiliate_end_date).size %></td>
+                  <td><%= number_to_currency origin.purchases_total(@affiliate_start_date, @affiliate_end_date) %></td>
+                  <td><%= number_to_currency (origin.purchases_profit(@affiliate_start_date, @affiliate_end_date) - ((origin.purchases_profit(@affiliate_start_date, @affiliate_end_date).to_f > 0 ? Business::PROCESSING_FEE : 0) * origin.purchases_total(@affiliate_start_date, @affiliate_end_date))) %></td>
+                  <td><%= number_to_percentage business.purchaser_rate, :precision => 2 %></td>
+                  <td class="total"><%= number_to_currency(business.purchaser_rate.to_f / 100.00 * (origin.purchases_profit(@affiliate_start_date, @affiliate_end_date).to_f - ((origin.purchases_profit(@affiliate_start_date, @affiliate_end_date).to_f > 0 ? Business::PROCESSING_FEE : 0) * origin.purchases_total(@affiliate_start_date, @affiliate_end_date)))) %></td>
+                </tr>
+              <% end %>
+        
+              <tr><td></td><td class="grand_total" colspan='4'>Subtotal for Referred Purchasers</td><td class="grand_total"><%= number_to_currency purchaser_grand_total %></td></tr>
+            <% end %>
+            
+          </table>
+          
+          <h4 id="total2" class="super_grand_total">Grand Total: <strong><%= number_to_currency(subscriber_grand_total + purchaser_grand_total) %></strong></h4>
+        </div>
+    
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  $("#affiliate_start_date").datepicker();
+  $("#affiliate_end_date").datepicker();
+  $("#total1 strong").html($("#total2 strong").html());
+</script>

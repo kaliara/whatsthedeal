@@ -1,0 +1,124 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Promotions Listing', admin_promotions_path %></li>
+  <li><%= link_to 'Live promotions', admin_promotions_path(:live => true) %></li>
+<% end %>
+
+<%= render :partial => "/admin/shared/tiny_mce" %>
+
+<h2>New promotion</h2>
+
+<% form_for([:admin,@promotion], :html => {:multipart => true}) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :business_id %><br />
+    <%= f.select :business_id, Business.find(:all, :order => "name asc").collect{|b| ["#{b.name} (##{b.id.to_s})", b.id]} %>
+  </p>
+  <br>
+  <p>
+    <%= f.label :partner_id, 'Sourced by Partner' %><br />
+    <%= f.select :partner_id, [['No', 0], ['Washingtonian', 2], ['Half Price DC', 3]] %>
+  </p>
+  <br>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :external_url, "Deal Me In URL" %> (leave blank if normal deal)<br />
+    <%= f.text_field :external_url %>
+  </p>
+  <p>
+    <%= f.label :map_replacement_image, "Map Replacement (265 x 265)" %><br />
+    <%= f.file_field :map_replacement_image %>
+  </p>
+  <p>
+    <%= f.label :image1, "Main Image (315 x 222)" %><br />
+    <%= f.file_field :image1 %>
+  </p>
+  <p>
+    <%= f.label :ad_image1, "Ad Image (140 x 140)" %><br />
+    <%= f.file_field :ad_image1 %>
+  </p>
+  <p>
+    <%= f.label :header %><br />
+    <%= f.text_field :header %>
+  </p>
+  <p>
+    <%= f.label :summary, "Summary" %><br />
+    <%= f.text_area :summary, :cols => 100 %>
+  </p>
+  <p>
+    <%= f.label :body1, "Main Body Text" %><br />
+    <%= f.text_area :body1, :cols => 100 %>
+  </p>
+  <p>
+    <%= f.label :image2, "Montage Image(600px wide or less)" %><br />
+    <%= f.file_field :image2 %>
+  </p>
+  <p>
+    <%= f.label :body2, "Additional Body Text (below montage)" %><br />
+    <%= f.text_area :body2, :cols => 100 %>
+  </p>
+  <br><br>
+  <h3>Other Information</h3>
+  <p>
+    <%= f.label :restrictions %><br />
+    <%= f.text_area :restrictions %>
+  </p>
+  <p>
+    <%= f.label :profit_percentage, "WTD Profit Percentage (enter 25 for 25%)" %><br />
+    <%= f.text_field :profit_percentage %>
+  </p>
+  <p>
+    <%= f.label :inventory %> (9999 means none)<br />
+    <%= f.text_field :inventory %>
+  </p>
+  <p>
+    <%= f.label :quota %><br />
+    <%= f.text_field :quota %>
+  </p>
+  <br>
+  <p>
+    <%= f.label :start_date %><br />
+    <%= f.datetime_select :start_date, :start_year => Date.today.year, :default => {:year => (1.week.from_now).year, :month => (1.week.from_now).month, :day => (1.week.from_now).day, :hour => 0, :minute => 01}, :order => [:month, :day, :year] %>
+  </p>
+  <p>
+    <%= label_tag 'Duration (in days)' %>
+    <%= select_tag :duration, options_for_select(1..30, :selected => 7) %>
+  </p>
+  <br><br>
+  <h3>Options</h3>
+  <p>
+    <%= f.check_box :featured %>
+    <%= f.label :featured, "Featured Override" %>
+  </p>
+  <p>
+    <%= f.check_box :washingtonian_featured %>
+    <%= f.label :washingtonian_featured, 'Washingtonian Override' %>
+  </p>
+  <p>
+    <%= f.check_box :halfpricedc_featured %>
+    <%= f.label :halfpricedc_featured, 'Half Price DC Override' %>
+  </p>
+  <p>
+    <%= f.check_box :hidden %>
+    <%= f.label :hidden %> (hide from More Great Deals page and sidebar)
+  </p>
+  <p>
+    <%= f.check_box :auto_activate_coupons %>
+    <%= f.label :auto_activate_coupons %> (when deal tips, newly purchased coupons get activated right away)
+  </p>
+  <p>
+    <%= f.check_box :credit_restriction %>
+    <%= f.label :credit_restriction %> (if checked, cannot use credit to purchase)
+  </p>
+  <p>
+    <%= f.check_box :physical_address %>
+    <%= f.label :physical_address %> (if not checked, will NOT show up on deal map)
+  </p>
+  <br><br>
+  <p>
+    <%= f.submit 'Create' %>
+  </p>
+<% end %>

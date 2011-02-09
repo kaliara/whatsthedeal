@@ -1,0 +1,89 @@
+<% content_for :sub_nav do %>
+  <% @no_sub_nav = true %>
+<% end %>
+<br><br>
+
+<div class="section_content clearfix">
+  <div style="float: left;">
+    <% form_tag do %>
+      <label>Promotion:</label> <%= select_tag :id, options_for_select([''] + Promotion.find(:all, :order => 'created_at DESC').collect{|p| [p.id.to_s + " - " + p.name, p.id]}, params[:id].to_i), :onchange => "submit()" %>
+    <% end %>
+  </div>
+  <div style="float: left; margin-left: 20px">
+    <% form_tag do %>
+      <label>Business:</label> <%= select_tag :business_id, options_for_select(Business.find(:all, :order => 'name ASC').collect{|b| [b.name + " (##{b.id})", b.id]}, params[:business_id].to_i), :onchange => "submit()" %>
+    <% end %>
+  </div>
+  <div style="float: left; margin-left: 30px;padding-top:20px">
+    <%= link_to "See ALL Promotions", "?all=true" %><br>(let's not do this during rush hour)
+  </div>
+</div>
+
+<% if params[:business_id] %>
+  <h2>All Promotions for <%= Business.find(params[:business_id]).name %></h2>
+<% elsif params[:all] %>
+  <h2>All Promotions</h2>
+<% elsif params[:id].nil? %>
+  <h2>3 Recent Promotions</h2>
+<% end %>
+
+<div class="section_element"> 
+  <div class="section_content">
+    <table width="950px">
+      <% @promotions.each_with_index do |promotion,i| %>
+        <% if i % 7 == 0 %>
+          <tr>
+            <th style="text-align:left; width:250px">Promotion Name</th>
+            <th style="text-align:center">Purchased</th>
+            <th style="text-align:center">Purchase Price</th>
+            <th style="text-align:center">$ in Early Bird Losses</th>
+            <th style="text-align:center">Total $$ Collected</th>
+            <th style="text-align:center">$ in Credits Used</th>
+            <th style="text-align:center">% to Business</th>
+            <th style="text-align:center">$$ to Business</th>
+            <th style="text-align:center">Profit for WTD</th>
+          </tr>
+        <% end %>
+        
+        <% 
+          reminder_purchases = 0
+          promotion_reminders = Reminder.find(:all, :conditions => {:promotion_id => promotion.id})
+          promotion_reminders.each do |reminder|
+          	reminder_purchases += 1 unless User.find_by_email(reminder.email).nil? or Coupon.find(:all, :conditions => {:deal_id => promotion.deals.collect{|d| d.id}, :user_id => User.find_by_email(reminder.email).id}).empty?
+          end
+        %>
+        
+        <tr style="background:#F0E8D0;">
+          <td style="text-align:left;"><strong><%= promotion.name %></strong></td>
+          <td style="text-align:right"><%= promotion.purchases %></td>
+          <td style="text-align:right">---</td>
+          <td style="text-align:right"><%= number_to_currency promotion.early_bird_losses %></td>
+          <td style="text-align:right"><%= number_to_currency promotion.revenue %></td>
+          <td style="text-align:right"><%= number_to_currency promotion.credit_used %></td>
+          <td style="text-align:right"><%= number_to_percentage (100.00 - promotion.profit_percentage.to_f, :precision => 2) %></td>
+          <td style="text-align:right"><%= number_to_currency promotion.business_profit %></td>
+          <td style="text-align:center" class="total"><%= number_to_currency(promotion.revenue - promotion.credit_used - promotion.business_profit - promotion.early_bird_losses) %></td>
+          <% unless promotion_reminders.empty? %>
+            <td style="text-align:center"><strong>Reminders:</strong> <%= reminder_purchases %> out of <%= promotion_reminders.size %> purchased. (<%= (reminder_purchases.to_f / promotion_reminders.size.to_f * 100.00).to_i %>%)</td>
+          <% end %>
+        </tr>
+        <% unless promotion.deals.empty? %>
+          <% promotion.deals.each do |deal| %>
+            <tr class="deal_breakdown">
+              <td style="text-align:left;padding-left:25px"><%= deal.name %></td>
+              <td style="text-align:right"><%= deal.coupons.count %></td>
+              <td style="text-align:right"><%= number_to_currency deal.price %></td>
+              <td style="text-align:right">---</td>
+              <td style="text-align:right"><%= number_to_currency (deal.price * deal.coupons.count).to_f %></td>
+              <td style="text-align:right"><%= number_to_currency deal.credit_used %></td>
+              <td style="text-align:right"><%= number_to_percentage (100.00 - promotion.profit_percentage.to_f, :precision => 2) %></td>
+              <td style="text-align:right"><%= number_to_currency deal.business_profit * deal.coupons.count  %></td>
+              <td style="text-align:center;font-weight:normal;" class="total"><%= number_to_currency(deal.revenue - deal.credit_used - (deal.business_profit * deal.coupons.count)) %></td>
+            </tr>
+          <% end %>
+        <% end %>
+        <tr style="height: 10px"><td colspan="8">&nbsp;</td></tr>
+      <% end %>
+    </table>
+  </div>
+</div>

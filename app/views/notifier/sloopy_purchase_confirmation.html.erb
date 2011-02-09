@@ -1,0 +1,63 @@
+<table width="580" style="border-collapse: collapse;border-spacing: 0;">
+  
+  <tr>
+    <td style="vertical-align: top;padding: 0;" width="100%">
+      <table class="border" width="100%" style="border-collapse: collapse;border-spacing: 0;border: 1px solid #de0e0e;">
+        <tr class="section_header" style="background-color: #de0e0e;">
+          <td><img src="http://sowhatsthedeal.com/images/sloopy/sloopy_logo.gif" /></td>
+          <td colspan="2" style="vertical-align: top;padding: 0;">
+            <h2 style="text-align: center;padding-top: 10px;text-transform: uppercase;font-size: 1.08em;color: #FFF;">Your Purchase from Sloopy/WTD</h2>
+          </td>
+        </tr>
+      </table>
+      
+      <table class="border" width="100%" style="border-collapse: collapse;border-spacing: 0;border: 1px solid #AC1A15;">
+        <tr>
+          <td style="vertical-align: top;padding: 0;">
+            <p style="text-align:center;padding:0 15px"><strong>Note: This is not your coupon, but only a purchase confirmation.<br> You will receive your coupon on <%= (@purchase.coupons.first.deal.promotion.end_date + 1.days).strftime("%b %d, %Y") %> via email.</strong></p>
+            <ul style="list-style: none;margin: 15px 0 0 7px;padding: 0;">
+            <li><span><label style="margin-right: 10px;">Invoice number:</label><strong style="color: #F5A73A;"><%= @purchase.invoice_number %></strong></span></li>
+            <li><span><label style="margin-right: 10px;">Purchase Date:</label><strong style="color: #F5A73A;"><%= @purchase.created_at.strftime("%m/%d/%Y") %></strong></span></li>
+            <li><span><label style="margin-right: 10px;">Deals Purchased:</label><strong style="color: #F5A73A;"><%= @purchase.coupons.count %></strong></span></li>       
+            <li><span><label style="margin-right: 10px;">Total:</label><strong style="color: #F5A73A;"><%= number_to_currency @purchase.total %></strong></span></li>
+            </ul>
+          </td>
+        </tr>
+              
+        <tr>
+          <td style="vertical-align: top;padding: 0;">
+            <table class="simple_table" width="100%" style="border-collapse: collapse;border-spacing: 0;width: 100%;margin: 10px 0 10px 10px;">
+              <tr>
+                <th style="background-color: #FFF;font-family: Georgia, sans-serif;text-align: left;padding: 10px;">Name</th>
+                <th style="background-color: #FFF;font-family: Georgia, sans-serif;text-align: left;padding: 10px;">Expiration</th>
+                <td style="vertical-align: top;padding: 10px;"></td>
+              </tr>
+
+              <% @purchase.coupons.each do |coupon| %>
+                <tr>
+                  <td style="vertical-align: top;padding: 10px;"><%= coupon.name %> at <%= coupon.deal.promotion.business.name %></td>
+                  <td style="vertical-align: top;padding: 10px;"><%= coupon.expiration.strftime("%m/%d/%Y") %></td>
+                </tr>
+              <% end %>
+            </table>
+          </td>
+        </tr>
+          
+        <tr>
+          <td colspan="3" class="quick_note" style="vertical-align: top;padding: 0;text-align: center;padding-top: 10px;"><b>*Quick note: Your credit card will not be charged<br>until we reach the minimum number of purchasers.*</b></td>
+        </tr>
+        
+        <tr>
+          <td colspan="3" style="vertical-align: top;padding: 0;"> <br>&nbsp;</td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+  
+  <tr>
+    <td colspan="3" style="vertical-align: top;padding: 0;"> <br>&nbsp;</td>
+  </tr>
+  
+  
+</table>

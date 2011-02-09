@@ -1,0 +1,120 @@
+<%
+  @now = DateTime.new(Time.zone.now.year, Time.zone.now.month, Time.zone.now.day, Time.zone.now.hour, Time.zone.now.min, Time.zone.now.sec)
+  @today = DateTime.new(@now.year, @now.month, @now.day, 4, 0)
+  @yesterday = DateTime.new((@now - 1.day).year, (@now - 1.day).month, (@now - 1.day).day, 4, 0)
+  @last_week = DateTime.new((@now - 1.week).year, (@now - 1.week).month, (@now - 1.week).day, 4, 0)
+%>
+
+<% if current_user.admin? %>
+  <h2>User Information</h2>
+  <div class="clearfix">
+    <div class="section_element floated_section">
+      <h3>Today</h3>
+      <div class="section_content">
+        <dl class="homepage totals">
+          <dt>Registrations:</dt>
+          <dd><%= User.find(:all, :conditions => ['origin_id != ? and created_at >= ?', 25, @today]).size %></dd>
+          <dt>Subscriptions:</dt>
+          <dd><%= User.find(:all, :conditions => ['created_at >= ? and gets_daily_deal_email = ?', @today, true]).size %></dd>
+          <dt>Purchases:</dt>
+          <dd><%= Purchase.find(:all, :conditions => ['partner_id = ? and created_at >= ?', 0, @today]).size %></dd>
+          <dt>Coupons:</dt>
+          <dd><%= Coupon.find(:all, :conditions => ['created_at >= ?', @today]).delete_if{|c| Purchase.find(c.purchase_id).partner_id > 0}.size %></dd>
+        </dl>
+      </div>
+    </div>  
+  
+    <div class="section_element floated_section">
+      <h3>Yesterday (<%= (@now - 1.day).strftime("%b %e") %>)</h3>
+      <div class="section_content">
+        <dl class="homepage totals">
+          <dt>Registrations:</dt>
+          <dd><%= User.find(:all, :conditions => ['origin_id != ? and created_at > ? and created_at < ?', 26, @yesterday, @today]).size %></dd>
+          <dt>Subscriptions:</dt>
+          <dd><%= User.find(:all, :conditions => ['created_at > ? and created_at < ? and gets_daily_deal_email = ?', @yesterday, @today, true]).size %></dd>
+          <dt>Purchases:</dt>
+          <dd><%= Purchase.find(:all, :conditions => ['partner_id = ? and created_at > ? and created_at < ?', 0, @yesterday, @today]).size %></dd>
+          <dt>Coupons:</dt>
+          <dd><%= Coupon.find(:all, :conditions => ['created_at > ? and created_at < ?', @yesterday, @today]).delete_if{|c| Purchase.find(c.purchase_id).partner_id > 0}.size %></dd>
+        </dl>
+      </div>
+    </div>  
+  
+    <div class="section_element floated_section">
+      <h3>Last Week (<%= (@now - 7.days).strftime("%b %e") %>)</h3>
+      <div class="section_content">
+        <dl class="homepage totals">
+          <dt>Registrations:</dt>
+          <dd><%= User.find(:all, :conditions => ['origin_id != ? and created_at > ? and created_at < ?', 26, @last_week, @today]).size %></dd>
+          <dt>Subscriptions:</dt>
+          <dd><%= User.find(:all, :conditions => ['created_at > ? and created_at < ? and gets_daily_deal_email = ?', @last_week, @today, true]).size %></dd>
+          <dt>Purchases:</dt>
+          <dd><%= Purchase.find(:all, :conditions => ['partner_id = ? and created_at > ? and created_at < ?', 0, @last_week, @today]).size %></dd>
+          <dt>Coupons:</dt>
+          <dd><%= Coupon.find(:all, :conditions => ['created_at > ? and created_at < ?', @last_week, @today]).delete_if{|c| Purchase.find(c.purchase_id).partner_id > 0}.size %></dd>
+        </dl>
+      </div>
+    </div>  
+  </div>
+  <br><br>
+
+  <h2>Purchase Information</h2>
+  <div class="clearfix">
+    <div class="section_element floated_section">
+      <h3>Today</h3>
+      <div class="section_content">
+        <dl class="homepage">
+          <dt>Total:</dt>
+          <dd><%= number_to_currency Purchase.find(:all, :conditions => ['partner_id = ? and created_at >= ?', 0, @today]).collect{|p| p.deals_total}.sum %></dd>
+          <dt>Total (after credits):</dt>
+          <dd><%= number_to_currency Purchase.find(:all, :conditions => ['partner_id = ? and created_at >= ?', 0, @today]).collect{|p| p.total}.sum %></dd>
+          <dt>Profit</dt>
+          <dd><%= number_to_currency Purchase.find(:all, :conditions => ['partner_id = ? and created_at >= ?', 0, @today]).collect{|p| p.profit}.sum %></dd>
+        </dl>
+      </div>
+    </div>
+  
+    <div class="section_element floated_section">
+      <h3>Yesterday (<%= (@now - 1.day).strftime("%b %e") %>)</h3>
+      <div class="section_content">
+        <dl class="homepage">
+          <dt>Total:</dt>
+          <dd><%= number_to_currency Purchase.find(:all, :conditions => ['partner_id = ? and created_at > ? and created_at < ?', 0, @yesterday, @today]).collect{|p| p.deals_total}.sum %></dd>
+          <dt>Total (after credits):</dt>                                                                                                      
+          <dd><%= number_to_currency Purchase.find(:all, :conditions => ['partner_id = ? and created_at > ? and created_at < ?', 0, @yesterday, @today]).collect{|p| p.total}.sum %></dd>
+          <dt>Profit:</dt>                                                                                                                     
+          <dd><%= number_to_currency Purchase.find(:all, :conditions => ['partner_id = ? and created_at > ? and created_at < ?', 0, @yesterday, @today]).collect{|p| p.profit}.sum %></dd>
+        </dl>
+      </div>
+    </div>
+  
+    <div class="section_element floated_section">
+      <h3>Last Week (<%= (@now - 7.days).strftime("%b %e") %>) </h3>
+      <div class="section_content">
+        <dl class="homepage">
+          <dt>Total:</dt>
+          <dd><%= number_to_currency Purchase.find(:all, :conditions => ['partner_id = ? and created_at > ? and created_at < ?', 0, @last_week, @today]).collect{|p| p.deals_total}.sum %></dd>
+          <dt>Total (after credits):</dt>
+          <dd><%= number_to_currency Purchase.find(:all, :conditions => ['partner_id = ? and created_at > ? and created_at < ?', 0, @last_week, @today]).collect{|p| p.total}.sum %></dd>
+          <dt>Profit:</dt>
+          <dd><%= number_to_currency Purchase.find(:all, :conditions => ['partner_id = ? and created_at > ? and created_at < ?', 0, @last_week, @today]).collect{|p| p.profit}.sum %></dd>
+        </dl>
+      </div>
+    </div>
+  </div>
+  <br><br>
+
+  <div class="section_element">
+    <h3>Percentage of Purchases that are from New Users</h3>
+    <div class="section_content">
+      <dl class="homepage">
+        <dt>Last Week (<%= (@now - 7.days).strftime("%b %e") %>):</dt>
+        <dd><%= number_to_percentage(Purchase.find(:all, :conditions => ['partner_id = ? and created_at > ? and created_at < ?', 0, @last_week, @today]).delete_if{|p| p.user.purchases.size > 1}.size.to_f / Purchase.find(:all, :conditions => ['partner_id = ? and created_at > ? and created_at < ?', 0, @last_week, @today]).size * 100) %></dd>
+        <dt>All Time (M):</dt>
+        <dd><%= number_to_percentage(Purchase.all.delete_if{|p| p.user.purchases.size > 1}.size.to_f / Purchase.all.size * 100) %></dd>
+      </dl>
+    </div>  
+  </div>
+  <br><br>
+  (M) - Since March 2010
+<% end %>

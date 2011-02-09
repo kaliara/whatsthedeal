@@ -1,0 +1,41 @@
+<% if mobile %>
+  <!DOCTYPE html>
+  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+    <meta name="viewport" content="user-scalable=no, width=device-width" />
+    <title>Your Coupon</title>
+    <%= stylesheet_link_tag 'reset', 'print', 'mobile' %>
+    <%= yield :head %>
+    <script type="text/javascript"
+        src="http://maps.google.com/maps/api/js?sensor=false">
+    </script>
+  </head>
+
+  <body class="printed">
+    <%= render :partial => "/coupons/printed_coupon", :locals => {:coupon => @coupon} %>
+  </body>
+  </html>
+<% else %>
+  <script type="text/javascript"
+      src="http://maps.google.com/maps/api/js?sensor=false">
+  </script>
+  <title>Print Your Coupon</title>
+  <%= stylesheet_link_tag 'reset', 'print', :media => "all" %>
+
+  <div class="print_this"><a href="#" onclick="print();return false;">Print This Coupon</a></div>
+  <%= render :partial => "/coupons/printed_coupon", :locals => {:coupon => @coupon} %>
+
+  <%= link_to "Back to My Deals", my_deals_path %>
+  <div class="print_this"><a href="#" onclick="print();return false;">Print This Coupon</a></div>
+
+  <% if params[:print] %>
+    <script type="text/javascript" charset="utf-8">
+      setTimeout(print(), 2000);
+    </script>
+  <% end %>
+<% end %>
+
+
+
+

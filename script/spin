@@ -1,0 +1,1 @@
+/home/kaliara/public_html/wtd/current/script/process/spawner -p 8000 -i 2 -e production
