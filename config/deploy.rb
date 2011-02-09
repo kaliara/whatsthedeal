@@ -3,7 +3,7 @@ set :default_stage, "staging"
 
 set :application, "sowhatsthedeal.com"
 set :user, "kaliara"
-set :repository,  "git@github.com:kaliara/wtd.git"
+set :repository,  "git@github.com:kaliara/whatsthedeal.git"
 
 set :deploy_to, "/home/kaliara/public_html/wtd"
 set :deploy_via, :copy
