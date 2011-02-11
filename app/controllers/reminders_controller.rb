@@ -18,7 +18,7 @@ class RemindersController < ApplicationController
         flash[:error] = "Hmmm... something seems to be wrong with your email address for the reminder. Verify your address in #{link_to 'your account', my_account_path}."
       end
 
-      redirect_to @from_index ? promotions_path : promotion_path(params[:reminder_promotion_id])
+      redirect_to @from_index ? promotions_path : promotion_slug_path(Promotion.find(params[:reminder_promotion_id]).slug)
     end
   end
   
@@ -27,7 +27,7 @@ class RemindersController < ApplicationController
     session[:remove_reminder] = true
     flash[:notice] = "Your reminder was successfully removed!" if @reminder.destroy
     
-    redirect_to promotion_path(params[:reminder_promotion_id])
+    redirect_to promotion_slug_path(Promotion.find(params[:reminder_promotion_id]).slug)
   end
 
 end

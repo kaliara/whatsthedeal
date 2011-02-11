@@ -46,114 +46,116 @@
       <%= "<br>" + link_to(@raffle.business.website, @raffle.business.website, :target => "_blank") unless @raffle.business.website.blank? %>
     </p> 
     
-    <% if current_user and current_user.entered?(@raffle) %>
-      <p class="already_rsvp">Silly rabbit, you already entered this raffle!</p>
-    <% else %>
-      <% if current_user %>
-        <div class="one_click_rsvp">
-          <h3>Click below to enter this raffle</h3>
-          <% form_tag create_raffle_entry_path(@raffle) do %>
-            <%= hidden_field_tag :raffle_id, @raffle.id %>
-            <%= submit_tag 'Enter Raffle', :class => 'primary green' %>
-            <% unless current_user.customer and current_user.customer.has_name? %>
-              <div class="label_set">
-                <%= label_tag :first_name %>
-                <%= text_field_tag :first_name %>
-              </div>
-              <div class="label_set">
-                <%= label_tag :last_name %>
-                <%= text_field_tag :last_name %>
-              </div>
-            <% end %>
-            <% unless current_user.gets_daily_deal_email? %>
-              <div class="label_set">
-                <%= check_box_tag :gets_daily_deal_email, true, true %>&nbsp;&nbsp;
-                <%= label_tag :gets_daily_deal_email, "The WTD Daily Deal Email" %>
-              </div>
-            <% end %>
-            <% unless current_user.gets_happy_hour_announcement_email? %>
-              <div class="label_set">
-                <%= check_box_tag :gets_happy_hour_announcement_email, true, true %>&nbsp;&nbsp;
-                <%= label_tag :gets_happy_hour_announcement_email, "Weekly Happy Hour Announcement" %>
-              </div>
-            <% end %>
-          <% end %>
-        </div>
+    <% if @raffle.in_rotation? %>
+      <% if current_user and current_user.entered?(@raffle) %>
+        <p class="already_rsvp">Silly rabbit, you already entered this raffle!</p>
       <% else %>
-        <div class="clearfix">
-          <h3 class="event_rsvp">Log in or create an account to enter this Raffle.</h3>
-          <div class="signup_box login_box">
-            <% form_for @user_session, :url => user_session_path do |f| %>
-              <%= display_error_messages(f.error_messages) %>
-              <%= hidden_field_tag :return_uri, entries_path(:raffle_id => @raffle.id, :anchor => 'enter') %>
-              <table align="center" border="0" cellpadding="5" cellspacing="0">
-                <tr>
-                  <td><%= f.label :email %></td>
-                  <td><%= f.text_field :email, :size => 18 %></td>
-                </tr>
-                <tr>
-                  <td><%= f.label :password %></td>
-                  <td><%= f.password_field :password, :size => 18 %></td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td><%= f.check_box :remember_me %>&nbsp;&nbsp;<%= f.label :remember_me %></td>
-                </tr>
-                <tr>
-                  <td>&nbsp;</td>
-                  <td><%= f.submit "Login", :class => "primary green" %></td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td align="right"><%= link_to "Forgot Password?", forgot_password_path %></td>
-                </tr>
-              </table>
+        <% if current_user %>
+          <div class="one_click_rsvp">
+            <h3>Click below to enter this raffle</h3>
+            <% form_tag create_raffle_entry_path(@raffle) do %>
+              <%= hidden_field_tag :raffle_id, @raffle.id %>
+              <%= submit_tag 'Enter Raffle', :class => 'primary green' %>
+              <% unless current_user.customer and current_user.customer.has_name? %>
+                <div class="label_set">
+                  <%= label_tag :first_name %>
+                  <%= text_field_tag :first_name %>
+                </div>
+                <div class="label_set">
+                  <%= label_tag :last_name %>
+                  <%= text_field_tag :last_name %>
+                </div>
+              <% end %>
+              <% unless current_user.gets_daily_deal_email? %>
+                <div class="label_set">
+                  <%= check_box_tag :gets_daily_deal_email, true, true %>&nbsp;&nbsp;
+                  <%= label_tag :gets_daily_deal_email, "The WTD Daily Deal Email" %>
+                </div>
+              <% end %>
+              <% unless current_user.gets_happy_hour_announcement_email? %>
+                <div class="label_set">
+                  <%= check_box_tag :gets_happy_hour_announcement_email, true, true %>&nbsp;&nbsp;
+                  <%= label_tag :gets_happy_hour_announcement_email, "Weekly Happy Hour Announcement" %>
+                </div>
+              <% end %>
             <% end %>
           </div>
+        <% else %>
+          <div class="clearfix">
+            <h3 class="event_rsvp">Log in or create an account to enter this Raffle.</h3>
+            <div class="signup_box login_box">
+              <% form_for @user_session, :url => user_session_path do |f| %>
+                <%= display_error_messages(f.error_messages) %>
+                <%= hidden_field_tag :return_uri, entries_path(:raffle_id => @raffle.id, :anchor => 'enter') %>
+                <table align="center" border="0" cellpadding="5" cellspacing="0">
+                  <tr>
+                    <td><%= f.label :email %></td>
+                    <td><%= f.text_field :email, :size => 18 %></td>
+                  </tr>
+                  <tr>
+                    <td><%= f.label :password %></td>
+                    <td><%= f.password_field :password, :size => 18 %></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td><%= f.check_box :remember_me %>&nbsp;&nbsp;<%= f.label :remember_me %></td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td><%= f.submit "Login", :class => "primary green" %></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td align="right"><%= link_to "Forgot Password?", forgot_password_path %></td>
+                  </tr>
+                </table>
+              <% end %>
+            </div>
     
-          <div class="signup_box">
-            <% form_for @user, :url => quiet_create_user_path, :onsubmit => "return checkF(this)" do |f| %>
-              <%= display_error_messages(f.error_messages) %>
-              <%= hidden_field_tag :return_uri, create_raffle_entry_path(:raffle_id => @raffle) %>
-              <%= hidden_field_tag :flash_notice, "Thanks, we have your entry for #{@raffle.header}." %>
-              <table align="center" border="0" cellpadding="5" cellspacing="0">
-              <% f.fields_for :customer do |cf| %>
-                <tr>
-                  <td><%= cf.label :first_name %>*</td>
-                  <td><%= cf.text_field :first_name, :size => 25 %></td>
-                </tr>
-                <tr>
-                  <td><%= cf.label :last_name %>*</td>
-                  <td><%= cf.text_field :last_name, :size => 25 %></td>
-                </tr>
+            <div class="signup_box">
+              <% form_for @user, :url => quiet_create_user_path, :onsubmit => "return checkF(this)" do |f| %>
+                <%= display_error_messages(f.error_messages) %>
+                <%= hidden_field_tag :return_uri, create_raffle_entry_path(:raffle_id => @raffle) %>
+                <%= hidden_field_tag :flash_notice, "Thanks, we have your entry for #{@raffle.header}." %>
+                <table align="center" border="0" cellpadding="5" cellspacing="0">
+                <% f.fields_for :customer do |cf| %>
+                  <tr>
+                    <td><%= cf.label :first_name %>*</td>
+                    <td><%= cf.text_field :first_name, :size => 25 %></td>
+                  </tr>
+                  <tr>
+                    <td><%= cf.label :last_name %>*</td>
+                    <td><%= cf.text_field :last_name, :size => 25 %></td>
+                  </tr>
+                <% end %>
+                  <tr>
+                    <td><%= f.label :email %>*</td>
+                    <td><%= f.text_field :email, :size => 25 %></td>
+                  </tr>
+                <% f.fields_for :customer do |cf| %>
+                  <tr>
+                    <td><%= cf.label :zipcode, 'Zip Code' %></td>
+                    <td><%= cf.text_field :zipcode, :size => 10 %></td>
+                  </tr>
+                <% end %>
+                  <tr>
+                    <td></td>
+                    <td><%= f.check_box :gets_daily_deal_email, :checked => true %>&nbsp;&nbsp;<%= f.label :gets_daily_deal_email, "The WTD Daily Deal" %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td><%= f.check_box :gets_happy_hour_announcement_email, :checked => true %>&nbsp;&nbsp;<%= f.label :gets_happy_hour_announcement_email, "Weekly Happy Hour Announcement" %></td>
+                  </tr>
+                  <tr>
+                    <td>&nbsp;</td>
+                    <td><br><%= f.submit 'Enter Raffle', :class => 'primary' %></td>
+                  </tr>
+                </table>
               <% end %>
-                <tr>
-                  <td><%= f.label :email %>*</td>
-                  <td><%= f.text_field :email, :size => 25 %></td>
-                </tr>
-              <% f.fields_for :customer do |cf| %>
-                <tr>
-                  <td><%= cf.label :zipcode, 'Zip Code' %></td>
-                  <td><%= cf.text_field :zipcode, :size => 10 %></td>
-                </tr>
-              <% end %>
-                <tr>
-                  <td></td>
-                  <td><%= f.check_box :gets_daily_deal_email, :checked => true %>&nbsp;&nbsp;<%= f.label :gets_daily_deal_email, "The WTD Daily Deal" %>
-                  </td>
-                </tr>
-                <tr>
-                  <td></td>
-                  <td><%= f.check_box :gets_happy_hour_announcement_email, :checked => true %>&nbsp;&nbsp;<%= f.label :gets_happy_hour_announcement_email, "Weekly Happy Hour Announcement" %></td>
-                </tr>
-                <tr>
-                  <td>&nbsp;</td>
-                  <td><br><%= f.submit 'Enter Raffle', :class => 'primary' %></td>
-                </tr>
-              </table>
-            <% end %>
+            </div>
           </div>
-        </div>
+        <% end %>
       <% end %>
     <% end %>
   </div>
