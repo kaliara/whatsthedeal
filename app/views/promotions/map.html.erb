@@ -55,7 +55,7 @@
           <h3>Online Deals</h3>
           <ul>
             <% @unmapped_promotions.each do |promotion| %>
-              <li><%= link_to promotion.name, promotion %></li>
+              <li><%= link_to promotion.name, promotion_slug_path(promotion.slug) %></li>
             <% end %>
           </ul>
         <% end %>

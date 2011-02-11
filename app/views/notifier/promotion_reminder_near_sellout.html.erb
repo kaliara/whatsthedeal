@@ -49,7 +49,7 @@
                       <p style="color: #adc5d9;font-family: 'Myriad', sans-serif;font-size: 14px;font-weight: normal;margin: 0;padding: 15px 0;text-align:center"><strong>Note:</strong> This reminder is being sent because you requested it and <strong>will only be sent once</strong>.</p>
                       <table width="580" class="deal_highlights" cellspacing="0" cellpadding="0" style="background-color: #012437;">
                         <tr>
-                          <td colspan="3" align="center"><h1 style="font-family: 'Myriad', sans-serif;font-size: 28px;font-weight: normal;margin: 0 0 5px 0;padding:10px"><a href="<%= promotion_url @promotion %><%= @google_tracking %>" style="color: #3fc7ff !important;font-family: 'Myriad', sans-serif;font-size: 28px;font-weight: normal;text-decoration: underline;"><%= @promotion.name %></a></h1></td>
+                          <td colspan="3" align="center"><h1 style="font-family: 'Myriad', sans-serif;font-size: 28px;font-weight: normal;margin: 0 0 5px 0;padding:10px"><a href="<%= promotion_slug_url @promotion.slug %><%= @google_tracking %>" style="color: #3fc7ff !important;font-family: 'Myriad', sans-serif;font-size: 28px;font-weight: normal;text-decoration: underline;"><%= @promotion.name %></a></h1></td>
                         </tr>
 
                         <tr>
@@ -66,12 +66,12 @@
                                 <td width="129" align="right"><h3 style="color: #adc5d9;font-family: 'Myriad', sans-serif;font-size: 24px;font-weight: normal;margin: 2px 0 25px 0;padding: 0;">SAVINGS</h3></td><td width="43" valign="top" style="padding: 0 7px"><img src="http://sowhatsthedeal.com/emails/new_equals.png" width="43" height="26" alt="" class="no_border" style="border: none;"></td><td><h3 style="font-family: 'Myriad', sans-serif;font-size: 24px;font-weight: normal;margin: 2px 0 25px 0;padding: 0;color: #adc5d9;"><strong style="color: #ffffff;"><%= number_to_percentage (1 - @promotion.featured_deal.price.to_f / @promotion.featured_deal.value.to_f) * 100, :precision => 0 %></strong></h3></td>
                               </tr>
                               <tr>
-                                <td width="245" align="center" colspan="3"><a href="<%= promotion_url @promotion %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;"><img src="http://sowhatsthedeal.com/emails/new_moredetails_btn.png" alt="More Details" border="0" class="more_details" style="border: none;"></a></td>
+                                <td width="245" align="center" colspan="3"><a href="<%= promotion_slug_url @promotion.slug %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;"><img src="http://sowhatsthedeal.com/emails/new_moredetails_btn.png" alt="More Details" border="0" class="more_details" style="border: none;"></a></td>
                               </tr>
                             </table>
                           </td>
                           <td align="right" width="316" style="padding:10px">
-                            <a href="<%= promotion_url @promotion %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;"><img src="http://sowhatsthedeal.com<%= @promotion.image1.url %>" alt="<%= @promotion.business.name %> Deal" border="0" width="280" height="197" style="border: 7px solid #ffffff;"></a>
+                            <a href="<%= promotion_slug_url @promotion.slug %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;"><img src="http://sowhatsthedeal.com<%= @promotion.image1.url %>" alt="<%= @promotion.business.name %> Deal" border="0" width="280" height="197" style="border: 7px solid #ffffff;"></a>
                           </td>
                         </tr>
                      </table>
@@ -128,8 +128,8 @@
                   <br><br>
                   <h5 style="color: #333333;font-family: 'Myriad', sans-serif;font-size: 16px;text-transform: uppercase;margin: 0 0 5px 0;text-align:center;">SHARE WITH FRIENDS</h5>
                   <div style="text-align: center">
-                    <span><a target="_blank" href="http://www.facebook.com/share.php?u=<%= CGI::escape promotion_url(@promotion) %>"><img src="http://sowhatsthedeal.com/images/facebook.png" alt="Facebook" border="0" /></a></span>&nbsp;&nbsp;&nbsp;
-                    <span><a target="_blank" href="http://twitter.com/home?status=<%= CGI::escape(@promotion.name + " at " + promotion_url(@promotion)) %>"><img src="http://sowhatsthedeal.com/images/twitter.png" alt="Twitter" border="0" /></a></span>
+                    <span><a target="_blank" href="http://www.facebook.com/share.php?u=<%= CGI::escape promotion_slug_url(@promotion.slug) %>"><img src="http://sowhatsthedeal.com/images/facebook.png" alt="Facebook" border="0" /></a></span>&nbsp;&nbsp;&nbsp;
+                    <span><a target="_blank" href="http://twitter.com/home?status=<%= CGI::escape(@promotion.name + " at " + promotion_slug_url(@promotion.slug)) %>"><img src="http://sowhatsthedeal.com/images/twitter.png" alt="Twitter" border="0" /></a></span>
                   </div>
                 </td>
               </tr>

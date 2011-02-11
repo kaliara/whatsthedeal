@@ -38,7 +38,7 @@ class CartItemsController < ApplicationController
       redirect_to request.env['HTTP_REFERER'].blank? ? root_url : :back
     elsif @gift_items > 1
       flash[:error] = "Sorry, but you can only add one gift to your cart at the same time. Please add them individually. Thanks!" if params[:tried_once] == 'true'
-      redirect_to promotion_path(params[:promotion_id])
+      redirect_to promotion_slug_path(Promotion.find(params[:promotion_id]).slug)
     elsif @gift_items == 1 and (!@cart_item.valid_gift? or @cart_item.deal.purchase_limit_remaining(cart, @cart_item.gift_name) < 1)
       flash.now[:error] = "There seems to be a problem. Be sure you complete all of the fields. <br/><br/>Also, you cannot buy a gift for the same person twice or for yourself." if params[:tried_once] == 'true'
       render :action => "new_gift"

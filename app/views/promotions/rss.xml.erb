@@ -10,8 +10,8 @@
   <% @promotions.each do |promotion| %>
     <item>
       <title><%= promotion.name.gsub(/\&/, "&amp;").gsub(/\</, "&lt;").gsub(/\>/, "&gt;") %></title>
-      <link><%= promotion_url promotion %></link>
-      <guid><%= promotion_url promotion %></guid>
+      <link><%= promotion_slug_url promotion.slug %></link>
+      <guid><%= promotion_slug_url promotion.slug %></guid>
       <pubDate><%= promotion.created_at %></pubDate>
       <description><%= strip_tags(promotion.body1).gsub(/\&/, "&amp;").gsub(/\</, "&lt;").gsub(/\>/, "&gt;") %></description>
     </item>

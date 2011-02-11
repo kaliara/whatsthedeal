@@ -4,7 +4,7 @@
   <deal><%= @promotion.featured_deal.name.gsub(/\&/, "&amp;").gsub(/\</, "&lt;").gsub(/\>/, "&gt;") unless @promotion.featured_deal.name.nil? %></deal>
   <description><%= @promotion.ad_description.gsub(/\&/, "&amp;").gsub(/\</, "&lt;").gsub(/\>/, "&gt;") unless @promotion.ad_description.nil? %></description>
   <image>http://sowhatsthedeal.com<%= @promotion.ad_image1.url %></image>
-  <url><%= promotion_url @promotion %></url>
+  <url><%= promotion_slug_url @promotion.slug %></url>
   <value><%= number_to_currency @promotion.featured_deal.value, :precision => has_cents?(@promotion.featured_deal.value) ? 2 : 0 %></value>
   <price><%= number_to_currency @promotion.featured_deal.price, :precision => has_cents?(@promotion.featured_deal.price) ? 2 : 0 %></price>
   <time_left><%= distance_of_time_in_words_to_now @promotion.end_date %></time_left>

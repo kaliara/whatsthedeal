@@ -2,7 +2,7 @@
   <li><%= link_to 'Promotions Listing', admin_promotions_path %></li>
   <li><%= link_to 'Live promotions', admin_promotions_path(:live => true) %></li>
 <% end %>
-
+<script type="text/javascript" charset="utf-8" src="/javascripts/slug.js"></script>
 <%= render :partial => "/admin/shared/tiny_mce" %>
 
 <h2>New promotion</h2>
@@ -17,13 +17,18 @@
   <br>
   <p>
     <%= f.label :partner_id, 'Sourced by Partner' %><br />
-    <%= f.select :partner_id, [['No', 0], ['Washingtonian', 2], ['Half Price DC', 3]] %>
+    <%= f.select :partner_id, [['No', 0], ['Washingtonian', 2], ['Half Price DC', 3], ['OnTap', 4]] %>
   </p>
   <br>
   <p>
     <%= f.label :name %><br />
-    <%= f.text_field :name %>
+    <%= f.text_field :name, :onkeyup => "updateSlugName();" %>
   </p>
+  <p>
+    <%= f.label :slug, 'Slug (pretty url ending)' %><br />
+    <%= f.text_field :slug %>
+  </p>
+  <br>
   <p>
     <%= f.label :external_url, "Deal Me In URL" %> (leave blank if normal deal)<br />
     <%= f.text_field :external_url %>
@@ -122,3 +127,9 @@
     <%= f.submit 'Create' %>
   </p>
 <% end %>
+
+<script type="text/javascript" charset="utf-8">
+  function updateSlugName(){
+    $('#promotion_slug').val(URLify($('#promotion_name').val(),100));
+  }
+</script>

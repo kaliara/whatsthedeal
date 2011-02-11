@@ -33,6 +33,7 @@ class Promotion < ActiveRecord::Base
 
   validates_attachment_presence :image1
   validates_attachment_size :image1, :less_than => 2.megabytes
+  validates_uniqueness_of :slug, :on => :save, :message => "(url name) is already in use, try another one"
 
   PREVIEW_PASSWORD = 'special_preview'
   BUY_AS_GIFT_LABEL = 'Buy As Gift'

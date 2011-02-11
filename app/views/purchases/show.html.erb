@@ -52,8 +52,8 @@
     <br>
     <p>
       <% @deal = @purchase.coupons.first.deal %>
-      <span><a target="_blank" href="https://www.facebook.com/share.php?u=<%= CGI::escape promotion_url(@deal.promotion) %>"><img src="/images/facebook.png" /></a></span>
-      <span><a target="_blank" href="https://twitter.com/home?status=<%= CGI::escape "I just saved #{number_to_percentage(@deal.savings, :precision => 0)} at #{@deal.promotion.business.name} from @whatsthedealdc, you should too. http://wtddc.com#{promotion_path @deal.promotion}" %>"><img src="/images/twitter.png" /></a></span>
+      <span><a target="_blank" href="https://www.facebook.com/share.php?u=<%= CGI::escape promotion_slug_url(@deal.promotion.slu) %>"><img src="/images/facebook.png" /></a></span>
+      <span><a target="_blank" href="https://twitter.com/home?status=<%= CGI::escape "I just saved #{number_to_percentage(@deal.savings, :precision => 0)} at #{@deal.promotion.business.name} from @whatsthedealdc, you should too. http://wtddc.com#{promotion_slug_path @deal.promotion.slug}" %>"><img src="/images/twitter.png" /></a></span>
     </p>
   </div>
   
@@ -74,7 +74,7 @@
           <h3>Online Deals</h3>
           <ul>
             <% @unmapped_promotions.each do |promotion| %>
-              <li><%= link_to promotion.name, promotion %></li>
+              <li><%= link_to promotion.name, promotion_slug_path(promotion.slug) %></li>
             <% end %>
           </ul>
         <% end %>

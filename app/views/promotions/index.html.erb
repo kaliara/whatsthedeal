@@ -17,7 +17,7 @@
         <% if promotion.deals.active.count > 1 and !mobile %>
           <%= link_to "See #{promotion.deals.active.count > 2 ? "All<br>#{promotion.deals.active.count}" : "Both<br>"} Offers", promotion, :class => "multi_deal_badge" %>
         <% end %>
-        <h2 class="<%= 'mutli_deal_header' if promotion.deals.active.count > 1 %>"><%= link_to promotion.name, promotion %></h2>
+        <h2 class="<%= 'mutli_deal_header' if promotion.deals.active.count > 1 %>"><%= link_to promotion.name, promotion_slug_path(promotion.slug) %></h2>
         
         <div class="buying_details clearfix">
           <div class="single_deal clearfix">

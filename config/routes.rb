@@ -98,6 +98,9 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/promotions/ad_preview.:format', :controller => 'promotions', :action => 'ad_preview'
   map.connect 'lon.:format', :controller => 'promotions', :action => 'lon'
 
+  # promotions
+  map.promotion_slug '/promotions/:slug', :controller => 'promotions', :action => 'show' 
+
   # businesses stuff
   map.connect '/business/purchases/bulk_use', :controller => '/business/purchases', :action => 'bulk_use'
   map.connect '/business/purchases',:controller => '/business/purchases', :action => 'index'

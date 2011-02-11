@@ -1,7 +1,7 @@
 <div class="info_window_content" style="<%= 'height: 140px;width:260px;overflow:hidden;' if height >= 400 %>">
-  <h4><%= link_to promotion.ad_description6.gsub(/\'/,"&#39;"), promotion_url(promotion, :clicked_promotion_map => true), :target => '_blank' -%></h4>
+  <h4><%= link_to promotion.ad_description6.gsub(/\'/,"&#39;"), promotion_slug_url(promotion.slug, :clicked_promotion_map => true), :target => '_blank' -%></h4>
   <% if height >= 400 %>
-    <%= link_to image_tag(promotion.image1.url), promotion_url(promotion, :clicked_promotion_map => true), :target => '_blank' -%>
+    <%= link_to image_tag(promotion.image1.url), promotion_slug_url(promotion.slug, :clicked_promotion_map => true), :target => '_blank' -%>
     <div class="single_deal">
       <dl>
         <dt>You Pay:</dt><dd><%= number_to_currency promotion.featured_deal.price, :precision => (has_cents?(promotion.featured_deal.price) ? 2 : 0) %></dd>
@@ -19,7 +19,7 @@
       </dl>
     </div>
     <div class="more_details_container">
-      <%= link_to "More Details", promotion_url(promotion, :clicked_promotion_map => true), :class => "primary", :target => '_blank' %><br><br>
+      <%= link_to "More Details", promotion_slug_path(promotion.slug, :clicked_promotion_map => true), :class => "primary", :target => '_blank' %><br><br>
       <%= link_to "Get Directions", "http://maps.google.com/maps?f=d&hl=en&geocode=&saddr=#{session[:location_latitude]},#{session[:location_longitude]}&daddr=#{promotion.business.street1.gsub(/\s/,"+")}+#{promotion.business.city.gsub(/\s/,"+")},+#{promotion.business.state}+#{promotion.business.zipcode}", :class => "get_directions", :target => "_blank" %>
     </div>
   <% end %>
