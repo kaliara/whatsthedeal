@@ -55,7 +55,7 @@
                         <td class="main" align="left" valign="top" width="600" style="padding:10px">
                           <table width="580" class="deal_highlights" cellspacing="0" cellpadding="0" style="background-color: #012437;">
                             <tr>
-                              <td colspan="3" align="center"><h1 style="font-family: 'Myriad', sans-serif;font-size: 28px;font-weight: normal;margin: 0 0 5px 0;padding:10px"><a href="<%= promotion_url @promotion %><%= @google_tracking %>" style="color: #3fc7ff !important;font-family: 'Myriad', sans-serif;font-size: 28px;font-weight: normal;text-decoration: underline;"><%= @promotion.name %></a></h1></td>
+                              <td colspan="3" align="center"><h1 style="font-family: 'Myriad', sans-serif;font-size: 28px;font-weight: normal;margin: 0 0 5px 0;padding:10px"><a href="<%= promotion_slug_url(@promotion.slug) %><%= @google_tracking %>" style="color: #3fc7ff !important;font-family: 'Myriad', sans-serif;font-size: 28px;font-weight: normal;text-decoration: underline;"><%= @promotion.name %></a></h1></td>
                             </tr>
 
                             <tr>
@@ -72,12 +72,12 @@
                                     <td width="129" align="right"><h3 style="color: #adc5d9;font-family: 'Myriad', sans-serif;font-size: 24px;font-weight: normal;margin: 2px 0 25px 0;padding: 0;">SAVINGS</h3></td><td width="43" valign="top" style="padding: 0 7px"><img src="http://sowhatsthedeal.com/emails/new_equals.png" width="43" height="26" alt="" class="no_border" style="border: none;"></td><td><h3 style="font-family: 'Myriad', sans-serif;font-size: 24px;font-weight: normal;margin: 2px 0 25px 0;padding: 0;color: #adc5d9;"><strong style="color: #ffffff;"><%= number_to_percentage (1 - @promotion.featured_deal.price.to_f / @promotion.featured_deal.value.to_f) * 100, :precision => 0 %></strong></h3></td>
                                   </tr>
                                   <tr>
-                                    <td width="245" align="center" colspan="3"><a href="<%= promotion_url @promotion %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;"><img src="http://sowhatsthedeal.com/emails/new_moredetails_btn.png" alt="More Details" border="0" class="more_details" style="border: none;"></a></td>
+                                    <td width="245" align="center" colspan="3"><a href="<%= promotion_slug_url(@promotion.slug) %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;"><img src="http://sowhatsthedeal.com/emails/new_moredetails_btn.png" alt="More Details" border="0" class="more_details" style="border: none;"></a></td>
                                   </tr>
                                 </table>
                               </td>
                               <td align="right" width="316" style="padding:10px">
-                                <a href="<%= promotion_url @promotion %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;"><img src="http://sowhatsthedeal.com<%= @promotion.image1.url %>" alt="<%= @promotion.business.name %> Deal" border="0" width="280" height="197" style="border: 7px solid #ffffff;"></a>
+                                <a href="<%= promotion_slug_url(@promotion.slug) %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;"><img src="http://sowhatsthedeal.com<%= @promotion.image1.url %>" alt="<%= @promotion.business.name %> Deal" border="0" width="280" height="197" style="border: 7px solid #ffffff;"></a>
                               </td>
                             </tr>
                          </table>
@@ -94,7 +94,7 @@
                            <tr>
                              <td valign="top" width="245" style="padding:5px" id="summary">
                                <p style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #cfcfcf  !important;margin: 0 0 16px 0;padding: 0;"><span style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #cfcfcf  !important;margin: 0 0 16px 0;padding: 0;line-height: 1.5em"><%= @promotion.summary %></span></p>
-                               <p align="right" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #cfcfcf;margin: 0 0 16px 0;padding: 0;"><a href="<%= promotion_url @promotion %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;">READ MORE »</a></p>
+                               <p align="right" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #cfcfcf;margin: 0 0 16px 0;padding: 0;"><a href="<%= promotion_slug_url(@promotion.slug) %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;">READ MORE »</a></p>
                                <h4 style="color: #adc5d9;font-family: 'Myriad', sans-serif;font-size: 14px;font-weight: normal;margin: 7px 0 0 0;padding: 0;">DEAL ENDS: <strong style="color: #ffffff;"><%= (@promotion.end_date - 5.hours).strftime("%A, %b %d") %></strong></h4>
                                <p align="center" style="margin: 5px 0 0 0;font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #cfcfcf;padding: 0;"><a href=<%= HOST_URL %>add_reminder/<%= @promotion.id %><%= @google_tracking %> style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;"><img src="http://sowhatsthedeal.com/emails/new_remindme_btn.png" alt="Remind Me" border="0" class="remind_me" style="border: none;"></a></p>
                             </td>
@@ -124,8 +124,8 @@
                           <tr>
                           <% @side_promotions.each_with_index do |side_promotion, i| %>
                             <td width="180" align="center" valign="top" style="<%= i == 1 ? "padding: 0 20px 20px;" : "padding-bottom: 20px;" %>">
-                              <a href="<%= promotion_url side_promotion %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: bold;color: #1279af;"><img src="http://sowhatsthedeal.com<%= side_promotion.image1.url %>" border="0" width="170" height="120" style="border: 3px solid #999999;display: block;margin-bottom: 7px;"></a>
-                              <a href="<%= promotion_url side_promotion %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: bold;color: #1279af;"><%= side_promotion.name %></a><% if (side_promotion.end_date - Time.now < 36.hours) %><span style="color: red;text-decoration: none;font: bold 13px/1em Helvetica, Arial,sans-serif;"><strong> - last day</strong></span><% end %>
+                              <a href="<%= promotion_slug_url(side_promotion.slug) %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: bold;color: #1279af;"><img src="http://sowhatsthedeal.com<%= side_promotion.image1.url %>" border="0" width="170" height="120" style="border: 3px solid #999999;display: block;margin-bottom: 7px;"></a>
+                              <a href="<%= promotion_slug_url(side_promotion.slug) %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: bold;color: #1279af;"><%= side_promotion.name %></a><% if (side_promotion.end_date - Time.now < 36.hours) %><span style="color: red;text-decoration: none;font: bold 13px/1em Helvetica, Arial,sans-serif;"><strong> - last day</strong></span><% end %>
                             </td>
                           <% end %>
                           </tr>

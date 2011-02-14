@@ -12,10 +12,10 @@
     <div class="promotion">
       <div class="main_details clearfix">
         <div class="promotion_image">
-          <%= link_to image_tag(promotion.image1.url, :alt => promotion.name), promotion %>
+          <%= link_to image_tag(promotion.image1.url, :alt => promotion.name), promotion_slug_path(promotion.slug) %>
         </div>
         <% if promotion.deals.active.count > 1 and !mobile %>
-          <%= link_to "See #{promotion.deals.active.count > 2 ? "All<br>#{promotion.deals.active.count}" : "Both<br>"} Offers", promotion, :class => "multi_deal_badge" %>
+          <%= link_to "See #{promotion.deals.active.count > 2 ? "All<br>#{promotion.deals.active.count}" : "Both<br>"} Offers", promotion_slug_path(promotion.slug), :class => "multi_deal_badge" %>
         <% end %>
         <h2 class="<%= 'mutli_deal_header' if promotion.deals.active.count > 1 %>"><%= link_to promotion.name, promotion_slug_path(promotion.slug) %></h2>
         
@@ -29,7 +29,7 @@
             </dl>
           </div>
         </div>
-        <div class="more_details_container"><%= link_to "More Details", promotion, :class => "primary" %></div>
+        <div class="more_details_container"><%= link_to "More Details", promotion_slug_path(promotion.slug), :class => "primary" %></div>
                 
         <div class="promotion_info_strip clearfix">
           <div class="time_left <%= 'almost_over' if promotion.almost_over? %>">

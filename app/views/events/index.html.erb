@@ -5,10 +5,10 @@
     <div class="promotion">
       <div class="main_details clearfix">
         <div class="promotion_image">
-          <%= link_to image_tag(promotion.image1.url, :alt => promotion.name), promotion %>
+          <%= link_to image_tag(promotion.image1.url, :alt => promotion.name), promotion_slug_path(promotion.slug) %>
         </div>
         <% if promotion.deals.active.count > 1 %>
-          <%= link_to "See #{promotion.deals.active.count > 2 ? "All<br>#{promotion.deals.active.count}" : "Both<br>"} Offers", promotion, :class => "multi_deal_badge" %>
+          <%= link_to "See #{promotion.deals.active.count > 2 ? "All<br>#{promotion.deals.active.count}" : "Both<br>"} Offers", promotion_slug_path(promotion.slug), :class => "multi_deal_badge" %>
         <% end %>
         <div class="event_content clearfix">
           <h2 class="<%= 'mutli_deal_header' if promotion.deals.active.count > 1 %>"><%= link_to promotion.name, promotion_slug_path(promotion.slug) %></h2>
@@ -25,7 +25,7 @@
           <div class="event_details">
             <p><%= truncate strip_tags(promotion.body1), :length => 170 %></p>
             <br>
-            <%= link_to "Event Details", promotion, :class => 'secondary' %>
+            <%= link_to "Event Details", promotion_slug_path(promotion.slug), :class => 'secondary' %>
           </div>
         
           <!--
