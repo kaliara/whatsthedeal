@@ -940,7 +940,6 @@ a.edit_shopping_cart{
   margin-bottom: 10px;
   margin-left: 10px;
   height: auto;
-  overflow: auto;
   width: 120px;
 }
 .cart_other_deals_sidebar .cart_other_deal img{
