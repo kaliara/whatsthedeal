@@ -53,10 +53,11 @@
                         <% @coupons.each do |coupon| %>
                           <li style="vertical-align: top;padding: 10px;color:#ADC5D9"><%= coupon.name %> <%= "(for:  #{coupon.recipient})" if coupon.gift? %></li>
                         <% end %>
+                        <% @only_electronic_coupons = @coupons.delete_if{|c| c.deal.has_coupon_code?}.empty? %>
                       </ul>
-                      <h3 style="text-align: center;padding-top: 10px;text-transform: uppercase;font-size: 1.08em;color: #FFF;">Print your Coupons</h3>
+                      <h3 style="text-align: center;padding-top: 10px;text-transform: uppercase;font-size: 1.08em;color: #FFF;"><%= @only_electronic_coupons ? "Get Your Coupon Code" : "Print your Coupons" %></h3>
                       <p style="color: #adc5d9;font-family: 'Myriad', sans-serif;font-size: 20px;font-weight: normal;margin: 7px 0 0 0;padding:20px; background:#012437; border: 1px solid #3d6073; text-align:center;">
-                      Login to your account to <a href="<%= HOST_URL %>my_deals" style="color: #65b0ff;text-decoration: none;">print your coupons now</a>!</p>
+                      Login to your account to <a href="<%= HOST_URL %>my_deals" style="color: #65b0ff;text-decoration: none;"><%= @only_electronic_coupons ? "access your coupon code" : "print your coupons now" %></a>!</p>
                       </p>
                       <br><br>
                       <p style="color: #ddd;font-family: 'Myriad', sans-serif;font-size: 14px;font-weight: normal;margin: 0;padding: 15px 0;text-align:left">
