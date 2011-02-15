@@ -2,7 +2,7 @@ ActionController::Routing::Routes.draw do |map|
 
   # old urls
   map.connect 'deal/access/:deal_id/:user_id', :controller => 'coupons', :action => 'legacy', :requirements => {:protocol => "http"}
-  map.connect 'deal/:id',            :controller => 'promotions', :action => 'index'
+  map.connect 'deal/:slug',            :controller => 'promotions', :action => 'index'
   map.connect 'info/how_it_works',   :controller => 'static', :action => 'how_it_works', :requirements => {:protocol => "http"}
   map.connect 'info/faq',            :controller => 'static', :action => 'faq', :requirements => {:protocol => "http"}
   map.connect 'info/press',          :controller => 'static', :action => 'press', :requirements => {:protocol => "http"}
@@ -60,16 +60,16 @@ ActionController::Routing::Routes.draw do |map|
   map.admin_raffle_entrants '/admin/raffles/:id/entrants', :controller => 'admin/raffles', :action => 'entrants'
 
   # tracking codes
-  map.connect '/ptc/:code',                :controller => 'promotions', :action => 'home',    :ptc => true, :requirements => {:protocol => "http"}
-  map.connect 'promotions/ptc/:code',      :controller => 'promotions', :action => 'index',   :ptc => true, :requirements => {:protocol => "http"}
-  map.connect 'promotions/:id/ptc/:code/', :controller => 'promotions', :action => 'show',    :ptc => true, :requirements => {:protocol => "http"}
-  map.connect 'signup/ptc/:code',          :controller => 'static',     :action => 'signup',  :ptc => true, :requirements => {:protocol => "http"}
-  map.connect 'signup2/ptc/:code',         :controller => 'static',     :action => 'signup2', :ptc => true, :requirements => {:protocol => "http"}
-  map.connect 'signup3/ptc/:code',         :controller => 'static',     :action => 'signup3', :ptc => true, :requirements => {:protocol => "http"}
-  map.connect 'signup4/ptc/:code',         :controller => 'static',     :action => 'signup4', :ptc => true, :requirements => {:protocol => "http"}
-  map.connect 'register/ptc/:code',        :controller => 'users',      :action => 'new',     :ptc => true, :requirements => {:protocol => "http"}
-  map.connect 'events/:id/ptc/:code',      :controller => 'events',     :action => 'show',    :ptc => true, :requirements => {:protocol => "http"}
-  map.connect 'events/ptc/:code',          :controller => 'events',     :action => 'index',   :ptc => true, :requirements => {:protocol => "http"}
+  map.connect '/ptc/:code',                  :controller => 'promotions', :action => 'home',    :ptc => true, :requirements => {:protocol => "http"}
+  map.connect 'promotions/ptc/:code',        :controller => 'promotions', :action => 'index',   :ptc => true, :requirements => {:protocol => "http"}
+  map.connect 'promotions/:slug/ptc/:code/', :controller => 'promotions', :action => 'show',    :ptc => true, :requirements => {:protocol => "http"}
+  map.connect 'signup/ptc/:code',            :controller => 'static',     :action => 'signup',  :ptc => true, :requirements => {:protocol => "http"}
+  map.connect 'signup2/ptc/:code',           :controller => 'static',     :action => 'signup2', :ptc => true, :requirements => {:protocol => "http"}
+  map.connect 'signup3/ptc/:code',           :controller => 'static',     :action => 'signup3', :ptc => true, :requirements => {:protocol => "http"}
+  map.connect 'signup4/ptc/:code',           :controller => 'static',     :action => 'signup4', :ptc => true, :requirements => {:protocol => "http"}
+  map.connect 'register/ptc/:code',          :controller => 'users',      :action => 'new',     :ptc => true, :requirements => {:protocol => "http"}
+  map.connect 'events/:id/ptc/:code',        :controller => 'events',     :action => 'show',    :ptc => true, :requirements => {:protocol => "http"}
+  map.connect 'events/ptc/:code',            :controller => 'events',     :action => 'index',   :ptc => true, :requirements => {:protocol => "http"}
   
   # subscribe
   map.subscribe 'subscribe', :controller => 'users', :action => 'create', :quietly_create => true
@@ -80,7 +80,7 @@ ActionController::Routing::Routes.draw do |map|
   map.register 'register', :controller => 'users', :action => 'new'
   map.quiet_create_user '/users/quiet_create', :controller => 'users', :action => 'create', :quietly_create => true
   map.connect '/customers/new', :controller => 'users', :action => 'new'
-  map.connect '/promo_signup/:id', :controller => 'promotions', :action => 'show', :promo_signup => 'yes'
+  map.connect '/promo_signup/:slug', :controller => 'promotions', :action => 'show', :promo_signup => 'yes'
 
   # sessions and passwords
   map.logout 'logout', :controller => 'user_sessions', :action => 'destroy'
@@ -98,6 +98,9 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/promotions/ad_preview.:format', :controller => 'promotions', :action => 'ad_preview'
   map.connect 'lon.:format', :controller => 'promotions', :action => 'lon'
 
+  # promotions
+  map.promotion_slug '/promotions/:slug', :controller => 'promotions', :action => 'show' 
+
   # businesses stuff
   map.connect '/business/purchases/bulk_use', :controller => '/business/purchases', :action => 'bulk_use'
   map.connect '/business/purchases',:controller => '/business/purchases', :action => 'index'
@@ -110,10 +113,11 @@ ActionController::Routing::Routes.draw do |map|
     business.resources :purchases
     business.resources :promotions
     business.resources :subscribers
+    business.resources :business_staffs
   end
 
   # special promotion show for businesses
-  map.special_preview '/promotions/:id/:password', :controller => 'promotions', :action => 'show'
+  map.special_preview '/promotions/:slug/:password', :controller => 'promotions', :action => 'show'
   map.event_preview   '/events/:id/:password', :controller => 'events', :action => 'show'
 
   # admin stuff

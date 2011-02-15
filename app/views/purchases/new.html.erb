@@ -1,12 +1,12 @@
 <% content_for :page_title do %>Ready to Purchase!<% end %>
 
-<% unless @other_promotions.nil? or @other_promotions.empty? %>  
+<% unless partner > 0 or @other_promotions.nil? or @other_promotions.empty? %>  
   <div class="cart_other_deals_sidebar clearfix">
     <h3>Check out our other great deals</h3>
     <% @other_promotions.each do |promotion| %>
       <div class="cart_other_deal clearfix">
         <%= image_tag promotion.image1.url %><br>
-        <%= link_to (truncate(promotion.featured_deal.name + " at " + promotion.business.name, :length => 100)), promotion_path(promotion, :clicked_other_promotion => true) %>
+        <%= link_to (truncate(promotion.featured_deal.name + " at " + promotion.business.name, :length => 100)), promotion_slug_path(promotion.slug, :clicked_other_promotion => true) %>
         <% form_for @cart_item do |f| -%>
           <%= hidden_field_tag "cart_items[0][deal_id]", promotion.featured_deal.id %>
           <%= hidden_field_tag "added_more_great_deal_to_cart", true %>

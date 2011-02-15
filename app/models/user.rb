@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   has_one  :staff
   has_one  :admin
   has_one  :business
+  has_one  :business_staff
   has_one  :customer
   has_one  :payment_profile
   
@@ -107,6 +108,10 @@ class User < ActiveRecord::Base
   
   def business?
     !self.business.nil?
+  end
+  
+  def business_staff?
+    !self.business_staff.nil? or !self.business.nil?
   end
   
   def customer?

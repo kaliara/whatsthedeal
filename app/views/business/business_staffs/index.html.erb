@@ -1,0 +1,13 @@
+<ul id="sub_nav">
+  <li><%= link_to 'New Staff Member', new_business_business_staff_path %></li>
+  <li><%= link_to 'Business Home', business_home_path %></li>
+</ul>
+
+<div class="section_content">
+  <p>The following people have access to your purchase list, but not financial agreements between you and WTD.</p><br><br>
+  <ul style="font-size: 14px;">
+    <% @business_staffs.each do |bs| %>
+    <li><strong><%= bs.name %> </strong>(<%= bs.user.email %>) - <%= link_to 'Delete', business_business_staff_path(bs.id), :method => :delete %></li>
+    <% end %>
+  </ul>
+</div>

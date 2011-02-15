@@ -9,17 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110201222314) do
-
-  create_table "admin_events", :force => true do |t|
-    t.string   "header"
-    t.string   "title"
-    t.text     "description"
-    t.datetime "start_date"
-    t.string   "image"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(:version => 20110214201157) do
 
   create_table "admins", :force => true do |t|
     t.integer  "user_id"
@@ -56,6 +46,14 @@ ActiveRecord::Schema.define(:version => 20110201222314) do
     t.datetime "updated_at"
     t.boolean  "payment1_paid",                                :default => false
     t.boolean  "payment2_paid",                                :default => false
+  end
+
+  create_table "business_staffs", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "business_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "businesses", :force => true do |t|
@@ -376,6 +374,7 @@ ActiveRecord::Schema.define(:version => 20110201222314) do
     t.string   "ad_description7"
     t.boolean  "halfpricedc_featured",                                              :default => false
     t.boolean  "physical_address",                                                  :default => true
+    t.string   "slug"
   end
 
   create_table "purchases", :force => true do |t|

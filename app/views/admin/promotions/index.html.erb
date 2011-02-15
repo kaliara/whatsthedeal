@@ -35,7 +35,7 @@
     <td><%=h (promotion.end_date - 5.hours).strftime("%b %e, %Y") %></td>
     <td><%= link_to "Activate Coupons", admin_promotion_activate_coupons_path(promotion) if promotion.quota_met?  %></td>
     <td><%= link_to "Clear Carts", admin_clear_carts_path(:id => promotion.id), :confirm => 'Are you sure clear all of the cart items for this promotion?'  %></td>
-    <td><%= link_to 'Show', special_preview_path(:id => promotion.id, :password => Promotion::PREVIEW_PASSWORD) %></td>
+    <td><%= link_to 'Show', special_preview_path(:slug => promotion.slug, :password => Promotion::PREVIEW_PASSWORD) %></td>
     <td><%= link_to 'Show&nbsp;Deals', admin_deals_path(:promotion_id => promotion.id) %></td>
     <td><%= link_to 'Edit', edit_admin_promotion_path(promotion) %></td>
     <td><%= (link_to 'Destroy', admin_promotion_path(promotion), :confirm => 'Are you sure?', :method => :delete) unless promotion.purchases > 0 %></td>

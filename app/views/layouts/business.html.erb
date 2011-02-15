@@ -17,15 +17,22 @@
     <% if current_user_session %>
       <p>You <span>are logged in</span> as <%= current_user_session.user.email %>. (<%= link_to 'logout', logout_path %>)</p>
     <% end %>
-     <h1>WTD Account <%= "for #{current_user.business.name}" if current_user and current_user.business? %></h1>
+    <% if current_user and current_user.business? %>
+      <h1>WTD Account <%= "for #{current_user.business.name}" %></h1>
+    <% elsif current_user and current_user.business_staff? %>
+      <h1>WTD Account <%= "for #{current_user.business_staff.business.name}" %></h1>
+    <% end %>
   </div>
   
   <ul id="nav">
     <li><%= link_to_unless_current "Home", business_home_path %></li>
-    <% if current_user and current_user.business? and !current_user.business.promotions.empty? %>
-      <li><%= link_to_unless_current "My Deals", business_promotions_path %></li>
+    <% if current_user and current_user.business_staff? %>
       <li><%= link_to_unless_current "Purchases", business_purchases_path %></li>
       <li><%= link_to_unless_current "Mobile Redemptions", business_mobile_redemptions_path %></li>
+    <% end %>
+    <% if current_user and current_user.business? and !current_user.business.promotions.empty? %>
+      <li><%= link_to_unless_current "My Deals", business_promotions_path %></li>
+      <li><%= link_to_unless_current "My Staff Members", business_business_staffs_path %></li>
     <% end %>
   </ul>
 

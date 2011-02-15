@@ -4,7 +4,7 @@
     <id><%= @featured_promotion.id %></id>
     <market>washington_dc</market>
     <neighborhood></neighborhood>
-    <url><%= promotion_url @featured_promotion %>/ptc/lon</url>
+    <url><%= promotion_slug_url @featured_promotion.slug %>/ptc/lon</url>
     <image_url>http://sowhatsthedeal.com<%= @featured_promotion.image1.url %></image_url>
     <title><%= @featured_promotion.name %></title>
     <highlights><%= @featured_promotion.featured_deal.name %></highlights>
@@ -32,7 +32,7 @@
     <id><%= promotion.id %></id>
     <market>washington_dc</market>
     <neighborhood></neighborhood>
-    <url><%= promotion_url promotion %>/ptc/lon</url>
+    <url><%= promotion_slug_url promotion.slug %>/ptc/lon</url>
     <image_url>http://sowhatsthedeal.com<%= promotion.image1.url %></image_url>
     <title><%= promotion.name %></title>
     <highlights><%= promotion.featured_deal.name %></highlights>

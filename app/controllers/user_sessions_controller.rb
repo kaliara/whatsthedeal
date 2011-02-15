@@ -29,7 +29,7 @@ class UserSessionsController < ApplicationController
       
       if current_user.staff?
         redirect_to admin_home_path
-      elsif current_user.business?
+      elsif current_user.business? or current_user.business_staff?
         redirect_to business_home_path
       else
         # try to get back to where user came from

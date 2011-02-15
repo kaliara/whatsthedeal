@@ -192,6 +192,9 @@ class ApplicationController < ActionController::Base
     def business_required
       redirect_away(:controller => '/business/home', :action => 'login') unless (current_user and current_user.business?)
     end
+    def business_staff_required
+      redirect_away(:controller => '/business/home', :action => 'login') unless (current_user and current_user.business_staff?)
+    end
     def customer_required
       redirect_away(:controller => '/user_sessions', :action => 'new') unless (current_user and current_user.customer)
     end

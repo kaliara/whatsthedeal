@@ -940,7 +940,6 @@ a.edit_shopping_cart{
   margin-bottom: 10px;
   margin-left: 10px;
   height: auto;
-  overflow: auto;
   width: 120px;
 }
 .cart_other_deals_sidebar .cart_other_deal img{
@@ -1823,6 +1822,7 @@ p.event_full{
 .purchase_show_payment_info dd{
   margin-top: 5px;
   display: block;
+  float: left;
 }
 
 .billing_address_show{

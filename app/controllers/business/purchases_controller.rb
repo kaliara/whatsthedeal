@@ -1,14 +1,15 @@
 class Business::PurchasesController < ApplicationController
   layout 'business'
   before_filter :impersonate_business
-  before_filter :business_required 
+  before_filter :business_staff_required 
   
   add_template_helper(ApplicationHelper)
   
   # GET /purchases
   # GET /purchases.xml
   def index
-    @business_ids = Business.find(:all, :conditions => {:user_id => current_user.id}).collect{|b| b.id}
+    user = current_user.business? ? current_user : current_user.business_staff.business.user
+    @business_ids = Business.find(:all, :conditions => {:user_id => user.id}).collect{|b| b.id}
     @promotions = Promotion.find(:all, :conditions => {:business_id => @business_ids})
     
     if params[:promotion_id].to_i > 0
@@ -40,11 +41,12 @@ class Business::PurchasesController < ApplicationController
   end
   
   def mobile_redemptions
+    user = current_user.business? ? current_user : current_user.business_staff.business.user
     @now = DateTime.new(Time.zone.now.year, Time.zone.now.month, Time.zone.now.day, Time.zone.now.hour, Time.zone.now.min, Time.zone.now.sec)
     @start_date = params[:start_date].nil? ? DateTime.parse(Date.commercial(Date.today.year, Date.today.cweek, 1).strftime("%m/%d/%Y") + " 04:00:00") : DateTime.parse(params[:start_date] + " 04:00:00")
     @end_date   = params[:end_date].nil? ? DateTime.parse(Date.commercial(Date.today.year, Date.today.cweek, 7).strftime("%m/%d/%Y") + " 04:00:00") : DateTime.parse(params[:end_date] + " 04:00:00")
     
-    @business_ids = Business.find(:all, :conditions => {:user_id => current_user.id}).collect{|b| b.id}
+    @business_ids = Business.find(:all, :conditions => {:user_id => user.id}).collect{|b| b.id}
     @promotions = Promotion.find(:all, :conditions => {:business_id => @business_ids})
     
     if params[:promotion_id].to_i > 0
@@ -74,7 +76,8 @@ class Business::PurchasesController < ApplicationController
   
   # export to .xls
   def export
-    @business_ids = Business.find(:all, :conditions => {:user_id => current_user.id}).collect{|b| b.id}
+    user = current_user.business? ? current_user : current_user.business_staff.business.user
+    @business_ids = Business.find(:all, :conditions => {:user_id => user.id}).collect{|b| b.id}
     @promotions = Promotion.find(:all, :conditions => {:business_id => @business_ids})
     
     if params[:promotion_id].to_i > 0
@@ -84,7 +87,7 @@ class Business::PurchasesController < ApplicationController
     end
     @coupons = Coupon.find(:all, :conditions => {:deal_id => @deals}, :order => 'deal_id ASC')
 
-    @path = "dc/biz_exports/" + (current_user.business.name.downcase.gsub(/[\s+|\W+]/, '')) + '_coupons_' + Time.zone.now.strftime("%m%d%y%H%M") + ".xls"
+    @path = "dc/biz_exports/" + (user.business.name.downcase.gsub(/[\s+|\W+]/, '')) + '_coupons_' + Time.zone.now.strftime("%m%d%y%H%M") + ".xls"
     book = Spreadsheet::Workbook.new
     sheet1 = book.create_worksheet
 

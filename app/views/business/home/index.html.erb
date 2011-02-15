@@ -17,24 +17,30 @@
                 <tr>
                   <th style="text-align:center">Deal Name</th>
                   <th style="text-align:center">Purchased</th>
+                  <% if current_user.business? %>
                   <th style="text-align:center">Purchase Price</th>
                   <th style="text-align:center">Total $$ Collected</th>
                   <th style="text-align:center">% to <%= business.name %></th>
                   <th style="text-align:center">$$ to <%= business.name %></th>
+                  <% end %>
                 </tr>
                 <% promotion.deals.each do |deal| %>
                   <tr>
                     <td><%= deal.name %></td>
                     <td style="text-align:right"><%= deal.coupons.count %></td>
+                    <% if current_user.business? %>
                     <td style="text-align:right"><%= number_to_currency deal.price %></td>
                     <td style="text-align:right"><%= number_to_currency (deal.price * deal.coupons.count).to_f %></td>
                     <td style="text-align:right"><%= number_to_percentage (100.00 - promotion.profit_percentage.to_f, :precision => 2) %></td>
                     <td style="text-align:right"><%= number_to_currency (deal.price * deal.coupons.count * (1 - (promotion.profit_percentage.to_f / 100)), :precision => 2)  %></td>
+                    <% end %>
                   </tr>
                 <% end %>
                 <tr>
-                  <th colspan="5" style="text-align:right; padding-right:20px;"><% unless promotion.coupons.empty? %>(<%= link_to "Purchases", :controller => 'purchases', :action => 'show', :id => promotion.id %>)<% end %> <%= promotion.purchases %></th>
-                  <th colspan="5" style="text-align:right; padding-right:20px;"><%= number_to_currency promotion.business_profit, :precision => 2 %></th>
+                  <th colspan="<%= current_user.business? ? "5" : "3" %>" style="text-align:right; padding-right:20px;"><% unless promotion.coupons.empty? %>(<%= link_to "Purchases", :controller => 'purchases', :action => 'show', :id => promotion.id %>)<% end %> <%= promotion.purchases %></th>
+                  <% if current_user.business? %>
+                    <th style="text-align:right; padding-right:20px;"><%= number_to_currency promotion.business_profit, :precision => 2 %></th>
+                  <% end %>
                 </tr>
               </table>
             <% else %>

@@ -10,7 +10,7 @@
       <div class="coupon_content">
     	  <div class="expiration_date"><%= coupon.expired? ? "expired" : "expires" %>: <strong><%=h coupon.expiration > 3.years.from_now ? "Never!" : coupon.expiration.strftime("%m/%d/%Y") %></strong></div>
     	  <h3><%= coupon.name %></h3>
-    	  <p><%= link_to "View Original Deal", promotion_path(coupon.deal.promotion) if coupon.active? %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "View Receipt", purchase_path(coupon.purchase, :coupon => coupon.id) if coupon.active? %></p>
+    	  <p><%= link_to "View Original Deal", promotion_slug_path(coupon.deal.promotion.slug) if coupon.active? %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "View Receipt", purchase_path(coupon.purchase, :coupon => coupon.id) if coupon.active? %></p>
     	</div>
   	  <div class="coupon_footer">
         <div class="coupon_action">

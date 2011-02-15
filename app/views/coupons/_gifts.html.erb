@@ -15,7 +15,7 @@
     	</div>
   	  <div class="coupon_footer clearfix clear">
         <div class="coupon_action">
-          <p><%= link_to "View Original Deal", promotion_path(coupon.deal.promotion) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "View Receipt", purchase_path(coupon.purchase, :coupon => coupon.id) %></p>
+          <p><%= link_to "View Original Deal", promotion_slug_path(coupon.deal.promotion.slug) %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "View Receipt", purchase_path(coupon.purchase, :coupon => coupon.id) %></p>
         </div>
       </div>
     </div>

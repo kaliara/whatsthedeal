@@ -71,13 +71,16 @@ class PromotionsController < ApplicationController
     
     case partner
     when 2
-      @promotion = params[:featured] ? Promotion.washingtonian_featured.first : Promotion.find(params[:id])
+      @promotion = params[:featured] ? Promotion.washingtonian_featured.first : Promotion.find_by_slug(params[:slug])
     when 3
-      @promotion = params[:featured] ? Promotion.halfpricedc_featured.first : Promotion.find(params[:id])
+      @promotion = params[:featured] ? Promotion.halfpricedc_featured.first : Promotion.find_by_slug(params[:slug])
     else
-      @promotion = params[:featured] ? Promotion.featured.first : Promotion.find(params[:id])
+      @promotion = params[:featured] ? Promotion.featured.first : Promotion.find_by_slug(params[:slug])
     end
-    if @promotion.start_date > Time.now.utc and params[:password] != Promotion::PREVIEW_PASSWORD
+    if @promotion.nil?
+      flash[:error] = "We have updated some of the links to our promotions, please select a promotion from the list below"
+      redirect_to promotions_path
+    elsif @promotion.start_date > Time.now.utc and params[:password] != Promotion::PREVIEW_PASSWORD
       flash[:error] = "Sorry, but the deal you were looking for is no longer available. Please check out these other great deals below."
       redirect_to promotions_path
     else

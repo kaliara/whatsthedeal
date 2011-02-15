@@ -115,8 +115,8 @@
                       <tr>
                       <% @side_promotions.each_with_index do |side_promotion, i| %>
                         <td width="180" align="center" valign="top" style="<%= i == 1 ? "padding: 0 20px 20px;" : "padding-bottom: 20px;" %>">
-                          <a href="<%= promotion_url side_promotion %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: bold;color: #1279af;"><img src="http://sowhatsthedeal.com<%= side_promotion.image1.url %>" border="0" width="170" height="120" style="border: 3px solid #999999;display: block;margin-bottom: 7px;"></a>
-                          <a href="<%= promotion_url side_promotion %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: bold;color: #1279af;"><%= side_promotion.name %></a><% if (side_promotion.end_date - Time.now < 36.hours) %><span style="color: red;text-decoration: none;font: bold 13px/1em Helvetica, Arial,sans-serif;"> - last day</span><% end %>
+                          <a href="<%= promotion_slug_url(side_promotion.slug) %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: bold;color: #1279af;"><img src="http://sowhatsthedeal.com<%= side_promotion.image1.url %>" border="0" width="170" height="120" style="border: 3px solid #999999;display: block;margin-bottom: 7px;"></a>
+                          <a href="<%= promotion_slug_url(side_promotion.slug) %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: bold;color: #1279af;"><%= side_promotion.name %></a><% if (side_promotion.end_date - Time.now < 36.hours) %><span style="color: red;text-decoration: none;font: bold 13px/1em Helvetica, Arial,sans-serif;"> - last day</span><% end %>
                         </td>
                       <% end %>
                       </tr>
@@ -257,7 +257,7 @@
   									<span style="line-height: 21px; color: rgb(5, 36, 82); "><b>What&#39;s the Deal</b> is proud to put on free Happy Hours and bring amazing deals to Washington DC. &nbsp;Haven&#39;t checked out our deals recently (or ever - gasp!)? &nbsp;</span></p>
 
   								<p style="font: normal normal normal 14px/1em Helvetica, Arial, sans-serif; margin-bottom: 5px; ">
-  									<span style="line-height: 21px; color: rgb(5, 36, 82); ">Current deals include <%= link_to @promotions[0].name, promotion_url(@promotions[0]) %>, <%= link_to @promotions[1].name, promotion_url(@promotions[1]) %> and up to <%= link_to @promotions[2].name, promotion_url(@promotions[2]) %>.</span></p>
+  									<span style="line-height: 21px; color: rgb(5, 36, 82); ">Current deals include <%= link_to @promotions[0].name, promotion_slug_url(@promotions[0].slug) %>, <%= link_to @promotions[1].name, promotion_slug_url(@promotions[1].slug) %> and up to <%= link_to @promotions[2].name, promotion_slug_url(@promotions[2].slug) %>.</span></p>
   								<p style="font: normal normal normal 14px/1em Helvetica, Arial, sans-serif; margin-bottom: 5px; ">
   									See all <strong><a href="http://sowhatsthedeal.com/promotions">Current Deals</a></strong><a href="http://sowhatsthedeal.com/promotions"></a>.</p>
 
