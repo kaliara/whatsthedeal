@@ -34,9 +34,9 @@
   
     &nbsp;&nbsp;&nbsp;&nbsp;
     <span>Specific Range:</span>
-    <%= text_field_tag 'start_date', @start_date.strftime("%m/%d/%Y"), :size => 10 %>
+    <%= text_field_tag 'start_date', @start_date.strftime("%m/%d/%Y"), :size => 10, :style => "width:85px" %>
     &nbsp;&nbsp;to&nbsp;&nbsp;
-    <%= text_field_tag 'end_date', @end_date.strftime("%m/%d/%Y"), :size => 10 %>
+    <%= text_field_tag 'end_date', @end_date.strftime("%m/%d/%Y"), :size => 10, :style => "width:85px" %>
     <%= submit_tag 'Filter by Date' %>
   <% end %>
 </div>

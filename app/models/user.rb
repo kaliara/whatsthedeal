@@ -111,7 +111,7 @@ class User < ActiveRecord::Base
   end
   
   def business_staff?
-    !self.business_staff.nil?
+    !self.business_staff.nil? or !self.business.nil?
   end
   
   def customer?
