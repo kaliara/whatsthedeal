@@ -63,6 +63,7 @@
       <%= render :partial => "/promotions/map", :locals => {:promotions => @mapped_promotions, :height => 450} %>
     <% else %>
       <div class="section_content">
+        <p class="map_intro">Enter your address below to see deals in your 'hood.</p>
         <% form_tag set_location_path, :id => "set_location" do %>
           <%= hidden_field_tag :latitude %>
           <%= hidden_field_tag :longitude %>

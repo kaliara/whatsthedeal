@@ -2799,6 +2799,13 @@ h3.event_rsvp{
   color: #ddd;
   padding-top: 0;
 }
+.promotions_map .section_content .map_intro{
+  position: relative;
+  left: -5px;
+  color: #ddd;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
 .promotions_map .change_location{
   text-align: right;
   line-height: 125%;
