@@ -1,0 +1,31 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Business Home', business_home_path %></li>
+<% end %>
+
+<div class="section_content">
+  <h2>New Business Staff Member</h2>
+  <p>Staff members of your business will have access to the purchasers list, but not the financial details with What's the Deal</p>
+  <br><br>
+  <% form_tag :controller => 'business/business_staffs', :action => 'create' do %>
+    <p>
+      <%= label_tag :name %><br />
+      <%= text_field_tag :name %>
+    </p>
+    <br>
+    <p>
+      <%= label_tag :email %><br />
+      <%= text_field_tag :email %>
+    </p>
+    <br>
+    <p>
+      <%= label_tag :password %><br />
+      <%= text_field_tag :password %>
+    </p>
+    <br><br>
+    <p>Note: The following staff will be tied to the <strong><%= current_user.business.name %></strong> business.</p>
+    <br>
+    <p>
+      <%= submit_tag 'Create' %>
+    </p>
+  <% end %>
+</div>

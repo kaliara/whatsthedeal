@@ -113,6 +113,7 @@ ActionController::Routing::Routes.draw do |map|
     business.resources :purchases
     business.resources :promotions
     business.resources :subscribers
+    business.resources :business_staffs
   end
 
   # special promotion show for businesses

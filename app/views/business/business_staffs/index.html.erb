@@ -1,0 +1,12 @@
+<ul id="sub_nav">
+  <li><%= link_to 'New Staff Member', new_business_business_staff_path %></li>
+  <li><%= link_to 'Business Home', business_home_path %></li>
+</ul>
+
+<div class="section_content">
+  <ul>
+    <% @business_staffs.each do |bs| %>
+    <li><%= bs.name %> (<%= bs.user.email %>) - <%= link_to 'Delete', business_business_staff_path(bs.id), :method => :delete %></li>
+    <% end %>
+  </ul>
+</div>
