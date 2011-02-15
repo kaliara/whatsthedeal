@@ -166,3 +166,6 @@ td.quantity{
 .promo_code{
   *width: 350px;
 }
+.purchase_show_payment_info dd{
+  float: none;
+}

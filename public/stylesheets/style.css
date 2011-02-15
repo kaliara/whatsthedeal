@@ -1822,6 +1822,7 @@ p.event_full{
 .purchase_show_payment_info dd{
   margin-top: 5px;
   display: block;
+  float: left;
 }
 
 .billing_address_show{
