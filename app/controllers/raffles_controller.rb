@@ -26,6 +26,7 @@ class RafflesController < ApplicationController
     session[:stored_promotion_code_id] = nil
     
     if @raffle.rotation_start_date <= Date.today or params[:password] == Raffle::PREVIEW_PASSWORD
+      flash[:error] = "This raffle has ended. Make sure you don't miss another raffle by <a href='/signup'>signing up for our Daily Deal</a>."
       render :action => 'show'
     else
       flash[:error] = "Sorry, but that raffle is not available right now. Email us at support@sowhatsthedeal.com if you need help."
