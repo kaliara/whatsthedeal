@@ -108,7 +108,7 @@ class ApplicationController < ActionController::Base
 
   private
     def cart
-      return @cart if defined?(@cart)
+      #return @cart if defined?(@cart)
       
       if current_user
         if session[:cart_id]

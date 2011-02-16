@@ -50,14 +50,16 @@ class CartItemsController < ApplicationController
           cart_item = @existing
         end
         
-        if cart_item.quantity_adding.to_i > cart_item.deal.purchase_limit_remaining(cart_item.cart, cart_item.gift_name)
+        if cart_item.deal.purchase_limit_remaining(cart_item.cart, cart_item.gift_name) == 0
+          cart_item.errors.add_to_base("Sorry, you cannot add anymore of the '#{cart_item.deal.name}' to your cart. You've purchased the maximum already.")
+        elsif cart_item.quantity_adding.to_i > cart_item.deal.purchase_limit_remaining(cart_item.cart, cart_item.gift_name)
           flash[:notice] = "Looks like you tried to add too many of the '#{cart_item.deal.name}' deal to your cart. We've added the maximum amount for you."
           cart_item.quantity = cart_item.deal.purchase_limit
         else
           cart_item.quantity = cart_item.quantity.to_i + cart_item.quantity_adding.to_i
         end
         
-        if cart_item.save
+        if cart_item.quantity.to_i > 0 and cart_item.save
           session[:add_to_cart] = true
           session[:added_more_great_deal_to_cart] = params[:added_more_great_deal_to_cart]
       

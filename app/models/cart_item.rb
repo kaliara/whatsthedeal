@@ -2,6 +2,7 @@ class CartItem < ActiveRecord::Base
   belongs_to :deal
   belongs_to :cart
   
+  validates_length_of :quantity, :within => 1..100, :on => :save, :message => "must be at least one"
   validate :check_quantity
   attr_accessor :quantity_adding
   

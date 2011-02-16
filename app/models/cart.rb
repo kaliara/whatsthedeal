@@ -22,7 +22,7 @@ class Cart < ActiveRecord::Base
   end
   
   def empty?
-    self.cart_items.empty?
+    self.cart_items.delete_if{|c| c.quantity.to_i == 0}.empty?
   end
   
   def empty!
@@ -50,6 +50,19 @@ class Cart < ActiveRecord::Base
     end
     
     self.save if removed_deals
+    return removed_deals
+  end
+  
+  def remove_already_purchased_maximum_deals?
+    removed_deals = false
+    
+    self.cart_items.each do |cart_item|
+      if (cart_item.deal.purchase_limit_remaining(cart_item.cart, cart_item.gift_name) + cart_item.quantity.to_i) <= 0
+        cart_item.destroy
+        removed_deals = true
+      end  
+    end
+    
     return removed_deals
   end
   
