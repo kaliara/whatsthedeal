@@ -5,7 +5,7 @@
     var info_windows = new Array();
     var markers = new Array();
     function loadMap() {
-      var latlng = new google.maps.LatLng(<%= session[:location_latitude] %>, <%= session[:location_longitude] %>);
+      var latlng = new google.maps.LatLng(<%= session[:location_latitude].blank? ? Promotion::PROMOTION_MAP_DEFAULT_LAT : session[:location_latitude] %>, <%= session[:location_longitude].blank? ? Promotion::PROMOTION_MAP_DEFAULT_LNG : session[:location_longitude] %>);
       var myOptions = {
         zoom: 11,
         panControl: false,
@@ -14,7 +14,7 @@
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
       map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-      var marker_home = new google.maps.Marker({position: new google.maps.LatLng(<%= session[:location_latitude] %>, <%= session[:location_longitude] %>), map: map, icon: '/images/map_marker_home.png'});
+      var marker_home = new google.maps.Marker({position: new google.maps.LatLng(<%= session[:location_latitude].blank? ? Promotion::PROMOTION_MAP_DEFAULT_LAT : session[:location_latitude] %>, <%= session[:location_longitude].blank? ? Promotion::PROMOTION_MAP_DEFAULT_LNG : session[:location_longitude] %>), map: map, icon: '/images/map_marker_home.png'});
     }
     function resetInfoWindows(){
       for (i in info_windows) {
