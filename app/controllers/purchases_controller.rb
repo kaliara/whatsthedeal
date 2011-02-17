@@ -272,7 +272,7 @@ class PurchasesController < ApplicationController
         render :action => 'new' and return
       end
     else
-      flash[:error] = "It seems like you tried to make a purchase with nothing in your cart. We definitely don't recommend this.<br/><br/> Please email us at support@sowhatsthedeal.com if you see this message!"
+      flash[:error] = "Sorry, but your cart was empty while you were trying to checkout. Please try adding the deal to your cart again."
       redirect_to root_url
     end
   end
