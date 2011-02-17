@@ -40,6 +40,7 @@ class PurchasesController < ApplicationController
     # cart checks
     flash.now[:error] = "A deal in your cart was sold out, so we had to remove it. Sorry! <br/><br/>Refresh the page or <a href='/my_cart'>click here</a> to view your updated cart." if cart.remove_soldout_deals?
     flash.now[:error] = "There were some interesting gifts in your cart. We had to removed them to make sure everything checks out. Now that your logged in, you can try adding them again. <br/><br/>Refresh the page or <a href='/my_cart'>click here</a> to view your updated cart." if cart.remove_invalid_gifts?
+    flash.now[:error] = "There was a deal in your cart that you already purchased the maximum for, so we had to remove it. Sorry!" if cart.remove_already_purchased_maximum_deals?
     @cart_item = CartItem.new
     
     # show other deals not in cart
@@ -64,10 +65,7 @@ class PurchasesController < ApplicationController
       end
     end
 
-    if cart.empty?
-      flash[:error] = "Sorry, but it doesn't seem like you have anything in your cart."
-      redirect_to root_url and return
-    elsif cart.remove_invalid_gifts?
+    if cart.remove_invalid_gifts?
       flash[:error] = "There were some invalid gifts in your cart. We had to remove them to make sure everything checks out. Now that your logged in, you can try adding them again. <br/><br/>Refresh the page or <a href='/my_cart'>click here</a> to view your updated cart."
       redirect_to new_purchase_path and return
     elsif cart.remove_soldout_deals?

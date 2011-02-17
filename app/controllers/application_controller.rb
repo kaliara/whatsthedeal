@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 
   def mobile
     return !session[:force_full_site] unless session[:force_full_site].blank?
-    request.user_agent.blank? ? false : request.user_agent.downcase.include?('mobile') and !request.user_agent.downcase.include?('ipad')
+    request.user_agent.blank? ? false : (request.user_agent.downcase.include?('mobile') or request.user_agent.downcase.include?('android')) and !request.user_agent.downcase.include?('ipad')
   end
   
   def force_full_site
@@ -108,7 +108,7 @@ class ApplicationController < ActionController::Base
 
   private
     def cart
-      return @cart if defined?(@cart)
+      #return @cart if defined?(@cart)
       
       if current_user
         if session[:cart_id]

@@ -7,7 +7,7 @@
       <div class="purchase_show_content clearfix">
         <% if @track_transaction %>
           <div class="coupons_ready_note">
-            <p>Your coupon(s) will be available after tonight at midnight if the deal has reached the minimum and can be printed directly from your account.</p>
+            <p>Your coupon(s) will be available after tonight at midnight if the deal has reached the minimum and can be printed directly from your account.<br><br></p>
           </div>
         <% end %>
         <dl class="purchase_show_payment_info clearfix">
@@ -57,7 +57,7 @@
     </p>
   </div>
   
-  <% if @track_transaction and !session[:location_latitude].blank? and !session[:location_longitude].blank? and !@mapped_promotions.empty? %>
+  <% if @track_transaction and !@mapped_promotions.empty? %>
     <div class="promotions_map purchase_invoice">
       <div class="section_content">
         <div class="change_location">Not the right location? <%= link_to "Update your address", clear_location_path %>.</div>
