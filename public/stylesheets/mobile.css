@@ -763,7 +763,7 @@ body.printed{
 /* shopping cart */
 table.shopping_cart{
   width: 100%;  
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 table.shopping_cart td{
   color: #666;
@@ -876,6 +876,11 @@ td.deal_name{
   margin: 20px 0;
 }
 .new_shipping_address .cart_shipping_info{
+  margin-bottom: 20px;
+}
+
+.have_promo_code,
+.promo_code{
   margin-bottom: 20px;
 }
 

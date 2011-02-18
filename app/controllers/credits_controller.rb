@@ -1,5 +1,5 @@
 class CreditsController < ApplicationController
-  before_filter :impersonate_customer, :force_full_site
+  before_filter :impersonate_customer
   before_filter :customer_required, :except => [:redeem_gift]
   layout :hyrbrid_layout_application
 

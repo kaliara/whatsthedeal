@@ -22,18 +22,16 @@
   <%= render :partial => "/carts/cart" %>
 </div>
 
-<% unless mobile %>
-  <div class="section_element">
-    <div class="have_promo_code" style="<%= 'display: none' unless params[:code].blank? %>"><%= link_to "Have a Promo Code?", "#", :onclick => "$('.promo_code').show(); $('.have_promo_code').hide(); return false;" %></div>
-    <div class="promo_code" style="<%= 'display: none' if params[:code].blank? %>">
-      <% form_for @credit do |f| -%>
-        <label><%= render_content('promo_code_box_label') %></label>
-        <%= text_field_tag 'code', params[:code], :size => 19 %>
-        <%= f.submit 'Apply', :class => "secondary" %>
-      <% end -%>
-    </div>
+<div class="section_element">
+  <div class="have_promo_code" style="<%= 'display: none' unless params[:code].blank? %>"><%= link_to "Have a Promo Code?", "#", :onclick => "$('.promo_code').show(); $('.have_promo_code').hide(); return false;" %></div>
+  <div class="promo_code" style="<%= 'display: none' if params[:code].blank? %>">
+    <% form_for @credit do |f| -%>
+      <label><%= render_content('promo_code_box_label') %></label>
+      <%= text_field_tag 'code', params[:code], :size => 19 %>
+      <%= f.submit 'Apply', :class => "secondary" %>
+    <% end -%>
   </div>
-<% end %>
+</div>
 
 
 <% unless cart.empty? %>
