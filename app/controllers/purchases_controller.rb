@@ -1,7 +1,7 @@
 class PurchasesController < ApplicationController
   include ActiveMerchant::Utils
 
-  before_filter :impersonate_customer, :force_full_site
+  before_filter :impersonate_customer
   before_filter :customer_required
   layout :hyrbrid_layout_nosidebar
 

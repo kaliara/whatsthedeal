@@ -5,6 +5,7 @@
   <meta name="viewport" content="user-scalable=no, width=device-width" />
   <title>What's The Deal - <%= "*************** PLAYTIME on #{RAILS_ENV.upcase} *************** - " if (RAILS_ENV == 'staging' or RAILS_ENV == 'development') %><%= yield :page_title %></title>
   <%= stylesheet_link_tag 'reset', 'mobile' %>
+  <%= javascript_include_tag 'jquery', :cache => true %>
   <%= yield :head %>
 </head>
 

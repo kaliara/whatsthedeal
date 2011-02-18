@@ -1,5 +1,4 @@
 class CartItemsController < ApplicationController
-  before_filter :force_full_site
   layout :hyrbrid_layout_nosidebar
   
   # POST /cart_items

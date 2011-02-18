@@ -1,6 +1,6 @@
 <% content_for :page_title do %>Ready to Purchase!<% end %>
 
-<% unless partner > 0 or @other_promotions.nil? or @other_promotions.empty? %>  
+<% unless mobile or partner > 0 or @other_promotions.nil? or @other_promotions.empty? %>  
   <div class="cart_other_deals_sidebar clearfix">
     <h3>Check out our other great deals</h3>
     <% @other_promotions.each do |promotion| %>
@@ -22,7 +22,7 @@
   <%= render :partial => "/carts/cart" %>
 </div>
 
-<%# if @last_credit and @last_credit.created_at < 2.minutes.ago %>
+<% unless mobile %>
   <div class="section_element">
     <div class="have_promo_code" style="<%= 'display: none' unless params[:code].blank? %>"><%= link_to "Have a Promo Code?", "#", :onclick => "$('.promo_code').show(); $('.have_promo_code').hide(); return false;" %></div>
     <div class="promo_code" style="<%= 'display: none' if params[:code].blank? %>">
@@ -33,7 +33,7 @@
       <% end -%>
     </div>
   </div>
-<%# end %>
+<% end %>
 
 
 <% unless cart.empty? %>
@@ -48,7 +48,7 @@
     <% if cart.total > 0 %>
       <% unless @existing_payment_profile %>
         <div class="clearfix">
-          <div class="section_element">
+          <div class="section_element new_credit_card">
             <div class="section_header">
               <h3>Credit Card Information</h3>
             </div>
@@ -58,7 +58,7 @@
                   <p>We accept Visa, MasterCard, <br>and American Express.</p>
                   <p>
                     <img src="/images/visa.gif"><img src="/images/mastercard.gif"><img src="/images/americanexpress.gif"><br><br><br>
-                    <span class="note">3 digits on back of card (MC/Visa) or 4 digits on front of card (AMEX)</span>
+                    <% unless mobile %><% end %>
                   </p>
                 </div>
 
@@ -78,7 +78,8 @@
                   </div>  
                   <div class="label_input_form">   
                     <%= ccf.label :verification_value, "Card Verification Code" %>
-                    <%= ccf.text_field :verification_value, :value => (params[:purchase][:payment_profile_attributes][:credit_card][:verification_value] unless (params[:purchase].blank? or params[:purchase][:payment_profile_attributes].blank? or params[:purchase][:payment_profile_attributes][:credit_card].blank?)) %>
+                    <%= ccf.text_field :verification_value, :value => (params[:purchase][:payment_profile_attributes][:credit_card][:verification_value] unless (params[:purchase].blank? or params[:purchase][:payment_profile_attributes].blank? or params[:purchase][:payment_profile_attributes][:credit_card].blank?)), :size => 4, :style => "width: 50px" %>
+                    <div class="note">3 digits on back (MC/Visa) or 4 digits on front (AMEX)</div>
                   </div>  
                   <div class="label_input_form">
                     <%= ccf.label :month, 'Expiration Month' %>
@@ -101,7 +102,7 @@
         </div>
   
         <div class="clearfix">
-          <div class="section_element">
+          <div class="section_element new_billing_address">
             <div class="section_header">
               <h3>Billing Address</h3>
             </div>
@@ -143,9 +144,9 @@
             <div class="section_header">
               <h3>Payment Information</h3>
             </div>
-            <div class="section_content">
+            <div class="section_content stored_payment_info">
               <p>We will use the following payment information:<br><br></p>
-              <p><strong><label>Card Number</label>: XXXXXXXX<%= @existing_payment_profile.billing_cc_last_four %> &nbsp;&nbsp;Billing Zip</label>: <%= @existing_payment_profile.billing_zip %></strong>&nbsp;&nbsp;(<%= link_to("Change/Remove Credit Card", payment_profile_path(@purchase.payment_profile), :confirm => 'Are you sure?', :method => :delete) %>)</p>
+              <p><strong><label>Card Number</label>: XXXXXXXX<%= @existing_payment_profile.billing_cc_last_four %> &nbsp;&nbsp;<%= "<br/>" if mobile %><label>Billing Zip</label>: <%= @existing_payment_profile.billing_zip %></strong>&nbsp;&nbsp;<%= "<br/><br/>" if mobile %>(<%= link_to("Change/Remove Credit Card", payment_profile_path(@purchase.payment_profile), :confirm => 'Are you sure you want to remove this stored credit card?', :method => :delete) %>)</p>
               <%= hidden_field_tag :store_billing_info, 1 %>
               <% f.fields_for :payment_profile, :url => {:action => 'create'} do |ppf| %>
                 <% ppf.fields_for :billing_address do |bf| %>
@@ -186,7 +187,7 @@
   
     <% if cart.shippable_item? %>
       <div class="clearfix">      
-        <div class="section_element">
+        <div class="section_element new_shipping_address">
           <div class="section_header">
             <h3 class="<%= "fieldWithErrors" if !@user.nil? and @user.customer.errors.size > 0 %>">Shipping Address</h3>
           </div>

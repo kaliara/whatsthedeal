@@ -150,7 +150,10 @@ ul.main_nav li.current a,
   color: #fff;
   font-weight: bold;
 }
-
+ul.main_nav a .not_empty{
+  font-weight: bold;
+  color: #FF9800;
+}
 
 
 /* flash notices and errors */
@@ -396,6 +399,14 @@ ul.main_nav li.current a,
   text-shadow: 0px 0px 2px #000;
   -moz-border-radius: 5px; 
   -webkit-border-radius: 5px;
+}
+.cart_shipping_info .secondary{
+  background: transparent url(/images/bg_button_secondary.png) repeat-x scroll left center;
+}
+.secondary:visited,
+.secondary:active{
+  color: #fff;
+  text-decoration: none;
 }
 .promotion .last_chance{
   background: transparent url(/images/promo_hourglass.png) no-repeat 4px 3px;
@@ -743,4 +754,124 @@ body.printed{
 }
 .mobile_footer{
   text-align: center;
+}
+
+
+/* shopping cart */
+table.shopping_cart{
+  width: 100%;  
+  margin-bottom: 20px;
+}
+table.shopping_cart td{
+  color: #666;
+}
+
+th.quantity{
+  text-align: center;
+}
+
+.shopping_cart th{
+  text-transform: uppercase;
+  font-family: 'Myriad Pro', Myriad, Helvetica, sans-serif;
+  font-size: 100%;
+  padding: 10px;
+}
+
+td.quantity{
+  text-align: center;
+  width: 10px;
+}
+td.quantity_show{
+  padding-left: 35px;
+}
+td.price{
+  color: #999;
+}
+.shopping_cart_items{
+   -moz-border-radius-topleft: 1em;
+   -webkit-border-top-left-radius: 1em;
+}
+
+th.total{
+   -moz-border-radius-topright: 1em;
+   -webkit-border-top-right-radius: 1em;
+}
+td.deal_name{
+  font-size: 80%;
+}
+.quantity select{
+  margin-left: 5px;
+  width: 47px;
+}
+
+.shopping_cart td{
+  padding: 7px 7px 5px;
+}
+.credit td,
+.credit_amount{
+  background-color: #DECB86;
+}
+.credit_amount{
+  width: 53px;
+}
+.credit td .note{
+  color: #90875B;
+  font-size: 0.85em;
+  margin: 5px 0;
+}
+
+.price, 
+.total,
+.sub_total,
+.credit_amount,
+.new_total{
+  text-align: right;
+  /*width: 55px;*/
+  font-family: 'Myriad Pro', Myriad, Helvetica, sans-serif;
+}
+
+.num_cart_items, 
+.total_price,
+.new_total_price{
+  color: #F6A933;
+}
+
+
+/* purchase new */
+.new_purchase .notice{
+  float: none;
+  text-align: left;
+  width: auto;
+  font-size: 80%;
+  background-position: center left;
+}
+.stored_payment_info{
+  margin: 20px 10px;
+}
+
+.sidebar_text p{
+  margin-bottom: 10px;
+}
+.new_credit_card {
+  margin-bottom: 40px;
+  margin-top: 30px;
+}
+.new_credit_card .sidebar_text{
+  margin-bottom: -10px;
+}
+.new_credit_card .note{
+  font-size: 85%;
+  margin-bottom: 15px;
+}
+.new_credit_card select,
+.new_billing_address select,
+.new_shipping_address select{
+  font-size: 150%;
+}
+
+.new_shipping_address{
+  margin: 20px 0;
+}
+.new_shipping_address .cart_shipping_info{
+  margin-bottom: 20px;
 }

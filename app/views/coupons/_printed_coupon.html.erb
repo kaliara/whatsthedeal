@@ -33,7 +33,7 @@
   <div class="print_coupon_header">
     <img src="/images/logo_on_white.png" id="wtd_coupon_logo" />
     <img src="/images/hpdc_coupon_logo.png" id="hpdc_coupon_logo" style="display: none" />
-    <p class="coupon_recipient">Customer Name: <strong><%=h coupon.recipient %></strong></p>
+    <p class="coupon_recipient">Customer: <strong><%=h coupon.recipient %></strong></p>
     <p class="confirmation_code">Confirmation Code: <strong><%=h coupon.confirmation_code %></strong></p>
     <p class="coupon_expiration">Expires: <%=h coupon.expiration > 3.years.from_now ? "Never!" : coupon.expiration.strftime("%m/%d/%Y") %></p>
   </div>

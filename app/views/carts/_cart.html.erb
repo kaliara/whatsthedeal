@@ -1,8 +1,8 @@
 <table class="shopping_cart">
 
   <tr>
-    <th class="shopping_cart_items">Shopping Cart Items: <span class="num_cart_items"><%= cart.cart_items.size %></span></th>
-    <th class="quantity">Quantity</th>
+    <th class="shopping_cart_items">Deals: <span class="num_cart_items"><%= cart.cart_items.size %></span></th>
+    <th class="quantity"><%= mobile ? "Qty" : "Quantity" %></th>
     <th class="price">Price</th>
     <th class="total">Total</th>
   </tr>
@@ -27,13 +27,13 @@
 
     <% unless cart.credits.empty? %>
       <tr class="credit">
-        <td colspan="3">Promo Code Applied:
+        <td colspan="3">Promo<%= " Code Applied" unless mobile %>:
           <strong><%= cart.credits.count > 1 ? "WTD Credit" : cart.credits.first.name %></strong>
-          <% if cart.true_credits_total > cart.credits_total %>
+          <% if !mobile and (cart.true_credits_total > cart.credits_total) %>
             <br/ ><p class="note">Note: The <strong>unused <%= number_to_currency (cart.true_credits_total - cart.credits_total) %> of credit</strong> will be saved in your account for your next purchase. Your welcome!</p>
           <% end %>
         </td> 
-        <td class="credit_amount">- <%= number_to_currency cart.credits_total %></td>
+        <td class="credit_amount">-&nbsp;<%= number_to_currency cart.credits_total %></td>
       </tr>
 
       <tr>

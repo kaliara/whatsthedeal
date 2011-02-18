@@ -1,5 +1,5 @@
 class CartsController < ApplicationController
-  before_filter :impersonate_customer, :force_full_site
+  before_filter :impersonate_customer
   layout :hyrbrid_layout_nosidebar, :only => :show
   
   # GET /carts/1

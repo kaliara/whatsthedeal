@@ -1716,6 +1716,10 @@ p.event_full{
   color: #999;
   font-size: 85%;
 }
+.new_credit_card .note{
+  display: inline;
+  font-size: 85%;
+}
 
 .label_input_form label{
   float: left;
