@@ -34,7 +34,6 @@
         <tr>
           <th>Coupon</th>
           <th>Expiration</th>
-          <td></td>
         </tr>
         <% @purchase.coupons.each do |coupon| %>
           <tr class="<%= "highlight" if coupon.id == params[:coupon].to_i %>">
@@ -57,7 +56,7 @@
     </p>
   </div>
   
-  <% if @track_transaction and !@mapped_promotions.empty? %>
+  <% if !mobile and @track_transaction and !@mapped_promotions.empty? %>
     <div class="promotions_map purchase_invoice">
       <div class="section_content">
         <div class="change_location">Not the right location? <%= link_to "Update your address", clear_location_path %>.</div>

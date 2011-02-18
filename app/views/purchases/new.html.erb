@@ -145,8 +145,8 @@
               <h3>Payment Information</h3>
             </div>
             <div class="section_content stored_payment_info">
-              <p>We will use the following payment information:<br><br></p>
-              <p><strong><label>Card Number</label>: XXXXXXXX<%= @existing_payment_profile.billing_cc_last_four %> &nbsp;&nbsp;<%= "<br/>" if mobile %><label>Billing Zip</label>: <%= @existing_payment_profile.billing_zip %></strong>&nbsp;&nbsp;<%= "<br/><br/>" if mobile %>(<%= link_to("Change/Remove Credit Card", payment_profile_path(@purchase.payment_profile), :confirm => 'Are you sure you want to remove this stored credit card?', :method => :delete) %>)</p>
+              <p>We'll use your saved credit card:<br><br></p>
+              <p><strong><label>Card Number</label>: XXXXXXXX<%= @existing_payment_profile.billing_cc_last_four %> &nbsp;&nbsp;<%= "<br/>" if mobile %><label>Billing Zip</label>: <%= @existing_payment_profile.billing_zip %></strong>&nbsp;&nbsp;<%= "<br/><br/>" if mobile %>(<%= link_to("Change/Remove Credit Card", payment_profile_path(@purchase.payment_profile), :confirm => 'Are you sure you want to remove this saved credit card?', :method => :delete) %>)</p>
               <%= hidden_field_tag :store_billing_info, 1 %>
               <% f.fields_for :payment_profile, :url => {:action => 'create'} do |ppf| %>
                 <% ppf.fields_for :billing_address do |bf| %>
