@@ -840,7 +840,10 @@ td.deal_name{
 }
 
 
-/* purchase new */
+/* purchase new and cart */
+.table_footer .note{
+  margin-top: 15px;
+}
 .new_purchase .notice{
   float: none;
   text-align: left;

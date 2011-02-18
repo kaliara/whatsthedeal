@@ -9,7 +9,7 @@
     <% end %>
   </div>
   
-  <% unless @other_promotions.nil? or @other_promotions.empty? %>  
+  <% unless mobile or @other_promotions.nil? or @other_promotions.empty? %>  
     <h3>Check out our other great deals</h3>
     <div class="cart_other_deals clearfix">
       <% @other_promotions.each do |promotion| %>
