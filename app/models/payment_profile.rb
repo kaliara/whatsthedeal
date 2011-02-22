@@ -50,6 +50,10 @@ class PaymentProfile < ActiveRecord::Base
                 
     response = @gateway.get_customer_payment_profile(@profile)
     
+     puts "11111111111111111111"
+      puts response.to_yaml
+      puts "11111111111111111"
+    
     if response.success?
       return response.params['payment_profile']
     else
@@ -70,10 +74,29 @@ class PaymentProfile < ActiveRecord::Base
     if duplicate_payment_profile?(@profile)
       errors.add(:profile, 'This payment information has been used already. Please contact support@sowhatsthedeal.com if you believe this message has appeared in error.')
       return false
+    elsif credit_card[:number].size < 15 or credit_card[:number].size > 16
+      errors.add(:profile, 'Please check your <strong>Credit Card Number</strong>, it should be 15 (American Express) or 16 (MasterCard and Visa) digits long')
+      return false
+    elsif credit_card[:verification_value].size < 3 or credit_card[:verification_value].size > 4
+      errors.add(:profile, 'Please check your <strong>Card Verification Value</strong>.  It should be 3 or 4 digits long and can be found on the front (American Express) or back (MasterCard and Visa) of  your credit card.')
+      return false
+    elsif credit_card[:first_name].blank? or credit_card[:last_name].blank?
+      errors.add(:profile, 'Please fill in the <strong>First and Last Name</strong> that appears on your credit card.')
+      return false
+    elsif billing_address[:address1].blank?
+      errors.add(:profile, 'Please fill in your <strong>Billing Address</strong>.')
+      return false
+    elsif billing_address[:zip].size < 5
+      errors.add(:profile, 'Please check your <strong>Billing Zip Code</strong>.  It should be at least 5 digits long.')
+      return false
     end
 
     response = @gateway.create_customer_payment_profile(@profile)
-
+    
+    puts "11111111111111111111111111111"
+    puts response.to_yaml
+    puts "11111111111111111111111111111"
+    
     if response.success? and response.params['customer_payment_profile_id']
       update_attributes({:payment_cim_id => response.params['customer_payment_profile_id']})
       self.billing_cc_last_four = @profile[:payment_profile][:payment][:credit_card].number[-4..-1]

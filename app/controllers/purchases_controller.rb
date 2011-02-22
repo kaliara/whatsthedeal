@@ -179,6 +179,7 @@ class PurchasesController < ApplicationController
     
           unless @purchase.payment_profile.save
             @credit = Credit.new
+            flash.now[:error] = @purchase.payment_profile.errors.on(:profile).to_s unless @purchase.payment_profile.errors.on(:profile).blank?
 
             # create a new payment profile unless one exists
             if @user.payment_profile.nil? or (@user.payment_profile.payment_cim_id.to_i == 0)
@@ -187,8 +188,7 @@ class PurchasesController < ApplicationController
               @purchase.payment_profile = @user.payment_profile
               @existing_payment_profile = @user.payment_profile
             end
-            
-            flash.now[:error] = @purchase.payment_profile.errors.on(:profile).nil? ? "There seems to be a problem with your payment information, please try entering it again." : @purchase.payment_profile.errors.on(:profile).to_s
+
             render :action => 'new' and return
           end
         else
@@ -269,6 +269,7 @@ class PurchasesController < ApplicationController
           @purchase.payment_profile = @user.payment_profile
           @existing_payment_profile = @user.payment_profile
         end
+        #flash.now[:error] = @purchase.errors.on(:base).nil? ? "22There seems to be a problem with your payment information." : @purchase.errors.on(:base).to_s
         render :action => 'new' and return
       end
     else

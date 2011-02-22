@@ -26,6 +26,9 @@ class Purchase < ActiveRecord::Base
                                                                   :description => description
                                                                 }}
                                                             })
+    puts "xxxxxxxxxxxxxxxxxx"
+    puts response.to_yaml
+    puts "yyyyyyyyyyyyyyyyyy"
     
     if response.success?
       return true
