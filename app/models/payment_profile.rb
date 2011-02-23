@@ -73,9 +73,9 @@ class PaymentProfile < ActiveRecord::Base
     elsif credit_card[:number].size < 15 or credit_card[:number].size > 16
       errors.add(:profile, 'Please check your <strong>Credit Card Number</strong>, it should be 15 (American Express) or 16 (MasterCard and Visa) digits long')
       return false
-    elsif credit_card[:verification_value].size < 3 or credit_card[:verification_value].size > 4
-      errors.add(:profile, 'Please check your <strong>Card Verification Value</strong>.  It should be 3 or 4 digits long and can be found on the front (American Express) or back (MasterCard and Visa) of  your credit card.')
-      return false
+    # elsif credit_card[:verification_value].size < 3 or credit_card[:verification_value].size > 4
+    #   errors.add(:profile, 'Please check your <strong>Card Verification Value</strong>.  It should be 3 or 4 digits long and can be found on the front (American Express) or back (MasterCard and Visa) of  your credit card.')
+    #   return false
     elsif credit_card[:first_name].blank? or credit_card[:last_name].blank?
       errors.add(:profile, 'Please fill in the <strong>First and Last Name</strong> that appears on your credit card.')
       return false
