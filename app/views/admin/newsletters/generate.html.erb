@@ -88,7 +88,12 @@
                               <h4 style="color: #adc5d9;font-family: 'Myriad', sans-serif;font-size: 14px;font-weight: normal;margin: 7px 0 0 0;padding: 0;"><%= @promotion.start_date.strftime("%B %d").upcase %></h4>
                             </td>
                             <td width="325" align="center" valign="bottom" height="31" style="padding:5px">
-                               <span class="address" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #ffffff;padding: 0;"><strong><%= @promotion.business.name %></strong> <%= "(" + link_to("website", @promotion.business.website, :target => "_blank", :style => "font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;") + ")" unless @promotion.business.website.blank? %><br><%= @promotion.business.street1 %> <%= @promotion.business.city %>, <%= @promotion.business.state %> <%= @promotion.business.zipcode %></span>
+                               <span class="address" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #ffffff;padding: 0;">
+                                 <strong><%= @promotion.business.name %></strong> <%= "(" + link_to("website", @promotion.business.website, :target => "_blank", :style => "font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;") + ")" unless @promotion.business.website.blank? %>
+                                 <% if @promotion.physical_address? %>
+                                   <br><%= @promotion.business.street1 %> <%= @promotion.business.city %>, <%= @promotion.business.state %> <%= @promotion.business.zipcode %>
+                                 <% end %>
+                              </span>
                             </td>
                            </tr>
                            <tr>
