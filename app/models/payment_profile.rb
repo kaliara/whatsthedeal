@@ -50,10 +50,6 @@ class PaymentProfile < ActiveRecord::Base
                 
     response = @gateway.get_customer_payment_profile(@profile)
     
-     puts "11111111111111111111"
-      puts response.to_yaml
-      puts "11111111111111111"
-    
     if response.success?
       return response.params['payment_profile']
     else
@@ -92,10 +88,6 @@ class PaymentProfile < ActiveRecord::Base
     end
 
     response = @gateway.create_customer_payment_profile(@profile)
-    
-    puts "11111111111111111111111111111"
-    puts response.to_yaml
-    puts "11111111111111111111111111111"
     
     if response.success? and response.params['customer_payment_profile_id']
       update_attributes({:payment_cim_id => response.params['customer_payment_profile_id']})
