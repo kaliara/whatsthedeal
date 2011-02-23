@@ -32,7 +32,6 @@ class Purchase < ActiveRecord::Base
       errors.add_to_base "#{response.params['direct_response']['message']}" unless (response.params.empty? or response.params['direct_response'].blank?)
       return false
     end
-    
   rescue ActiveMerchant::ConnectionError => e
   	errors.add_to_base "Sorry, one of the interns tripped over a cord (there was a timeout error). <br/><br/><strong>If you were in the middle of a purchase</strong>, check your account to see if your deal is in your account. If not, try again in a minute or two. <br/><br/>Need us to check on something? Email us at support@sowhatsthedeal.com"
   end
