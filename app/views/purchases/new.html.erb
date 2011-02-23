@@ -74,11 +74,6 @@
                     <%= ccf.label :number, 'Card Number' %>
                     <%= ccf.text_field :number, :value => (params[:purchase][:payment_profile_attributes][:credit_card][:number] unless (params[:purchase].blank? or params[:purchase][:payment_profile_attributes].blank? or params[:purchase][:payment_profile_attributes][:credit_card].blank?)), :class => "text" %>
                   </div>  
-                  <div class="label_input_form">   
-                    <%= ccf.label :verification_value, "Card Verification Code" %>
-                    <%= ccf.text_field :verification_value, :value => (params[:purchase][:payment_profile_attributes][:credit_card][:verification_value] unless (params[:purchase].blank? or params[:purchase][:payment_profile_attributes].blank? or params[:purchase][:payment_profile_attributes][:credit_card].blank?)), :size => 4, :style => "width: 50px" %>
-                    <div class="note">3 digits on back (MC/Visa) or 4 digits on front (AMEX)</div>
-                  </div>  
                   <div class="label_input_form">
                     <%= ccf.label :month, 'Expiration Month' %>
                     <%= ccf.select :month, 1..12, :selected => (params[:purchase][:payment_profile_attributes][:credit_card][:month].to_i unless (params[:purchase].blank? or params[:purchase][:payment_profile_attributes].blank? or params[:purchase][:payment_profile_attributes][:credit_card].blank?)) %>
