@@ -48,7 +48,7 @@
     
     <% if @raffle.in_rotation? %>
       <% if current_user and current_user.entered?(@raffle) %>
-        <p class="already_rsvp">Silly rabbit, you already entered this raffle!</p>
+        <p class="already_rsvp">You have successfully entered this raffle.  Good luck! </p>
       <% else %>
         <% if current_user %>
           <div class="one_click_rsvp">

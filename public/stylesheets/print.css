@@ -210,3 +210,6 @@ h4{
   -webkit-border-radius: 5px;
   cursor: pointer;
 }
+.edit_coupon{
+  display: none;
+}

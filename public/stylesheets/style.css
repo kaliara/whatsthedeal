@@ -1814,7 +1814,7 @@ p.event_full{
 .purchase_show_payment_info dt{
   padding-right: 10px;
   float: left;
-  _clear: left;
+  clear: left;
   width: 150px;
   text-align: right;
   color: #113C5A;
