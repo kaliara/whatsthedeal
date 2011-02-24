@@ -3,7 +3,6 @@ class Admin::NewslettersController < ApplicationController
   before_filter :staff_required 
   
   def setup
-    # I HATE DOING THIS!!!
     @now = DateTime.new(Time.zone.now.year, Time.zone.now.month, Time.zone.now.day, Time.zone.now.hour, Time.zone.now.min, Time.zone.now.sec)
     
     @promotions = Promotion.all.reverse
@@ -15,8 +14,10 @@ class Admin::NewslettersController < ApplicationController
   def generate
     @promotion = Promotion.find(params[:promotion_id])
     @side_promotions = Promotion.find([params[:side_promotion_1], params[:side_promotion_2], params[:side_promotion_3]])
-    @event = Event.find(params[:event_id]) if params[:event_id].to_i > 0
-    @shoutout = Shoutout.find(params[:shoutout_id]) if params[:shoutout_id].to_i > 0
+    @event1 = Event.find(params[:event1_id]) if params[:event1_id].to_i > 0
+    @event2 = Event.find(params[:event2_id]) if params[:event2_id].to_i > 0
+    @shoutout1 = Shoutout.find(params[:shoutout1_id]) if params[:shoutout1_id].to_i > 0
+    @shoutout2 = Shoutout.find(params[:shoutout2_id]) if params[:shoutout2_id].to_i > 0
     @google_tracking = "?utm_source=newsletter&utm_medium=email&utm_campaign=dailydeal"
   end
 

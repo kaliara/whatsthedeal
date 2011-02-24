@@ -98,8 +98,8 @@
                            </tr>
                            <tr>
                              <td valign="top" width="245" style="padding:5px" id="summary">
-                               <p style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #cfcfcf  !important;margin: 0 0 16px 0;padding: 0;"><span style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #cfcfcf  !important;margin: 0 0 16px 0;padding: 0;line-height: 1.5em"><%= @promotion.summary %></span></p>
-                               <p align="right" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #cfcfcf;margin: 0 0 16px 0;padding: 0;"><a href="<%= promotion_slug_url(@promotion.slug) %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;">READ MORE »</a></p>
+                               <div style="font-family: Lucida, sans-serif;font-size: 14px;font-weight: normal;color: #cfcfcf  !important;margin: 0 0 16px 0;padding: 0;"><span style="font-family: Lucida, sans-serif;font-size: 14px;font-weight: normal;color: #cfcfcf  !important;margin: 0 0 16px 0;padding: 0;line-height: 1.2em"><%= @promotion.summary %></span></div>
+                               <p align="right" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #cfcfcf;margin: 0 0 16px 0;padding: 0;"><a href="<%= promotion_slug_url(@promotion.slug) %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 14px;font-weight: normal;color: #3fc7ff;text-decoration: underline;">READ MORE »</a></p>
                                <h4 style="color: #adc5d9;font-family: 'Myriad', sans-serif;font-size: 14px;font-weight: normal;margin: 7px 0 0 0;padding: 0;">DEAL ENDS: <strong style="color: #ffffff;"><%= (@promotion.end_date - 5.hours).strftime("%A, %b %d") %></strong></h4>
                                <p align="center" style="margin: 5px 0 0 0;font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #cfcfcf;padding: 0;"><a href=<%= HOST_URL %>add_reminder/<%= @promotion.id %><%= @google_tracking %> style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;"><img src="http://sowhatsthedeal.com/emails/new_remindme_btn.png" alt="Remind Me" border="0" class="remind_me" style="border: none;"></a></p>
                             </td>
@@ -146,7 +146,7 @@
             </tr>
           <% end %>
 
-          <% unless @event.nil? and @shoutout.nil? %>
+          <% unless @event1.nil? and @event2.nil? and @shoutout1.nil? and @shoutout2.nil? %>
             <tr class="separator">
               <td height="3" style="background-color: #999999;font-size: 6px;line-height: 6px;"></td>
             </tr>
@@ -159,31 +159,61 @@
                       <h2 style="color: #666666;font-family: 'Myriad', sans-serif;font-size: 28px;font-weight: normal;margin: 0 0 4px 0;padding: 0 0 4px 0;">Events and Shoutouts</h2>
                       <table width="580" border="0" cellspacing="0" cellpadding="0" class="event_items">
                         <tr>
-                        <% unless @event.nil? %>
+                        <% unless @event1.nil? %>
                           <td align="left" valign="top">
                             <table border="0" cellspacing="0" cellpadding="0">
                               <tr>
                                 <td valign="top" style="padding-right:8px" width="105">
-                                  <a href="<%= event_url @event %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #1279af;"><img src="http://sowhatsthedeal.com<%= @event.image1.url %>" alt="<%= @event.header %>" width="100" align="left" style="border: 2px solid #777777;"></a>
+                                  <a href="<%= event_url @event1 %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #1279af;"><img src="http://sowhatsthedeal.com<%= @event1.image1.url %>" alt="<%= @event1.header %>" width="100" align="left" style="border: 2px solid #777777;"></a>
                                 </td>
                                 <td valign="top" width="160">
-                                  <h5 style="color: #666666;font-family: 'Myriad', sans-serif;font-size: 11px;text-transform: uppercase;margin: 0 0 5px 0;"><a href="<%= event_url @event %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 11px;font-weight: bold;color: #1279af;"><%= @event.header %></a></h5>
-                                  <p style="font-family: Lucida, sans-serif;font-size: 11px;font-weight: normal;color: #666666;margin: 0 0 16px 0;padding: 0;margin-bottom: 0;"><%= @event.description %> &nbsp;<%= link_to @event.read_more_text, event_url(@event) %></p>
+                                  <h5 style="color: #666666;font-family: 'Myriad', sans-serif;font-size: 11px;text-transform: uppercase;margin: 0 0 5px 0;"><a href="<%= event_url @event1 %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 11px;font-weight: bold;color: #1279af;"><%= @event1.header %></a></h5>
+                                  <p style="font-family: Lucida, sans-serif;font-size: 11px;font-weight: normal;color: #666666;margin: 0 0 16px 0;padding: 0;margin-bottom: 0;"><%= @event1.description %> &nbsp;<%= link_to @event1.read_more_text, event_url(@event1) %></p>
                                 </td>
                               </tr>
                             </table>
                           </td>
                         <% end %>
-                        <% unless @shoutout.nil? %>
+                        <% unless @event2.nil? %>
                           <td align="left" valign="top">
                             <table border="0" cellspacing="0" cellpadding="0">
                               <tr>
                                 <td valign="top" style="padding-right:8px" width="105">
-                                  <img src="http://sowhatsthedeal.com<%= @shoutout.image1.url %>" width="100" align="left" style="border: 2px solid #777777;">
+                                  <a href="<%= event_url @event2 %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #1279af;"><img src="http://sowhatsthedeal.com<%= @event2.image1.url %>" alt="<%= @event2.header %>" width="100" align="left" style="border: 2px solid #777777;"></a>
                                 </td>
                                 <td valign="top" width="160">
-                                  <h5 style="color: #666666;font-family: 'Myriad', sans-serif;font-size: 11px;text-transform: uppercase;margin: 0 0 5px 0;"><%= @shoutout.header %></h5>
-                                  <p style="font-family: Lucida, sans-serif;font-size: 11px;font-weight: normal;color: #666666;margin: 0 0 16px 0;padding: 0;margin-bottom: 0;"><%= @shoutout.description %></p>
+                                  <h5 style="color: #666666;font-family: 'Myriad', sans-serif;font-size: 11px;text-transform: uppercase;margin: 0 0 5px 0;"><a href="<%= event_url @event2 %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 11px;font-weight: bold;color: #1279af;"><%= @event2.header %></a></h5>
+                                  <p style="font-family: Lucida, sans-serif;font-size: 11px;font-weight: normal;color: #666666;margin: 0 0 16px 0;padding: 0;margin-bottom: 0;"><%= @event2.description %> &nbsp;<%= link_to @event2.read_more_text, event_url(@event2) %></p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        <% end %>
+                        <% unless @shoutout1.nil? %>
+                          <td align="left" valign="top">
+                            <table border="0" cellspacing="0" cellpadding="0">
+                              <tr>
+                                <td valign="top" style="padding-right:8px" width="105">
+                                  <img src="http://sowhatsthedeal.com<%= @shoutout1.image1.url %>" width="100" align="left" style="border: 2px solid #777777;">
+                                </td>
+                                <td valign="top" width="160">
+                                  <h5 style="color: #666666;font-family: 'Myriad', sans-serif;font-size: 11px;text-transform: uppercase;margin: 0 0 5px 0;"><%= @shoutout1.header %></h5>
+                                  <p style="font-family: Lucida, sans-serif;font-size: 11px;font-weight: normal;color: #666666;margin: 0 0 16px 0;padding: 0;margin-bottom: 0;"><%= @shoutout1.description %></p>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                        <% end %>
+                        <% unless @shoutout2.nil? %>
+                          <td align="left" valign="top">
+                            <table border="0" cellspacing="0" cellpadding="0">
+                              <tr>
+                                <td valign="top" style="padding-right:8px" width="105">
+                                  <img src="http://sowhatsthedeal.com<%= @shoutout2.image1.url %>" width="100" align="left" style="border: 2px solid #777777;">
+                                </td>
+                                <td valign="top" width="160">
+                                  <h5 style="color: #666666;font-family: 'Myriad', sans-serif;font-size: 11px;text-transform: uppercase;margin: 0 0 5px 0;"><%= @shoutout2.header %></h5>
+                                  <p style="font-family: Lucida, sans-serif;font-size: 11px;font-weight: normal;color: #666666;margin: 0 0 16px 0;padding: 0;margin-bottom: 0;"><%= @shoutout2.description %></p>
                                 </td>
                               </tr>
                             </table>
@@ -223,8 +253,11 @@
     
     <script type="text/javascript" charset="utf-8">
       $('#summary ul').css('padding-left', '20px');
+      $('#summary ul').css('margin-top', '10px');
       $('#summary ul li').css('color', '#cfcfcf');
       $('#summary ul li').css('font-family', 'Myriad, Helvetica');
+      $('#summary ul li').css('margin-bottom', '5px');
+      $('#summary ul li a').css('color', '#3fc7ff');
 
       <% if @promotion.physical_address? %>
         var geocoder;

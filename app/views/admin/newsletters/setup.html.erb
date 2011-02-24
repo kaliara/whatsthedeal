@@ -26,22 +26,37 @@
   </p><br><br>
   
   <p>
-    <%= label_tag 'Event' %><br />
+    <%= label_tag 'Event 1' %><br />
     <% unless @events.empty? %>
-      <%= select_tag :event_id, options_for_select([['-- None --', 0]] + @events.collect{|e| ["#{e.id} - #{strip_tags e.header}", e.id] }) %>
+      <%= select_tag :event1_id, options_for_select([['-- None --', 0]] + @events.collect{|e| ["#{e.id} - #{strip_tags e.header}", e.id] }) %>
+    <% else %>
+      Sorry, no events, go <%= link_to "add some", admin_events_path %>!
+    <% end %>
+  </p>
+  <p>
+    <%= label_tag 'Event 2' %><br />
+    <% unless @events.empty? %>
+      <%= select_tag :event2_id, options_for_select([['-- None --', 0]] + @events.collect{|e| ["#{e.id} - #{strip_tags e.header}", e.id] }) %>
     <% else %>
       Sorry, no events, go <%= link_to "add some", admin_events_path %>!
     <% end %>
   </p><br><br>
   
   <p>
-    <%= label_tag 'Shoutout' %><br />
+    <%= label_tag 'Shoutout 1' %><br />
     <% unless @shoutouts.empty? %>
-      <%= select_tag :shoutout_id, options_for_select([['-- None --', 0]] + @shoutouts.collect{|s| ["#{s.id} - #{strip_tags s.header}", s.id] }) %>
+      <%= select_tag :shoutout1_id, options_for_select([['-- None --', 0]] + @shoutouts.collect{|s| ["#{s.id} - #{strip_tags s.header}", s.id] }) %>
     <% else %>
       Sorry, no shoutouts, go <%= link_to "add some", admin_shoutouts_path %>!
     <% end %>
-    
+  </p>
+  <p>
+    <%= label_tag 'Shoutout 2' %><br />
+    <% unless @shoutouts.empty? %>
+      <%= select_tag :shoutout2_id, options_for_select([['-- None --', 0]] + @shoutouts.collect{|s| ["#{s.id} - #{strip_tags s.header}", s.id] }) %>
+    <% else %>
+      Sorry, no shoutouts, go <%= link_to "add some", admin_shoutouts_path %>!
+    <% end %>
   </p><br><br>
   
   <p>
