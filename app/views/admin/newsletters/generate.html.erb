@@ -109,6 +109,9 @@
                               <% else %>
                                 <%= link_to image_tag(@promotion.map_replacement_image.url, :width => 280, :height => 190, :align => "right", :style => "margin-right: 5px;border: 7px solid #ffffff;"), promotions_url %>
                               <% end %>
+                              <p style="text-align:center">
+                                <%= link_to image_tag('http://sowhatsthedeal.com/emails/deal_map_link.png', :border => 0), promotion_map_url %>
+                              </p>
                             </td>
                           </tr>
                         </table>
@@ -252,7 +255,7 @@
     </div>
     
     <script type="text/javascript" charset="utf-8">
-      $('#summary ul').css('padding-left', '20px');
+      $('#summary ul').css('padding-left', '10px');
       $('#summary ul').css('margin-top', '10px');
       $('#summary ul li').css('color', '#cfcfcf');
       $('#summary ul li').css('font-family', 'Myriad, Helvetica');
