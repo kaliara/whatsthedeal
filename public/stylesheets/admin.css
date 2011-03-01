@@ -26,6 +26,9 @@ a:hover { color: #fff; background-color:#000; }
 input[type="text"]{
   width: 600px;
 }
+input.hasDatepicker{
+  width: 80px;
+}
 .clear {
   clear: both;
 }
