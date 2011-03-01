@@ -47,6 +47,10 @@ a.orange_btn{
 td.quantity{
   width: 180px;
 }
+
+.promotion .more_details_container {
+  float: none;
+}
   
 #purchase_loading span{
  float: right;
@@ -168,4 +172,18 @@ td.quantity{
 }
 .purchase_show_payment_info dd{
   float: none;
+}
+.social_buttons{
+  *margin-top: 20px;
+}
+
+.cart_other_deals_sidebar .cart_other_deal{
+  margin-bottom: 20px;
+}
+
+.footer_container{
+  clear: both !important;
+}
+.get_daily_deal{
+  margin-top: 20px;
 }

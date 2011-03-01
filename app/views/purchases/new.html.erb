@@ -12,6 +12,7 @@
           <%= hidden_field_tag "added_more_great_deal_to_cart", true %>
           <%= hidden_field_tag "cart_items[0][quantity]", 1 %>
           <%= f.submit 'Add to Cart', :class => "primary" %>                  
+          <br class="ie_clear" />
         <% end %>
       </div>
     <% end %>
@@ -127,9 +128,6 @@
             <% end %>
           </div>
 
-          <div class="sidebar_text">
-            <p><%= render_content 'cart_sidebar_billing_address_desc' %></p>
-          </div>
         </div>
       <% else %>
         <div class="clearfix">
@@ -226,7 +224,7 @@
     <% end %>
   
     <p class="notice">We've streamlined the checkout process to make things more efficient. By clicking below, you're purchasing the items in your cart (above).</p>
-    <div class="section_element tright clearfix clear">
+    <div class="tright clearfix clear">
       <%= f.submit "Confirm Purchase", :class => 'confirm_purchase primary', :id => 'confirm_purchase_submit' %>
       <div id="purchase_loading" style="display:none"><%= f.submit "Confirm Purchase", :class => 'confirm_purchase primary disabled', :disabled => true %><span>&nbsp;</span></div>
     </div>
