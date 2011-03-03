@@ -110,7 +110,7 @@ class Notifier < ActionMailer::Base
   end
 
   def user_review_added(user_review)
-   recipients   "referral@sowhatsthedeal.com"
+   recipients   (RAILS_ENV == 'staging' or RAILS_ENV == 'development') ? TEST_RECIPIENT : "referral@sowhatsthedeal.com"
    from         "support@sowhatsthedeal.com (What's the Deal)"
    subject      "User Review # #{user_review.id} Added" + (" ::::: [just a test]" if (RAILS_ENV == 'staging' or RAILS_ENV == 'development')).to_s
    body         :user_review => user_review

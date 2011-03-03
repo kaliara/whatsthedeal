@@ -1822,6 +1822,13 @@ p.event_full{
   _margin-top: 0;
 /*  font-size: 1.17em;*/
 }
+dl.shipping_details{
+  display: block;
+  margin: 20px 0 30px;
+}
+.shipping_details dt{
+  font-weight: bold;
+}
 
 .purchase_show_payment_info dd{
   margin-top: 5px;

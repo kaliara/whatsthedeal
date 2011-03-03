@@ -79,7 +79,11 @@
           <th># of Users</th>
           <th># of Subscribers</th>
           <th># of Purchases</th>
+          <th>Purchased 1+ time</th>
+          <th>Purchased 2+ times</th>
+          <th>Purchased 3+ times</th>
           <th>Lifetime Revenue</th>
+          <th>Credit Used</th>
           <th>Lifetime Profit</th>
           <td width="20">&nbsp;</td>
           <th>Associated Business</th>
@@ -97,7 +101,11 @@
             <td style="text-align: center"><%= lifetime_users.size %></td>
             <td style="text-align: center"><%= subscribers %></td>
             <td style="text-align: center"><%= lifetime_purchases.size %></td>
+            <td style="text-align: center"><%= lifetime_users.delete_if{|u| u.purchases.size < 1}.size %></td>
+            <td style="text-align: center"><%= lifetime_users.delete_if{|u| u.purchases.size < 2}.size %></td>
+            <td style="text-align: center"><%= lifetime_users.delete_if{|u| u.purchases.size < 3}.size %></td>
             <td class="total"><strong><%= number_to_currency lifetime_purchases_total %></strong></td>
+            <td style="text-align: right"><%= number_to_currency lifetime_purchases.collect{|p| (p.deals_total - p.total).to_f}.sum %></td>
             <td><strong><%= number_to_currency lifetime_purchases_profit %></strong></td>
             <td width="20">&nbsp;</td>
             <td><%= select_tag 'business_id', options_for_select([''] + Business.find(:all, :order => 'name asc').collect{|b| [b.name, b.id]}, :selected => origin.business_id), :class => 'business_select' %></td>
