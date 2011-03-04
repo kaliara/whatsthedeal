@@ -243,7 +243,7 @@
               <li><strong><a href="/promotions/237">3-Play Weekday Subscription</a></strong></li>
             </ul>
           <% elsif !@promotion.ended? and !@promotion.sold_out? and @promotion.id != 291 %>
-            <div class="deal_me_in"><%= submit_tag 'Deal Me In', :class => 'primary' %></div>
+            <div class="deal_me_in"><%= submit_tag 'Deal Me In', :class => 'primary', :disabled => !@promotion.active? %></div>
             <%= submit_tag Promotion::BUY_AS_GIFT_LABEL, :class => 'buy_as_gift' %>
           <% else %>
           <% end %>
