@@ -3,7 +3,7 @@
     <iframe src="https://www.facebook.com/plugins/like.php?href=<%= CGI::escape promotion_slug_url(@promotion.slug) %>&amp;layout=button_count&amp;show_faces=false&amp;width=200&amp;action=like&amp;font&amp;colorscheme=light&amp;height=35" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
   </div>
   <div class="twitter_share">
-    <a href="https://twitter.com/share" class="twitter-share-button" data-url="<%= promotion_slug_url(@promotion.slug) %>" data-text="<%= @promotion.name %>" data-count="none" data-via="whatsthedeal">Tweet</a>
+    <a href="https://twitter.com/share" class="twitter-share-button" data-url="<%= promotion_slug_url(@promotion.slug) %>" data-text="<%= @promotion.name %>" data-count="none" data-via="whatsthedealdc">Tweet</a>
   </div>
   <div class="facebook_share">
     <a name="fb_share" type="button" share_url="<%= promotion_slug_url(@promotion.slug) %>">SHARE</a> 
