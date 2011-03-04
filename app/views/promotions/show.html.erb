@@ -226,7 +226,7 @@
         
         <div class="checkout_buttons">
           <% if @promotion.id == 330 %>
-            <div class="deal_me_in"><%= submit_tag 'Get My Code', :class => 'primary' %></div>
+            <div class="deal_me_in"><br><br><%= link_to 'Get My Code', @promotion.external_url, :class => 'primary' %><br><br></div>
           <% elsif @promotion.id == 216 %>
             <h3>Choose a performance date</h3>
             <ul style="font-size: 120%; line-height: 1.2em;list-style-type: disc; text-align: left; color: #E9EFF3; margin-left: 45px">
