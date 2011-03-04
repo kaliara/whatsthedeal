@@ -2444,6 +2444,14 @@ h3.event_rsvp{
   text-align: center;
   float: left;
 }
+.promotion .buying_details .special_deal_me_in_message{
+  color: #AAC5DB;
+  font-size: 18px;
+  line-height: 1.5em;
+  margin: 10px;
+  text-align: center;
+  text-transform: uppercase;
+}
 .promotion .buying_details .single_deal dl{
   clear: both;
   display: block;

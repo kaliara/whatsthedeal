@@ -201,7 +201,10 @@
         <% else %>
           <%= hidden_field_tag "cart_items[0][deal_id]", @promotion.featured_deal.id %>
           <%= hidden_field_tag "cart_items[0][quantity]", 1 %>
-          <% unless @promotion.featured_deal.id == 411 %>
+          <% if @promotion.id == 330 %>
+            <div class="special_deal_me_in_message">Click below<br>to get your FREE<br>10% off coupon code!</div>
+          <% elsif @promotion.featured_deal.id == 411 %>
+          <% else %>
             <div class="single_deal">
               <dl class="clearfix">
                 <dt>You Pay</dt>
@@ -222,7 +225,9 @@
         <% end %>
         
         <div class="checkout_buttons">
-          <% if @promotion.id == 216 %>
+          <% if @promotion.id == 330 %>
+            <div class="deal_me_in"><%= submit_tag 'Get My Code', :class => 'primary' %></div>
+          <% elsif @promotion.id == 216 %>
             <h3>Choose a performance date</h3>
             <ul style="font-size: 120%; line-height: 1.2em;list-style-type: disc; text-align: left; color: #E9EFF3; margin-left: 45px">
               <li><strong><a href="/promotions/217">Wednesday Evening (11/24 @ 8pm)</a></strong></li>
@@ -263,7 +268,9 @@
       <% end %>
     
       <div class="purchases">
-        <% if @promotion.id == 291 or @promotion.id == 293 or @promotion.id == 294 %>
+        <% if @promotion.id == 330  %>
+          <strong>&nbsp;</strong>
+        <% elsif @promotion.id == 291 or @promotion.id == 293 or @promotion.id == 294 %>
           <strong><%= Promotion.find(293).purchases + Promotion.find(294).purchases %></strong>&nbsp;&nbsp;purchased
         <% elsif @promotion.id == 239 or @promotion.id == 240 or @promotion.id == 260 %>
           <strong><%= @promotion.inventory - @promotion.purchases %></strong>&nbsp;&nbsp;tickets left
@@ -274,7 +281,8 @@
         <% end %>
       </div>
     
-      <% if @promotion.early_bird? %>
+      <% if @promotion.id == 330 %>
+      <% elsif @promotion.early_bird? %>
         <div class="early_bird">Early&nbsp;Bird</div>
       <% elsif @promotion.inventory.to_i > 999 and !@promotion.ended? and @promotion.quota_met? %>
         <div class="deal_is_on">Deal&nbsp;Is&nbsp;On!</div>

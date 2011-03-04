@@ -80,11 +80,8 @@ class PromotionsController < ApplicationController
     if @promotion.nil?
       flash[:error] = "We have updated some of the links to our promotions, please select a promotion from the list below"
       redirect_to promotions_path
-    elsif @promotion.start_date > Time.now.utc and params[:password] != Promotion::PREVIEW_PASSWORD
-      flash[:error] = "Sorry, but the deal you were looking for is no longer available. Please check out these other great deals below."
-      redirect_to promotions_path
     else
-      flash.now[:error] = "Did you miss this deal? <a href='/signup'>Signup for the our Daily Deal e-mails</a> never miss out again!" unless (@promotion.active? || params[:password] == Promotion::PREVIEW_PASSWORD)
+      flash.now[:error] = "Did you miss this deal? <a href='/signup'>Signup for the our Daily Deal e-mails</a> never miss out again!" unless @promotion.end_date > Time.now.utc
       
       @side_promotions = Promotion.sidebar(@promotion.id)
       @cart_item = CartItem.new
