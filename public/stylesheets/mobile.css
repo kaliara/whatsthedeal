@@ -904,3 +904,11 @@ td.deal_name{
 .share_purchase{
   margin: 20px 0;
 }
+.promotion .special_deal_me_in_message{
+  color: #AAC5DB;
+  font-size: 120%;
+  line-height: 1.3em;
+  margin: 10px;
+  text-align: center;
+  text-transform: uppercase;
+}
