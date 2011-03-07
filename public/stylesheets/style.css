@@ -2809,6 +2809,47 @@ h3.event_rsvp{
   margin-bottom: 10px;
 }
 
+/* promotions grab bag */
+.grab_bag{
+  margin-left: 5px;
+}
+.grab_bag .promotion{
+  float: left;
+  width: 280px;
+  margin-bottom: 30px;
+}
+.grab_bag .left{
+  margin-right: 40px;
+}
+.grab_bag .promotion .buying_details .multi_deal .pricing_info{
+  float: none;
+  width: auto;
+  margin-bottom: 13px;
+}
+.grab_bag .promotion .buying_details .multi_deal .pricing_info h3{
+  text-align: center;
+  margin-bottom: 10px;
+}
+.grab_bag .promotion .buying_details .multi_deal .pricing_info dl{
+  float: none;
+}
+.grab_bag .promotion .buying_details .multi_deal{
+  border: none;
+  clear: none;
+  margin-top: none;
+}
+.grab_bag .promotion_image{
+  float: none;
+}
+.grab_bag .promotion_image img{
+  width: 275px;
+}
+.grab_bag .promotion .more_details_container{
+  float: none;
+  top: 0;
+  right: 80px;
+  margin-top: 20px;
+}
 
 /* promotion map */
 .promotions_map{

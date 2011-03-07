@@ -1,0 +1,30 @@
+<div class="grab_bag">
+  <% @promotions.each do |promotion| %>
+    <div class="promotion <%= cycle('left', '') %> clearfix">
+      <div class="buying_details">
+        <div class="multi_deal clearfix">
+          <div class="pricing_info">
+            <h3><%= link_to promotion.name, promotion_slug_path(promotion.slug) %></h3>
+            <dl class="clearfix">
+              <dt>You Pay:</dt>&nbsp;
+              <% if promotion.featured_deal.early_bird? %>
+                <dd class="early_bird_discount"><span><%= number_to_currency promotion.featured_deal.price, :precision => 0 %></span>&nbsp;<%= number_to_currency promotion.featured_deal.adjusted_price, :precision => (has_cents?(promotion.featured_deal.price) ? 2 : 0) %></dd>
+              <% else %>  
+                <dd><%= number_to_currency promotion.featured_deal.price, :precision => (has_cents?(promotion.featured_deal.price) ? 2 : 0) %></dd>
+              <% end %>
+              <dt>Value:</dt>&nbsp;<dd><%= number_to_currency promotion.featured_deal.value, :precision => (has_cents?(promotion.featured_deal.value) ? 2 : 0) %></dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <div class="promotion_image">
+        <%= link_to image_tag(promotion.image1.url, :alt => promotion.name), promotion_slug_path(promotion.slug) %>
+      </div>
+      <% unless promotion.sold_out? %>
+        <div class="more_details_container"><%= link_to "More Details", promotion_slug_path(promotion.slug), :class => "primary" %></div>
+      <% else %>
+        <div class="sold_out">Sold Out</div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

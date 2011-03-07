@@ -39,6 +39,22 @@ class PromotionsController < ApplicationController
     end
   end
 
+  # GET /promotions/grab_bag
+  def grab_bag
+    session[:force_full_site] = true
+    
+    @promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and grab_bag = ?', Time.now.utc, Time.now.utc, true, false, true], :order  => 'featured DESC, start_date DESC')
+
+    if @promotions.empty?
+      redirect_to promotions_path
+    else
+      respond_to do |format|
+        format.html # index.html.erb
+        format.xml  { render :xml => @promotions }
+      end
+    end
+  end
+
   def map
     @mapped_promotions   = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and physical_address = ?', Time.now.utc, Time.now.utc, true, false, true], :order  => 'featured DESC, start_date DESC')
     @unmapped_promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and physical_address = ?', Time.now.utc, Time.now.utc, true, false, false], :order  => 'featured DESC, start_date DESC')

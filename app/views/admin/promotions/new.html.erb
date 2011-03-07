@@ -111,6 +111,10 @@
     <%= f.label :hidden %> (hide from More Great Deals page and sidebar)
   </p>
   <p>
+    <%= f.check_box :grab_bag %>
+    <%= f.label :grab_bag %> (part of promotions listed on <%= link_to "grab bag page", grab_bag_url %>)
+  </p>
+  <p>
     <%= f.check_box :auto_activate_coupons %>
     <%= f.label :auto_activate_coupons %> (when deal tips, newly purchased coupons get activated right away)
   </p>

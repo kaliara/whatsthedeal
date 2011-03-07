@@ -99,6 +99,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'lon.:format', :controller => 'promotions', :action => 'lon'
 
   # promotions
+  map.grab_bag '/promotions/grab_bag', :controller => 'promotions', :action => 'grab_bag'
   map.promotion_slug '/promotions/:slug', :controller => 'promotions', :action => 'show' 
 
   # businesses stuff
