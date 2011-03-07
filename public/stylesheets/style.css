@@ -2813,10 +2813,14 @@ h3.event_rsvp{
 .grab_bag{
   margin-left: 5px;
 }
+.grab_bag h2{
+  padding: 0;
+  margin-bottom: 20px;
+}
 .grab_bag .promotion{
   float: left;
   width: 280px;
-  margin-bottom: 30px;
+  margin-bottom: 45px;
 }
 .grab_bag .left{
   margin-right: 40px;
@@ -2834,9 +2838,9 @@ h3.event_rsvp{
   float: none;
 }
 .grab_bag .promotion .buying_details .multi_deal{
+  margin-top: 0;
+  padding-top: 0;
   border: none;
-  clear: none;
-  margin-top: none;
 }
 .grab_bag .promotion_image{
   float: none;

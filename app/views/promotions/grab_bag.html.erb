@@ -1,4 +1,6 @@
+<% content_for :page_title do %><%= render_content 'grab_bag_header' %><% end %>
 <div class="grab_bag">
+  <h2><%= render_content 'grab_bag_header' %></h2>
   <% @promotions.each do |promotion| %>
     <div class="promotion <%= cycle('left', '') %> clearfix">
       <div class="buying_details">
