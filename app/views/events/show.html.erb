@@ -99,7 +99,7 @@
           <div class="signup_box login_box">
             <% form_for @user_session, :url => user_session_path do |f| %>
               <%= display_error_messages(f.error_messages) %>
-              <%= hidden_field_tag :return_uri, attendees_path(:anchor => 'rsvp') %>
+              <%= hidden_field_tag :return_uri, event_path(@event) %>
               <table align="center" border="0" cellpadding="5" cellspacing="0">
                 <tr>
                   <td><%= f.label :email %></td>
