@@ -12,7 +12,7 @@
     <td style="vertical-align: top;padding: 0;"><strong>Hi <%= @coupon.user.customer.first_name == Customer::STOCK_FIRST_NAME ? 'there' : @coupon.user.customer.first_name %></strong>,<br><br> 
       Just a reminder that your <strong><%= @coupon.name %></strong> is set to expire on <strong><%= @coupon.expiration.strftime("%m/%d/%Y") %></strong>.  Best to use it before you lose it.
       <br><br>
-      <strong>Note:</strong> if you have already used your coupon, you are receiving this message because you haven't marked the coupon as "used" in your account.  To do so, go to the <%= link_to "My Deals", my_deals_url %> page and click the "used" checkbox.
+      <strong>Note:</strong> if you've already used this deal, mark it as "Redeemed" in the <%= link_to "My Deals", my_deals_url %> section
       <br><br>
       Enjoy!
       <br><br>
