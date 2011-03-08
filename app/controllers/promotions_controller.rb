@@ -44,6 +44,7 @@ class PromotionsController < ApplicationController
     session[:force_full_site] = true
     
     @promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and grab_bag = ?', Time.now.utc, Time.now.utc, true, true], :order  => 'featured DESC, start_date DESC')
+    @side_promotions = Promotion.sidebar(@promotions.first.id)
 
     if @promotions.empty?
       redirect_to promotions_path
