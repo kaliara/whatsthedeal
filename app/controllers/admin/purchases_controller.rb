@@ -13,7 +13,7 @@ class Admin::PurchasesController < ApplicationController
       @type = "Invoice Number"
       @purchases = Purchase.find_by_invoice_number(params[:q]).to_a
     else
-      @purchases = Purchase.find(:all, :order => 'created_at DESC', :limit => 20)
+      @purchases = Purchase.find(:all, :order => 'created_at DESC', :limit => 20, :offset => params[:offset].to_i)
     end
     
     respond_to do |format|

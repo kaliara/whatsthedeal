@@ -13,7 +13,7 @@ class Admin::CouponsController < ApplicationController
       @type = "Confirmation Code"
       @coupons = Coupon.find_by_confirmation_code(params[:q]).to_a
     else
-      @coupons = Coupon.find(:all, :order => 'created_at DESC', :limit => 20)
+      @coupons = Coupon.find(:all, :order => 'created_at DESC', :limit => 20, :offset => params[:offset].to_i)
     end
     
     

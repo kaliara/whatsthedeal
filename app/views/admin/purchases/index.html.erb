@@ -36,3 +36,7 @@
   </tr>
 <% end %>
 </table>
+
+<br><br>
+
+&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "Show next 20", admin_purchases_path(:offset => params[:offset].to_i + 20) %>

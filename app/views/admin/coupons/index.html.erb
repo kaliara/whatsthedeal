@@ -55,3 +55,5 @@
   </tr>
 <% end %>
 </table>
+
+&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "Show next 20", admin_coupons_path(:offset => params[:offset].to_i + 20) %>
