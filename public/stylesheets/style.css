@@ -2854,6 +2854,14 @@ h3.event_rsvp{
   right: 80px;
   margin-top: 20px;
 }
+.grab_bag .sold_out{
+  color: #c00;
+  font-size: 1.25em;
+  line-height: 1.2em;
+  font-weight: bold;
+  text-align: center;
+  padding-top: 13px;
+}
 
 /* promotion map */
 .promotions_map{

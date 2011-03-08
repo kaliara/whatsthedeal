@@ -190,7 +190,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resource  :user_session
     
   # homepage
-  map.root :controller => 'promotions', :action => 'home', :requirements => {:protocol => "http"}
+  # map.root :controller => 'promotions', :action => 'home', :requirements => {:protocol => "http"}
+  map.root :controller => 'promotions', :action => 'grab_bag', :requirements => {:protocol => "http"}
   
   # halfprice dc
   map.about_hpdc '/about_hpdc', :controller => 'static', :action => 'about_hpdc', :requirements => {:protocol => "http"}
@@ -231,6 +232,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'rsvp_thanks',     :controller => 'static', :action => 'rsvp_thanks',    :requirements => {:protocol => "http"}
   map.connect 'rap',             :controller => 'static', :action => 'rap',            :requirements => {:protocol => "http"}
   map.connect 'ontap',           :controller => 'users',  :action => 'new', :source => 'ontap', :utm_source => 'ontap', :utm_medium => 'magazine', :utm_campaign => 'ontap_mag_ad_feb2011'
+  map.connect 'totn',            :controller => 'users',  :action => 'new', :source => 'totn',  :utm_source => 'totn',  :utm_medium => 'magazine', :utm_campaign => 'totn_ad'
   
   # The priority is based upon order of creation: first created -> highest priority.
 
