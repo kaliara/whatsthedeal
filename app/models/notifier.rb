@@ -40,6 +40,7 @@ class Notifier < ActionMailer::Base
   def coupon_gift_received(coupon)
    recipients  (RAILS_ENV == 'staging' or RAILS_ENV == 'development') ? TEST_RECIPIENT : coupon.gift_email
    from         "support@sowhatsthedeal.com (What's the Deal)"
+   reply_to     coupon.user.email
    subject      "You Have a Gift from #{coupon.gift_from} on What's the Deal" + (" ::::: [originally for #{coupon.gift_email}]" if (RAILS_ENV == 'staging' or RAILS_ENV == 'development')).to_s
    body         :coupon => coupon
    content_type "text/html"
