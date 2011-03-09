@@ -190,8 +190,7 @@ ActionController::Routing::Routes.draw do |map|
   map.resource  :user_session
     
   # homepage
-  # map.root :controller => 'promotions', :action => 'home', :requirements => {:protocol => "http"}
-  map.root :controller => 'promotions', :action => 'grab_bag', :requirements => {:protocol => "http"}
+  map.root :controller => 'promotions', :action => 'home', :requirements => {:protocol => "http"}
   
   # halfprice dc
   map.about_hpdc '/about_hpdc', :controller => 'static', :action => 'about_hpdc', :requirements => {:protocol => "http"}
