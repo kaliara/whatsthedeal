@@ -1,25 +1,4 @@
-<% if current_page?(signup_path) or current_page?(signup_with_source_path) %>
-  <% @side_promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ?', Time.now.utc, Time.now.utc, true, false], :order => 'position ASC', :limit => 5) %>
-  <div class="sidebar">
-    <% unless @side_promotions.blank? %>
-      <h2><%= link_to "More Great Deals", promotions_path %></h2>
-      <div class="sidebar_content last">
-        <% @side_promotions.each do |promotion| %>
-          <div class="deal_preview clearfix">
-            <img src="<%= promotion.image1.url %>" class="deal_thumbnail" />
-            <h4><%= link_to truncate(promotion.name, :length => 50), promotion_slug_path(promotion.slug), :title => promotion.name %></h4>
-            <dl><dt>Days Left: </dt><dd><%= ((promotion.end_date - Time.now.utc)/86400) < 1 ? "< 1" : ((promotion.end_date - Time.now.utc)/86400).floor %></dd></dl>
-            <% unless promotion.id == 330 %>
-              <dl class="last">Purchases: <dt></dt><dd><%= promotion.purchases %></dd></dl>
-            <% end %>
-          </div>
-        <% end %>
-  
-        <span class="see_all_deal"><%= link_to "See All Current Deals", promotions_url %></span>
-      </div>
-    <% end %>
-  </div>
-<% else %>
+<% unless current_page?(signup_path) or current_page?(signup_with_source_path) %>
   <div class="sidebar">
     <% if content_exists?('global_announcement_desc') %>
       <h2><%= render_content 'global_announcement_title' %></h2>
