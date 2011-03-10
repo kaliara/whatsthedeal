@@ -202,7 +202,7 @@ ActionController::Routing::Routes.draw do |map|
   map.press              'press',              :controller => 'static', :action => 'press', :requirements => {:protocol => "http"}
   map.referral_info      'referral_info',      :controller => 'static', :action => 'referral_info', :requirements => {:protocol => "http"}
   map.signup             'signup',             :controller => 'static', :action => 'signup', :requirements => {:protocol => "http"}
-  map.connect            'signup/:source',     :controller => 'static', :action => 'signup', :requirements => {:protocol => "http"}
+  map.signup_with_source 'signup/:source',     :controller => 'static', :action => 'signup', :requirements => {:protocol => "http"}
   map.suggest_business   'suggest_business',   :controller => 'static', :action => 'suggest_business', :requirements => {:protocol => "http"}
   map.contact            'contact',            :controller => 'static', :action => 'contact', :requirements => {:protocol => "http"}
   map.about              'about',              :controller => 'static', :action => 'about', :requirements => {:protocol => "http"}
