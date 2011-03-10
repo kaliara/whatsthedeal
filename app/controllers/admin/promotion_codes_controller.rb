@@ -6,7 +6,16 @@ class Admin::PromotionCodesController < ApplicationController
   # GET /promotion_codes
   # GET /promotion_codes.xml
   def index
-    @promotion_codes = params[:all] ? PromotionCode.find(:all, :order => 'name asc') : PromotionCode.find(:all, :conditions => {:listed => true}, :order => 'name asc')
+    if params[:q] =~ /\@/
+      @type = "email"
+      @user = User.find_by_email(params[:q])
+      @promotion_codes = @user.nil? ? [] : PromotionCode.find(:all, :conditions => {:user_id => @user.id}, :order => 'name asc')
+    elsif params[:q] =~ /\w+/
+      @type = "code"
+      @promotion_codes = PromotionCode.find(:all, :conditions => ["code like ?", "%#{params[:q]}%"], :order => 'name asc')
+    else
+      @promotion_codes = params[:all] ? PromotionCode.find(:all, :order => 'name asc') : PromotionCode.find(:all, :conditions => {:listed => true}, :order => 'name asc')
+    end
 
     respond_to do |format|
       format.html # index.html.erb

@@ -12,7 +12,7 @@
     </tr>
   <% @promotion_code.credits.each do |credit| %>
     <tr>
-      <td><%= credit.user.email %></td>
+      <td><%= link_to credit.user.email, admin_credit_profile_path(:email => credit.user.email) %></td>
       <td><%= credit.created_at.strftime("%b %e, %Y") %></td>
     </tr>
   <% end %>

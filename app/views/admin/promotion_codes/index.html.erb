@@ -8,7 +8,19 @@
 <% end %>
 
 
-<h2>Listing Promotion Codes</h2>
+<% form_tag nil, :method => :get do %>
+  <label for="q"><strong>Email</strong> or <strong>First Five Letters of Last Name</strong>:</label>
+  <%= text_field_tag 'q' %>
+  <%= submit_tag 'search' %>
+<% end %>
+<br><br>
+
+
+<% if @type %>
+  <h2><%= pluralize @promotion_codes.size, "Promotion Code" %> matching <%= @type %> '<%= params[:q] %>'</h2>
+<% else %>
+  <h2>"Listed" Promotion Codes</h2>
+<% end %>
 
 <table>
   <tr>
