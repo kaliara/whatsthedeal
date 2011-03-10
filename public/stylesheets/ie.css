@@ -187,3 +187,7 @@ td.quantity{
 .get_daily_deal{
   margin-top: 20px;
 }
+
+#signup_page .signup_button{
+  margin-left: 10px;
+}
