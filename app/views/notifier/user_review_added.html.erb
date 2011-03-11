@@ -50,16 +50,16 @@
                       <p style="color: #fff;font-family: 'Myriad', sans-serif;font-size: 14px;font-weight: normal;margin: 0;padding: 15px 0;text-align:left">
                         <table>
                           <tr>
-                            <td><strong>User A</strong></td>
-                            <td><%= link_to @user_review.user.email, admin_customer_url(@user_review.user.customer) %></td>
-                            <td><%= @user_review.user.customer.name %></td>
-                            <td><%= @user_review.user.purchases.count %> purchases</td>
+                            <td style="color: #fff;font-family: 'Myriad', sans-serif;font-size: 12px"><strong>User A</strong></td>
+                            <td style="color: #fff;font-family: 'Myriad', sans-serif;font-size: 12px"><%= link_to @user_review.user.email, admin_customer_url(@user_review.user.customer) %></td>
+                            <td style="color: #fff;font-family: 'Myriad', sans-serif;font-size: 12px"><%= @user_review.user.customer.name %></td>
+                            <td style="color: #fff;font-family: 'Myriad', sans-serif;font-size: 12px"><%= @user_review.user.purchases.count %> purchases</td>
                           </tr>
                           <tr>
-                            <td><strong>User B</strong></td>
-                            <td><%= link_to @user_review.referred_user.email, admin_customer_url(@user_review.referred_user.customer) %></td>
-                            <td><%= @user_review.referred_user.customer.name %></td>
-                            <td>---</td>
+                            <td style="color: #fff;font-family: 'Myriad', sans-serif;font-size: 12px"><strong>User B</strong></td>
+                            <td style="color: #fff;font-family: 'Myriad', sans-serif;font-size: 12px"><%= link_to @user_review.referred_user.email, admin_customer_url(@user_review.referred_user.customer) %></td>
+                            <td style="color: #fff;font-family: 'Myriad', sans-serif;font-size: 12px"><%= @user_review.referred_user.customer.name %></td>
+                            <td style="color: #fff;font-family: 'Myriad', sans-serif;font-size: 12px">---</td>
                           </tr>
                         </table>
                       </p>  
