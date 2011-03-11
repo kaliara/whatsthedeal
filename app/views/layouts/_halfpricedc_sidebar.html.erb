@@ -1,82 +1,84 @@
-<div class="sidebar">
-  <% unless @on_my_account %>
-    <% unless current_user and current_user.gets_daily_deal_email? %>
-      <div class="sidebar_content daily_deal">
-        <h2>Get Deal Alerts!</h2>
-        <p>Great DC deals delivered right to your inbox!</p>
-        <% form_for :user, :url => quiet_create_user_path, :html => {:method => :post} do |f| %>
-          <%= f.hidden_field :gets_daily_deal_email, :value => 1 %>
-          <%= hidden_field_tag 'user[customer_attributes][first_name]', Customer::STOCK_FIRST_NAME %>
-          <%= hidden_field_tag 'user[customer_attributes][last_name]',  Customer::STOCK_LAST_NAME %>
-          <%= f.text_field :email, :value => '', :class => 'daily_deal_textfield' %>
-    	    <%= f.submit 'Signup', :class => 'primary small_primary' %>
-    	  <% end %>
-      </div>
-    <% end %>
-  
-    <div class="sidebar_content">
-      <h2>Account and Cart</h2>
-      <div class="signup_login">
-        <% if current_user %>
-          <div class="logged_in_as">Signed in as <%= current_user.customer.has_name? ? current_user.customer.name : current_user.email %> (<%= link_to "my account", my_account_path %>)</div>
-        <% end %>
-    
-        <% if cart.empty? %>
-          <p>Your cart is empty</p>
-        <% else %>
-          <p>
-            <%= link_to "View My Cart <strong>(#{cart.cart_items.size})</strong>", my_cart_path %>
-            <% if current_user %>
-            <br><%= link_to_unless_current "My Deals", my_deals_path %>
-            <% end %>
-          </p>
-        <% end %>
-
-        <% if current_user %>
-          <%= link_to_unless_current "logout", logout_path %>
-        <% else %>
-          <%= link_to_unless_current "Register", new_user_path %>
-          <span>- or -</span>
-          <%= link_to_unless_current "Login", login_path %>
-        <% end %>
-      </div>
-    </div>
-  
-    <% unless @side_promotions.blank? %>
-      <div class="sidebar_content">
-        <h2><%= link_to "More Offers", promotions_path %></h2>
-        <% @side_promotions.each do |promotion| %>
-          <div class="deal_preview clearfix">
-            <img src="<%= promotion.image1.url %>" class="deal_thumbnail" />
-            <h4><%= link_to truncate(promotion.name, :length => 50), promotion_slug_path(promotion.slug), :title => promotion.name %></h4>
-            <dl><dt>Days Left: </dt><dd><%= ((promotion.end_date - Time.now.utc)/86400) < 1 ? "< 1" : ((promotion.end_date - Time.now.utc)/86400).floor %></dd></dl>
-            <dl class="last">Purchases: <dt></dt><dd>
-              <% if promotion.id == 291 %>
-                <%= Promotion.find(293).purchases + Promotion.find(294).purchases %>
-              <% else %>
-                <%= promotion.purchases %>
-              <% end %>
-            </dd></dl>
-          </div>
-        <% end %>
-    
-        <span class="see_all_deal"><%= link_to "See All Current Deals", promotions_url %></span>
-      </div>
-    <% end %>
-
-    <div class="sidebar_content last">
-      <h2>Share With Friends</h2>
-      <div class="refer_a_friend"><%= link_to "Refer a friend, grab $5", referral_info_url, :class => "five_dollar" %></div>
-      <% if current_user and !https? %>
-        <div class="social_buttons clearfix">
-          <div class="twitter_share">
-            <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://hpdc.wtddc.com/ref/<%= current_user.referral_link %>" data-text="Up to 80% off bars, restaurants, theater and other fun things in DC" data-count="none" data-via="whatsthedealdc">Tweet</a>
-          </div>
-          <div class="facebook_share">
-            <a name="fb_share" type="button" share_url="http://hpdc.wtddc.com/ref/<%= current_user.referral_link %>">SHARE</a> 
-          </div>
+<% unless current_page?(signup_path) or current_page?(signup_with_source_path) %>
+  <div class="sidebar">
+    <% unless @on_my_account %>
+      <% unless current_user and current_user.gets_daily_deal_email? %>
+        <div class="sidebar_content daily_deal">
+          <h2>Get Deal Alerts!</h2>
+          <p>Great DC deals delivered right to your inbox!</p>
+          <% form_for :user, :url => quiet_create_user_path, :html => {:method => :post} do |f| %>
+            <%= f.hidden_field :gets_daily_deal_email, :value => 1 %>
+            <%= hidden_field_tag 'user[customer_attributes][first_name]', Customer::STOCK_FIRST_NAME %>
+            <%= hidden_field_tag 'user[customer_attributes][last_name]',  Customer::STOCK_LAST_NAME %>
+            <%= f.text_field :email, :value => '', :class => 'daily_deal_textfield' %>
+      	    <%= f.submit 'Signup', :class => 'primary small_primary' %>
+      	  <% end %>
         </div>
       <% end %>
-    </div>
-  <% end %>
-</div>
+  
+      <div class="sidebar_content">
+        <h2>Account and Cart</h2>
+        <div class="signup_login">
+          <% if current_user %>
+            <div class="logged_in_as">Signed in as <%= current_user.customer.has_name? ? current_user.customer.name : current_user.email %> (<%= link_to "my account", my_account_path %>)</div>
+          <% end %>
+    
+          <% if cart.empty? %>
+            <p>Your cart is empty</p>
+          <% else %>
+            <p>
+              <%= link_to "View My Cart <strong>(#{cart.cart_items.size})</strong>", my_cart_path %>
+              <% if current_user %>
+              <br><%= link_to_unless_current "My Deals", my_deals_path %>
+              <% end %>
+            </p>
+          <% end %>
+
+          <% if current_user %>
+            <%= link_to_unless_current "logout", logout_path %>
+          <% else %>
+            <%= link_to_unless_current "Register", new_user_path %>
+            <span>- or -</span>
+            <%= link_to_unless_current "Login", login_path %>
+          <% end %>
+        </div>
+      </div>
+  
+      <% unless @side_promotions.blank? %>
+        <div class="sidebar_content">
+          <h2><%= link_to "More Offers", promotions_path %></h2>
+          <% @side_promotions.each do |promotion| %>
+            <div class="deal_preview clearfix">
+              <img src="<%= promotion.image1.url %>" class="deal_thumbnail" />
+              <h4><%= link_to truncate(promotion.name, :length => 50), promotion_slug_path(promotion.slug), :title => promotion.name %></h4>
+              <dl><dt>Days Left: </dt><dd><%= ((promotion.end_date - Time.now.utc)/86400) < 1 ? "< 1" : ((promotion.end_date - Time.now.utc)/86400).floor %></dd></dl>
+              <dl class="last">Purchases: <dt></dt><dd>
+                <% if promotion.id == 291 %>
+                  <%= Promotion.find(293).purchases + Promotion.find(294).purchases %>
+                <% else %>
+                  <%= promotion.purchases %>
+                <% end %>
+              </dd></dl>
+            </div>
+          <% end %>
+    
+          <span class="see_all_deal"><%= link_to "See All Current Deals", promotions_url %></span>
+        </div>
+      <% end %>
+
+      <div class="sidebar_content last">
+        <h2>Share With Friends</h2>
+        <div class="refer_a_friend"><%= link_to "Refer a friend, grab $5", referral_info_url, :class => "five_dollar" %></div>
+        <% if current_user and !https? %>
+          <div class="social_buttons clearfix">
+            <div class="twitter_share">
+              <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://hpdc.wtddc.com/ref/<%= current_user.referral_link %>" data-text="Up to 80% off bars, restaurants, theater and other fun things in DC" data-count="none" data-via="whatsthedealdc">Tweet</a>
+            </div>
+            <div class="facebook_share">
+              <a name="fb_share" type="button" share_url="http://hpdc.wtddc.com/ref/<%= current_user.referral_link %>">SHARE</a> 
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
