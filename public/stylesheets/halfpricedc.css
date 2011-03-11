@@ -153,3 +153,9 @@ strong,
 /*  border-color: #dfc101;*/
 /*  background: transparent url(/images/halfpricedc/promo_thumbs_up.png) no-repeat 3px 3px;*/
 }
+
+/* signup page */
+.halfpricedc .signup{
+  float: none;
+  margin: 0 auto;
+}
