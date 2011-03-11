@@ -141,7 +141,7 @@ class User < ActiveRecord::Base
   end
   
   def send_signup_confirmation
-    if self.quietly_created?
+    # if self.quietly_created?
       @delayed_email = DelayedEmail.new
       case self.partner_id
       when 2
@@ -152,18 +152,18 @@ class User < ActiveRecord::Base
         @delayed_email.template = 'deliver_signup_confirmation'
       end
       @delayed_email.user_id = self.id
-      @delayed_email.delay_until = self.created_at + 30.minutes
+      @delayed_email.delay_until = self.created_at + (self.quietly_created? ? 30.minutes : 5.minutes)
       @delayed_email.save
-    else
-      case self.partner_id
-      when 2
-        Notifier.deliver_washingtonian_signup_confirmation(self) unless self.gets_daily_deal_email?
-      when 3
-        Notifier.deliver_halfpricedc_signup_confirmation(self) unless self.gets_daily_deal_email?
-      else
-        Notifier.deliver_signup_confirmation(self) unless self.gets_daily_deal_email?
-      end
-    end
+    # else
+    #   case self.partner_id
+    #   when 2
+    #     Notifier.deliver_washingtonian_signup_confirmation(self) unless self.gets_daily_deal_email?
+    #   when 3
+    #     Notifier.deliver_halfpricedc_signup_confirmation(self) unless self.gets_daily_deal_email?
+    #   else
+    #     Notifier.deliver_signup_confirmation(self) unless self.gets_daily_deal_email?
+    #   end
+    # end
   rescue Timeout::Error => e
   	errors.add_to_base "Sorry, one of the interns tripped over a cord (there was a timeout error). <br/><br/> You might not get a confirmation email, but your account should be created and you should be logged in. <br/><br/>Need us to check on something? Email us at support@sowhatsthedeal.com"
   end
