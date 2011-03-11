@@ -184,6 +184,7 @@ class UsersController < ApplicationController
     @user.update_subscriptions('http://sowhatsthedeal.com/my_account_email')
 
     if @user.errors.empty? and @user.save
+      @user.update_cim_profile
       flash.now[:notice] = "Your #{@tab == 'personal' ? 'account has' : 'email preferences have' } been updated!"
     end
     
