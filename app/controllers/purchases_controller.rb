@@ -98,7 +98,7 @@ class PurchasesController < ApplicationController
       # create customer profile if none exists
       unless @user.customer_cim_id.to_i > 0
         unless @user.create_cim_profile
-          flash[:error] = 'There seems to be a problem with your account. <br><br>Please <strong>email support@sowhatsthedeal.com noting that you saw the "DUPLICATE CIM ID" error</strong> before attempting to make a purchase.'
+          flash[:error] = 'There seems to be a problem with your account. <br><br>Please <strong>email support@sowhatsthedeal.com noting that you saw the "NO CIM PROFILE" error</strong> before attempting to make a purchase.'
         end
       end
       

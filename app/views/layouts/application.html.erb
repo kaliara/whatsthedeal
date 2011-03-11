@@ -11,9 +11,11 @@
     <%= stylesheet_link_tag 'reset', 'style' %>
     <%= stylesheet_link_tag 'reset', 'print', :media => "print" %>
     <!--[if IE]><%= stylesheet_link_tag 'ie' %><![endif]-->
-    <script type="text/javascript" src="https://dealsurf.com/tracker.js?aid=4c570bd9b7441"></script>
     <%= javascript_include_tag 'jquery', :cache => true %>
-    <% unless https? %>
+    <% unless simple_page?(controller) %>
+      <script type="text/javascript" src="https://dealsurf.com/tracker.js?aid=4c570bd9b7441"></script>
+    <% end %>
+    <% unless https? or simple_page?(controller) %>
       <script type="text/javascript" src="http://static.ak.fbcdn.net/connect.php/js/FB.Share"></script>
       <script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
     <% end %>

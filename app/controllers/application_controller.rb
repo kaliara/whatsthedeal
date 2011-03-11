@@ -2,7 +2,7 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  helper_method :current_user_session, :current_user, :cart, :partner, :originize, :mobile, :force_full_site, :https?
+  helper_method :current_user_session, :current_user, :cart, :partner, :originize, :mobile, :force_full_site, :https?, :simple_page?
   filter_parameter_logging :password, :number
   before_filter :store_return_uri, :set_timezone
   
@@ -25,6 +25,10 @@ class ApplicationController < ActionController::Base
   
   def force_full_site
     session[:force_full_site] = true
+  end
+  
+  def simple_page?(controller)
+    controller.action_name == 'signup'
   end
   
   # partner subdomain check
