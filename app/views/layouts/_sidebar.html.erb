@@ -1,4 +1,4 @@
-<% unless current_page?(signup_path) %>
+<% unless controller.action_name == 'signup' %>
   <div class="sidebar">
     <% if content_exists?('global_announcement_desc') %>
       <h2><%= render_content 'global_announcement_title' %></h2>
