@@ -188,7 +188,11 @@ class UsersController < ApplicationController
       flash.now[:notice] = "Your #{@tab == 'personal' ? 'account has' : 'email preferences have' } been updated!"
     end
     
-    render :action => @user.errors.on(:password) ? 'change_password' : 'show'
+    if request.xhr?
+      render :text => "success"
+    else  
+      render :action => @user.errors.on(:password) ? 'change_password' : 'show'
+    end
   end
   
   # referral signup stuff

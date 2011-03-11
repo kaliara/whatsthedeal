@@ -3301,3 +3301,64 @@ h3.event_rsvp{
   padding: 5px 10px;
   text-align: left;
 }
+
+/* overlay */
+#overlay{
+  background: transparent url(/images/overlay_shade.png) repeat 0 0;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+}
+#overlay .overlay_content{
+  font-size: 110%;
+  width: 410px;
+  margin: 150px auto 0;
+  background: #fff;
+  padding: 30px 0;
+  position: relative;
+  left: -150px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px; 
+}
+#overlay .overlay_content p{
+  color: #666;
+  margin: 0 40px 20px;
+  font-size: 1.1em;
+  line-height: 1.2em;
+}
+#overlay .overlay_content .zipcode{
+  width: 75px;
+  font-size: 110%;
+  padding: 1px;
+}
+#overlay .overlay_content .zipcode_label{
+  position: relative;
+  top: 7px;
+}
+#overlay .overlay_content .overlay_submit .primary{
+  font-size: 1.2em;
+  margin-top: 10px;
+  margin-left: 155px;
+  padding: 4px 9px;
+}
+#overlay #overlay_close{
+  background: transparent url(/images/promo_deal_me_in_bg.png) repeat-x center left;
+  position: absolute;
+  right: 5px;
+  top: 4px;
+  cursor: pointer;
+  font-size: 1.7em;
+  color: #FFF !important;
+  text-decoration: none !important;
+  border: 1px solid #000;
+  outline: none;
+  padding: 4px 6px;
+  text-shadow: 0px 0px 1px #000;
+  -moz-box-shadow: 0px 0px 1px #111;
+  -webkit-box-shadow: 0px 0px 1px #111;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+}

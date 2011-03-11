@@ -9,6 +9,7 @@ class PurchasesController < ApplicationController
   # GET /purchases/1.xml
   def show
     @purchase = Purchase.find(:first, :conditions => {:id => params[:id], :user_id => current_user.id})
+    @user = current_user
     @track_transaction = false
     @on_purchase = true
     
@@ -118,6 +119,9 @@ class PurchasesController < ApplicationController
   def create
     @mapped_promotions   = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and physical_address = ?', Time.now.utc, Time.now.utc, true, false, true], :order  => 'featured DESC, start_date DESC')
     @unmapped_promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and physical_address = ?', Time.now.utc, Time.now.utc, true, false, false], :order  => 'featured DESC, start_date DESC')
+    @user = current_user
+    @show_demo_survey = cookies[:seen_demo_survey].to_i < 2 and (@user.customer.zipcode.blank? or @user.customer.female.blank?)
+    cookies[:seen_demo_survey] = cookies[:seen_demo_survey].to_i + 1 if @show_demo_survey
     
     unless cart.empty?
       @user = current_user

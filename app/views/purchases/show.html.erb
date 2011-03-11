@@ -134,3 +134,60 @@
   <% end %>
   
 <% end %>
+
+<% if @show_demo_survey %>
+  <div id="overlay" style="display: none">
+    <div class="overlay_content">
+      <%= link_to "x", my_deals_path, :id => 'overlay_close', :title => "Close Window" %>
+      <p><%= render_content 'demographic_survey_text' %></p>
+      <% form_for(@user) do |f| %>
+        <%= hidden_field_tag :tab, 'personal' %>
+        <% f.fields_for :customer do |cf| %>
+          <% if @user.customer.zipcode.blank? %>
+            <div class="label_input_form">
+              <%= cf.label :zipcode, 'Zip Code', :class => 'zipcode_label' %>
+              <%= cf.text_field :zipcode, :class => "text zipcode" %>
+            </div>
+          <% end %>
+          <% if @user.customer.female.nil? %>
+            <div class="label_input_form">  
+              <%= cf.label :gender %>
+              <div class="radio_buttons">        
+                <%= cf.radio_button :female, true, :id => 'user_customer_attributes_female' %>
+                <%= cf.label :female %>
+                <%= cf.radio_button :female, false, :id => 'user_customer_attributes_male', :checked => @user.customer.female == 0 %>
+                <%= cf.label :male %>
+              </div>          
+            </div> 
+          <% end %> 
+          <div class="overlay_submit"><%= f.submit "Save", :class => 'primary' %></div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  
+  <script type="text/javascript" charset="utf-8">
+    $('#overlay form').submit(
+      function(){
+        $.ajax({
+          type: 'post',
+          data: $(this).serialize(),
+          dataType: 'script',
+          success: closeOverlay(),
+          url: $(this).attr('action')
+        });
+        return false;
+      }
+    );
+  
+    function showOverlay() {
+      $('#overlay').fadeIn('slow'); 
+    }
+    function closeOverlay() {
+      $('#overlay').fadeOut('slow');
+      return false;
+    }
+    $('#overlay #overlay_close').click(closeOverlay)
+    setTimeout(showOverlay, 750);
+  </script>
+<% end %>
