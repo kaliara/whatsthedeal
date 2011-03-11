@@ -31,9 +31,7 @@ class User < ActiveRecord::Base
   # validates_confirmation_of :email, :on => :create, :message => "doesn't match confirmation"
   validates_presence_of     :password, :on => :create, :message => "can't be blank"
     
-  # after_create :generate_referral_link, :send_signup_confirmation, :create_cim_profile, :if => proc { |obj| obj.customer? }
   after_create :generate_referral_link, :send_signup_confirmation, :if => proc { |obj| obj.customer? }
-  # after_update :update_cim_profile
   before_destroy :delete_cim_profile
   
   # special authorize.net cim methods
@@ -169,9 +167,10 @@ class User < ActiveRecord::Base
   end
   
   def deliver_password_reset_instructions!
-    self.save
-    # reset_perishable_token!
-    Notifier.deliver_password_reset_instructions(self)
+    if self.save
+      # reset_perishable_token!
+      Notifier.deliver_password_reset_instructions(self)
+    end
   rescue Timeout::Error => e
     return false
   end
