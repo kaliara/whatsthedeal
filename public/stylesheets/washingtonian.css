@@ -185,3 +185,9 @@ body {
 .coupon_footer{
   width: 425px;
 }
+
+/* signup page */
+#signup_page .signup_page_image{
+  position: relative;
+  left: 26px;
+}

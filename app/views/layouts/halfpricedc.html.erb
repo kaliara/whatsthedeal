@@ -26,7 +26,7 @@
 
       <%= render :partial => "/layouts/halfpricedc_sidebar" %>
       
-      <div class="page_content <%= "more_great_deals" if current_page?(promotions_path) %>">
+      <div class="page_content <%= "more_great_deals" if current_page?(promotions_path) %>  <%= "signup" if current_page?(signup_path) or current_page?(signup_with_source_path) %>">
         <%= yield :errors %>
     
         <% unless flash[:notice].blank? and flash[:error].blank? %>
