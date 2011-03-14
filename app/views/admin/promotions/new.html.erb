@@ -86,7 +86,7 @@
   <br>
   <p>
     <%= f.label :start_date %><br />
-    <%= f.datetime_select :start_date, :start_year => Date.today.year, :default => {:year => (1.week.from_now).year, :month => (1.week.from_now).month, :day => (1.week.from_now).day, :hour => 0, :minute => 01}, :order => [:month, :day, :year] %>
+    <%= f.datetime_select :start_date, :start_year => Date.today.year, :default => {:year => (1.week.from_now).year, :month => (1.week.from_now).month, :day => (1.week.from_now).day, :hour => 12, :minute => 00}, :order => [:month, :day, :year] %>
   </p>
   <p>
     <%= label_tag 'Duration (in days)' %>

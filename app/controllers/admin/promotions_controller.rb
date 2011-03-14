@@ -35,7 +35,8 @@ class Admin::PromotionsController < ApplicationController
   # GET /promotions/new.xml
   def new
     @promotion = Promotion.new
-      
+
+
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @promotion }
