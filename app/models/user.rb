@@ -200,13 +200,18 @@ class User < ActiveRecord::Base
   end
 
   # mailboto stuff
-  def update_subscriptions(request_uri='unknown', list=nil)
+  def update_subscriptions(request_uri='unknown', list=nil, delayed=false)
     success = true
     
     if self.changes['gets_happy_hour_announcement_email']
-      unless mailboto_api_request(request_uri, User::HAPPY_HOUR_LIST, self.changes['gets_happy_hour_announcement_email'].last == false)
-        self.gets_happy_hour_announcement_email = self.changes['gets_happy_hour_announcement_email'].first unless self.changes['gets_happy_hour_announcement_email'].nil?
-        success = false
+      if delayed
+        @delayed_subscription = DelayedSubscription.new(:email => self.email, :list => User::HAPPY_HOUR_LIST, :referrer => request_uri)
+        success = false unless @delayed_subscription.save
+      else
+        unless mailboto_api_request(request_uri, User::HAPPY_HOUR_LIST, self.changes['gets_happy_hour_announcement_email'].last == false)
+          self.gets_happy_hour_announcement_email = self.changes['gets_happy_hour_announcement_email'].first unless self.changes['gets_happy_hour_announcement_email'].nil?
+          success = false
+        end
       end
     end
     
@@ -219,17 +224,27 @@ class User < ActiveRecord::Base
       else
         daily_deal_list = User::WTD_MASTER_LIST
       end
-      
-      unless mailboto_api_request(request_uri, daily_deal_list, self.changes['gets_daily_deal_email'].last == false)
-        self.gets_daily_deal_email = self.changes['gets_daily_deal_email'].first unless self.changes['gets_daily_deal_email'].nil?
-        success = false
+
+      if delayed
+        @delayed_subscription = DelayedSubscription.new(:email => self.email, :list => daily_deal_list, :referrer => request_uri)
+        success = false unless @delayed_subscription.save
+      else
+        unless mailboto_api_request(request_uri, daily_deal_list, self.changes['gets_daily_deal_email'].last == false)
+          self.gets_daily_deal_email = self.changes['gets_daily_deal_email'].first unless self.changes['gets_daily_deal_email'].nil?
+          success = false
+        end
       end
     end  
     errors.add(:base,"The interns are out to lunch (something broke during the subscription process)! You can try updating your subscriptions by using the Email Preferences tab on the My Account page in a few minutes.") unless success
     
     unless list.nil?
-      unless mailboto_api_request(request_uri, list.to_s, false)
-        errors.add(:base,"The interns are out to lunch (something broke during the subscription process)! Please email support@sowhatsthedeal.com to make sure you are RSVP'd for this event.  Thanks!") unless success
+      if delayed
+        @delayed_subscription = DelayedSubscription.new(:email => self.email, :list => User::HAPPY_HOUR_LIST, :referrer => request_uri)
+        success = false unless @delayed_subscription.save
+      else
+        unless mailboto_api_request(request_uri, list.to_s, false)
+          errors.add(:base,"The interns are out to lunch (something broke during the subscription process)! Please email support@sowhatsthedeal.com to make sure you are RSVP'd for this event.  Thanks!") unless success
+        end
       end
     end
     

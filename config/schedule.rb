@@ -37,6 +37,9 @@ every 10.minutes do
   rake "delayed_emails:email"
 end
 
+every 27.minutes do
+  rake "subscriptions:update" 
+end
 
 every 1.day, :at => '1:00 am' do
   rake "reminders:email"

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110307170235) do
+ActiveRecord::Schema.define(:version => 20110314123242) do
 
   create_table "admins", :force => true do |t|
     t.integer  "user_id"
@@ -213,6 +213,15 @@ ActiveRecord::Schema.define(:version => 20110307170235) do
     t.integer  "user_id"
     t.datetime "delay_until"
     t.boolean  "emailed",     :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "delayed_subscriptions", :force => true do |t|
+    t.string   "email"
+    t.integer  "list"
+    t.string   "referrer"
+    t.boolean  "subscribed", :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

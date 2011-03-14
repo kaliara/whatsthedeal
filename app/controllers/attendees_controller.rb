@@ -29,7 +29,7 @@ class AttendeesController < ApplicationController
       session[:survey_question_value] = nil
       @attendee.save
     
-      if @user.update_subscriptions(request.referrer, @event.subscription_list_id) and !params[:gets_daily_deal_email].blank?
+      if @user.update_subscriptions(request.referrer, @event.subscription_list_id, true) and !params[:gets_daily_deal_email].blank?
         session[:new_subscriber] = true
         session[:new_subscriber_email] = @user.email
       end
@@ -38,7 +38,7 @@ class AttendeesController < ApplicationController
 
       session[:return_to] ? redirect_to(session[:return_to]) : render(:action => 'show')
     else
-      flash[:error] = "We need your first and last name and a valid email to RSVP you for this event. <strong>Also, if you already have an account, you can login on the left</strong>."
+      flash[:error] = "We need your first and last name and a valid email to RSVP you for this event. <strong>Also, if you already have an account, you can login instead</strong>."
       redirect_to @event
     end
   end

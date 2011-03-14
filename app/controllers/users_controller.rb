@@ -128,7 +128,7 @@ class UsersController < ApplicationController
     end
 
     # update subscriptions and tracking analytics
-    if @user.update_subscriptions(request.referrer)
+    if @user.update_subscriptions(request.referrer, nil, true)
       session[:new_subscriber] = true
       session[:new_subscriber_email] = @user.email
     end

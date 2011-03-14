@@ -28,7 +28,7 @@ class EntriesController < ApplicationController
       @user.gets_happy_hour_announcement_email = params[:gets_happy_hour_announcement_email] unless params[:gets_happy_hour_announcement_email].blank?
       @user.gets_daily_deal_email = params[:gets_daily_deal_email] unless params[:gets_daily_deal_email].blank?
       
-      if @user.update_subscriptions(request.referrer, @raffle.subscription_list_id) and !params[:gets_daily_deal_email].blank?
+      if @user.update_subscriptions(request.referrer, @raffle.subscription_list_id, true) and !params[:gets_daily_deal_email].blank?
         session[:new_subscriber] = true
         session[:new_subscriber_email] = @user.email
       end

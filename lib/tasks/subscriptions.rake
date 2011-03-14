@@ -18,7 +18,6 @@ namespace :subscriptions do
     jar.load("/home/kaliara/public_html/wtd/mailboto.txt", :cookiestxt)
 
     lists.each do |list_id, wtd_list|
-      # Daily Deal
       page = agent.post("https://www.mailboto.com/cgi-bin/uls/uls_admin.cgi?filterexport=#{list_id}=", "action" => "filterexport", "listid" => "#{list_id}", "archs" => "", "cancelled" => "1", "delim" => "comma", "whichorder" => "1", "dowhat" => "1")
       emails = page.body.split(/\n/)
 
@@ -26,6 +25,19 @@ namespace :subscriptions do
         user[wtd_list] = false
         user.save
         puts "removed #{user.email} from the #{wtd_list} list"
+      end
+    end
+  end
+
+  desc "updates mailboto with delayed subscriptions"
+  task :update => :environment do
+    DelayedSubscription.find(:all, :conditions => {:subscribed => false}).each do |delayed_subscription|
+      @user = User.find_by_email(delayed_subscription.email)
+      if !@user.nil? and @user.mailboto_api_request(delayed_subscription.referrer, delayed_subscription.list.to_s, false)
+        puts "DS - added #{@user.email} to list #{delayed_subscription.list}"
+        delayed_subscription.subscribed!
+      else
+        puts "DS - seems like there was a timeout while adding #{@user.email} to list #{delayed_subscription.list}"
       end
     end
   end
