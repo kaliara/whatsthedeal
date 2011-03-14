@@ -23,7 +23,7 @@
     <td><%=h promotion.id %></td>
     <td><%=h promotion.name %><%= ' <span style="color: green">(featured)</span>' if promotion.featured? %></td>
     <td><%=h promotion.start_date.strftime("%b %e, %Y") %></td>
-    <td><%=h (promotion.end_date - 5.hours).strftime("%b %e, %Y") %></td>
+    <td><%=h (promotion.end_date - 4.hours).strftime("%b %e, %Y") %></td>
   </tr>
 <% end %>
 </table>

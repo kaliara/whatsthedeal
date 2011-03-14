@@ -5,8 +5,8 @@ class Admin::DashboardsController < ApplicationController
   def index
     @now = DateTime.new(Time.zone.now.year, Time.zone.now.month, Time.zone.now.day, Time.zone.now.hour, Time.zone.now.min, Time.zone.now.sec)
     
-    @start_date = params[:start_date].nil? ? DateTime.new(@now.year, @now.month, @now.day, 5, 0) : DateTime.parse(params[:start_date] + " 05:00:00")
-    @end_date   = params[:end_date].nil? ? DateTime.new(@now.year, @now.month, @now.day, 5, 0) : DateTime.parse(params[:end_date] + " 05:00:00")
+    @start_date = params[:start_date].nil? ? DateTime.new(@now.year, @now.month, @now.day, 4, 0) : DateTime.parse(params[:start_date] + " 04:00:00")
+    @end_date   = params[:end_date].nil? ? DateTime.new(@now.year, @now.month, @now.day, 4, 0) : DateTime.parse(params[:end_date] + " 04:00:00")
     
     # some of these can be converted into count_by_sql
     @registrations = User.find(:all, :conditions => ['created_at >= ? and created_at < ?', @start_date, @end_date + 1.day])
@@ -22,8 +22,8 @@ class Admin::DashboardsController < ApplicationController
     
     @now = DateTime.new(Time.zone.now.year, Time.zone.now.month, Time.zone.now.day, Time.zone.now.hour, Time.zone.now.min, Time.zone.now.sec)
     
-    @start_date = params[:start_date].nil? ? DateTime.new(@now.year, @now.month, @now.day, 5, 0) : DateTime.parse(params[:start_date] + " 05:00:00")
-    @end_date   = params[:end_date].nil? ? DateTime.new(@now.year, @now.month, @now.day, 5, 0) : DateTime.parse(params[:end_date] + " 05:00:00")
+    @start_date = params[:start_date].nil? ? DateTime.new(@now.year, @now.month, @now.day, 4, 0) : DateTime.parse(params[:start_date] + " 04:00:00")
+    @end_date   = params[:end_date].nil? ? DateTime.new(@now.year, @now.month, @now.day, 4, 0) : DateTime.parse(params[:end_date] + " 04:00:00")
     
     # some of these can be converted into count_by_sql
     @registrations = User.find(:all, :conditions => ['partner_id = ? and created_at >= ? and created_at < ?', @partner, @start_date, @end_date + 1.day])
@@ -39,8 +39,8 @@ class Admin::DashboardsController < ApplicationController
   def affiliates
     @now = DateTime.new(Time.zone.now.year, Time.zone.now.month, Time.zone.now.day, Time.zone.now.hour, Time.zone.now.min, Time.zone.now.sec)
     
-    @start_date = params[:start_date].nil? ? Date.new(@now.year, @now.month, 1) : DateTime.parse(params[:start_date] + " 05:00:00")
-    @end_date   = params[:end_date].nil? ? Date.new(@now.year, @now.month, -1) : DateTime.parse(params[:end_date] + " 05:00:00")
+    @start_date = params[:start_date].nil? ? Date.new(@now.year, @now.month, 1) : DateTime.parse(params[:start_date] + " 04:00:00")
+    @end_date   = params[:end_date].nil? ? Date.new(@now.year, @now.month, -1) : DateTime.parse(params[:end_date] + " 04:00:00")
 
     @businesses = Business.find(Origin.find(:all, :conditions => ['business_id != ?', 25]).collect{|o| o.business_id}.uniq, :order => 'name asc')
   end
@@ -48,8 +48,8 @@ class Admin::DashboardsController < ApplicationController
   def affiliate_lifetime
     @now = DateTime.new(Time.zone.now.year, Time.zone.now.month, Time.zone.now.day, Time.zone.now.hour, Time.zone.now.min, Time.zone.now.sec)
     
-    @start_date = params[:start_date].nil? ? Date.new(@now.year, @now.month, 1) : DateTime.parse(params[:start_date] + " 05:00:00")
-    @end_date   = params[:end_date].nil? ? Date.new(@now.year, @now.month, -1) : DateTime.parse(params[:end_date] + " 05:00:00")
+    @start_date = params[:start_date].nil? ? Date.new(@now.year, @now.month, 1) : DateTime.parse(params[:start_date] + " 04:00:00")
+    @end_date   = params[:end_date].nil? ? Date.new(@now.year, @now.month, -1) : DateTime.parse(params[:end_date] + " 04:00:00")
 
     @businesses = Business.find(Origin.find(:all, :conditions => ['business_id != ?', 25]).collect{|o| o.business_id}.uniq, :order => 'name asc')
   end
@@ -68,8 +68,8 @@ class Admin::DashboardsController < ApplicationController
   
   def washingtonian
     @show_breakdowns = (params[:show_breakdowns].blank? or params[:show_breakdowns] == "false") ? false : true
-    @start_date = params[:start_date].nil? ? DateTime.new(Time.zone.now.year, Time.zone.now.month, 1) : DateTime.parse(params[:start_date] + " 05:00:00")
-    @end_date   = params[:end_date].nil? ? DateTime.new(Time.zone.now.year, Time.zone.now.month, -1) : DateTime.parse(params[:end_date] + " 05:00:00")
+    @start_date = params[:start_date].nil? ? DateTime.new(Time.zone.now.year, Time.zone.now.month, 1) : DateTime.parse(params[:start_date] + " 04:00:00")
+    @end_date   = params[:end_date].nil? ? DateTime.new(Time.zone.now.year, Time.zone.now.month, -1) : DateTime.parse(params[:end_date] + " 04:00:00")
     
     if !params[:business_id].blank?
       @promotions = Business.find(params[:business_id]).promotions
@@ -86,8 +86,8 @@ class Admin::DashboardsController < ApplicationController
   
   def source_report
     @now = DateTime.new(Time.zone.now.year, Time.zone.now.month, Time.zone.now.day, Time.zone.now.hour, Time.zone.now.min, Time.zone.now.sec)
-    @start_date = params[:start_date].nil? ? Date.new(@now.year, @now.month, 1) : DateTime.parse(params[:start_date] + " 05:00:00")
-    @end_date   = params[:end_date].nil? ? Date.new(@now.year, @now.month, -1) : DateTime.parse(params[:end_date] + " 05:00:00")
+    @start_date = params[:start_date].nil? ? Date.new(@now.year, @now.month, 1) : DateTime.parse(params[:start_date] + " 04:00:00")
+    @end_date   = params[:end_date].nil? ? Date.new(@now.year, @now.month, -1) : DateTime.parse(params[:end_date] + " 04:00:00")
     
     if !params[:business_id].blank?
       params[:source] = ""

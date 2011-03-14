@@ -32,7 +32,7 @@
     <td><%= number_to_percentage promotion.profit_percentage, :precision => 2 %></td>
     <td><%= "Yes" if promotion.active? %></td>
     <td><%=h promotion.start_date.strftime("%b %e, %Y") %></td>
-    <td><%=h (promotion.end_date - 5.hours).strftime("%b %e, %Y") %></td>
+    <td><%=h (promotion.end_date - 4.hours).strftime("%b %e, %Y") %></td>
     <td><%= link_to "Activate Coupons", admin_promotion_activate_coupons_path(promotion) if promotion.quota_met?  %></td>
     <td><%= link_to "Clear Carts", admin_clear_carts_path(:id => promotion.id), :confirm => 'Are you sure clear all of the cart items for this promotion?'  %></td>
     <td><%= link_to 'Show', promotion_slug_path(:slug => promotion.slug) %></td>

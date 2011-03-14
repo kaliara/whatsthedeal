@@ -20,7 +20,7 @@
     <td><strong><%= link_to promotion.purchases, :controller => 'purchases', :action => 'show', :id => promotion.id %></strong></td>
     <td><%=h promotion.quota %></td>
     <td><%=h promotion.active? ? "Yes" : "No" %></td>
-    <td class="last"><%=h (promotion.end_date - 5.hours).strftime("%b %e, %Y") %></td>
+    <td class="last"><%=h (promotion.end_date - 4.hours).strftime("%b %e, %Y") %></td>
   </tr>
 <% end %>
 </table>
