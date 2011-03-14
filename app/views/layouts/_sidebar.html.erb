@@ -37,13 +37,6 @@
       </div>
     <% end %>
   
-    <h2><a href="/promotions/map">Deals Near Me</a><br/></h2>
-    <div class="sidebar_content">
-      <p><strong>Find out what deals are available near you.</strong></p>
-      <br/>
-      <a href="/promotions/map"><img style="width: 265px; display: block;" alt="Deals Near Me" src="/images/map_preview.png"/></a>
-    </div>
-
     <% unless current_page?(events_url) or current_page?(:controller => 'events', :action => 'show') %>
       <% unless Event.in_rotation.empty? and Shoutout.in_rotation.empty? %>
         <h2>Events &amp; Shoutouts</h2>
@@ -72,6 +65,13 @@
       <% end %>
     <% end %>
   
+    <h2><a href="/promotions/map">Deals Near Me</a><br/></h2>
+    <div class="sidebar_content">
+      <p><strong>Find out what deals are available near you.</strong></p>
+      <br/>
+      <a href="/promotions/map"><img style="width: 265px; display: block;" alt="Deals Near Me" src="/images/map_preview.png"/></a>
+    </div>
+
     <% unless https? %>
       <div class="sidebar_content">
         <h2>Connect With Us</h2>
