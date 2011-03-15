@@ -54,7 +54,7 @@ class Admin::PromotionsController < ApplicationController
   def create
     @promotion = Promotion.new(params[:promotion])
     @promotion.active = false
-    @promotion.end_date = @promotion.start_date + params[:duration].to_i.days
+    @promotion.end_date = @promotion.start_date + params[:duration].to_i.days + 12.hours
     @promotion.ad_description4 = @promotion.name
     @promotion.ad_description5 = @promotion.name
     @promotion.ad_description6 = @promotion.name
