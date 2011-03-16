@@ -90,9 +90,11 @@
                           <table>
                             <tr>
                               <td valign="top" width="245" style="padding:20px 0; background:#012437; border: 1px solid #3d6073; text-align:center;">
+                                <% if @promotion.purchases.to_i > 20 %>
                                  <p style="font-family: Lucida, sans-serif;font-size: 18px;font-weight: normal;color: #ffffff;margin: 0 0 7px 0;padding: 0;">USERS WHO'VE SAVED:</p>
-                                 <p style="font-family: Lucida, sans-serif;font-size: 18px;font-weight: normal;color: #ffffff;margin: 0 0 16px 0;padding: 0;"><span style="font-size: 36px;  color: #f99200"><%= @promotion.purchases %></span></p>
+                                 <p style="font-family: Lucida, sans-serif;font-size: 18px;font-weight: normal;color: #ffffff;margin: 0 0 16px 0;padding: 0;"><span style="font-size: 36px;  color: #f99200"><%= @promotion.id == 289 ? 125 : @promotion.purchases %></span></p>
                                  <br>
+                                <% end %>
                                 <p style="color: #adc5d9;font-family: 'Myriad', sans-serif;font-size: 20px;font-weight: normal;margin: 7px 0 0 0;padding: 0;">This is your last chance,<br>don't miss out!</p>
                               </td>
                             </tr>
