@@ -37,7 +37,7 @@ namespace :subscriptions do
         puts "DS - added #{@user.email} to list #{delayed_subscription.list}"
         delayed_subscription.subscribed!
       else
-        puts "DS - seems like there was a timeout while adding #{@user.email} to list #{delayed_subscription.list}"
+        puts "DS - seems like there was an error while adding #{delayed_subscription.email} to list #{delayed_subscription.list}"
       end
     end
   end
