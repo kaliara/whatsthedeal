@@ -33,11 +33,12 @@ namespace :subscriptions do
   task :update => :environment do
     DelayedSubscription.find(:all, :conditions => {:subscribed => false}).each do |delayed_subscription|
       @user = User.find_by_email(delayed_subscription.email)
-      if !@user.nil? and @user.mailboto_api_request(delayed_subscription.referrer, delayed_subscription.list.to_s, false)
+      if !delayed_subscription.nil? and !@user.nil? and @user.mailboto_api_request(delayed_subscription.referrer, delayed_subscription.list.to_s, false)
         puts "DS - added #{@user.email} to list #{delayed_subscription.list}"
         delayed_subscription.subscribed!
-      else
-        puts "DS - seems like there was an error while adding #{delayed_subscription.email} to list #{delayed_subscription.list}"
+      # else
+        # puts "DS - seems like there was an error while adding #{delayed_subscription.email} to list #{delayed_subscription.list}"
+        # delayed_subscription.destroy
       end
     end
   end
