@@ -47,7 +47,7 @@
     </p> 
     
     <% if current_user and current_user.attending?(@event) %>
-      <p class="already_rsvp">Silly rabbit, you're already RSVP'd for this event! We'll send you a confirmation email with the details as well as a reminder on the night of the event.</p>
+      <p class="already_rsvp">Thanks, your RSVP'd for this event! We'll send you a confirmation email with the details as well as a reminder on the night of the event.</p>
     <% elsif @event.full_attendance? %>
       <p class="event_full"><strong>Sorry, but this event has filled up!</strong></p>
       <% if current_user %>
