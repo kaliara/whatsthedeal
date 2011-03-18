@@ -94,7 +94,7 @@
   </p>
   <p>
     <%= label_tag 'Duration (in days)' %>
-    <%= select_tag :duration, options_for_select(1..60, :selected => (@promotion.end_date - @promotion.start_date).divmod(86400).first) %> ending at <%= select_tag :end_time, options_for_select([['noon', 12], ['midnight', 0]], :selected => @promotion.end_date.hour) %>
+    <%= select_tag :duration, options_for_select(1..60, :selected => (@promotion.end_date - @promotion.start_date + 90.minutes).divmod(86400).first) %> ending at <%= select_tag :end_time, options_for_select([['noon', 12], ['midnight', 0]], :selected => @promotion.end_date.hour) %>
   </p>
   <br>
   <div id="end_date">
