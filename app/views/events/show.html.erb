@@ -48,8 +48,8 @@
     
     <% if current_user and current_user.attending?(@event) %>
       <p class="already_rsvp">Thanks, your RSVP'd for this event! We'll send you a confirmation email with the details as well as a reminder on the night of the event.</p>
-    <% elsif @event.full_attendance? %>
-      <p class="event_full"><strong>Sorry, but this event has filled up!</strong></p>
+    <% elsif @event.full_attendance? or @event.rsvps_closed? %>
+      <p class="event_full"><strong><%= @event.full_attendance? ? "Sorry, but this event has filled up!" : "Sorry, but RSVP's for this event have closed." %></strong></p>
       <% if current_user %>
         <p class="event_full">Make sure that you are subscribed to the "Happy Hour Announcement" email <br>by <%= link_to "editing your email preferences", my_account_email_path %> and don't miss out on another Happy Hour.</p>
       <% else %>

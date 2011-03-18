@@ -26,7 +26,7 @@ class EventsController < ApplicationController
     
     session[:stored_promotion_code_id] = nil
     
-    if @event.in_rotation? or params[:password] == Event::PREVIEW_PASSWORD
+    if @event.started_rotation? or params[:password] == Event::PREVIEW_PASSWORD
       render :action => 'show'
     else
       flash[:error] = "Sorry, but that event is not available right now. Email us at support@sowhatsthedeal.com if you need help."

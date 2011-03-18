@@ -18,8 +18,16 @@ class Event < ActiveRecord::Base
                       :path => ":rails_root/public/system/assets/dc/events/:id/image2.:extension",
                       :default_url => "/images/deal_default_image.png"
   
+  def started_rotation?
+    (self.rotation_start_date < Time.now.utc)
+  end
+  
   def in_rotation?
-    (self.rotation_start_date < Time.now.utc) and (self.rotation_end_date > Time.now.utc)
+    self.started_rotation? and (self.rotation_end_date > Time.now.utc)
+  end
+  
+  def rsvps_closed?
+    !(self.started_rotation? and (self.end_date > Time.now.utc))
   end
   
   def full_attendance?
