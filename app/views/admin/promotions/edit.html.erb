@@ -88,6 +88,19 @@
     <%= f.text_field :profit_percentage %>
   </p>
   <br><br>
+  <p>
+    <%= f.label :start_date %><br />
+    <%= f.date_select :start_date, :start_year => Date.today.year, :order => [:month, :day, :year] %> at 12:01 AM (EST).
+  </p>
+  <p>
+    <%= label_tag 'Duration (in days)' %>
+    <%= select_tag :duration, options_for_select(1..60, :selected => (@promotion.end_date - @promotion.start_date).divmod(86400).first) %> ending at <%= select_tag :end_time, options_for_select([['noon', 12], ['midnight', 0]], :selected => @promotion.end_date.hour) %>
+  </p>
+  <br>
+  <div id="end_date">
+    Deal ends: <span></span>
+  </div>
+  <br><br>
   <h3>Options</h3>
   <p>
     <%= f.check_box :featured %>
@@ -127,15 +140,18 @@
   </p>
   <br>
   <p>
-    <%= f.label :start_date %><br />
-    <%= f.datetime_select :start_date %>
-  </p>
-  <p>
-    <%= label_tag 'Duration (in days)' %>
-    <%= select_tag :duration, options_for_select(1..30, :selected => ((@promotion.end_date - @promotion.start_date).abs/86400).to_i) %>
-  </p>
-  <br><br>
-  <p>
     <%= f.submit 'Update' %>
   </p>
 <% end %>
+<script type="text/javascript" charset="utf-8">
+  function updateSlugName(){
+    $('#promotion_slug').val(URLify($('#promotion_name').val(),100));
+  }
+  function updateEndDate(){
+    var end_date = new Date($('#promotion_start_date_1i').val(),$('#promotion_start_date_2i').val()-1,$('#promotion_start_date_3i').val());
+    end_date.setDate(end_date.getDate() + Number($('#duration').val() - 1) + ($('#end_time').val() == 12 ? 1 : 0));
+    $("#end_date span").replaceWith("<span>" + (end_date.getMonth() + 1) + "/" + end_date.getDate() + "/" +  end_date.getFullYear() + " at " + ($('#end_time').val() == 12 ? "11:59 AM" : "11:59 PM") + " (EST)</span>");
+  }
+  $('select').change(updateEndDate);
+  updateEndDate();
+</script>

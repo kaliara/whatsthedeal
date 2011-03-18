@@ -687,3 +687,11 @@ h5 a:visited{
 .update_map_button{
   font-size: 150%;
 }
+
+#end_date {
+  font-size: 110%;
+}
+#end_date span{
+  color: red;
+  font-weight: bold;
+}
