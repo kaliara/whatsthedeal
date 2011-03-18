@@ -29,7 +29,7 @@ class AttendeesController < ApplicationController
       session[:survey_question_value] = nil
       @attendee.save
     
-      if @user.update_subscriptions(request.referrer, @event.subscription_list_id, true) and !params[:gets_daily_deal_email].blank?
+      if @user.update_subscriptions(request.referrer, @event.subscription_list_id, false) and !params[:gets_daily_deal_email].blank?
         session[:new_subscriber] = true
         session[:new_subscriber_email] = @user.email
       end

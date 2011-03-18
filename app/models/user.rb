@@ -237,9 +237,9 @@ class User < ActiveRecord::Base
     end  
     errors.add(:base,"The interns are out to lunch (something broke during the subscription process)! You can try updating your subscriptions by using the Email Preferences tab on the My Account page in a few minutes.") unless success
     
-    unless list.nil?
+    unless list.to_i == 0
       if delayed
-        @delayed_subscription = DelayedSubscription.new(:email => self.email, :list => User::HAPPY_HOUR_LIST, :referrer => request_uri)
+        @delayed_subscription = DelayedSubscription.new(:email => self.email, :list => list, :referrer => request_uri)
         success = false unless @delayed_subscription.save
       else
         unless mailboto_api_request(request_uri, list.to_s, false)
