@@ -47,7 +47,7 @@
     </p> 
     
     <% if current_user and current_user.attending?(@event) %>
-      <p class="already_rsvp">Thanks, your RSVP'd for this event! We'll send you a confirmation email with the details as well as a reminder on the night of the event.</p>
+      <p class="already_rsvp">You have successfully RSVP'd for this event!  We will send you a confirmation email and a reminder on the night of the event.</p>
     <% elsif @event.full_attendance? or @event.rsvps_closed? %>
       <p class="event_full"><strong><%= @event.full_attendance? ? "Sorry, but this event has filled up!" : "Sorry, but RSVP's for this event have closed." %></strong></p>
       <% if current_user %>
@@ -129,7 +129,7 @@
             <% form_for @user, :url => quiet_create_user_path, :onsubmit => "return checkF(this)" do |f| %>
               <%= display_error_messages(f.error_messages) %>
               <%= hidden_field_tag :return_uri, create_event_attendee_path(:event_id => @event) %>
-              <%= hidden_field_tag :flash_notice, "Thanks, we have your RSVP for #{@event.header}. We'll send you a confirmation email with the details as well as a reminder on the night of the event." %>
+              <%= hidden_field_tag :flash_notice, "You have successfully RSVP'd for this event!  We will send you a confirmation email and a reminder on the night of the event." %>
               <table align="center" border="0" cellpadding="5" cellspacing="0">
               <% f.fields_for :customer do |cf| %>
                 <tr>
