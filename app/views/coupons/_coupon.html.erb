@@ -32,6 +32,8 @@
         </div>
         <% if coupon.deal.has_coupon_code? and coupon.active? %>
           <div class="coupon_confirmation">Coupon Code: <strong><%= coupon.coupon_code %></strong></div>
+        <% else %>
+          <div class="coupon_confirmation">Conf. Code: <strong><%= coupon.confirmation_code %></strong></div>
         <% end %>
       </div>
     </div>
