@@ -1,0 +1,56 @@
+<br><br>
+<% form_tag :action => 'show' do %>
+  Deal: <%= select_tag :id, options_for_select([""] + @promotions.collect{|b| [b.id.to_s + " - " + b.name, b.id]}, params[:id].to_i), :onchange => "submit()" %>
+<% end %>
+<br><br>
+
+<% unless @line_items.empty? %>
+  <h2>Purchase Stats for <%= @promotion.name %></h2>
+  
+  <table class="business_table">
+    <tr>
+      <th class="align_left">Date</th>
+      <th>Number Purchased</th>
+    </tr>
+    <% @line_items.each_with_index do |line_item, i| %>
+      <tr>
+        <td class="align_left"><%= (@first_day + i.days).strftime("%A, %B %e, %Y") %></td>
+        <td><%= line_item %></td>
+      </tr>
+    <% end %>    
+  </table>
+  <br><br>
+
+  <h3>Demographics</h3>
+  <div class="section_content">
+    <label>Male:</label> <strong><%= @males.size %></strong>&nbsp;&nbsp;&nbsp;&nbsp;
+    <label>Female:</label> <strong><%= @females.size %></strong>&nbsp;&nbsp;&nbsp;&nbsp;
+    <label>Not Disclosed:</label> <strong><%= @neither.size %></strong>
+  </div>
+  <br>
+  <table class="business_table">
+    <tr>
+      <th class="align_left">Zip code</th>
+      <th>Number Purchased</th>
+    </tr>
+    <% @zipcode_purchases.each do |key, value| %>
+      <tr>
+        <td class="align_left"><%= key %></td>
+        <td><%= value %></td>
+      </tr>
+    <% end %>    
+  </table>
+  
+<% else %>
+  <div class="section_content"><br><p>
+    <% if params[:promotion_id] == 'All' or params[:promotion_id].to_i > 0 %>
+      Sorry, no purchases found.
+    <% else %>
+      Select a deal to view its purchase statistics.
+    <% end %>
+  </p></div>
+<% end %>
+<br><br>
+<div class="bottom_link_next_page">
+  <%= link_to "Back to Home", business_home_path %>
+</div>

@@ -28,6 +28,7 @@
     <li><%= link_to_unless_current "Home", business_home_path %></li>
     <% if current_user and current_user.business_staff? %>
       <li><%= link_to_unless_current "Purchases", business_purchases_path %></li>
+      <li><%= link_to_unless_current "Purchase Stats", business_purchase_stats_path %></li>
       <li><%= link_to_unless_current "Mobile Redemptions", business_mobile_redemptions_path %></li>
     <% end %>
     <% if current_user and current_user.business? and !current_user.business.promotions.empty? %>
