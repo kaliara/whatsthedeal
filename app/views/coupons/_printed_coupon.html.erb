@@ -5,6 +5,11 @@
     body{ background: transparent url(/images/redeemed_watermark.png) repeat 0 0 !important; }
   </style>
 <% end %>
+<style type="text/css" media="print">
+  .edit_coupon{ display: none; }
+  .print_this{ display: none; }
+  .back_link { display: none; }
+</style>
 <div class="print_coupon">
   <% if coupon.mobile_used? %>
     <div class="redemption_status">Redeemed via Mobile Device: <%= "<br/>" if mobile %><strong><%= coupon.redemption_date.strftime("%b %d, %Y at %l:%M %p") unless coupon.redemption_date.nil? %></strong></div>
@@ -13,7 +18,7 @@
   <% end %>
   
   <% if !coupon.used? and coupon.active? %>
-    <% if mobile and !coupon.mobile_used? %>
+    <% if mobile and !coupon.mobile_used? and !coupon.deal.has_coupon_code? %>
       <p class="mobile_usage_clause">Please present this coupon to <%= coupon.deal.promotion.business.name %> <strong>before</strong> you enjoy the product or service. Thanks!</p>
       <% form_for coupon do |f| %>  
         <%= f.hidden_field :id, :value => "coupon_#{coupon.id}" %>

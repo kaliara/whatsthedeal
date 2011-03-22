@@ -10,7 +10,15 @@
       </div>
       <div class="coupon_content">
     	  <h3><%= coupon.name %></h3>
-        <div class="coupon_confirmation"><% if coupon.deal.has_coupon_code? and coupon.active? %>Coupon Code: <strong><%= coupon.coupon_code %></strong><% end %>&nbsp;</div>
+        <div class="coupon_confirmation">
+          <% if coupon.active? %>
+            <% if coupon.deal.has_coupon_code? %>
+              Coupon Code: <strong><%= coupon.coupon_code %></strong>
+            <% else %>
+              Conf. Code: <strong><%= coupon.confirmation_code %></strong>
+            <% end %>
+          <% end %>&nbsp;
+        </div>
         <div class="coupon_footer clearfix">
           <% if coupon.shippable? and coupon.active? %>
             <%= link_to "View Shipping Details", coupon_shipping_details_path(coupon) %>

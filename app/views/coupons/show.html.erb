@@ -26,12 +26,12 @@
   <div class="print_this"><a href="#" onclick="print();return false;">Print This Coupon</a></div>
   <%= render :partial => "/coupons/printed_coupon", :locals => {:coupon => @coupon} %>
 
-  <%= link_to "Back to My Deals", my_deals_path %>
+  <div class="back_link"><%= link_to "Back to My Deals", my_deals_path %></div>
   <div class="print_this"><a href="#" onclick="print();return false;">Print This Coupon</a></div>
 
   <% if params[:print] %>
     <script type="text/javascript" charset="utf-8">
-      setTimeout(print(), 2000);
+      setTimeout("print()", 2000);
     </script>
   <% end %>
 <% end %>
