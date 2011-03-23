@@ -103,26 +103,28 @@
     <%= render :partial => "reminder", :locals => {:promotion => @promotion} unless @promotion.sold_out? or @promotion.ended? %>
   </div>
   
-  <div class="promotion_info_strip clearfix">
-    <% if @promotion.ended? %>
-      <div class="deal_ended">Sorry, but this deal is over</div>
-    <% end %>
-    <div class="time_left <%= 'almost_over' if @promotion.almost_over? %>">
-      Time Left:&nbsp;&nbsp;<strong><%= distance_of_time_in_words_to_now(@promotion.end_date) unless @promotion.ended? %></strong>
-    </div>
-    
-    <div class="purchases">
-      <% if @promotion.id == 330  %>
-        <strong>&nbsp;</strong>
-      <% elsif @promotion.id == 291 or @promotion.id == 293 or @promotion.id == 294 %>
-        <strong><%= Promotion.find(293).purchases + Promotion.find(294).purchases %></strong>&nbsp;&nbsp;purchased
-      <% elsif @promotion.inventory.to_i < 999 %>
-        <strong><%= @promotion.purchases %></strong> <span class="out_of">out of</span> <strong><%= @promotion.inventory %></strong>&nbsp;&nbsp;purchased
-      <% else %>
-        <strong><%= @promotion.purchases %></strong>&nbsp;&nbsp;purchases
+  <% unless @promotion.id == 289 %>
+    <div class="promotion_info_strip clearfix">
+      <% if @promotion.ended? %>
+        <div class="deal_ended">Sorry, but this deal is over</div>
       <% end %>
+      <div class="time_left <%= 'almost_over' if @promotion.almost_over? %>">
+        Time Left:&nbsp;&nbsp;<strong><%= distance_of_time_in_words_to_now(@promotion.end_date) unless @promotion.ended? %></strong>
+      </div>
+    
+      <div class="purchases">
+        <% if @promotion.id == 330  %>
+          <strong>&nbsp;</strong>
+        <% elsif @promotion.id == 291 or @promotion.id == 293 or @promotion.id == 294 %>
+          <strong><%= Promotion.find(293).purchases + Promotion.find(294).purchases %></strong>&nbsp;&nbsp;purchased
+        <% elsif @promotion.inventory.to_i < 999 %>
+          <strong><%= @promotion.purchases %></strong> <span class="out_of">out of</span> <strong><%= @promotion.inventory %></strong>&nbsp;&nbsp;purchased
+        <% else %>
+          <strong><%= @promotion.purchases %></strong>&nbsp;&nbsp;purchases
+        <% end %>
+      </div>
     </div>
-  </div>
+  <% end %>
   
   <a name="tabs"></a>
   <div class="promotion_tabs">
