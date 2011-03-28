@@ -8,11 +8,13 @@
   <table>
     <% @credits.each_with_index do |month, i| %>
       <tr>
-        <td><%= Date::MONTHNAMES[i+1] %></td>
+        <td><%= (@start_date + i.months).strftime("%B %Y") %></td>
         <td><%= number_to_currency month %></td>
       </tr>
     <% end %>
   </table>
   <br><br>
+  <strong>TOTAL OUTSTANDING CREDIT:</strong> <%= number_to_currency @outstanding_credit %>
+  <br><br><br>
   <p>NOTE: This is not when the credit was issued, <strong>but instead when it was actually used</strong></p>
 </div>
