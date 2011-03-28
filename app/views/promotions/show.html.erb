@@ -252,7 +252,7 @@
     <% end %>
   </div>
   
-  <% unless @promotion.id == 289 %>
+  <% unless @promotion.id == 289 or @promotion.id == 359 %>
     <div class="promotion_info_strip clearfix">
       <%= render :partial => "reminder", :locals => {:promotion => @promotion} unless @promotion.sold_out? or @promotion.ended? %>
       <% if @promotion.ended? %>

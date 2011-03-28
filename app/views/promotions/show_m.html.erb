@@ -103,7 +103,7 @@
     <%= render :partial => "reminder", :locals => {:promotion => @promotion} unless @promotion.sold_out? or @promotion.ended? %>
   </div>
   
-  <% unless @promotion.id == 289 %>
+  <% unless @promotion.id == 289 or @promotion.id == 359 %>
     <div class="promotion_info_strip clearfix">
       <% if @promotion.ended? %>
         <div class="deal_ended">Sorry, but this deal is over</div>
