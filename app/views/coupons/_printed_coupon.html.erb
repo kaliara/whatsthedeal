@@ -30,7 +30,7 @@
       <% form_for coupon do |f| %>  
         <%= f.hidden_field :id, :value => "coupon_#{coupon.id}" %>
         <%= f.hidden_field :used, :value => true %>
-        <%= f.submit "Mark as Redeemed", :class => 'secondary' %>
+        <%= f.submit "Mark as Redeemed", :confirm => 'By clicking OK you are confirming that this coupon is being redeemed.  Once confirmed, you won\'t be able to use the coupon again.', :class => 'secondary' %>
       <% end %>
     <% end %>
   <% end %>
