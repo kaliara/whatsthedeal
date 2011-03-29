@@ -79,8 +79,8 @@ class Business::PurchasesController < ApplicationController
     @business_ids = Business.find(:all, :conditions => {:user_id => user.id}).collect{|b| b.id}
     @promotions = Promotion.find(:all, :conditions => {:business_id => @business_ids})
     
-    if params[:promotion_id].to_i > 0
-      @deals = Promotion.find(:all, :conditions => {:business_id => @business_ids, :id => params[:promotion_id].to_i}, :order => 'id DESC').collect{|a|a.deals.collect{|d|d.id}}.flatten
+    if params[:excel_promotion_id].to_i > 0
+      @deals = Promotion.find(:all, :conditions => {:business_id => @business_ids, :id => params[:excel_promotion_id].to_i}, :order => 'id DESC').collect{|a|a.deals.collect{|d|d.id}}.flatten
     else
       @deals = Promotion.find(:all, :conditions => {:business_id => @business_ids}, :order => 'id DESC').collect{|a|a.deals.collect{|d|d.id}}.flatten
     end
