@@ -25,15 +25,12 @@ class Business::PurchasesController < ApplicationController
       @coupons = Coupon.find_by_confirmation_code(params[:q]).to_a
     elsif params[:q] =~ /\w+/
       @type = "Last Name"
-      @user_ids = Customer.find(:all, :conditions => {:last_name => params[:q]}).collect{|c| c.user.id}
-      @coupons = Coupon.find(:all, :conditions => {:user_id => @user_ids, :deal_id => @deals}, :order => 'created_at ASC')
-    elsif params[:promotion_id] == "All" or params[:promotion_id].to_i > 0
-      @coupons = Coupon.find(:all, :conditions => {:deal_id => @deals}, :order => 'created_at ASC', :limit => 10)
-    elsif params[:show_all] == 'true'
-      @coupons = Coupon.find(:all, :conditions => {:deal_id => @deals}, :order => 'created_at ASC')
-      @default_promotion = Deal.find(@deals.first).promotion
+      @user_ids = Customer.find(:all, :conditions => ['last_name like ?', "%#{params[:q]}%"]).collect{|c| c.user.id}
+      @coupons = Coupon.find(:all, :conditions => {:user_id => @user_ids, :deal_id => @deals}, :order => 'confirmation_code ASC')
+    elsif params[:all] == 'yes'
+      @coupons = Coupon.find(:all, :conditions => {:deal_id => @deals}, :order => 'confirmation_code ASC')
     else
-      @coupons = Coupon.find(:all, :conditions => {:deal_id => @deals}, :order => 'created_at ASC', :limit => 10)
+      @coupons = []
     end    
     
     respond_to do |format|
@@ -68,7 +65,7 @@ class Business::PurchasesController < ApplicationController
   # GET /purchases/1
   # GET /purchases/1.xml
   def show
-    @purchase = Purchase.find(params[:id])
+    @purchase = Purchase.find(params[:promotion_id])
     
     respond_to do |format|
       format.html # show.html.erb
@@ -119,7 +116,7 @@ class Business::PurchasesController < ApplicationController
       flash[:error] = "Please select one or more purchases to mark as redeemed"
     end
     
-    redirect_to :action => 'index'
+    redirect_to :action => 'index', :promotion_id => params[:promotion_id], :q => params[:q]
   end
 
 end

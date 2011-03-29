@@ -37,7 +37,7 @@
                   </tr>
                 <% end %>
                 <tr>
-                  <th colspan="<%= current_user.business? ? "5" : "3" %>" style="text-align:right; padding-right:20px;"><% unless promotion.coupons.empty? %>(<%= link_to "Purchases", :controller => 'purchases', :action => 'show', :id => promotion.id %>)<% end %> <%= promotion.purchases %></th>
+                  <th colspan="<%= current_user.business? ? "5" : "3" %>" style="text-align:right; padding-right:20px;"><% unless promotion.coupons.empty? %>(<%= link_to "Purchases", :controller => 'purchases', :action => 'index', :promotion_id => promotion.id %>)<% end %> <%= promotion.purchases %></th>
                   <% if current_user.business? %>
                     <th style="text-align:right; padding-right:20px;"><%= number_to_currency promotion.business_profit, :precision => 2 %></th>
                   <% end %>

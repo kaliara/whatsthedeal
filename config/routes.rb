@@ -106,7 +106,6 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/business/purchases/bulk_use', :controller => '/business/purchases', :action => 'bulk_use'
   map.connect '/business/purchases',:controller => '/business/purchases', :action => 'index'
   map.connect '/business/purchases/export',:controller => '/business/purchases', :action => 'export'
-  map.connect '/business/purchases/:promotion_id',:controller => '/business/purchases', :action => 'index'
   map.business_purchase_stats '/business/purchase_stats',:controller => '/business/purchase_stats', :action => 'show'
   map.connect '/business/mobile_redemptions/:promotion_id',:controller => '/business/purchases', :action => 'mobile_redemptions'
   map.business_mobile_redemptions '/business/mobile_redemptions', :controller => 'business/purchases', :action => 'mobile_redemptions'

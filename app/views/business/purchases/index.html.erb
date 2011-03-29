@@ -1,35 +1,36 @@
 <br><br>
 <% form_tag :action => 'index' do %>
-  Deal: <%= select_tag :promotion_id, options_for_select([""] + ["All"] + @promotions.collect{|b| [b.start_date.strftime("%m/%d/%Y") + " - " + b.name, b.id]}, (@default_promotion.nil? ? params[:promotion_id].to_i : @default_promotion.id)), :onchange => "submit()" %>
+  <label for='promotion_id'><strong>Deal:</strong></label> <%= select_tag :promotion_id, options_for_select([""] + ["All"] + @promotions.collect{|b| [b.start_date.strftime("%m/%d/%Y") + " - " + b.name, b.id]}, params[:promotion_id].to_i > 0 ? params[:promotion_id].to_i : params[:promotion_id]) %>
+  <br><br>
+  <%= radio_button_tag 'all', 'no', true %> <label for="q"><strong>Last Name</strong> or <strong>Confirmation Number</strong>:</label>
+  <%= text_field_tag 'q', params[:q], :style => 'width: 200px', :onkeydown => "$('#all_no').attr('checked', true)" %><br><br>
+  
+  <%= radio_button_tag 'all', 'yes', nil, :onclick => "$('#q').val('')" %> <label for="all_yes"><strong>Show All Purchases</strong></label>
+  
+  <br><br>
+  <%= submit_tag 'search', :style => "font-size: 120%" %>
 <% end %>
 <% unless @coupons.empty? %>
   <br><br>
   <% form_tag :action => 'export' do %>
     <%= hidden_field_tag :promotion_id, params[:promotion_id] %>
-    <%= submit_tag 'Export to Excel' %>
-  <% end %>
-  <br><br>
-  <% form_tag nil, :method => :get do %>
-    <label for="q"><strong>Last Name</strong> or <strong>Confirmation Number</strong>:</label>
-    <%= text_field_tag 'q' %>
-    <%= submit_tag 'search' %>
+    <%= submit_tag 'Export All Purchases to Excel' %>
   <% end %>
 <% end %>
-<br><br>
-
-<% if @type %>
-  <h2><%= pluralize @coupons.size, "Purchases" %> matching <%= @type %> '<%= params[:q] %>'</h2>
-<% elsif params[:id].to_i > 0 or params[:promotion_id].to_i > 0 %>
-  <h2>Purchases for <%= params[:id].to_i > 0 ? Promotion.find(params[:id]).name : Promotion.find(params[:promotion_id]).name %></h2>
-<% elsif params[:promotion_id] == 'All' %>
-  <h2>All Purchases</h2>
-<% else %>
-  <h2>Recent Purchases</h2>
-<% end %>
-
 
 <% unless @coupons.empty? %>
+  <br><br>
+  <% if @type %>
+    <h2><%= pluralize @coupons.size, "Purchases" %> for <%= params[:promotion_id].to_i > 0 ? Promotion.find(params[:promotion_id]).name : "All Deals" %> matching <%= @type %> '<%= params[:q] %>'</h2>
+  <% elsif params[:promotion_id].to_i > 0 %>
+    <h2>Purchases for <%= Promotion.find(params[:promotion_id]).name %></h2>
+  <% elsif params[:promotion_id] == 'All' %>
+    <h2>All Purchases</h2>
+  <% end %>
+
   <% form_tag :controller => :purchases, :action => :bulk_use do %>
+    <%= hidden_field_tag :q, params[:q] %>
+    <%= hidden_field_tag :promotion_id, params[:promotion_id] %>
     <table class="business_table">
       <tr>
         <th class="align_left">Purchaser Name</th>
@@ -62,14 +63,18 @@
   <% end %>
 <% else %>
   <div class="section_content"><br><p>
-    <% if params[:promotion_id] == 'All' or params[:promotion_id].to_i > 0 %>
-      Sorry, no purchases found.
+    <% if (params[:all] == 'no' or params[:all].blank?) and params[:q].blank? %>
+      <strong>How to Use:</strong> Select a deal and search by Customer Name or Coupon Confirmation Number.  You can also show all purchases (may take 2-3 minutes to display list).
     <% else %>
-      Select a deal to view its purchases.
+      Sorry, no purchases found. You can search partial last name.  You can also show all purchases (may take 2-3 minutes to display list).
     <% end %>
   </p></div>
 <% end %>
-
+<br>
 <div class="bottom_link_next_page">
   <%= link_to "Back to Home", business_home_path %>
 </div>
+
+<script type="text/javascript" charset="utf-8">
+  
+</script>
