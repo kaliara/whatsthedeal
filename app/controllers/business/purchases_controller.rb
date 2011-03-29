@@ -17,7 +17,7 @@ class Business::PurchasesController < ApplicationController
     elsif params[:promotion_id] == 'All'
       @deals = Promotion.find(:all, :conditions => {:business_id => @business_ids}, :order => 'id DESC').collect{|a|a.deals.collect{|d|d.id}}.flatten
     else
-      @deals = Promotion.find(:first, :conditions => {:business_id => @business_ids}, :order => 'id DESC').deals.collect{|d|d.id}.flatten
+      @deals = []
     end
 
     if params[:q] =~ /\d+\-?/
@@ -28,10 +28,12 @@ class Business::PurchasesController < ApplicationController
       @user_ids = Customer.find(:all, :conditions => {:last_name => params[:q]}).collect{|c| c.user.id}
       @coupons = Coupon.find(:all, :conditions => {:user_id => @user_ids, :deal_id => @deals}, :order => 'created_at ASC')
     elsif params[:promotion_id] == "All" or params[:promotion_id].to_i > 0
-      @coupons = Coupon.find(:all, :conditions => {:deal_id => @deals}, :order => 'created_at ASC')
-    else
+      @coupons = Coupon.find(:all, :conditions => {:deal_id => @deals}, :order => 'created_at ASC', :limit => 10)
+    elsif params[:show_all] == 'true'
       @coupons = Coupon.find(:all, :conditions => {:deal_id => @deals}, :order => 'created_at ASC')
       @default_promotion = Deal.find(@deals.first).promotion
+    else
+      @coupons = Coupon.find(:all, :conditions => {:deal_id => @deals}, :order => 'created_at ASC', :limit => 10)
     end    
     
     respond_to do |format|
