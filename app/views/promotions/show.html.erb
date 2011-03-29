@@ -203,6 +203,8 @@
           <%= hidden_field_tag "cart_items[0][quantity]", 1 %>
           <% if @promotion.id == 330 %>
             <div class="special_deal_me_in_message">Click below<br>to get your FREE<br>10% off coupon code!</div>
+          <% elsif @promotion.id == 362 %>
+            <div class="special_deal_me_in_message">Click below<br>to get your FREE<br>50% off coupon code!</div>
           <% elsif @promotion.featured_deal.id == 411 %>
           <% else %>
             <div class="single_deal">
@@ -225,7 +227,7 @@
         <% end %>
         
         <div class="checkout_buttons">
-          <% if @promotion.id == 330 %>
+          <% if @promotion.id == 330 or @promotion.id == 362 %>
             <div class="deal_me_in"><br><br><%= link_to 'Get My Code', @promotion.external_url, :class => 'primary' %><br><br></div>
           <% elsif @promotion.id == 216 %>
             <h3>Choose a performance date</h3>
@@ -268,7 +270,7 @@
       <% end %>
     
       <div class="purchases">
-        <% if @promotion.id == 330  %>
+        <% if @promotion.id == 330 or @promotion.id == 362 %>
           <strong>&nbsp;</strong>
         <% elsif @promotion.id == 291 or @promotion.id == 293 or @promotion.id == 294 %>
           <strong><%= Promotion.find(293).purchases + Promotion.find(294).purchases %></strong>&nbsp;&nbsp;purchased
@@ -281,7 +283,7 @@
         <% end %>
       </div>
     
-      <% if @promotion.id == 330 %>
+      <% if @promotion.id == 330 or @promotion.id == 362 %>
       <% elsif @promotion.early_bird? %>
         <div class="early_bird">Early&nbsp;Bird</div>
       <% elsif @promotion.inventory.to_i > 999 and !@promotion.ended? and @promotion.quota_met? %>

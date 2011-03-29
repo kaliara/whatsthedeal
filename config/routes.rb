@@ -231,6 +231,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'marchmadness',    :controller => 'static', :action => 'marchmadness',   :requirements => {:protocol => "http"}
   map.connect 'rsvp_thanks',     :controller => 'static', :action => 'rsvp_thanks',    :requirements => {:protocol => "http"}
   map.connect 'rap',             :controller => 'static', :action => 'rap',            :requirements => {:protocol => "http"}
+  map.connect 'nationals_deal',  :controller => 'static', :action => 'nationals_deal'
   map.connect 'ontap',           :controller => 'users',  :action => 'new', :source => 'ontap', :utm_source => 'ontap', :utm_medium => 'magazine', :utm_campaign => 'ontap_mag_ad_feb2011'
   map.connect 'totn',            :controller => 'users',  :action => 'new', :source => 'totn',  :utm_source => 'totn',  :utm_medium => 'magazine', :utm_campaign => 'totn_ad'
   
