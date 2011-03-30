@@ -199,7 +199,7 @@ window.onload = Custom.init;</script>
     
   </div>
 
-  <% if !params[:source].blank? and content_exists?("signup_#{params[:source]}_desc") %>
+  <% if !params[:source].blank? and content_exists?("signup_#{params[:source]}_images") %>
     <%= render_content "signup_#{params[:source]}_images" %>
   <% else %>
     <%= render_content 'signup_daily_deal_images' %>
