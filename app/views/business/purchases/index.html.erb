@@ -3,7 +3,9 @@
   <label for='promotion_id'><strong>Deal:</strong></label> <%= select_tag :promotion_id, options_for_select([""] + ["All"] + @promotions.collect{|b| [b.start_date.strftime("%m/%d/%Y") + " - " + b.name, b.id]}, params[:promotion_id].to_i > 0 ? params[:promotion_id].to_i : params[:promotion_id]), :onchange => "$('#excel_button').show(); $('#excel_promotion_id').val($('#promotion_id').val())" %>
   <br><br>
   <%= radio_button_tag 'all', 'no', true %> <label for="q"><strong>Last Name</strong> or <strong>Confirmation Number</strong>:</label>
-  <%= text_field_tag 'q', params[:q], :style => 'width: 200px', :onkeydown => "$('#all_no').attr('checked', true)" %><br><br>
+  <%= text_field_tag 'q', params[:q], :style => 'width: 200px', :onkeydown => "$('#all_no').attr('checked', true)" %><br>
+  <span style="margin-left: 25px">(if gift, search 'gift from' last name)</span>
+  <br><br>
   
   <%= radio_button_tag 'all', 'yes', nil, :onclick => "$('#q').val('')" %> <label for="all_yes"><strong>Show All Purchases</strong></label>
   
