@@ -9,6 +9,7 @@
   .edit_coupon{ display: none; }
   .print_this{ display: none; }
   .back_link { display: none; }
+  .map_replacement { display: none; }
 </style>
 <div class="print_coupon">
   <% if coupon.mobile_used? %>
@@ -56,7 +57,7 @@
           <% unless coupon.deal.promotion.map_replacement_image.file? %>
             <a href="<%= "http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=#{coupon.deal.promotion.business.street1.gsub(/\s/,"+")}+#{coupon.deal.promotion.business.city.gsub(/\s/,"+")},+#{coupon.deal.promotion.business.state}+#{coupon.deal.promotion.business.zipcode}" %>"><img src="/dc/images/map_default.jpg" id="map<%= coupon.id %>" alt="Map of <%= coupon.deal.promotion.business.name %>" width="<%= mobile ? '315' : '450' %>" align="<%= 'right' unless mobile %>" target="_blank" /></a>
           <% else %>
-            <%= image_tag coupon.deal.promotion.map_replacement_image.url %>
+            <%= image_tag coupon.deal.promotion.map_replacement_image.url, {:class => "map_replacement"} %>
           <% end %>
         </div>
       <% end %>
@@ -141,7 +142,7 @@
     <% end %>
 
     <div class="contact_info">
-      <p><strong>What's the Deal Contact Information:</strong> Got questions about your coupon?<br><br>Give us a call at (888) 765-3481 or email at <a href="mailto:support@sowhatsthedeal.com">support@sowhatsthedeal.com</a></p>
+      <p><strong>What's the Deal Contact Information:</strong> Email us at <a href="mailto:support@sowhatsthedeal.com">support@sowhatsthedeal.com</a> or give us a call at (888) 765-3481</p>
     </div>
     <div class="coupon_super_fine_print">
       <p>The amount you paid for this coupon may be valid for five years after the date of purchase (depending on your state's law).</p>
@@ -165,9 +166,6 @@
   geocoder.geocode( { 'address': address}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
       document.getElementById('map<%= coupon.id %>').src = "http://maps.google.com/maps/api/staticmap?center=" + results[0].geometry.location.toString().slice(1,-1) + "&zoom=14&markers=" + results[0].geometry.location.toString().slice(1,-1) + "&size=450x170&sensor=false"
-    }
-    else{
-      document.getElementById('map<%= coupon.id %>').style.display="none";
     }
   });
 </script>
