@@ -35,7 +35,7 @@ class EntriesController < ApplicationController
       
       @user.save
 
-      session[:return_to] ? redirect_to(session[:return_to]) : render(:action => 'show')
+      render(:action => 'show')
     else
       flash[:error] = "We need your first and last name and a valid email to enter you into the raffle.  Also, <strong>already have an account, you can login on the left</strong>"
       redirect_to @raffle

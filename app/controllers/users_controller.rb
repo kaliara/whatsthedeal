@@ -161,7 +161,7 @@ class UsersController < ApplicationController
       end
       
       flash[:notice] = params[:flash_notice] || "Welcome, you are now officially part of the WTD family!"
-      flash[:notice] += "<br/><br/><strong>Please choose a password to complete your WTD account.</strong>" if @user.quietly_created?
+      flash[:notice] += "<br/><br/><strong>Please <a href='/users/change_password'>choose a password</a> to complete your WTD account.</strong>" if @user.quietly_created?
       flash[:notice] = "Thanks for signing up for Half Price DC" if partner == 3
       redirect_to session[:return_to] ? session[:return_to] : my_account_path
     else

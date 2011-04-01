@@ -3,17 +3,7 @@ class RafflesController < ApplicationController
   layout :hyrbrid_layout_application
 
   def index
-    @raffles = Raffle.find(:all, :conditions => ['rotation_start_date <= ? and rotation_end_date >= ?', Date.today, Date.today], :order => 'created_at DESC')
-    
-    session[:stored_promotion_code_id] = nil
-
-    if @raffles.empty? and @promotions.empty?
-      flash[:error] = "Sorry, there are no raffles going on right now. <a href='/signup'>Signup for our listserv</a> to make sure you don't miss the next one!"
-      redirect_to root_path
-    else
-      @side_promotions = Promotion.sidebar
-      render :action => 'index'
-    end
+    redirect_to :show
   end
   
   def show
