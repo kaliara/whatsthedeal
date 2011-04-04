@@ -137,13 +137,22 @@
 <% end %>
 
 <script type="text/javascript" charset="utf-8">
+  var weekday=new Array(7);
+  weekday[0]="Sunday";
+  weekday[1]="Monday";
+  weekday[2]="Tuesday";
+  weekday[3]="Wednesday";
+  weekday[4]="Thursday";
+  weekday[5]="Friday";
+  weekday[6]="Saturday";
+
   function updateSlugName(){
     $('#promotion_slug').val(URLify($('#promotion_name').val(),100));
   }
   function updateEndDate(){
     var end_date = new Date($('#promotion_start_date_1i').val(),$('#promotion_start_date_2i').val()-1,$('#promotion_start_date_3i').val());
     end_date.setDate(end_date.getDate() + Number($('#duration').val() - 1) + ($('#end_time').val() == 12 ? 1 : 0));
-    $("#end_date span").replaceWith("<span>" + (end_date.getMonth() + 1) + "/" + end_date.getDate() + "/" +  end_date.getFullYear() + " at " + ($('#end_time').val() == 12 ? "11:59 AM" : "11:59 PM") + " (EST)</span>");
+    $("#end_date span").replaceWith("<span>" + weekday[end_date.getDay()] + " " + (end_date.getMonth() + 1) + "/" + end_date.getDate() + "/" +  end_date.getFullYear() + " at " + ($('#end_time').val() == 12 ? "11:59 AM" : "11:59 PM") + " (EST)</span>");
   }
   $('select').change(updateEndDate);
   updateEndDate();
