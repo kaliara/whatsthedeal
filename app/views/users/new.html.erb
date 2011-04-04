@@ -30,7 +30,7 @@
     <%= render_content 'referral_signup_desc' unless @promotion_code.nil? %>
     
     <% form_for @user do |f| %>
-      <%= display_error_messages(f.error_messages) unless @quietly_create %>
+      <%= display_error_messages(f.error_messages) %>
       <% f.fields_for :customer do |cf| %>
         <div class="label_input_form <%= 'fieldWithErrors' if @user.customer.first_name == Customer::STOCK_FIRST_NAME %>">
           <%= cf.label :first_name %>

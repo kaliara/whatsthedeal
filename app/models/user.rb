@@ -28,9 +28,9 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :customer, :allow_destroy => true, :reject_if => proc { |obj| obj.blank? }
   
   validates_presence_of     :email, :on => :save, :message => "can't be blank"
-  # validates_confirmation_of :email, :on => :create, :message => "doesn't match confirmation"
   validates_presence_of     :password, :on => :create, :message => "can't be blank"
-    
+  
+  before_create :mistyped_email?  
   after_create :generate_referral_link, :send_signup_confirmation, :if => proc { |obj| obj.customer? }
   before_destroy :delete_cim_profile
   
@@ -272,6 +272,15 @@ class User < ActiveRecord::Base
       return true
     rescue
     	return false
+    end
+  end
+  
+  def mistyped_email?
+    if email =~ /\.con|\.cm$|\.cmo|gmial|gnail|gmai\.com|yaho\.com|yahooo\.com|hotmial/
+      errors.add_to_base("Did you mistype your email? Please double check your email and try again.")
+      return false
+    else
+      return true
     end
   end
 end

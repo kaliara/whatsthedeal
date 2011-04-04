@@ -167,7 +167,7 @@ class UsersController < ApplicationController
     else
       @user.password = ""
       @user.password_confirmation = ""
-      flash[:error] = "<strong>Be sure to include your first name, last name and a valid email address</strong>. <br/><br/>Remember, If you subscribed to our newsletter, you already have an account. Forgot your password? You can <a href='/forgot_password'>reset your password here</a>."
+      flash[:error] = "<strong>Be sure to include your first name, last name and a valid email address</strong>. <br/><br/>Remember, If you subscribed to our newsletter, you already have an account. Forgot your password? You can <a href='/forgot_password'>reset your password here</a>." if @user.errors.empty?
       session[:return_to] ? redirect_to(session[:return_to]) : render(:action => 'new')
     end
   end
