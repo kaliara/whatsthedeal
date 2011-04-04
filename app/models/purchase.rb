@@ -72,7 +72,7 @@ class Purchase < ActiveRecord::Base
         @coupon.name              = cart_item.deal.coupon_name + (cart_item.quantity > 1 ? " (#{@alphabet[i-1]})" : "")
         @coupon.description       = cart_item.deal.coupon_description
         @coupon.expiration        = cart_item.deal.coupon_expiration
-        @coupon.number            = Coupon.find(:all, :conditions => {:deal_id => cart_item.deal.id}).size + 1
+        @coupon.number            = @coupon.new_coupon_number
         @coupon.early_bird        = cart_item.deal.early_bird?
         if cart_item.gift?
           @coupon.gift              = cart_item.gift?

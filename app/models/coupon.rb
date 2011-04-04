@@ -34,6 +34,11 @@ class Coupon < ActiveRecord::Base
     end
   end
   
+  def new_coupon_number
+    @last = Coupon.find(:first, :conditions => {:deal_id => deal.id}, :order => 'number DESC')
+    @last.nil? ? 1 : @last.number + 1
+  end
+  
   def generate_confirmation_code
     self.confirmation_code = self.id.to_s(16).upcase.reverse + "-" + self.user.id.to_s
     self.save
