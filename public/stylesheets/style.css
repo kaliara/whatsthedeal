@@ -2391,6 +2391,13 @@ h3.event_rsvp{
 	clear: left;
 	float: left;
 }
+.alt_list_popup .list_name{
+  padding-left: 30px;
+  width: 275px;
+}
+.alt_list_overlay .overlay_content p {
+  margin: 0 40px 20px 30px;
+}
 .account_section{
   background: #ddd;
 }
@@ -3323,7 +3330,7 @@ h3.event_rsvp{
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px; 
 }
-#overlay .overlay_content p{
+.overlay_content p{
   color: #666;
   margin: 0 40px 20px;
   font-size: 1.1em;
