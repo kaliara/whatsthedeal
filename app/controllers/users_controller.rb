@@ -228,6 +228,7 @@ class UsersController < ApplicationController
     @forgetfull_user = User.find_by_email(params[:user][:email])  
     if @forgetfull_user  
       if @forgetfull_user.deliver_password_reset_instructions!
+        cart.empty!
         flash[:notice] = "Instructions to reset your password have been emailed to you. " +  "Please check your email."  
         redirect_to root_url  
       else
