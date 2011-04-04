@@ -234,6 +234,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'nationals_deal',  :controller => 'static', :action => 'nationals_deal'
   map.connect 'ontap',           :controller => 'static', :action => 'signup', :source => 'ontap', :utm_source => 'ontap', :utm_medium => 'magazine', :utm_campaign => 'ontap_mag_ad_feb2011'
   map.connect 'totn',            :controller => 'static', :action => 'signup', :source => 'totn',  :utm_source => 'totn',  :utm_medium => 'magazine', :utm_campaign => 'totn_ad'
+  map.connect 'pitc',            :controller => 'static', :action => 'signup', :source => 'pitc',  :utm_source => 'pitc'
   
   # The priority is based upon order of creation: first created -> highest priority.
 
