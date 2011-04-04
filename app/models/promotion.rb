@@ -35,6 +35,8 @@ class Promotion < ActiveRecord::Base
   validates_attachment_size :image1, :less_than => 2.megabytes
   validates_uniqueness_of :slug, :on => :save, :message => "(url name) is already in use, try another one"
   validates_presence_of :slug, :on => :save, :message => "must be provided"
+  
+  after_save :update_business_payments
 
   PREVIEW_PASSWORD = 'special_preview'
   BUY_AS_GIFT_LABEL = 'Buy As Gift'
@@ -140,5 +142,12 @@ class Promotion < ActiveRecord::Base
   
   def business_profit
     self.deals.collect{|d| d.business_profit * d.coupons.count}.sum
+  end
+  
+  def update_business_payments
+    BusinessPayment.find(:all, :conditions => {:promotion_id => self.id}).each do |bp|
+      bp.business_id = self.business_id
+      bp.save
+    end
   end
 end
