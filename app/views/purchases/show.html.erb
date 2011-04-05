@@ -135,7 +135,7 @@
   
 <% end %>
 
-<% if @show_demo_survey %>
+<% if @show_demo_survey and (@user.customer.zipcode.blank? or @user.customer.female.nil?) %>
   <div id="overlay" style="display: none">
     <div class="overlay_content">
       <%= link_to "x", my_deals_path, :id => 'overlay_close', :title => "Close Window" %>
