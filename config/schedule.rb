@@ -16,7 +16,7 @@ every 1.day, :at => '5:05 am' do
   rake "coupons:email"
 end
 
-every 1.day, :at => '4:05 pm' do
+every 1.day, :at => '3:05 pm' do
   rake "coupons:send_gifts"
 end
 
