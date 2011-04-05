@@ -2391,9 +2391,15 @@ h3.event_rsvp{
 	clear: left;
 	float: left;
 }
+.email_preferences .coming_soon{
+  padding-left: 25px;
+}
+.email_preferences .coming_soon span{
+  color: red;
+}
 .alt_list_popup .list_name{
-  padding-left: 30px;
-  width: 275px;
+  padding-left: 18px;
+  width: 285px;
 }
 .alt_list_overlay .overlay_content p {
   margin: 0 40px 20px 30px;
