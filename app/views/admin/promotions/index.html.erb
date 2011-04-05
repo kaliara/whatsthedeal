@@ -4,8 +4,23 @@
   <li><%= link_to 'Live promotions', admin_promotions_path(:live => true) %></li>
 <% end %>
 
-<h2><%= params[:live] == "true" ? "Live Promotions on WTD" : "Listing promotions" %></h2>
+<div class="section_content">
+  <% form_tag admin_promotions_path, :method => :get do %>
+    <label>Business:</label>
+    <%= select_tag :business_id, options_for_select([""] + @businesses.collect{|b| ["#{b.name} (##{b.id.to_s})", b.id]}, :selected => params[:business_id].to_i), :onchange => "submit();" %>
+  <% end %>
+</div>
+<br>
 
+<h2>
+  <% if params[:live] == "true" %>
+    Live Promotions on WTD
+  <% elsif params[:business_id].to_i > 0 %>
+    Promotions for <%= Business.find(params[:business_id]).name %>
+  <% else %>
+    Listing promotions
+  <% end %>
+</h2>
 <div id="updated" style="opactiy: 0">Promotion positions have been updated!</div>
 
 <table id="promotions">

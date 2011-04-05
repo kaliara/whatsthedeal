@@ -2,9 +2,9 @@
   <li><%= link_to 'Show this Promotion', promotion_slug_path(:slug => @promotion.slug) %></li>
   <li><%= link_to 'Ad Preview', admin_ad_preview_path(:id => @promotion.id) %></li>
   <li><%= link_to 'Show&nbsp;Deals', admin_deals_path(:promotion_id => @promotion.id) %></li>
+  <li><%= link_to 'Edit Business', edit_admin_business_path(@promotion.business_id) %></li>
   <li>&nbsp;&nbsp;</li>
   <li><%= link_to 'Promotions Listing', admin_promotions_path %></li>
-  <li><%= link_to 'Live promotions', admin_promotions_path(:live => true) %></li>
 <% end %>
 
 <%= render :partial => "/admin/shared/tiny_mce" %>

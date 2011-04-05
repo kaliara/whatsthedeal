@@ -6,12 +6,15 @@ class Admin::PromotionsController < ApplicationController
   # GET /promotions
   # GET /promotions.xml
   def index
-    if params[:live] == 'true'
+    if params[:business_id].to_i > 0
+      @promotions = Promotion.find(:all, :conditions => {:business_id => params[:business_id]})
+    elsif params[:live] == 'true'
       @promotions = Promotion.find(:all, :order => 'start_date desc').delete_if{|p| !p.active?}
     else
       @promotions = Promotion.find(:all, :order => 'id desc', :limit => (params[:all] ? nil : 25))
     end
     
+    @businesses = Business.find(:all, :order => "name asc")
     @next_featured = Promotion.find(:first, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ?', Time.now.utc + 1.day, Time.now.utc + 1.day, true, false], :order => 'featured DESC, start_date DESC')
 
     respond_to do |format|
