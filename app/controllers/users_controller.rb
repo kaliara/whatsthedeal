@@ -127,12 +127,6 @@ class UsersController < ApplicationController
       @user.customer.quietly_created = true
     end
 
-    # update subscriptions and tracking analytics
-    if @user.update_subscriptions(request.referrer, nil, true)
-      session[:new_subscriber] = true
-      session[:new_subscriber_email] = @user.email
-    end
-    
     # add survey question if present
     session[:survey_question_value] = params[:survey_question_value] unless params[:survey_question_value].blank?
         
@@ -141,6 +135,12 @@ class UsersController < ApplicationController
       flash[:error] = 'Sorry, but that promo code is not redeemable!'
       render :action => 'new'
     elsif @user.save
+      # update subscriptions and tracking analytics
+      if @user.update_subscriptions(request.referrer, nil, true)
+        session[:new_subscriber] = true
+        session[:new_subscriber_email] = @user.email
+      end
+      
       flash[:notice] = "<strong>Success! You're officially part of the WTD family.</strong>" unless @quietly_create
       
       # trigger analytics to track
