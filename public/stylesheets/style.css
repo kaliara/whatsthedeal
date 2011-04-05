@@ -2414,8 +2414,7 @@ h3.event_rsvp{
   margin-top: 0;
 }
 .account_personal .tabs #tabs_personal a,
-.account_email    .tabs #tabs_email a
- {
+.account_email    .tabs #tabs_email a{
   background: #ddd;
   color: #000;
   text-decoration: none;
