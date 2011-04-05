@@ -27,7 +27,10 @@
             <img src="<%= promotion.image1.url %>" class="deal_thumbnail" />
             <h4><%= link_to truncate(promotion.name, :length => 50), promotion_slug_path(promotion.slug), :title => promotion.name %></h4>
             <dl><dt>Days Left: </dt><dd><%= ((promotion.end_date - Time.now.utc)/86400) < 1 ? "< 1" : ((promotion.end_date - Time.now.utc)/86400).floor %></dd></dl>
-            <% unless promotion.id == 330 %>
+            <% if promotion.id == 330 %>
+            <% elsif promotion.id == 362 %>
+              <dl class="last">Purchases: <dt></dt><dd>175</dd></dl>
+            <% else %>
               <dl class="last">Purchases: <dt></dt><dd><%= promotion.purchases %></dd></dl>
             <% end %>
           </div>
