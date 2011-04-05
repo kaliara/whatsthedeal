@@ -34,9 +34,6 @@ class User < ActiveRecord::Base
   after_create :generate_referral_link, :send_signup_confirmation, :if => proc { |obj| obj.customer? }
   before_destroy :delete_cim_profile
   
-  attr_accessor :gets_va_daily_deal_email
-  attr_accessor :gets_md_daily_deal_email
-  
   # special authorize.net cim methods
   def create_cim_profile
     #Login to the gateway using your credentials in environment.rb
