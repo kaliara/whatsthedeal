@@ -181,7 +181,7 @@ class UsersController < ApplicationController
 
     # do in two steps so we can see user.changes
     @user.attributes = params[:user]
-    @user.update_subscriptions('http://sowhatsthedeal.com/my_account_email')
+    @user.update_subscriptions('http://sowhatsthedeal.com/my_account_email', nil, true)
 
     if @user.errors.empty? and @user.save
       @user.update_cim_profile

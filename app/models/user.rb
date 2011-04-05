@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
   WASHINGTONIAN_LIST = '51'
   HALFPRICEDC_LIST = '95'
   HAPPY_HOUR_LIST = '74'
+  VIRGINIA_DEAL_LIST = '115'
+  MARYLAND_DEAL_LIST = '116'
   
   has_one  :cart
   has_many :purchases
@@ -215,6 +217,30 @@ class User < ActiveRecord::Base
       end
     end
     
+    if self.changes['gets_va_daily_deal_email']
+      if delayed
+        @delayed_subscription = DelayedSubscription.new(:email => self.email, :list => VIRGINIA_DEAL_LIST, :referrer => request_uri)
+        success = false unless @delayed_subscription.save
+      else
+        unless mailboto_api_request(request_uri, daily_deal_list, self.changes['gets_va_daily_deal_email'].last == false)
+          self.gets_daily_deal_email = self.changes['gets_va_daily_deal_email'].first unless self.changes['gets_va_daily_deal_email'].nil?
+          success = false
+        end
+      end
+    end  
+
+    if self.changes['gets_md_daily_deal_email']
+      if delayed
+        @delayed_subscription = DelayedSubscription.new(:email => self.email, :list => MARYLAND_DEAL_LIST, :referrer => request_uri)
+        success = false unless @delayed_subscription.save
+      else
+        unless mailboto_api_request(request_uri, daily_deal_list, self.changes['gets_md_daily_deal_email'].last == false)
+          self.gets_daily_deal_email = self.changes['gets_md_daily_deal_email'].first unless self.changes['gets_md_daily_deal_email'].nil?
+          success = false
+        end
+      end
+    end  
+
     if self.changes['gets_daily_deal_email']
       case self.partner_id
       when 2
