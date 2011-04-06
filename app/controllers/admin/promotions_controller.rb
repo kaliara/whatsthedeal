@@ -64,9 +64,9 @@ class Admin::PromotionsController < ApplicationController
     @promotion.ad_description7 = @promotion.name
     
     # remove &nbsp;
-    @promotion.summary.gsub("&nbsp;"," ")
-    @promotion.body1.gsub("&nbsp;"," ")
-    @promotion.body2.gsub("&nbsp;"," ")
+    @promotion.summary = @promotion.summary.gsub(/\&nbsp\;/," ")
+    @promotion.body1 = @promotion.body1.gsub(/\&nbsp\;/," ")
+    @promotion.body2 = @promotion.body2.gsub(/\&nbsp\;/," ")
     
     respond_to do |format|
       if @promotion.save
@@ -92,13 +92,14 @@ class Admin::PromotionsController < ApplicationController
   def update
     @promotion = Promotion.find(params[:id])
 
-    # remove &nbsp;
-    @promotion.summary.gsub("&nbsp;"," ")
-    @promotion.body1.gsub("&nbsp;"," ")
-    @promotion.body2.gsub("&nbsp;"," ")
-
     respond_to do |format|
       if @promotion.update_attributes(params[:promotion])
+        # remove &nbsp;
+        @promotion.summary = @promotion.summary.gsub(/\&nbsp\;/," ")
+        @promotion.body1 = @promotion.body1.gsub(/\&nbsp\;/," ")
+        @promotion.body2 = @promotion.body2.gsub(/\&nbsp\;/," ")
+        @promotion.save
+        
         unless params[:duration].blank?
           @promotion.end_date = (@promotion.start_date.to_time + params[:duration].to_i.days + params[:end_time].to_i.hours).to_datetime
           @promotion.save
