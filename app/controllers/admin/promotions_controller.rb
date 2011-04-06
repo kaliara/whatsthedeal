@@ -63,6 +63,11 @@ class Admin::PromotionsController < ApplicationController
     @promotion.ad_description6 = @promotion.name
     @promotion.ad_description7 = @promotion.name
     
+    # remove &nbsp;
+    @promotion.summary.gsub("&nbsp;"," ")
+    @promotion.body1.gsub("&nbsp;"," ")
+    @promotion.body2.gsub("&nbsp;"," ")
+    
     respond_to do |format|
       if @promotion.save
 
@@ -86,6 +91,11 @@ class Admin::PromotionsController < ApplicationController
   # PUT /promotions/1.xml
   def update
     @promotion = Promotion.find(params[:id])
+
+    # remove &nbsp;
+    @promotion.summary.gsub("&nbsp;"," ")
+    @promotion.body1.gsub("&nbsp;"," ")
+    @promotion.body2.gsub("&nbsp;"," ")
 
     respond_to do |format|
       if @promotion.update_attributes(params[:promotion])
