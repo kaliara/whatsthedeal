@@ -305,7 +305,7 @@ window.onload = Custom.init;</script>
   <div id="alt_list_overlay" style="display: none">
     <div class="overlay_content">
       <%= link_to "x", my_deals_path, :id => 'overlay_close', :title => "Close Window" %>
-      <p><%= image_tag "/images/logo.png", :class => "logo" %><br><%= render_content 'alt_list_text' %></p>
+      <p><%= image_tag "/images/logo.png", :class => "logo" %><%= render_content 'alt_list_text' %></p>
       <% form_for(@user) do |f| %>
         <%= hidden_field_tag :tab, 'email' %>
         <div class="email_preferences alt_list_popup">
