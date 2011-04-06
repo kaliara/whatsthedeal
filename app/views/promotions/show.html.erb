@@ -270,14 +270,16 @@
       <% end %>
     
       <div class="purchases">
-        <% if @promotion.id == 330 or @promotion.id == 362 %>
+        <% if @promotion.id == 330 %>
           <strong>&nbsp;</strong>
         <% elsif @promotion.id == 291 or @promotion.id == 293 or @promotion.id == 294 %>
           <strong><%= Promotion.find(293).purchases + Promotion.find(294).purchases %></strong>&nbsp;&nbsp;purchased
+        <% elsif @promotion.id == 362 %>
+          <strong>175</strong>&nbsp;&nbsp;purchased
         <% elsif @promotion.id == 239 or @promotion.id == 240 or @promotion.id == 260 %>
           <strong><%= @promotion.inventory - @promotion.purchases %></strong>&nbsp;&nbsp;tickets left
         <% elsif @promotion.inventory.to_i < 999 %>
-          <strong><%= @promotion.purchases %></strong> <span class="out_of">out of</span> <strong><%= @promotion.inventory %></strong>&nbsp;&nbsp;purchased
+          <strong><%= @promotion.purchases %></strong> <span class="out_of">of</span> <strong><%= @promotion.inventory %></strong>&nbsp;purchased
         <% else %>
           <strong><%= @promotion.purchases %></strong>&nbsp;&nbsp;purchases
         <% end %>

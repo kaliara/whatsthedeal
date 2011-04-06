@@ -1,5 +1,5 @@
 <% content_for :sub_nav do %>
-  <li><%= link_to 'Entrants', admin_raffle_entrants_path(@path) %></li>
+  <li><%= link_to 'Entrants', admin_raffle_entrants_path(@raffle) %></li>
   <li><%= link_to 'Show this Raffle', admin_raffle_path(@raffle) %></li>
   <li><%= link_to 'Raffle Listing', admin_raffles_path %></li>
 <% end %>
