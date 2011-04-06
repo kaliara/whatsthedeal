@@ -1,14 +1,14 @@
 <% content_for :head do %>
   <meta name="title" content="<%= @event.header %>" /> 
   <meta name="description" content="<%= truncate(strip_tags(@event.description), :length => 200) %>" /> 
-  <link rel="image_src" href="http://sowhatsthedeal.com<%= @event.image1.url %>" />
+  <link rel="image_src" href="http://sowhatsthedeal.com<%= @event.image3.url %>" />
   
   <!-- open graph stuff -->
   <meta property="og:title" content="<%= @event.header %>"/>
   <meta property="og:site_name" content="What's The Deal"/>
   <meta property="og:type" content="activity"/>
   <meta property="og:url" content="<%= event_url @event %>"/>
-  <meta property="og:image" content="http://sowhatsthedeal.com<%= @event.image1.url %>"/>
+  <meta property="og:image" content="http://sowhatsthedeal.com<%= @event.image3.url %>"/>
   <meta property="fb:admins" content="mburnett" />
 <% end %>
 <%- content_for :page_title do %><%= @event.header %><% end %>
