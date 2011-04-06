@@ -72,7 +72,7 @@
                         <tr>
                           <td width="4" style="padding:1px"> </td>
                           <td width="220" valign="top">
-                            <a href="<%= promotion_url @event %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;"><img src="http://sowhatsthedeal.com<%= @event.image %>" alt="<%= @event.business.name %> Deal" border="0" width="280" height="197" style="border: 7px solid #ffffff;"></a>
+                            <a href="<%= event_url @event %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;"><img src="http://sowhatsthedeal.com<%= @event.image %>" alt="<%= @event.business.name %> Deal" border="0" width="280" height="197" style="border: 7px solid #ffffff;"></a>
                           </td>
                           <td align="right" width="245">
                             <a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%= @event.business.street1.gsub(/\s/,"+") %>+<%= @event.business.city.gsub(/\s/,"+") %>,+<%= @event.business.state %>+<%= @event.business.zipcode %>" target="_blank" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;"><img src="THIS DIDN'T LOAD CORRECTLY'" id="map" alt="Map of <%= @event.business.name %>" width="245" height="197"  style="margin-right: 5px;border: 7px solid #ffffff;"></a>

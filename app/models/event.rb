@@ -18,6 +18,11 @@ class Event < ActiveRecord::Base
                       :path => ":rails_root/public/system/assets/dc/events/:id/image2.:extension",
                       :default_url => "/images/deal_default_image.png"
   
+  has_attached_file :image3, 
+                      :url  => "/dc/events/:id/image3.:extension", 
+                      :path => ":rails_root/public/system/assets/dc/events/:id/image3.:extension",
+                      :default_url => "/images/deal_default_image.png"
+  
   def started_rotation?
     (self.rotation_start_date < Time.now.utc)
   end
