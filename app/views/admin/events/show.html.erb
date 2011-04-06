@@ -180,7 +180,7 @@
                   <p style="font-family: Helvetica,Arial,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 14px; line-height: 1em; font-size-adjust: none; font-stretch: normal; margin-bottom: 5px;">
                     <span style="color: rgb(0, 0, 102);font-size: 14px;font-family: arial,helvetica,sans-serif;line-height: 21px;">Congrats,&nbsp;<b>%%%fname%%%</b>, you&#39;re all set for the <strong><%= @event.header %></strong> on <%= @event.start_date.strftime("%A, %B #{@event.start_date.day.ordinalize}") %>. The party goes from <%= @event.start_date.strftime("%I").to_i %>-<%= @event.end_date.strftime("%I").to_i %><%= @event.end_date.strftime("%p") %> with XXXXXXXXXXXXXXXXXXX.</span></p>
                   <p style="font-family: Helvetica,Arial,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 14px; line-height: 1em; font-size-adjust: none; font-stretch: normal; margin-bottom: 5px; text-align: center;">
-                    <img src="http://sowhatsthedeal.com<%= @event.page_image.url %>" /></p>
+                    <img src="http://sowhatsthedeal.com<%= @event.image2.url %>" /></p>
                   <% unless @event.business.nil? %>
                   <p style="font-family: Helvetica,Arial,sans-serif; font-style: normal; font-variant: normal; font-weight: normal; font-size: 14px; line-height: 1em; font-size-adjust: none; font-stretch: normal; margin-bottom: 5px; text-align: center;">
                     <span style="color: rgb(0, 0, 128);font-size: 12px;font-family: arial,helvetica,sans-serif;">
@@ -238,7 +238,7 @@
   								<p style="font: normal normal normal 14px/1em Helvetica, Arial, sans-serif; margin-bottom: 5px; ">
   									<font color="#052452"><span style="line-height: 21px;"><b><font><span style="font-weight: normal;">And remember, just for showing up you get entered into our </span></font></b></span></font><strong><span style="color:#ffa500;"><span style="line-height: 21px;"><span style="font-weight: bold;">raffle for a $20 WTD credit</span></span></span></strong><font color="#052452"><span style="line-height: 21px;"><b><font><span style="font-weight: normal;">, to be announced on our homepage.</span></font></b></span></font></p>
   								<p style="font: normal normal normal 14px/1em Helvetica, Arial, sans-serif; margin-bottom: 5px; text-align: center; ">
-  									<img src="http://sowhatsthedeal.com<%= @event.page_image.url %>" /></p>
+  									<img src="http://sowhatsthedeal.com<%= @event.image2.url %>" /></p>
   								<div style="text-align: center;">
   									&nbsp;</div>
 
