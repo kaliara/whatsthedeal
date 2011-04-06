@@ -25,7 +25,7 @@
 </div>
 
 <script type="text/javascript" charset="utf-8">
-  $("#gift_send_date").datepicker();
+  $("#gift_send_date").datepicker({ minDate: new Date( <%= (Date.today + 1.day).year %>, <%= (Date.today + 1.day).month %>, <%= (Date.today + 1.day).day %>) });
   //$(".gift_send_option").val('date');
   //$("#gift_send_immediately").click(function(){$("#gift_send_date")})
 </script>
