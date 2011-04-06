@@ -2397,13 +2397,6 @@ h3.event_rsvp{
 .email_preferences .coming_soon span{
   color: red;
 }
-.alt_list_popup .list_name{
-  padding-left: 15px;
-  width: 310px;
-}
-.alt_list_overlay .overlay_content p {
-  margin: 0 40px 20px 30px;
-}
 .account_section{
   background: #ddd;
 }
@@ -3315,7 +3308,7 @@ h3.event_rsvp{
 }
 
 /* overlay */
-#overlay{
+#overlay, #alt_list_overlay{
   background: transparent url(/images/overlay_shade.png) repeat 0 0;
   height: 100%;
   width: 100%;
@@ -3324,40 +3317,66 @@ h3.event_rsvp{
   left: 0;
   top: 0;
 }
-#overlay .overlay_content{
+.overlay_content{
+  color: #9fc6eb;
   font-size: 110%;
-  width: 410px;
+  width: 450px;
   margin: 150px auto 0;
-  background: #fff;
+  background: #0078ff url(/images/popup_bg.png) repeat-x bottom center;
   padding: 30px 0;
   position: relative;
   left: -150px;
+  border: 2px solid #013361;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px; 
 }
 .overlay_content p{
-  color: #666;
+  color: #eee;
   margin: 0 40px 20px;
   font-size: 1.1em;
   line-height: 1.2em;
 }
-#overlay .overlay_content .zipcode{
+.overlay_content strong{
+  color: #eee;
+}
+.overlay_content .zipcode{
   width: 75px;
   font-size: 110%;
   padding: 1px;
 }
-#overlay .overlay_content .zipcode_label{
+.overlay_content .zipcode_label{
   position: relative;
   top: 7px;
 }
-#overlay .overlay_content .overlay_submit .primary{
-  font-size: 1.2em;
+.overlay_content .overlay_submit .primary{
+  font-size: 1.4em;
   margin-top: 10px;
   margin-left: 155px;
   padding: 4px 9px;
 }
-#overlay #overlay_close{
-  background: transparent url(/images/promo_deal_me_in_bg.png) repeat-x center left;
+#alt_list_overlay .overlay_content p {
+  margin: 0 40px 20px 30px;
+}
+.alt_list_popup .list_name{
+  padding-bottom: 20px;
+  line-height: 1.3em;
+}
+.alt_list_popup .list_name strong{
+  font-size: 1.2em;
+}
+.alt_list_popup td.checkboxes{
+  width: 50px;
+  padding-left: 50px;
+  vertical-align: top;
+}
+.alt_list_popup .checkbox{
+  margin-right: 20px;
+}
+#alt_list_overlay .logo{
+  width: 100px;
+}
+#overlay_close{
+  background: transparent url(/images/checkbox.png) no-repeat 50% 5%;
   position: absolute;
   right: 5px;
   top: 4px;
