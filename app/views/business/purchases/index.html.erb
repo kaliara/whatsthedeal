@@ -1,4 +1,4 @@
-<br><br>
+<h1>Search for Purchases</h1>
 <% form_tag :action => 'index' do %>
   <label for='promotion_id'><strong>Deal:</strong></label> <%= select_tag :promotion_id, options_for_select([""] + ["All"] + @promotions.collect{|b| [b.start_date.strftime("%m/%d/%Y") + " - " + b.name, b.id]}, params[:promotion_id].to_i > 0 ? params[:promotion_id].to_i : params[:promotion_id]), :onchange => "$('#excel_button').show(); $('#excel_promotion_id').val($('#promotion_id').val())" %>
   <br><br>
@@ -10,12 +10,12 @@
   <%= radio_button_tag 'all', 'yes', nil, :onclick => "$('#q').val('')" %> <label for="all_yes"><strong>Show All Purchases</strong></label>
   
   <br><br>
-  <%= submit_tag 'search', :style => "font-size: 120%" %>
+  <%= submit_tag 'search', :class => "submit" %>
 <% end %>
 <br><br>
 <% form_tag :action => 'export' do %>
   <%= hidden_field_tag :excel_promotion_id, params[:promotion_id] %>
-  <%= submit_tag 'Export All Purchases to Excel', :style => ("display: none" if params[:promotion_id].blank?), :id => "excel_button" %>
+  <%= submit_tag 'Save All to Excel', :style => ("display: none" if params[:promotion_id].blank?), :class => "submit permanent", :id => "excel_button" %>
 <% end %>
 
 <% unless @coupons.empty? %>
@@ -59,7 +59,7 @@
       <% end %>    
     </table>
   
-    <div class="commit clear"><%= submit_tag "Update Coupons as 'Redeemed'" %></div>
+    <div class="commit clear"><%= submit_tag "Redeem Coupons", :class => "submit permanent" %></div>
   <% end %>
 <% else %>
   <div class="section_content"><br><p>
