@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110314123242) do
+ActiveRecord::Schema.define(:version => 20110406004041) do
 
   create_table "admins", :force => true do |t|
     t.integer  "user_id"
@@ -260,6 +260,10 @@ ActiveRecord::Schema.define(:version => 20110314123242) do
     t.string   "image2_content_type"
     t.integer  "image2_file_size"
     t.datetime "image2_updated_at"
+    t.string   "image3_file_name"
+    t.string   "image3_content_type"
+    t.integer  "image3_file_size"
+    t.datetime "image3_updated_at"
   end
 
   create_table "items", :force => true do |t|
@@ -502,6 +506,8 @@ ActiveRecord::Schema.define(:version => 20110314123242) do
     t.boolean  "gets_happy_hour_announcement_email", :default => false
     t.boolean  "gets_daily_deal_email",              :default => false
     t.boolean  "quietly_created",                    :default => false
+    t.boolean  "gets_va_daily_deal_email",           :default => false
+    t.boolean  "gets_md_daily_deal_email",           :default => false
   end
 
   add_index "users", ["email"], :name => "email", :unique => true

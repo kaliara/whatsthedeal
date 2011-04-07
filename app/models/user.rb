@@ -302,7 +302,7 @@ class User < ActiveRecord::Base
   end
   
   def mistyped_email?
-    if email =~ /\.con|\.coom|\.cm$|\.cmo|gmial|gnail|gmai\.com|yaho\.com|yahooo\.com|hotmial/
+    if email =~ /\.con|\.coom|\.cm$|\.cmo|gmial|gnail|gmai\.com|yaho\.com|yahooo\.com|hotmial|hotmail.co$|gmail.co$|yahoo.co$/
       errors.add_to_base("Did you mistype your email? Please double check your email and try again.")
       return false
     else
