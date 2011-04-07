@@ -1,6 +1,6 @@
 <br><br>
 <% form_tag :action => 'mobile_redemptions' do %>
-  Deal: <%= select_tag :promotion_id, options_for_select([""] + ["All"] + @promotions.collect{|b| [b.id.to_s + " - " + b.name, b.id]}, (@default_promotion.nil? ? params[:promotion_id].to_i : @default_promotion.id)), :onchange => "submit()" %>
+  <%= label_tag :promotion_id, "Deal:" %> <%= select_tag :promotion_id, options_for_select([""] + ["All"] + @promotions.collect{|b| [b.id.to_s + " - " + b.name, b.id]}, params[:promotion_id].to_i), :onchange => "submit()" %>
 <% end %>
 <br>
 
@@ -9,35 +9,27 @@
     &nbsp;
     <%= hidden_field_tag 'promotion_id', params[:promotion_id] %>
     
+    <%= hidden_field_tag 'start_date', (Date.today - 1.month).strftime("%m/%d/%Y"), :id => 'start_date_last_month' %>
+    <%= hidden_field_tag 'end_date', (Date.today).strftime("%m/%d/%Y"), :id => 'end_date_last_month' %>
+    <%= submit_tag 'Last 30 Days', :class => "submit" %>
+  <% end %>
+  <% form_tag do %>
+    <span>or</span>&nbsp;
+    <%= hidden_field_tag 'promotion_id', params[:promotion_id] %>
+    
     <%= hidden_field_tag 'start_date', Date.commercial(Date.today.year, Date.today.cweek, 1).strftime("%m/%d/%Y"), :id => 'start_date_this_week' %>
     <%= hidden_field_tag 'end_date', Date.commercial(Date.today.year, Date.today.cweek, 7).strftime("%m/%d/%Y"), :id => 'end_date_this_week' %>
-    <%= submit_tag 'This Week' %>
-  <% end %>
-  <% form_tag do %>
-    <span>or</span>&nbsp;
-    <%= hidden_field_tag 'promotion_id', params[:promotion_id] %>
-    
-    <%= hidden_field_tag 'start_date', (Date.today - 1.day).strftime("%m/%d/%Y"), :id => 'start_date_last_week' %>
-    <%= hidden_field_tag 'end_date', (Date.today - 1.day).strftime("%m/%d/%Y"), :id => 'end_date_last_week' %>
-    <%= submit_tag 'Yesterday' %>
-  <% end %>
-  <% form_tag do %>
-    <span>or</span>&nbsp;
-    <%= hidden_field_tag 'promotion_id', params[:promotion_id] %>
-    
-    <%= hidden_field_tag 'start_date', Date.today.strftime("%m/%d/%Y"), :id => 'start_date_today' %>
-    <%= hidden_field_tag 'end_date', Date.today.strftime("%m/%d/%Y"), :id => 'end_date_today' %>
-    <%= submit_tag 'Today' %>
+    <%= submit_tag 'This Week', :class => "submit" %>
   <% end %>
   <% form_tag do %>
   <%= hidden_field_tag 'promotion_id', params[:promotion_id] %>
   
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <span>Specific Range:</span>
-    <%= text_field_tag 'start_date', @start_date.strftime("%m/%d/%Y"), :size => 10, :style => "width:85px" %>
+    <label>Specific Range:</label>
+    <%= text_field_tag 'start_date', @start_date.strftime("%m/%d/%Y"), :size => 10, :style => "width:125px" %>
     &nbsp;&nbsp;to&nbsp;&nbsp;
-    <%= text_field_tag 'end_date', @end_date.strftime("%m/%d/%Y"), :size => 10, :style => "width:85px" %>
-    <%= submit_tag 'Filter by Date' %>
+    <%= text_field_tag 'end_date', @end_date.strftime("%m/%d/%Y"), :size => 10, :style => "width:125px" %>
+    <%= submit_tag 'Filter by Date', :class => "submit primary" %>
   <% end %>
 </div>
 <br>
@@ -70,11 +62,11 @@
   
   <% end %>
 <% else %>
-  <div class="section_content"><br><p>
+  <div class="section_content"><p>
     <% if params[:promotion_id] == 'All' or params[:promotion_id].to_i > 0 %>
-      Sorry, no mobile redemptions.  Choose a different date range or deal.
+      <span class="fieldWithErrors">Sorry, no mobile redemptions.</span>  Choose a different date range or deal.
     <% else %>
-      Select a deal to see mobile redemptions.
+      <strong class="notice">How to Use:</strong> select a deal to see mobile redemptions.
     <% end %>
   </p></div>
 <% end %>

@@ -31,10 +31,9 @@ h1{
 }
 
 h2{
-  color: #FFF;
+  color: #eee;
   font-family: 'Myriad Pro', Myriad, Helvetica, sans-serif;
   font-weight: normal;
-  padding-top: 15px;
   font-size: 1.75em;
   line-height: 1.1em;
   margin-bottom: 10px;
@@ -72,19 +71,35 @@ dl, dt, dd {
 }
 
 table{
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 th {
-  color: #FFF;
+  color: #FFC0A5;
   padding: 10px;
-  background-color: #D36337;
+  background-color: #C03C05;
+  font-weight: normal;
 }
 td { 
   padding: 10px;
   background-color: #eee;
+  border-bottom: 1px solid #ddd;
   color: #444;
 }
-
+tr.table_footer th{
+  color: #fff;
+  font-weight: bold;
+}
+tr.table_footer a{
+  color: #FFC367;
+}
+td.extra{
+  background: transparent;
+  border: none;
+  color: #87A7C7;
+}
+td.extra a{
+  color: #FFC367;
+}
 a,
 a:visited{
   color: #5391D2;
@@ -103,7 +118,24 @@ address{
   padding-top: 15px;
   line-height: 115%;
 }
-
+select, input{
+  font-size: 125%;
+}
+input.text{
+  padding: 2px;
+}
+label{
+  font-size: 125%;
+}
+.strong{
+  font-weight: bold;
+}
+.green{
+  color: #37C100 !important;
+}
+.red{
+  color: red !important;
+}
 
 /* flash notices and errors */
 .flash {
@@ -158,7 +190,7 @@ address{
 }
 
 .fieldWithErrors{
-  color: red;
+  color: red !important;
   font-weight: bold;
 }
 .fieldWithErrors .text{
@@ -317,7 +349,7 @@ input[type="text"]:focus{
 input.hasDatepicker{
   width: 80px;
 }
-input.submit{
+input.submit, a.submit{
   background: transparent url('/images/bg_button_secondary.png') repeat-x center left;
   border: 1px solid #000;
   outline: none;
@@ -332,16 +364,26 @@ input.submit{
   -webkit-border-radius: 5px;
   cursor: pointer;
 }
-input.permanent{
+input.primary, a.primary{
   background: transparent url(/images/promo_deal_me_in_bg.png) repeat-x center left;
+}
+a.submit, a.primary{
+  display: block;
+  float: left;
+  padding: 7px 10px 5px;
+  text-decoration: none;
 }
 .clear {
   clear: both;
 }
 
 /* Date picker */
+.datepicker{
+  position: relative;
+  left: -5px;
+}
 .datepicker form {
-  margin-left: 10px;
+  margin-right: 10px;
   margin-top: 10px;
   margin-bottom: 20px;
   float: left;

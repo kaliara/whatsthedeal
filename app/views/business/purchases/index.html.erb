@@ -2,9 +2,8 @@
 <% form_tag :action => 'index' do %>
   <label for='promotion_id'><strong>Deal:</strong></label> <%= select_tag :promotion_id, options_for_select([""] + ["All"] + @promotions.collect{|b| [b.start_date.strftime("%m/%d/%Y") + " - " + b.name, b.id]}, params[:promotion_id].to_i > 0 ? params[:promotion_id].to_i : params[:promotion_id]), :onchange => "$('#excel_button').show(); $('#excel_promotion_id').val($('#promotion_id').val())" %>
   <br><br>
-  <%= radio_button_tag 'all', 'no', true %> <label for="q"><strong>Last Name</strong> or <strong>Confirmation Number</strong>:</label>
-  <%= text_field_tag 'q', params[:q], :style => 'width: 200px', :onkeydown => "$('#all_no').attr('checked', true)" %><br>
-  <span style="margin-left: 25px">(if gift, search 'gift from' last name)</span>
+  <%= radio_button_tag 'all', 'no', true %> <label for="q"><strong>Last Name</strong> or <strong>Confirmation Number</strong>:</label>&nbsp;&nbsp;
+  <%= text_field_tag 'q', params[:q], :style => 'width: 200px', :class => "text", :onkeydown => "$('#all_no').attr('checked', true)" %><span style="margin-left: 10px">(if gift, search 'gift from' last name)</span>
   <br><br>
   
   <%= radio_button_tag 'all', 'yes', nil, :onclick => "$('#q').val('')" %> <label for="all_yes"><strong>Show All Purchases</strong></label>
@@ -15,13 +14,14 @@
 <br><br>
 <% form_tag :action => 'export' do %>
   <%= hidden_field_tag :excel_promotion_id, params[:promotion_id] %>
-  <%= submit_tag 'Save All to Excel', :style => ("display: none" if params[:promotion_id].blank?), :class => "submit permanent", :id => "excel_button" %>
+  <%= submit_tag 'Save All to Excel', :style => ("display: none" if params[:promotion_id].blank?), :class => "submit primary", :id => "excel_button" %>
 <% end %>
 
 <% unless @coupons.empty? %>
-  <br><br>
+  <br><br><br>
+  <h1>Mark Coupons As Redeemed</h1>
   <% if @type %>
-    <h2><%= pluralize @coupons.size, "Purchases" %> for <%= params[:promotion_id].to_i > 0 ? Promotion.find(params[:promotion_id]).name : "All Deals" %> matching <%= @type %> '<%= params[:q] %>'</h2>
+    <h2><%= pluralize @coupons.size, "Purchases" %> matching <%= @type %> '<%= params[:q] %>'</h2>
   <% elsif params[:promotion_id].to_i > 0 %>
     <h2>Purchases for <%= Promotion.find(params[:promotion_id]).name %></h2>
   <% elsif params[:promotion_id] == 'All' %>
@@ -59,14 +59,14 @@
       <% end %>    
     </table>
   
-    <div class="commit clear"><%= submit_tag "Redeem Coupons", :class => "submit permanent" %></div>
+    <div class="commit clear"><%= submit_tag "Redeem Coupons", :class => "submit primary" %></div>
   <% end %>
 <% else %>
-  <div class="section_content"><br><p>
+  <div class="section_content"><p>
     <% if (params[:all] == 'no' or params[:all].blank?) and params[:q].blank? %>
-      <strong>How to Use:</strong> Select a deal and search by Customer Name or Coupon Confirmation Number.  You can also show all purchases (may take 2-3 minutes to display list).
+      <strong class="notice">How to Use:</strong> Select a deal and search by Customer Name or Coupon Confirmation Number.  You can also show all purchases (may take 2-3 minutes to display list).
     <% else %>
-      Sorry, no purchases found. You can search partial last name.  You can also show all purchases (may take 2-3 minutes to display list).
+      <span class="fieldWithErrors">Sorry, no purchases found.</span> You can search partial last name.  You can also show all purchases (may take 2-3 minutes to display list).
     <% end %>
   </p></div>
 <% end %>
