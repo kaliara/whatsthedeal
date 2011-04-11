@@ -1,6 +1,6 @@
 <br><br>
 <% form_tag :action => 'mobile_redemptions' do %>
-  <%= label_tag :promotion_id, "Deal:" %> <%= select_tag :promotion_id, options_for_select([""] + ["All"] + @promotions.collect{|b| [b.id.to_s + " - " + b.name, b.id]}, params[:promotion_id].to_i), :onchange => "submit()" %>
+  <%= label_tag :promotion_id, "Deal:" %> <%= select_tag :promotion_id, options_for_select([""] + ["All"] + @promotions.collect{|b| [b.id.to_s + " - " + b.name, b.id]}, params[:promotion_id].to_i > 0 ? params[:promotion_id].to_i : params[:promotion_id]), :onchange => "submit()" %>
 <% end %>
 <br>
 
@@ -34,33 +34,33 @@
 </div>
 <br>
 
-<h2>Mobile Redemptions for <%= @start_date.strftime("%b %d") + " to" if (@end_date - @start_date > 0) %> <%= @end_date.strftime("%b %d %Y") %></h2>
 
 <% unless @coupons.empty? %>
-  <% form_tag :controller => :purchases, :action => :bulk_use do %>
-    <table class="business_table">
-      <tr>
-        <th class="align_left">Purchaser Name</th>
-        <th>Confirmation Code</th>
-        <th>Redemption Date</th>
-        <th>Deal</th>
-        <th>Purchase Price</th>
-        <th>Coupon Code</th>
-      </tr>
-
-      <% @coupons.each do |coupon| %>
-        <tr>
-          <td class="align_left"><%= coupon.recipient %></td>
-          <td><%= coupon.confirmation_code %></td>
-          <td><%= coupon.redemption_date.strftime("%b %e, %Y at %l:%M %p") %></td>
-          <td><%= coupon.name %></td>
-          <td><%= number_to_currency coupon.deal.price %></td>
-          <td><%= coupon.coupon_code %></td>
-        </tr>
-      <% end %>    
-    </table>
+  <div class="print_this"><%= link_to "Print this Report", "javascript:print()" %></div>
+  <h2>Mobile Redemptions for <%= @start_date.strftime("%b %d") + " to" if (@end_date - @start_date > 0) %> <%= @end_date.strftime("%b %d %Y") %></h2>
   
-  <% end %>
+  <table class="business_table" width="1023">
+    <tr>
+      <th class="align_left">Purchaser Name</th>
+      <th>Confirmation Code</th>
+      <th>Redemption Date</th>
+      <th>Deal</th>
+      <th>Purchase Price</th>
+      <th>Coupon Code</th>
+    </tr>
+
+    <% @coupons.each do |coupon| %>
+      <tr>
+        <td class="align_left"><%= coupon.recipient %></td>
+        <td><%= coupon.confirmation_code %></td>
+        <td><%= coupon.redemption_date.strftime("%b %e, %Y at %l:%M %p") %></td>
+        <td><%= coupon.name %></td>
+        <td><%= number_to_currency coupon.deal.price %></td>
+        <td><%= coupon.coupon_code %></td>
+      </tr>
+    <% end %>    
+  </table>
+  <div class="print_this"><%= link_to "Print this Report", "javascript:print()" %></div>
 <% else %>
   <div class="section_content"><p>
     <% if params[:promotion_id] == 'All' or params[:promotion_id].to_i > 0 %>

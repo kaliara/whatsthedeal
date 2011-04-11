@@ -1,21 +1,19 @@
-<h3>Login to your Account</h3>
+<h1>Login to your Account</h1>
 
 <% form_for @user_session, :url => user_session_path do |f| %>
   <%= display_error_messages(f.error_messages) %>
   <div class="label_input_form">
-    <%= f.label :email %>
-    <%= f.text_field :email, :tabindex => 1, :class => "text" %>
+    <%= f.label :email %><br>
+    <%= f.text_field :email, :tabindex => 1, :class => "text", :style => "width: 348px" %>
   </div>
   <div class="label_input_form">
-    <%= f.label :password %>
+    <%= f.label :password %><br>
     <%= f.password_field :password, :tabindex => 2, :class => "text" %>
   </div>
   <div class="label_input_form remember_me">
     <%= f.label :remember_me %>
-    <%= f.check_box :remember_me, :tabindex => 3 %>
+    <%= f.check_box :remember_me, :tabindex => 3 %><br><br>
     <%= link_to "Forgot Password?", forgot_password_path, :class => 'forget_password' %>
   </div>
-  <div class="form_action">
-    <p><%= f.submit "Login", :class => "primary small_primary", :tabindex => 4 %></p>
-  </div>
+  <%= f.submit "Login", :class => "submit primary", :tabindex => 4 %>
 <% end %>

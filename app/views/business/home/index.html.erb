@@ -1,5 +1,7 @@
 <% @businesses.each do |business| %>
-  <div class="business_dashboard">
+  <div class="business_dashboard print_small">
+    <div class="print_this"><%= link_to "Print this Report", "javascript:print()" %></div>
+    
     <h1>Merchant Dashboard</h1>
 
     <% if business.has_deals? %>
@@ -7,7 +9,7 @@
         <% unless promotion.deals.empty? %>
           <table>
             <tr>
-              <th colspan="<%= current_user.business? ? "6" : "2" %>"><h3>(<%= promotion.start_date.strftime("%m/%d/%Y") %>) <%= promotion.name %></h3></th>
+              <th align="left" colspan="<%= current_user.business? ? "6" : "2" %>"><h3>(<%= promotion.start_date.strftime("%m/%d/%Y") %>) <%= promotion.name %></h3></th>
             </tr>
             <tr>
               <th style="text-align:center">Deal Name</th>
@@ -15,8 +17,8 @@
               <% if current_user.business? %>
               <th style="text-align:center">Purchase Price</th>
               <th style="text-align:center">Total $$ Collected</th>
-              <th style="text-align:center">% to <%= business.name %></th>
-              <th style="text-align:center">$$ to <%= business.name %></th>
+              <th style="text-align:center">% to Merchant</th>
+              <th style="text-align:center">$$ to Merchant</th>
               <% end %>
             </tr>
             <% promotion.deals.each do |deal| %>
@@ -37,7 +39,7 @@
               <% if current_user.business? %>
                 <th colspan="<%= current_user.business? ? "4" : "1" %>" style="text-align:right;">
                   <% unless promotion.coupons.empty? %>
-                    (<%= link_to "Purchase Report", :controller => 'purchases', :action => 'index', :promotion_id => promotion.id %> | <%= link_to "Demographics", business_purchase_stats_path(:promotion_id => promotion.id) %>) &nbsp;&nbsp;
+                    <span class="dont_print">(<%= link_to "Purchaser Report", :controller => 'purchases', :action => 'index', :promotion_id => promotion.id %> | <%= link_to "Demographics", business_purchase_stats_path(:promotion_id => promotion.id) %>)</span> &nbsp;&nbsp;
                   <% end %>
                   
                   <%= number_to_currency promotion.business_profit, :precision => 2 %>
@@ -148,6 +150,8 @@
         <h4 id="total2" class="super_grand_total">Grand Total: <strong><%= number_to_currency(subscriber_grand_total + purchaser_grand_total) %></strong></h4>
     <% end %>
   </div>
+  <div class="print_this_left"><%= link_to "Print this Report", "javascript:print()" %></div>
+  
 <% end %>
 
 <script type="text/javascript" charset="utf-8">
