@@ -2,11 +2,14 @@ form,
 iframe,
 .last,
 .print_this,
+.print_this_left,
 .footer,
 .submit,
 .main_nav,
 .account_nav,
-.bottom_link_next_page{
+.bottom_link_next_page,
+.copyright,
+.dont_print{
   display: none;
 }
 
@@ -17,7 +20,6 @@ body,
 html{
   margin: 0;
   padding: 0;
-  width: 100%;
 }
 
 .purchases_report{
@@ -31,20 +33,35 @@ body{
   padding: 30px;
 }
 
+h1{
+  font-size: 225%;
+  font-weight: normal;
+  margin-bottom: 40px;
+}
 h2{
   font-size: 225%;
   font-weight: normal;
   margin: 20px 0 25px;
 }
+h3{
+  font-size: 125%;
+  font-weight: normal;
+  padding-bottom: 10px;
+}
 h4{
   font-size: 125%;
   margin-bottom: 5px;
 }
-
+td, th{
+  text-align: left !important;
+  padding-right: 5px;
+}
+.print_small{
+  font-size: 100%;
+}
 .break{
   page-break-before: always;
 }
-
-td, th{
-  text-align: left;
+#logo{
+  font-size: 80%;
 }

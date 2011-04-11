@@ -6,6 +6,9 @@
 <br><br><br><br>
 
 <% unless @line_items.empty? %>
+  <div class="print_this_left"><%= link_to "Print this Report", "javascript:print()" %></div>
+  <br><br><br>
+  
   <h2>Purchases by Day</h2>
   
   <table class="business_table">
@@ -66,6 +69,7 @@
       </tr>
     <% end %>    
   </table>
+  <div class="print_this_left"><%= link_to "Print this Report", "javascript:print()" %></div>
   
 <% else %>
   <div class="section_content"><p>

@@ -438,7 +438,8 @@ a.submit, a.primary{
 .print_this{
   float: right;
 }
-.print_this a{
+.print_this a,
+.print_this_left a{
   padding: 15px 45px 15px 0;
   background: transparent url(/images/print_icon.jpg) no-repeat center right;
 }
