@@ -26,7 +26,7 @@ class Business::PurchasesController < ApplicationController
       @coupons = Coupon.find(:all, :conditions => ["REPLACE(confirmation_code,'-','') = '#{params[:q].gsub(/\-/,'')}' and deal_id in (#{@deals.join(',')})"]).to_a
     elsif params[:q] =~ /\w+/
       @type = "Name"
-      @user_ids = Customer.find(:all, :conditions => ['last_name like ?', "%#{params[:q]}%"]).collect{|c| c.user.id}
+      @user_ids = Customer.find(:all, :conditions => ['first_name like ? or last_name like ? or CONCAT(first_name," ",last_name) like ?', "%#{params[:q]}%", "%#{params[:q]}%", "%#{params[:q]}%"]).collect{|c| c.user.id}
       @coupons = Coupon.find(:all, :conditions => {:user_id => @user_ids, :deal_id => @deals}, :order => 'confirmation_code ASC')
     elsif params[:all] == 'yes'
       @coupons = Coupon.find(:all, :conditions => {:deal_id => @deals}, :order => 'confirmation_code ASC')
