@@ -1,5 +1,6 @@
-<h1>Search for Purchases</h1>
 <% form_tag :action => 'index' do %>
+  <h1>Search for Purchases</h1>
+  
   <label for='promotion_id'><strong>Deal:</strong></label> <%= select_tag :promotion_id, options_for_select([""] + ["All"] + @promotions.collect{|b| [b.start_date.strftime("%m/%d/%Y") + " - " + b.name, b.id]}, params[:promotion_id].to_i > 0 ? params[:promotion_id].to_i : params[:promotion_id]), :onchange => "$('#excel_button').show(); $('#excel_promotion_id').val($('#promotion_id').val())" %>
   <br><br>
   <%= radio_button_tag 'all', 'no', true %> <label for="q"><strong>Last Name</strong> or <strong>Confirmation Number</strong>:</label>&nbsp;&nbsp;
@@ -20,6 +21,7 @@
 <% unless @coupons.empty? %>
   <br><br><br>
   <h1>Mark Coupons As Redeemed</h1>
+  <div class="print_this"><%= link_to "Print this Report", "javascript:print()" %></div>
   <% if @type %>
     <h2><%= pluralize @coupons.size, "Purchases" %> matching <%= @type %> '<%= params[:q] %>'</h2>
   <% elsif params[:promotion_id].to_i > 0 %>
@@ -28,10 +30,10 @@
     <h2>All Purchases</h2>
   <% end %>
 
-  <% form_tag :controller => :purchases, :action => :bulk_use do %>
+  <% form_tag '/business/purchases/bulk_use', :class => "purchases_report" do %>
     <%= hidden_field_tag :q, params[:q] %>
     <%= hidden_field_tag :promotion_id, params[:promotion_id] %>
-    <table class="business_table">
+    <table class="business_table" width="1023">
       <tr>
         <th class="align_left">Purchaser Name</th>
         <th>Confirmation Code</th>
@@ -58,7 +60,7 @@
         </tr>
       <% end %>    
     </table>
-  
+    <div class="print_this"><%= link_to "Print this Report", "javascript:print()" %></div>
     <div class="commit clear"><%= submit_tag "Redeem Coupons", :class => "submit primary" %></div>
   <% end %>
 <% else %>

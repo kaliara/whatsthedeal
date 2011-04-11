@@ -434,3 +434,11 @@ a.submit, a.primary{
   margin: 0 40px;
   color: #87A7C7;
 }
+
+.print_this{
+  float: right;
+}
+.print_this a{
+  padding: 15px 45px 15px 0;
+  background: transparent url(/images/print_icon.jpg) no-repeat center right;
+}

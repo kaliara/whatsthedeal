@@ -1,0 +1,50 @@
+form,
+iframe,
+.last,
+.print_this,
+.footer,
+.submit,
+.main_nav,
+.account_nav,
+.bottom_link_next_page{
+  display: none;
+}
+
+.page_content,
+.wrapper,
+.main_wrapper,
+body,
+html{
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.purchases_report{
+  display: block !important;
+}
+body, p, td{
+  font-size: 16px;
+  line-height: 1.2em;
+}
+body{
+  padding: 30px;
+}
+
+h2{
+  font-size: 225%;
+  font-weight: normal;
+  margin: 20px 0 25px;
+}
+h4{
+  font-size: 125%;
+  margin-bottom: 5px;
+}
+
+.break{
+  page-break-before: always;
+}
+
+td, th{
+  text-align: left;
+}
