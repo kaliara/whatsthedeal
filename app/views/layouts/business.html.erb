@@ -23,12 +23,12 @@
           <li class="<%= 'current' if current_page? business_home_path %>"><%= link_to "Home", business_home_path %></li>
           <% if current_user and current_user.business_staff? %>
             <li class="<%= 'current' if current_page? business_purchases_path %>"><%= link_to "Purchases", business_purchases_path %></li>
-            <li class="<%= 'current' if current_page? business_purchase_stats_path %>"><%= link_to "Purchase Stats", business_purchase_stats_path %></li>
+            <li class="<%= 'current' if current_page? business_purchase_stats_path %>"><%= link_to "Demographics", business_purchase_stats_path %></li>
             <li class="<%= 'current' if current_page? business_mobile_redemptions_path %>"><%= link_to "Mobile Redemptions", business_mobile_redemptions_path %></li>
           <% end %>
           <% if current_user and current_user.business? and !current_user.business.promotions.empty? %>
-            <li class="<%= 'current' if current_page? business_promotions_path %>"><%= link_to "My Deals", business_promotions_path %></li>
-            <li class="<%= 'current' if current_page? business_business_staffs_path %>"><%= link_to "My Staff Members", business_business_staffs_path %></li>
+            <li class="<%= 'current' if current_page? business_promotions_path %>"><%= link_to "Deals", business_promotions_path %></li>
+            <li class="<%= 'current' if current_page? business_business_staffs_path %>"><%= link_to "My Staff", business_business_staffs_path %></li>
           <% end %>
         </ul>
       </div>
@@ -36,7 +36,7 @@
       <div class="account_nav">
         <div class="login_logout">
           <% if current_user_session %>
-            <p>Logged in: <%= current_user_session.user.email %> (<%= link_to 'logout', logout_path %>)</p>
+            <p><%= current_user_session.user.email %> (<%= link_to 'logout', logout_path %>)</p>
           <% end %>
           <% if current_user and current_user.business? %>
             <p>WTD Account <strong><%= "for #{current_user.business.name}" %></strong></p>

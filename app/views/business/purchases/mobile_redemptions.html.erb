@@ -1,6 +1,6 @@
 <br><br>
 <% form_tag :action => 'mobile_redemptions' do %>
-  <%= label_tag :promotion_id, "Deal:" %> <%= select_tag :promotion_id, options_for_select([""] + ["All"] + @promotions.collect{|b| [b.id.to_s + " - " + b.name, b.id]}, params[:promotion_id].to_i), :onchange => "submit()" %>
+  <%= label_tag :promotion_id, "Deal:" %> <%= select_tag :promotion_id, options_for_select([""] + ["All"] + @promotions.collect{|b| [b.id.to_s + " - " + b.name, b.id]}, params[:promotion_id].to_i > 0 ? params[:promotion_id].to_i : params[:promotion_id]), :onchange => "submit()" %>
 <% end %>
 <br>
 

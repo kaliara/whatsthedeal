@@ -7,7 +7,7 @@
         <% unless promotion.deals.empty? %>
           <table>
             <tr>
-              <th colspan="<%= current_user.business? ? "6" : "2" %>"><h3>(<%= promotion.start_date.strftime("%m/%d/%Y") %>) <%= promotion.name %></h3></th>
+              <th align="left" colspan="<%= current_user.business? ? "6" : "2" %>"><h3>(<%= promotion.start_date.strftime("%m/%d/%Y") %>) <%= promotion.name %></h3></th>
             </tr>
             <tr>
               <th style="text-align:center">Deal Name</th>
@@ -37,7 +37,7 @@
               <% if current_user.business? %>
                 <th colspan="<%= current_user.business? ? "4" : "1" %>" style="text-align:right;">
                   <% unless promotion.coupons.empty? %>
-                    (<%= link_to "Purchase Report", :controller => 'purchases', :action => 'index', :promotion_id => promotion.id %> | <%= link_to "Demographics", business_purchase_stats_path(:promotion_id => promotion.id) %>) &nbsp;&nbsp;
+                    (<%= link_to "Purchaser Report", :controller => 'purchases', :action => 'index', :promotion_id => promotion.id %> | <%= link_to "Demographics", business_purchase_stats_path(:promotion_id => promotion.id) %>) &nbsp;&nbsp;
                   <% end %>
                   
                   <%= number_to_currency promotion.business_profit, :precision => 2 %>

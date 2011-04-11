@@ -64,9 +64,9 @@
 <% else %>
   <div class="section_content"><p>
     <% if (params[:all] == 'no' or params[:all].blank?) and params[:q].blank? %>
-      <strong class="notice">How to Use:</strong> Select a deal and search by Customer Name or Coupon Confirmation Number.  You can also show all purchases (may take 2-3 minutes to display list).
+      <strong class="notice">How to Use:</strong> Select a deal and search by Customer Name or Coupon Confirmation Number. <br>You can also show all purchases (may take 2-3 minutes to display list).
     <% else %>
-      <span class="fieldWithErrors">Sorry, no purchases found.</span> You can search partial last name.  You can also show all purchases (may take 2-3 minutes to display list).
+      <span class="fieldWithErrors">Sorry, no purchases found.</span> You can search partial last name. <br>You can also show all purchases (may take 2-3 minutes to display list).
     <% end %>
   </p></div>
 <% end %>

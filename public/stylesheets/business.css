@@ -200,7 +200,7 @@ label{
 /* Layout */
 .header{
   background: transparent url('/images/new_header_bg.png') no-repeat -29px -98px;
-  margin: 0 40px;
+  margin: 0 0 0 40px;
   height: 162px;
 }
 
@@ -222,6 +222,10 @@ label{
 .page_content{
   position: relative;
   background: #01314A;
+  float: left;
+  min-width: 1023px;
+  width: auto !important;
+  width: 1023px;
   padding: 20px;
   color: #ccc;
   -moz-border-radius: 10px;
@@ -290,15 +294,16 @@ label{
 }
 .nav_wrapper ul li a{
   display: block;
-  padding: 15px;
+  padding: 15px 3px 3px;
 }
 ul.main_nav{
   background: #01314A;
-  font-size: 110%;
+  font-size: 130%;
   font-weight: normal;
   float: left;
   display: inline;
   margin-right: 30px;
+  padding: 0 5px;
   -moz-border-radius: 0 0 10px 10px;
   -webkit-border-radius: 0 0 10px 10px;
 }
@@ -306,30 +311,38 @@ ul.main_nav li{
 	float:			left;
 	list-style:	none;
 	display:		inline;
-	margin:     0 5px;
+	margin:     0 13px 15px;
 }
 
 ul.main_nav li a{
+  color: #fff;
+  font-weight: bold;
+  border-bottom: 2px solid #D14900;
+}
+ul.main_nav li a:hover{
+  text-decoration: none !important;
+  border: none;
   color: #ccc;
 }
 ul.main_nav li.current a{
-  color: #fff;
-  font-weight: bold;
+  color: #ccc;
+  border: none;
   text-decoration: none !important;
   cursor: default !important;
 }
 .account_nav{
   background: #01314A;
   color: #ccc;
-  font-size: 80%;
+  font-size: 85%;
   font-weight: normal;
   float: left;
   display: inline;
-  padding: 5px 15px;
+  padding: 7px 15px;
   margin-left: 25px;
   -moz-border-radius: 0 0 10px 10px;
   -webkit-border-radius: 0 0 10px 10px;
   line-height: 1.55em;
+  width: 210px;
 }
 .account_nav p{
   color: #ccc;
@@ -340,10 +353,14 @@ ul.main_nav li.current a{
 
 
 /* interface */
+form{
+  line-height: 1.2em;
+}
 input[type="text"]{
   width: 600px;
 }
-input[type="text"]:focus{
+input[type="text"]:focus,
+input[type="password"]:focus{
   background: #F5D992;
 }
 input.hasDatepicker{
@@ -373,6 +390,10 @@ a.submit, a.primary{
   padding: 7px 10px 5px;
   text-decoration: none;
 }
+.label_input_form{
+  margin-bottom: 20px;
+}
+
 .clear {
   clear: both;
 }
