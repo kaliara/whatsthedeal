@@ -122,7 +122,7 @@
         <% elsif @promotion.id == 291 or @promotion.id == 293 or @promotion.id == 294 %>
           <strong><%= Promotion.find(293).purchases + Promotion.find(294).purchases %></strong>&nbsp;&nbsp;purchased
         <% elsif @promotion.id == 362 %>
-          <strong>659</strong>&nbsp;&nbsp;purchased
+          <strong>710</strong>&nbsp;&nbsp;purchased
         <% elsif @promotion.inventory.to_i < 999 %>
           <strong><%= @promotion.purchases %></strong> <span class="out_of">of</span> <strong><%= @promotion.inventory %></strong>&nbsp;purchased
         <% else %>
