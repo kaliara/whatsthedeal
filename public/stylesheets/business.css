@@ -390,12 +390,22 @@ a.submit, a.primary{
   padding: 7px 10px 5px;
   text-decoration: none;
 }
+a.disabled, input.disabled{
+  background: #78633F url('/images/bg_button_primary_disabled.png') repeat-x left center;
+  cursor: default;
+  border-color: #A3895B;
+  color: #aaa !important;
+} 
 .label_input_form{
   margin-bottom: 20px;
 }
 
 .clear {
   clear: both;
+}
+.export_notice{
+  color: #ccc;
+  margin-left: 10px;
 }
 
 /* Date picker */
