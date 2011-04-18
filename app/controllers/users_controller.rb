@@ -222,10 +222,12 @@ class UsersController < ApplicationController
   
   # forgot password
   def forgot_password
+    current_user_session.destroy if current_user_session
     render :action => mobile ? 'forgot_password_m' : 'forgot_password'
   end
   
   def reset_password
+    current_user_session.destroy if current_user_session
     @forgetfull_user = User.find_by_email(params[:user][:email])  
     @forgetfull_user.password = @forgetfull_user.temporary_password
     @forgetfull_user.password_confirmation = @forgetfull_user.temporary_password
@@ -233,7 +235,7 @@ class UsersController < ApplicationController
       if @forgetfull_user.deliver_password_reset_instructions!
         cart.empty!
         flash[:notice] = "We've just emailed you a temporary password. Please check your email."  
-        redirect_to login_url  
+        redirect_to logout_url  
       else
         flash[:error] = "Sorry, but we had trouble sending the password reset email. Try again in a few minutes, or email us at password@sowhatsthedeal.com and we'll help get things sorted out."  
         redirect_to timeout_error_path  
