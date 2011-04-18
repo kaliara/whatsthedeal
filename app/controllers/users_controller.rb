@@ -227,11 +227,13 @@ class UsersController < ApplicationController
   
   def reset_password
     @forgetfull_user = User.find_by_email(params[:user][:email])  
-    if @forgetfull_user  
+    @forgetfull_user.password = @forgetfull_user.temporary_password
+    @forgetfull_user.confirmatin_password = @forgetfull_user.temporary_password
+    if @forgetfull_user.save
       if @forgetfull_user.deliver_password_reset_instructions!
         cart.empty!
         flash[:notice] = "Instructions to reset your password have been emailed to you. " +  "Please check your email."  
-        redirect_to root_url  
+        redirect_to login_url  
       else
         flash[:error] = "Sorry, but we had trouble sending the password reset email. Try again in a few minutes, or email us at password@sowhatsthedeal.com and we'll help get things sorted out."  
         redirect_to timeout_error_path  
