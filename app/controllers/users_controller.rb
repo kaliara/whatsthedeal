@@ -228,7 +228,7 @@ class UsersController < ApplicationController
   def reset_password
     @forgetfull_user = User.find_by_email(params[:user][:email])  
     @forgetfull_user.password = @forgetfull_user.temporary_password
-    @forgetfull_user.password_confirmatin = @forgetfull_user.temporary_password
+    @forgetfull_user.password_confirmation = @forgetfull_user.temporary_password
     if @forgetfull_user.save
       if @forgetfull_user.deliver_password_reset_instructions!
         cart.empty!
