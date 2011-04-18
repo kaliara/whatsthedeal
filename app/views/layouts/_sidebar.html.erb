@@ -29,7 +29,7 @@
             <dl><dt>Days Left: </dt><dd><%= ((promotion.end_date - Time.now.utc)/86400) < 1 ? "< 1" : ((promotion.end_date - Time.now.utc)/86400).floor %></dd></dl>
             <% if promotion.id == 330 %>
             <% elsif promotion.id == 362 %>
-              <dl class="last">Purchases: <dt></dt><dd>836</dd></dl>
+              <dl class="last">Purchases: <dt></dt><dd>1017</dd></dl>
             <% else %>
               <dl class="last">Purchases: <dt></dt><dd><%= promotion.purchases %></dd></dl>
             <% end %>
