@@ -6,7 +6,7 @@
     <th>ID</th>
     <th>Name</th>
     <th>Deals</th>
-    <th><strong>Purchases</strong></th>
+    <th>Purchases</th>
     <th>Quota</th>
     <th>Live on WTD?</th>
     <th>End date</th>
@@ -19,13 +19,12 @@
     <td><%=h promotion.deals.count %></td>
     <td><strong><%= link_to promotion.purchases, :controller => 'purchases', :action => 'show', :promotion_id => promotion.id %></strong></td>
     <td><%=h promotion.quota %></td>
-    <td><%=h promotion.active? ? "Yes" : "No" %></td>
+    <td class="<%= "green" if promotion.active? %>"><%=h promotion.active? ? "Yes" : "No" %></td>
     <td class="last"><%=h (promotion.end_date - 4.hours).strftime("%b %e, %Y") %></td>
+    <td class="extra"><%= link_to "Purchase Report", :controller => 'purchases', :action => 'index', :promotion_id => promotion.id %> | <%= link_to "Demographics", business_purchase_stats_path(:promotion_id => promotion.id) %></td>
   </tr>
 <% end %>
 </table>
-
-<br />
 
 <div class="bottom_link_next_page">
   <%= link_to "Back to Home", business_home_path %>

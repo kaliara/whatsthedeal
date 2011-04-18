@@ -44,19 +44,21 @@ class Business::BusinessStaffsController < ApplicationController
   # POST /business_staffs
   # POST /business_staffs.xml
   def create
-    @user = User.new
-    @user.email = params[:email]
-    @user.password = params[:password]
-    @user.password_confirmation = params[:password]
-    @user.save
+    unless params[:email].blank? or params[:password].blank?
+      @user = User.new
+      @user.email = params[:email]
+      @user.password = params[:password]
+      @user.password_confirmation = params[:password]
+      @user.save
     
-    @business_staff = BusinessStaff.new
-    @business_staff.user_id = @user.id
-    @business_staff.name = params[:name]
-    @business_staff.business_id = current_user.business.id
-
+      @business_staff = BusinessStaff.new
+      @business_staff.user_id = @user.id
+      @business_staff.name = params[:name]
+      @business_staff.business_id = current_user.business.id
+    end
+    
     respond_to do |format|
-      if @business_staff.save
+      if !params[:email].blank? and !params[:password].blank? and @business_staff.save
         flash[:notice] = 'Staff member was successfully created.'
         format.html { redirect_to(business_business_staffs_path) }
         format.xml  { render :xml => @business_staff, :status => :created, :location => @business_staff }

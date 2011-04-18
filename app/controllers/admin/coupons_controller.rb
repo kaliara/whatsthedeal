@@ -9,9 +9,13 @@ class Admin::CouponsController < ApplicationController
     if params[:q] =~ /\@/
       @type = "Email"
       @coupons = Coupon.find(:all, :conditions => {:user_id => User.find_by_email(params[:q]).id}, :order => 'created_at DESC')
-    elsif params[:q] =~ /\d+\-?/
+    elsif params[:q] =~ /\d+/
       @type = "Confirmation Code"
-      @coupons = Coupon.find_by_confirmation_code(params[:q]).to_a
+      @coupons = Coupon.find(:all, :conditions => ["REPLACE(confirmation_code,'-','') = '#{params[:q].gsub(/\-/,'')}'"]).to_a
+    elsif params[:q] =~ /\w+/
+      @type = "Name"
+      @user_ids = Customer.find(:all, :conditions => ['first_name like ? or last_name like ? or CONCAT(first_name," ",last_name) like ?', "%#{params[:q]}%", "%#{params[:q]}%", "%#{params[:q]}%"]).collect{|c| c.user.id}
+      @coupons = Coupon.find(:all, :conditions => {:user_id => @user_ids}, :order => 'confirmation_code ASC')
     else
       @coupons = Coupon.find(:all, :order => 'created_at DESC', :limit => 20, :offset => params[:offset].to_i)
     end

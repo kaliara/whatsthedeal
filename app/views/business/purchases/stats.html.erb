@@ -1,0 +1,86 @@
+<h1>Purchase Demographics</h1>
+<br>
+<% form_tag :action => 'stats' do %>
+  <%= label_tag :promotion_id, "Deal:" %> <%= select_tag :promotion_id, options_for_select([""] + @promotions.collect{|p| [p.start_date.strftime("%m/%d/%Y") + " - " + p.name, p.id]}, params[:promotion_id].to_i), :onchange => "submit()" %>
+<% end %>
+<br><br><br><br>
+
+<% unless @line_items.empty? %>
+  <div class="print_this_left"><%= link_to "Print this Report", "javascript:print()" %></div>
+  <br><br><br>
+  
+  <h2>Purchases by Day</h2>
+  
+  <table class="business_table">
+    <tr>
+      <th class="align_left">Date</th>
+      <th>Number Purchased</th>
+    </tr>
+    <% @line_items.each_with_index do |line_item, i| %>
+      <tr>
+        <td><%= (@first_day + i.days).strftime("%A, %B %e, %Y") %></td>
+        <td align="center"><%= line_item %></td>
+      </tr>
+    <% end %> 
+    <tr class="table_footer">
+      <th>Total Deals Sold</th>
+      <th><%= @promotion.coupons.size %></th>
+    </tr>  
+  </table>
+  <br><br>
+
+  <h2>Demographic Information</h2>
+  <table class="business_table">
+    <tr>
+      <th>Gender</th>
+      <th>Count</th>
+    </tr>
+    <tr>
+      <td>Male</td>
+      <td align="center"><%= @males.size %></td>
+    </tr>
+    <tr>
+      <td>Female</td>
+      <td align="center"><%= @females.size %></td>
+    </tr>
+    <tr>
+      <td>Not Disclosed</td>
+      <td align="center"><%= @neither.size %></td>
+    </tr>
+    <tr class="table_footer">
+      <th>Total Purchasers</th>
+      <th><%= @customers.size %></th>
+    </tr>  
+  </table>
+  <br><br>
+  
+
+  <h2>Location Information</h2>
+  
+  <table class="business_table">
+    <tr>
+      <th class="align_left">Zip code</th>
+      <th>Number Purchased</th>
+    </tr>
+    <% @zipcode_purchases.each do |key, value| %>
+      <tr class="<%= "strong" if value >= 10 %>">
+        <td class="align_left"><%= key %></td>
+        <td align="center"><%= value %></td>
+      </tr>
+    <% end %>    
+  </table>
+  <div class="print_this_left"><%= link_to "Print this Report", "javascript:print()" %></div>
+  
+<% else %>
+  <div class="section_content"><p>
+    <% if params[:promotion_id] == 'All' or params[:promotion_id].to_i > 0 %>
+      <span class="fieldWithErrors">Sorry, no purchases found.</span>
+    <% else %>
+      <strong class="notice">How to Use:</strong> Select a deal to view its purchase demographics.
+    <% end %>
+  </p></div>
+<% end %>
+<br><br>
+<div class="bottom_link_next_page">
+  <%= link_to "Back to Home", business_home_path %>
+</div>

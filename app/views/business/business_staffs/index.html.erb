@@ -1,13 +1,21 @@
-<ul id="sub_nav">
-  <li><%= link_to 'New Staff Member', new_business_business_staff_path %></li>
-  <li><%= link_to 'Business Home', business_home_path %></li>
-</ul>
+<h1>Staff Members</h1>
+<br>
+<%= link_to 'New Staff Member', new_business_business_staff_path, :class => "submit primary" %></li>
+<br><br>
 
 <div class="section_content">
-  <p>The following people have access to your purchase list, but not financial agreements between you and WTD.</p><br><br>
-  <ul style="font-size: 14px;">
-    <% @business_staffs.each do |bs| %>
-    <li><strong><%= bs.name %> </strong>(<%= bs.user.email %>) - <%= link_to 'Delete', business_business_staff_path(bs.id), :method => :delete %></li>
-    <% end %>
-  </ul>
+  <% unless @business_staffs.empty? %>
+    <p>The following people have access to your purchase list, but not financial agreements between you and WTD.</p>
+    <ul>
+      <% @business_staffs.each do |bs| %>
+      <li><strong><%= bs.name %> </strong>(<%= bs.user.email %>) - <%= link_to 'Delete', business_business_staff_path(bs.id), :method => :delete, :class => "red" %></li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p><strong class="notice">How to Use:</strong> Click the "New Staff Member" button and fill out information.<br>Staff Members have access to your purchase list, but not financial agreements between you and WTD</p>
+  <% end %>
+</div>
+
+<div class="bottom_link_next_page">
+  <%= link_to "Back to Home", business_home_path %>
 </div>
