@@ -1,0 +1,43 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'New Refund', new_admin_refund_path %></li>
+<% end %>
+
+<h2>Refund for <%= @refund.purchase.user.email %></h2>
+
+<h3>Coupons Refunded</h3>
+<table>
+<% @coupons_refunded.each do |coupon| %>
+  <tr>
+    <td><%= coupon.user.email %></td>
+    <td><%= coupon.user.customer.name %></td>
+    <td><%= coupon.name %></td>
+  </tr>
+<% end %>
+</table>
+
+<div class="section_content">
+  <p>
+    <%= label_tag "Date Processed" %>:
+    <strong><%= @refund.created_at.strftime "%B, %e %Y at %H:%M %p" %></strong>
+  </p>
+
+  <p>
+    <%= label_tag "Purchase" %>:
+    <strong><%= link_to @refund.purchase_id, admin_purchase_path(@refund.purchase_id) %></strong>
+  </p>
+
+  <p>
+    <%= label_tag "Credit Card Amount" %>:
+    <strong><%= number_to_currency @refund.cc_amount %></strong>
+  </p>
+
+  <p>
+    <%= label_tag "WTD Credit Amount" %>:
+    <strong><%= number_to_currency @refund.credit_amount %></strong>
+  </p>
+  <br>
+  <p>
+    <%= label_tag "Reason for the refund (interal):" %><br />
+    <em><%= @refund.reason %></em>
+  </p>
+</div>

@@ -1,0 +1,45 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'All Refunds', admin_refunds_path %></li>
+<% end %>
+
+<h2>New Refund</h2>
+
+<h3>Coupons to Refund</h3>
+<table>
+<% @queued_coupon_refunds.each do |coupon| %>
+  <tr>
+    <td><%= coupon.user.email %></td>
+    <td><%= coupon.user.customer.name %></td>
+    <td><%= coupon.name %></td>
+    <td><%= number_to_currency coupon.deal.price - coupon.purchase.credit_per_deal %></td>
+    <td><%= link_to "Remove from Queue", new_admin_refund_path(:coupon_to_remove => coupon.id) %></td>
+  </tr>
+<% end %>
+</table>
+<br>
+
+<% form_for([:admin,@refund]) do |f| %>
+  <%= f.error_messages %>
+  <%= f.hidden_field :purchase_id, :value => @queued_coupon_refunds.first.purchase_id unless @queued_coupon_refunds.empty? %>
+  <%= f.hidden_field :cc_amount, :value => @cc_amount %>
+  <%= f.hidden_field :credit_amount, :value => @credit_amount %>
+  
+  <p>
+    <%= f.label :cc_amount, "Credit Card Amount" %>:
+    <strong><%= number_to_currency @cc_amount %></strong>
+  </p>
+  
+  <p>
+    <%= f.label :credit_amount, "WTD Credit Amount" %>:
+    <strong><%= number_to_currency @credit_amount %></strong>
+  </p>
+  <br>
+  <p>
+    <%= f.label :reason, "Describe the reason for the refund (internal):" %><br />
+    <%= f.text_area :reason, :rows => 5, :cols => 70 %>
+  </p>
+  <br><br>
+  <p>
+    <%= f.submit 'Process Refund' %>
+  </p>
+<% end %>

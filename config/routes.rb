@@ -172,6 +172,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :promotion_codes
     admin.resources :purchases
     admin.resources :users
+    admin.resources :refunds
     admin.resources :items
     admin.resources :raffles
     admin.resources :user_reviews
