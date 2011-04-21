@@ -5,6 +5,7 @@ class Purchase < ActiveRecord::Base
   has_many :credits
   belongs_to :user
   has_one :payment_profile
+  has_one :refund
 
   accepts_nested_attributes_for :payment_profile, :allow_destroy => false, :reject_if => proc { |obj| obj.blank? }
   

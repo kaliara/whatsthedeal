@@ -695,3 +695,7 @@ h5 a:visited{
   color: red;
   font-weight: bold;
 }
+.refunded{
+  color: red;
+  font-weight: bold;
+}

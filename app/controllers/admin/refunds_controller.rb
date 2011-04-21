@@ -17,7 +17,6 @@ class Admin::RefundsController < ApplicationController
   # GET /refunds/1.xml
   def show
     @refund = Refund.find(params[:id])
-    @coupons_refunded = Coupon.refunded.select{|c| c.purchase_id == @refund.purchase_id}
     
     respond_to do |format|
       format.html { render :action => "show"}

@@ -26,6 +26,7 @@ class Admin::PurchasesController < ApplicationController
   # GET /purchases/1.xml
   def show
     @purchase = Purchase.find(params[:id])
+    @refund = @purchase.refund
 
     respond_to do |format|
       format.html # show.html.erb

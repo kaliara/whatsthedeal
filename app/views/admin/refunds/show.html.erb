@@ -6,7 +6,7 @@
 
 <h3>Coupons Refunded</h3>
 <table>
-<% @coupons_refunded.each do |coupon| %>
+<% @refund.coupons.each do |coupon| %>
   <tr>
     <td><%= coupon.user.email %></td>
     <td><%= coupon.user.customer.name %></td>

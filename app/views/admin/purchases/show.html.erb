@@ -29,23 +29,57 @@
           <dt>Total<%= " (after credits)" unless @purchase.credits.empty? %>:</dt>
           <dd><%= number_to_currency @purchase.total %></dd>
         </dl>
-      </div><br>
-    
-      <table class="simple_table">
-        <tr>
-          <th>Name</th>
-          <th>Expiration</th>
-          <td></td>
-        </tr>
-        <% @purchase.coupons.each do |coupon| %>
+      </div><br><br>
+
+      <% unless @purchase.coupons.empty? %>
+        <table class="simple_table">
           <tr>
-            <td><%= link_to coupon.name, admin_coupon_path(coupon) %></td>
-            <td><%=h coupon.expiration.strftime("%m/%d/%Y") %></td>
+            <th>Name</th>
+            <th>Expiration</th>
+            <td></td>
           </tr>
-        <% end %>
-      </table>
-    
+          <% @purchase.coupons.each do |coupon| %>
+            <tr>
+              <td><%= link_to coupon.name, admin_coupon_path(coupon) %></td>
+              <td><%=h coupon.expiration.strftime("%m/%d/%Y") %></td>
+            </tr>
+          <% end %>
+        </table><br><br>
+      <% end %>
     </div>  
   </div>
   
+    <% unless @refund.nil? or @refund.coupons.empty? %>
+      <div class="section_element">
+        <div class="section_header">
+          <h3>Refunded Coupons (<%= link_to "refund details", admin_refund_path(@refund) %>)</h3>
+        </div>
+        <div class="section_content">
+          <p>
+            <%= label_tag "Date Processed" %>:
+            <strong><%= @refund.created_at.strftime "%B, %e %Y at %H:%M %p" %></strong>
+          </p>
+          <p>
+            <%= label_tag "Credit Card Amount" %>:
+            <strong><%= number_to_currency @refund.cc_amount %></strong>
+          </p>
+          <p>
+            <%= label_tag "WTD Credit Amount" %>:
+            <strong><%= number_to_currency @refund.credit_amount %></strong>
+          </p>
+        </div>
+      
+        <table class="simple_table">
+          <tr>
+            <th>Coupon</th>
+            <td></td>
+          </tr>
+          <% @refund.coupons.each do |coupon| %>
+            <tr>
+              <td class="refunded"><%= coupon.name %></td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
+    </div>
 </div>
