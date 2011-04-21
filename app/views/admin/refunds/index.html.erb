@@ -2,28 +2,67 @@
   <li><%= link_to 'New Refund', new_admin_refund_path %></li>
 <% end %>
 
-<h2>All Refunds</h2>
-<table>
-<tr>
-  <th>Purchase</th>
-  <th>Customer</th>
-  <th>Date</th>
-  <th>Credit Card</th>
-  <th>WTD Credit</th>
-</tr>
-<% @refunds.each do |refund| %>
+<div class="datepicker clearfix">
+  <% form_tag "", :method => :get do %>
+    &nbsp;
+    <%= hidden_field_tag 'start_date', Date.new(Date.today.year, Date.today.month, 1).strftime("%m/%d/%Y"), :id => 'start_date_this_week' %>
+    <%= hidden_field_tag 'end_date', Date.new(Date.today.year, Date.today.month, -1).strftime("%m/%d/%Y"), :id => 'end_date_this_week' %>
+    <%= submit_tag 'This Month' %>
+  <% end %>
+  <% form_tag "", :method => :get do %>
+    <span>or</span>&nbsp;
+    <%= hidden_field_tag 'start_date', Date.commercial(Date.today.year, Date.today.cweek, 1).strftime("%m/%d/%Y"), :id => 'start_date_this_week' %>
+    <%= hidden_field_tag 'end_date', Date.commercial(Date.today.year, Date.today.cweek, 7).strftime("%m/%d/%Y"), :id => 'end_date_this_week' %>
+    <%= submit_tag 'This Week' %>
+  <% end %>
+  <% form_tag "", :method => :get do %>
+    <span>or</span>&nbsp;
+    <%= hidden_field_tag 'start_date', Date.today.strftime("%m/%d/%Y"), :id => 'start_date_today' %>
+    <%= hidden_field_tag 'end_date', Date.today.strftime("%m/%d/%Y"), :id => 'end_date_today' %>
+    <%= submit_tag 'Today' %>
+  <% end %>
+  <% form_tag "", :method => :get do %>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <span>Specific Range:</span>
+    <%= text_field_tag 'start_date', @start_date.strftime("%m/%d/%Y"), :style => "width: 90px" %>
+    &nbsp;&nbsp;to&nbsp;&nbsp;
+    <%= text_field_tag 'end_date', @end_date.strftime("%m/%d/%Y"), :style => "width: 90px" %>
+    <%= submit_tag 'Filter by Date' %>
+  <% end %>
+</div>
+
+<% unless @refunds.empty? %>
+  <h2>Refunds for <%= @start_date.strftime("%B %e") %> - <%= @end_date.strftime("%B %e") %></h2>
+  <table>
   <tr>
-    <td><%= link_to refund.purchase_id, admin_purchase_path(refund.purchase_id) %></td>
-    <td><%= link_to refund.purchase.user.customer.name, admin_customer_path(refund.purchase.user.customer) %> (<%= refund.purchase.user.email %>)</td>
-    <td><%= refund.created_at.strftime "%m/%d/%Y at %H:%M %p" %></td>
-    <td><%= number_to_currency refund.cc_amount %></td>
-    <td><%= number_to_currency refund.credit_amount %></td>
-    <td><%= link_to "Details", admin_refund_path(refund) %></td>
+    <th>Purchase</th>
+    <th>Customer</th>
+    <th>Date</th>
+    <th>Credit Card</th>
+    <th>WTD Credit</th>
   </tr>
+  <% @refunds.each do |refund| %>
+    <tr>
+      <td><%= link_to refund.purchase_id, admin_purchase_path(refund.purchase_id) %></td>
+      <td><%= link_to refund.purchase.user.customer.name, admin_customer_path(refund.purchase.user.customer) %> (<%= refund.purchase.user.email %>)</td>
+      <td><%= refund.created_at.strftime "%m/%d/%Y at %H:%M %p" %></td>
+      <td><%= number_to_currency refund.cc_amount %></td>
+      <td><%= number_to_currency refund.credit_amount %></td>
+      <td><%= link_to "Details", admin_refund_path(refund) %></td>
+    </tr>
+  <% end %>
+  <tr class="total">
+    <th colspan="3"></th>
+    <th><strong><%= number_to_currency @refunds.collect{|r| r.cc_amount}.sum %></strong></th>
+    <th><strong><%= number_to_currency @refunds.collect{|r| r.credit_amount}.sum %></strong></th>
+  </tr>
+  </table>
+<% else %>
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;No refunds that match. Perhaps try a different date range?</p>
 <% end %>
-<tr class="total">
-  <th colspan="3"></th>
-  <th><strong><%= number_to_currency @refunds.collect{|r| r.cc_amount}.sum %></strong></th>
-  <th><strong><%= number_to_currency @refunds.collect{|r| r.credit_amount}.sum %></strong></th>
-</tr>
-</table>
+  
+  
+<script type="text/javascript" charset="utf-8">
+  $("#start_date").datepicker();
+  $("#end_date").datepicker();
+</script>

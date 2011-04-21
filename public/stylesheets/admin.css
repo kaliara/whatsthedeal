@@ -688,7 +688,7 @@ h5 a:visited{
   font-size: 150%;
 }
 
-#end_date {
+#end_date, #start_date {
   font-size: 110%;
 }
 #end_date span{
