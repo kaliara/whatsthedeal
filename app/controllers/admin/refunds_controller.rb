@@ -45,9 +45,19 @@ class Admin::RefundsController < ApplicationController
     
     @refund = Refund.new
     @queued_coupon_refunds = Coupon.find(session[:queued_coupon_refunds])
-    @credit_amount = @queued_coupon_refunds.empty? ? 0 : @queued_coupon_refunds.first.purchase.credit_per_deal * @queued_coupon_refunds.size
-    @cc_amount = @queued_coupon_refunds.empty? ? 0 : @queued_coupon_refunds.collect{|c| c.deal.price}.sum - @credit_amount
-
+    @credit_amount = 0
+    @cc_amount = 0
+    
+    unless @queued_coupon_refunds.empty?
+      @credit_amount = @queued_coupon_refunds.first.purchase.credit_per_deal * @queued_coupon_refunds.size
+      @cc_amount = @queued_coupon_refunds.collect{|c| c.deal.price}.sum - @credit_amount
+    end
+    
+    if params[:all_credit]
+      @credit_amount = @credit_amount + @cc_amount
+      @cc_amount = 0
+    end
+    
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @refund }
@@ -63,7 +73,7 @@ class Admin::RefundsController < ApplicationController
     # create wtd credits
     if @refund.credit_amount > 0
       @credit = Credit.new
-      @credit.promotion_code_id = PromotionCode::DIFFERENCE_CREDIT
+      @credit.promotion_code_id = PromotionCode::REFUND_CREDIT
       @credit.value = @refund.credit_amount
       @credit.user_id = @refund.purchase.user.id
       @credit.save

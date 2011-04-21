@@ -1,0 +1,24 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'New Refund', new_admin_refund_path %></li>
+<% end %>
+
+<h2>All Refunds</h2>
+<table>
+<tr>
+  <th>Purchase</th>
+  <th>Customer</th>
+  <th>Date</th>
+  <th>Credit Card</th>
+  <th>WTD Credit</th>
+</tr>
+<% @refunds.each do |refund| %>
+  <tr>
+    <td><%= link_to refund.purchase_id, admin_purchase_path(refund.purchase_id) %></td>
+    <td><%= link_to refund.purchase.user.customer.name, admin_customer_path(refund.purchase.user.customer) %> (<%= refund.purchase.user.email %>)</td>
+    <td><%= refund.created_at.strftime "%m/%d/%Y at %H:%M %p" %></td>
+    <td><%= number_to_currency refund.cc_amount %></td>
+    <td><%= number_to_currency refund.credit_amount %></td>
+    <td><%= link_to "Details", admin_refund_path(refund) %></td>
+  </tr>
+<% end %>
+</table>

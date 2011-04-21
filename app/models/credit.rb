@@ -44,7 +44,7 @@ class Credit < ActiveRecord::Base
   end
   
   def valid_unused_promotion_code?
-    if [PromotionCode::REFERRAL_CREDIT, PromotionCode::DIFFERENCE_CREDIT, PromotionCode::COURTESY_CREDIT].include?(promotion_code_id) or Credit.find(:all, :conditions => [ "user_id = ? AND promotion_code_id = ?", self.user_id, self.promotion_code_id]).empty?
+    if [PromotionCode::REFERRAL_CREDIT, PromotionCode::DIFFERENCE_CREDIT, PromotionCode::COURTESY_CREDIT, PromotionCode::REFUND_CREDIT].include?(promotion_code_id) or Credit.find(:all, :conditions => [ "user_id = ? AND promotion_code_id = ?", self.user_id, self.promotion_code_id]).empty?
       true
     else
       errors.add :promotion_code, 'Hey now, you already used that promotion code'
@@ -98,6 +98,6 @@ class Credit < ActiveRecord::Base
   end
   
   def name
-    [PromotionCode::REFERRAL_CREDIT, PromotionCode::DIFFERENCE_CREDIT, PromotionCode::COURTESY_CREDIT].include?(self.promotion_code_id) ? "WTD Credit" : self.promotion_code.name
+    [PromotionCode::REFERRAL_CREDIT, PromotionCode::DIFFERENCE_CREDIT, PromotionCode::COURTESY_CREDIT, PromotionCode::REFUND_CREDIT].include?(self.promotion_code_id) ? "WTD Credit" : self.promotion_code.name
   end
 end

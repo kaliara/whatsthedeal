@@ -8,6 +8,7 @@ class PromotionCode < ActiveRecord::Base
   REFERRAL_CREDIT   = 1
   DIFFERENCE_CREDIT = 2
   COURTESY_CREDIT   = 3
+  REFUND_CREDIT     = 4
 
   def redeemable?
     self.active? and (self.credits.count < self.use_limit)
