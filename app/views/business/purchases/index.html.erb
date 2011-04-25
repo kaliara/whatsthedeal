@@ -15,7 +15,8 @@
 <br><br>
 <% form_tag :action => 'export' do %>
   <%= hidden_field_tag :excel_promotion_id, params[:promotion_id] %>
-  <%= submit_tag 'Save All to Excel', :style => ("display: none" if params[:promotion_id].blank?), :class => "submit primary", :id => "excel_button" %>
+  <%= submit_tag 'Save All to Excel', :style => ("display: none" if params[:promotion_id].blank?), :class => "submit primary", :id => "excel_button", :onclick => "$(this).addClass('disabled'); $(this).attr('disabled', 'disabled'); $('.export_notice').show();" %>
+  <span class="export_notice" style="display:none">(Exporting now. Process may take 2-4 minutes.)</span>
 <% end %>
 
 <% unless @coupons.empty? %>
@@ -76,7 +77,3 @@
 <div class="bottom_link_next_page">
   <%= link_to "Back to Home", business_home_path %>
 </div>
-
-<script type="text/javascript" charset="utf-8">
-  
-</script>

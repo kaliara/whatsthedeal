@@ -17,7 +17,7 @@
     <td><%=h promotion.id %></td>
     <td class="align_left"><%= link_to promotion.name, promotion_slug_path(promotion.slug) %></td>
     <td><%=h promotion.deals.count %></td>
-    <td><strong><%= link_to promotion.purchases, :controller => 'purchases', :action => 'show', :promotion_id => promotion.id %></strong></td>
+    <td><strong><%= link_to promotion.purchases, :controller => 'purchases', :action => 'index', :promotion_id => promotion.id %></strong></td>
     <td><%=h promotion.quota %></td>
     <td class="<%= "green" if promotion.active? %>"><%=h promotion.active? ? "Yes" : "No" %></td>
     <td class="last"><%=h (promotion.end_date - 4.hours).strftime("%b %e, %Y") %></td>

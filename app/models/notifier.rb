@@ -65,7 +65,7 @@ class Notifier < ActionMailer::Base
    recipients   (RAILS_ENV == 'staging' or RAILS_ENV == 'development') ? TEST_RECIPIENT : user.email
    from         "support@sowhatsthedeal.com (What's the Deal)"
    subject      "Reset your What's the Deal Password" + (" ::::: [originally for #{user.email}]" if (RAILS_ENV == 'staging' or RAILS_ENV == 'development')).to_s
-   body         :user => user, :edit_password_reset_url => reset_password_url(user.perishable_token)
+   body         :user => user
    content_type "text/html"
   end
   

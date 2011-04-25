@@ -107,7 +107,7 @@
                               <% if @promotion.physical_address? %>
                                 <a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%= @promotion.business.street1.gsub(/\s/,"+") %>+<%= @promotion.business.city.gsub(/\s/,"+") %>,+<%= @promotion.business.state %>+<%= @promotion.business.zipcode %>" target="_blank" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;"><img src="THIS DIDN'T LOAD CORRECTLY'" id="map" alt="Map of <%= @promotion.business.name %>" width="280" height="190" align="right" style="margin-right: 5px;border: 7px solid #ffffff;"></a>
                               <% else %>
-                                <%= link_to image_tag(@promotion.map_replacement_image.url, :width => 280, :height => 190, :align => "right", :style => "margin-right: 5px;border: 7px solid #ffffff;"), promotions_url %>
+                                <%= link_to image_tag("http://sowhatsthedeal.com" + @promotion.map_replacement_image.url, :width => 280, :height => 190, :align => "right", :style => "margin-right: 5px;border: 7px solid #ffffff;"), promotions_url %>
                               <% end %>
                               <p style="text-align:center">
                                 <%= link_to image_tag('http://sowhatsthedeal.com/emails/deal_map_link.png', :border => 0), promotion_map_url %>

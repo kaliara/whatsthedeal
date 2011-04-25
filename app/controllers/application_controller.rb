@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base
     return @partner if defined?(@partner)
     
     if !request.subdomains.empty? and (request.subdomains.first == 'washingtonian')
-      @partner = 2
+      @partner = 0
     elsif !request.subdomains.empty? and (request.subdomains.first == 'halfpricedc')
       @partner = 3
     else
