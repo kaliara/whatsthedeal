@@ -1,5 +1,4 @@
 <% content_for :sub_nav do %>
-  <li><%= link_to 'New Refund', new_admin_refund_path %></li>
 <% end %>
 
 <div class="datepicker clearfix">
@@ -31,39 +30,32 @@
   <% end %>
 </div>
 
-<% unless @refunds.empty? %>
-  <h2>Refunds for <%= @start_date.strftime("%B %e") %> - <%= @end_date.strftime("%B %e") %></h2>
+<% unless @voids.empty? %>
+  <h2>Voids for <%= @start_date.strftime("%B %e") %> - <%= @end_date.strftime("%B %e") %></h2>
   <table>
   <tr>
     <th>Purchase</th>
     <th>Invoice Number</th>
     <th>Customer</th>
     <th>Date</th>
-    <th>Credit Card</th>
-    <th>WTD Credit</th>
-    <th>Processed</th>
+    <th>Adjusted Amount</th>
+    <th>Processed?</th>
   </tr>
-  <% @refunds.each do |refund| %>
+  <% @voids.each do |void| %>
     <tr>
-      <td><%= link_to refund.purchase_id, admin_purchase_path(refund.purchase_id) %></td>
-      <td><%= refund.purchase.invoice_number %></td>
-      <td><%= link_to refund.purchase.user.customer.name, admin_customer_path(refund.purchase.user.customer) %> (<%= refund.purchase.user.email %>)</td>
-      <td><%= refund.created_at.strftime "%m/%d/%Y at %H:%M %p" %></td>
-      <td><%= number_to_currency refund.cc_amount %></td>
-      <td><%= number_to_currency refund.credit_amount %></td>
-      <td align="center" style="color: green;"><%= "&#10004;" if refund.processed? %></td>
-      <td><%= link_to "Details", admin_refund_path(refund) %></td>
-      <td><%= link_to "Process", admin_process_refund_path(refund) if current_user.admin? and !refund.processed? %></td>
+      <td><%= link_to void.purchase_id, admin_purchase_path(void.purchase_id) %></td>
+      <td><%= void.purchase.invoice_number %></td>
+      <td><%= link_to void.purchase.user.customer.name, admin_customer_path(void.purchase.user.customer) %> (<%= void.purchase.user.email %>)</td>
+      <td><%= void.created_at.strftime "%m/%d/%Y at %H:%M %p" %></td>
+      <td><%= number_to_currency void.purchase.total %></td>
+      <td align="center" style="color: green;"><%= "&#10004;" if void.processed? %></td>
+      <td><%= link_to "Details", admin_void_path(void) %></td>
+      <td><%= link_to "Process", admin_process_void_path(void) if current_user.admin? and !void.processed? %></td>
     </tr>
   <% end %>
-  <tr class="total">
-    <th colspan="4"></th>
-    <th><strong><%= number_to_currency @refunds.collect{|r| r.cc_amount}.sum %></strong></th>
-    <th><strong><%= number_to_currency @refunds.collect{|r| r.credit_amount}.sum %></strong></th>
-  </tr>
   </table>
 <% else %>
-  <p>&nbsp;&nbsp;&nbsp;&nbsp;No refunds that match. Perhaps try a different date range?</p>
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;No voids that match. Perhaps try a different date range?</p>
 <% end %>
   
   

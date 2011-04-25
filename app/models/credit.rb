@@ -15,7 +15,7 @@ class Credit < ActiveRecord::Base
   def valid_meets_restrictions?
     return true unless self.promotion_code.restricted?
     
-    Credit.find(:all, :conditions => ['user_id = ? and id > 0 and promotion_code_id > 3', self.user_id]).each do |c|
+    Credit.find(:all, :conditions => ['user_id = ? and id > 0 and promotion_code_id > 4', self.user_id]).each do |c|
       if c.restricted?
         errors.add :promotion_code, 'Sorry, but this promo can only be used when you register'
         return false

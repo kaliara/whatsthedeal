@@ -52,7 +52,7 @@
     <% if coupon.active? %>
       <td><%= link_to 'Refund', new_admin_refund_path(:coupon_to_refund => coupon.id) %></td>
     <% else %>
-      <td><%= link_to 'Destroy', admin_coupon_path(coupon), :confirm => 'Are you sure?', :method => :delete %></td>
+      <td><%= link_to 'Void', admin_coupon_path(coupon), :confirm => 'Are you sure?', :method => :delete %></td>
     <% end %>
   </tr>
 <% end %>

@@ -6,11 +6,12 @@ class Purchase < ActiveRecord::Base
   belongs_to :user
   has_one :payment_profile
   has_one :refund
+  has_one :void
 
   accepts_nested_attributes_for :payment_profile, :allow_destroy => false, :reject_if => proc { |obj| obj.blank? }
   
   before_create :process, :if => Proc.new { |p| p.total > 0 }
-  default_scope :order => 'created_at DESC'
+  default_scope :conditions => {:deleted => false}, :order => 'created_at DESC'
   
   attr_accessor :card_number, :card_verification, :customer_email, :description, :customer_ip
 
@@ -122,4 +123,12 @@ class Purchase < ActiveRecord::Base
     return false
   end
   
+  def delete!
+    self.deleted = true
+    self.save
+  end
+  
+  def self.deleted(limit=nil, offset=nil)
+    Purchase.with_exclusive_scope { Purchase.find(:all, :conditions => {:deleted => true}, :limit => limit, :offset => offset) }
+  end
 end

@@ -7,7 +7,7 @@
 <div class="section_content">
   <h4>Refund Details</h4>
   <p>
-    <%= label_tag "Date Processed" %>:
+    <%= label_tag "Created" %>:
     <strong><%= @refund.created_at.strftime "%B, %e %Y at %H:%M %p" %></strong>
   </p>
 
@@ -27,12 +27,33 @@
     <%= label_tag "Issued as WTD Credit" %>:
     <strong><%= number_to_currency @refund.credit_amount %></strong>
   </p>
+  <% if @refund.processed? %>
+  <p>
+    <%= label_tag "Processed" %>:
+    <strong style="color: green">YES</strong>
+  </p>
+  <p>
+    <%= label_tag "Processing Date" %>:
+    <strong><%= @refund.updated_at.strftime "%B, %e %Y at %H:%M %p" %></strong>
+  </p>
+  <% else %>
+  <p>
+    <%= label_tag "Processed" %>:
+    <strong style="color:red">NO</strong>
+  </p>
+  <br>
+    <% form_tag admin_process_refund_path(@refund) do %>
+      <%= submit_tag "Mark as Processed" if current_user.admin? %>
+    <% end %>
+  <% end %>
+
   <br><br>
   <h4>Coupons Refunded</h4>
   <table>
   <% @refund.coupons.each do |coupon| %>
     <tr>
       <td><%= coupon.user.email %></td>
+      <td><%= coupon.confirmation_code %></td>
       <td><%= coupon.user.customer.name %></td>
       <td><%= coupon.name %></td>
     </tr>

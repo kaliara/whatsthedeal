@@ -1,13 +1,14 @@
 class Admin::RefundsController < ApplicationController
   layout 'admin'
   before_filter :staff_required
+  before_filter :admin_required, :only => [:processing]
 
   # GET /refunds
   # GET /refunds.xml
   def index
     @now = DateTime.new(Time.zone.now.year, Time.zone.now.month, Time.zone.now.day, Time.zone.now.hour, Time.zone.now.min, Time.zone.now.sec)
-    @start_date = params[:start_date].nil? ? DateTime.new(@now.year, @now.month, @now.day, 4, 0) : DateTime.parse(params[:start_date] + " 04:00:00")
-    @end_date   = params[:end_date].nil? ? DateTime.new(@now.year, @now.month, @now.day, 4, 0) : DateTime.parse(params[:end_date] + " 04:00:00")
+    @start_date = params[:start_date].nil? ? DateTime.new(@now.year, @now.month, 1, 4, 0) : DateTime.parse(params[:start_date] + " 04:00:00")
+    @end_date   = params[:end_date].nil? ? DateTime.new(@now.year, @now.month, -1, 4, 0) : DateTime.parse(params[:end_date] + " 04:00:00")
     
     @refunds = Refund.find(:all, :conditions => ['created_at >= ? and created_at < ?', @start_date, @end_date + 1.day])
 
@@ -108,4 +109,11 @@ class Admin::RefundsController < ApplicationController
     end
   end
 
+  def processing
+    @refund = Refund.find(params[:id])
+    @refund.processed = true
+    @refund.save
+    
+    redirect_to :back
+  end
 end

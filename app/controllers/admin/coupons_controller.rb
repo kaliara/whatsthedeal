@@ -43,30 +43,43 @@ class Admin::CouponsController < ApplicationController
   def destroy
     @coupon = Coupon.find(params[:id])
     @purchase = @coupon.purchase
+    @user = @coupon.user
     @difference = @purchase.total - @coupon.deal.price
 
     # update purchase totals
     @purchase.deals_total = @purchase.deals_total - @coupon.deal.price
     @purchase.total = [0, @difference].max
     @purchase.save
-    
+
     # destroy coupon and empty purchases
-    if @coupon.destroy
-      flash[:notice] = "Coupon has been removed, double check the purchase to verify: <a href='#{admin_purchase_path(@purchase)}'>view purchase</a>"
-    end
-    if @purchase.coupons.empty?
-      @purchase.destroy
-      flash[:notice] = "Coupon and entire purchase (since it only had one coupon) has been removed."
-    end
-    
-    # differnce credit needed?
-    if @difference < 0
-      @credit = Credit.new
-      @credit.promotion_code_id = PromotionCode::DIFFERENCE_CREDIT
-      @credit.value = @difference.abs
-      @credit.user_id = @coupon.user.id
-      @credit.save
-      flash[:notice] += "<br/>Also, we credited the users account $#{@credit.value} because the new purchase price (or removed purchase) means they would have had credit left over.<br/><a href='#{admin_impersonate_path(:type => 'customer', :id => @credit.user.customer.id)}'>Impersonate this customer</a> to make sure everything is in order."
+    if @coupon.delete!
+      flash[:notice] = "Coupon has been voided, double check the purchase to verify: <a href='#{admin_purchase_path(@purchase)}'>view purchase</a>"
+
+      if @purchase.coupons.empty?
+        @purchase.delete!
+        flash[:notice] = "Coupon has been voided. The purchase was voided as well (since it contained on that coupon)"
+      end
+
+      # differnce credit needed?
+      if @difference < 0
+        @credit = Credit.new
+        @credit.promotion_code_id = PromotionCode::DIFFERENCE_CREDIT
+        @credit.value = @difference.abs
+        @credit.user_id = @user.id
+        @credit.save
+        flash[:notice] += "<br/>Also, we credited the users account $#{@credit.value} because the new purchase price (or removed purchase) means they would have had credit left over.<br/><a href='#{admin_impersonate_path(:type => 'customer', :id => @credit.user.customer.id)}'>Impersonate this customer</a> to make sure everything is in order."
+      end
+      
+      # create a void entry if necessary
+      if Void.find_by_purchase_id(@purchase.id)
+        @void = Void.find_by_purchase_id(@purchase.id)
+        @void.processed = false
+      else
+        @void = Void.new
+        @void.purchase_id = @purchase.id
+      end
+      @void.save
+      flash[:notice] += "<br/><br/>An entry has been created in the Voids table and will be processed at 5pm. <a href='/admin/voids/#{@void.id}'>View the Void entry</a>."
     end
     
     respond_to do |format|

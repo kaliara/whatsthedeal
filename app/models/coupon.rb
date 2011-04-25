@@ -92,6 +92,11 @@ class Coupon < ActiveRecord::Base
     self.save
   end
   
+  def delete!
+    self.deleted = true
+    self.save
+  end
+  
   def stolen?(current_user)
     current_user.nil? ? true : self.user.id != current_user.id
   end
