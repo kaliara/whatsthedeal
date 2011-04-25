@@ -15,7 +15,7 @@ class Credit < ActiveRecord::Base
   def valid_meets_restrictions?
     return true unless self.promotion_code.restricted?
     
-    Credit.find(:all, :conditions => ['user_id = ? and id > 0 and promotion_code_id > 3', self.user_id]).each do |c|
+    Credit.find(:all, :conditions => ['user_id = ? and id > 0 and promotion_code_id > 4', self.user_id]).each do |c|
       if c.restricted?
         errors.add :promotion_code, 'Sorry, but this promo can only be used when you register'
         return false
@@ -44,7 +44,7 @@ class Credit < ActiveRecord::Base
   end
   
   def valid_unused_promotion_code?
-    if [PromotionCode::REFERRAL_CREDIT, PromotionCode::DIFFERENCE_CREDIT, PromotionCode::COURTESY_CREDIT].include?(promotion_code_id) or Credit.find(:all, :conditions => [ "user_id = ? AND promotion_code_id = ?", self.user_id, self.promotion_code_id]).empty?
+    if [PromotionCode::REFERRAL_CREDIT, PromotionCode::DIFFERENCE_CREDIT, PromotionCode::COURTESY_CREDIT, PromotionCode::REFUND_CREDIT].include?(promotion_code_id) or Credit.find(:all, :conditions => [ "user_id = ? AND promotion_code_id = ?", self.user_id, self.promotion_code_id]).empty?
       true
     else
       errors.add :promotion_code, 'Hey now, you already used that promotion code'
@@ -98,6 +98,6 @@ class Credit < ActiveRecord::Base
   end
   
   def name
-    [PromotionCode::REFERRAL_CREDIT, PromotionCode::DIFFERENCE_CREDIT, PromotionCode::COURTESY_CREDIT].include?(self.promotion_code_id) ? "WTD Credit" : self.promotion_code.name
+    [PromotionCode::REFERRAL_CREDIT, PromotionCode::DIFFERENCE_CREDIT, PromotionCode::COURTESY_CREDIT, PromotionCode::REFUND_CREDIT].include?(self.promotion_code_id) ? "WTD Credit" : self.promotion_code.name
   end
 end

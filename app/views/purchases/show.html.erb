@@ -18,7 +18,7 @@
           <dd><%=h @purchase.created_at.to_date %></dd>
         
           <dt>Deals Purchased:</dt>
-          <dd><%= @purchase.coupons.count %></dd>
+          <dd><%= @purchase.coupons.count %> <%= "<span class='refunded'>(#{@purchase.refund.coupons.count} refunded)</span>" unless @purchase.refund.nil? %></dd>
 
           <% unless @purchase.credits.empty? %>
             <dt>WTD Credit used:</dt>
@@ -26,7 +26,7 @@
           <% end %>
         
           <dt>Total<%= " (after credits)" unless @purchase.credits.empty? %>:</dt>
-          <dd><%= number_to_currency @purchase.total %></dd>
+          <dd><%= number_to_currency @purchase.total %> <%= "<span class='refunded'>(#{number_to_currency (@purchase.refund.cc_amount + @purchase.refund.credit_amount)} refunded)</span>" unless @purchase.refund.nil? %></dd>
         </dl>
       </div>
     
@@ -42,6 +42,36 @@
           </tr>
         <% end %>
       </table>
+      
+      <br><br>
+      
+      <% unless @purchase.refund.nil? or @purchase.refund.coupons.empty? %>
+        <h4>There was a <span class="refunded">refund</span> issued for this purchase</h4>
+        <dl class="purchase_show_payment_info clearfix">
+          <dt>Date Processed:</dt>
+          <dd><%= @purchase.refund.created_at.strftime "%B, %e %Y at %H:%M %p" %></dd>
+        </dl>
+        <dl class="purchase_show_payment_info clearfix">
+          <dt>Issued to Credit Card:</dt>
+          <dd><%= number_to_currency @purchase.refund.cc_amount %></dd>
+        </dl>
+        <dl class="purchase_show_payment_info clearfix">
+          <dt>Issued as WTD Credit:</dt>
+          <dd><%= number_to_currency @purchase.refund.credit_amount %></dd>
+        </dl>
+        
+        <table class="simple_table">
+          <tr>
+            <th>Refunded Coupon</th>
+            <td></td>
+          </tr>
+          <% @purchase.refund.coupons.each do |coupon| %>
+            <tr>
+              <td class="refunded"><%= coupon.name %></td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
       
     </div>  
   </div>

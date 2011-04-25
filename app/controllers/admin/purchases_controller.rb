@@ -25,7 +25,9 @@ class Admin::PurchasesController < ApplicationController
   # GET /purchases/1
   # GET /purchases/1.xml
   def show
-    @purchase = Purchase.find(params[:id])
+    @purchase = Purchase.exists?(params[:id]) ? Purchase.find(params[:id]) : Purchase.deleted.select{|p| p.id == params[:id]}.first
+    puts @purchase.to_yaml
+    @refund = @purchase.refund
 
     respond_to do |format|
       format.html # show.html.erb

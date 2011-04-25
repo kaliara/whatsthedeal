@@ -24,7 +24,6 @@
     <th>Coupon Holder</th>
     <th>Purchase</th>
     <th>Name</th>
-    <!-- <th>Expiration</th> -->
     <th>Active</th>
     <th>Emailed</th>
     <th>Printed</th>
@@ -41,7 +40,6 @@
     <td><%=h coupon.recipient %></td>
     <td><%= link_to coupon.purchase_id, admin_purchase_path(coupon.purchase_id) %></td>
     <td><%=h coupon.name %></td>
-    <!-- <td><%=h coupon.expiration.strftime("%m/%e/%Y") %></td> -->
     <td style="color: green;"><%= "&#10004;" if coupon.active? %></td>
     <td style="color: green;"><%= "&#10004;" if coupon.emailed? %></td>
     <td style="color: green;"><%= "&#10004;" if coupon.printed? %></td>
@@ -49,9 +47,13 @@
     <td style="color: green;"><%= "&#10004;" if coupon.biz_used? %></td>
     <td><%=h coupon.confirmation_code %></td>
     <td><%=h coupon.coupon_code %></td>
-    <td><%= link_to "Activate", admin_activate_coupons_path(coupon) if coupon.deal.promotion.quota_met?  %></td>
-    <td><%= link_to 'Show', admin_coupon_path (coupon) %></td>
-    <td><%= (link_to 'Destroy', admin_coupon_path(coupon), :confirm => 'Are you sure?', :method => :delete)  if current_user and current_user.admin? %></td>
+    <td><%= link_to 'Preview', admin_coupon_path (coupon) %></td>
+    <td><%= link_to "Activate", admin_activate_coupons_path(coupon) if coupon.deal.promotion.quota_met? and !coupon.active? %></td>
+    <% if coupon.active? %>
+      <td><%= link_to 'Refund', new_admin_refund_path(:coupon_to_refund => coupon.id) %></td>
+    <% else %>
+      <td><%= link_to 'Void', admin_coupon_path(coupon), :confirm => 'Are you sure?', :method => :delete %></td>
+    <% end %>
   </tr>
 <% end %>
 </table>

@@ -277,13 +277,13 @@
         <% elsif @promotion.id == 291 or @promotion.id == 293 or @promotion.id == 294 %>
           <strong><%= Promotion.find(293).purchases + Promotion.find(294).purchases %></strong>&nbsp;&nbsp;purchased
         <% elsif @promotion.id == 362 %>
-          <strong>1081</strong>&nbsp;&nbsp;purchased
+          <strong>1,081</strong>&nbsp;&nbsp;purchased
         <% elsif @promotion.id == 239 or @promotion.id == 240 or @promotion.id == 260 %>
-          <strong><%= @promotion.inventory - @promotion.purchases %></strong>&nbsp;&nbsp;tickets left
+          <strong><%= number_with_delimiter(@promotion.inventory - @promotion.purchases) %></strong>&nbsp;&nbsp;tickets left
         <% elsif @promotion.inventory.to_i < 999 %>
-          <strong><%= @promotion.purchases %></strong> <span class="out_of">of</span> <strong><%= @promotion.inventory %></strong>&nbsp;purchased
+          <strong><%= number_with_delimiter @promotion.purchases %></strong> <span class="out_of">of</span> <strong><%= @promotion.inventory %></strong>&nbsp;purchased
         <% else %>
-          <strong><%= @promotion.purchases %></strong>&nbsp;&nbsp;purchases
+          <strong><%= number_with_delimiter @promotion.purchases %></strong>&nbsp;&nbsp;purchases
         <% end %>
       </div>
     
