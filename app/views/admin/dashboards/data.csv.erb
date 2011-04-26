@@ -1,0 +1,4 @@
+<%= "Date,Registrations,Referred Registrations,Subscriptions,Purchases,First Purchases,Deals,Early bird losses,Revenue,Revenue (after credits),Profit,Avg. Rev. per Coupon,Avg. Commission" %>
+<%- for i in 0..(@days - 1) do -%>
+  <%= @data[i].join(',') %>
+<%- end -%>

@@ -138,6 +138,8 @@ ActionController::Routing::Routes.draw do |map|
   map.admin_deal_activate_coupons '/admin/deals/:id/activate_coupons', :controller => '/admin/deals', :action => 'activate_coupons'
   map.admin_activate_coupons '/admin/coupons/:id/activate_coupons', :controller => '/admin/coupons', :action => 'activate_coupons'
   map.admin_dashboards '/admin/dashboards', :controller => '/admin/dashboards', :action => 'index'
+  map.admin_dashboard_daily_csv '/admin/dashboards/daily.csv', :controller => '/admin/dashboards', :action => 'data', :format => 'csv', :days => '1'
+  map.admin_dashboard_weekly_csv '/admin/dashboards/weekly.csv', :controller => '/admin/dashboards', :action => 'data', :format => 'csv', :days => '7'
   map.admin_promotions_dashboard '/admin/dashboards/promotions', :controller => '/admin/dashboards', :action => 'promotions'
   map.admin_washingtonian_dashboard '/admin/dashboards/washingtonian', :controller => '/admin/dashboards', :action => 'washingtonian'
   map.admin_affiliates_dashboard '/admin/dashboards/affiliates', :controller => '/admin/dashboards', :action => 'affiliates'

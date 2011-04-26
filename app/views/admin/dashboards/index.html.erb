@@ -66,11 +66,16 @@
         <dt>Early bird losses:</dt>                                                                                
         <dd><%= number_to_currency @purchases.collect{|p| p.early_bird_losses}.sum %></dd>
         <dt>Revenue (after early bird):</dt>
-        <dd><%= number_to_currency @purchases.collect{|p| p.deals_total}.sum %></dd>
+        <dd><%= number_to_currency @revenue %></dd>
         <dt>Revenue (after credits):</dt>                                                                                
-        <dd><%= number_to_currency @purchases.collect{|p| p.total}.sum %></dd>
+        <dd><%= number_to_currency @revenue_post_credit %></dd>
         <dt>Profit:</dt>                                                                                               
-        <dd><%= number_to_currency(@purchases.collect{|p| p.profit}.sum - (@purchases.collect{|p| p.deals_total}.sum - @purchases.collect{|p| p.total}.sum)) %></dd>
+        <dd><%= number_to_currency @profit - (@revenue - @revenue_post_credit) %></dd>
+        <br><br>
+        <dt>Avg. Rev. per Coupon:</dt>                                                                                               
+        <dd><%= number_to_currency(@revenue / @deals.size) unless @deals.empty? %></dd>
+        <dt>Avg. Commission:</dt>                                                                                               
+        <dd><%= number_to_percentage(@revenue > 0 ? @profit / @revenue * 100 : 0) %></dd>
       </dl>
     </div>
   </div>
