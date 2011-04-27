@@ -28,6 +28,7 @@
     <th>Emailed</th>
     <th>Printed</th>
     <th>Used</th>
+    <th>Mobile Used</th>
     <th>Used (biz)</th>
     <th>Confirmation Code</th>
     <th>Coupon Code</th>
@@ -44,6 +45,7 @@
     <td style="color: green;"><%= "&#10004;" if coupon.emailed? %></td>
     <td style="color: green;"><%= "&#10004;" if coupon.printed? %></td>
     <td style="color: green;"><%= "&#10004;" if coupon.used? %></td>
+    <td style="color: green;"><%= "&#10004;" if coupon.mobile_used? %></td>
     <td style="color: green;"><%= "&#10004;" if coupon.biz_used? %></td>
     <td><%=h coupon.confirmation_code %></td>
     <td><%=h coupon.coupon_code %></td>
