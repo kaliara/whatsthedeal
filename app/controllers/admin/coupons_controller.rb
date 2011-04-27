@@ -57,7 +57,7 @@ class Admin::CouponsController < ApplicationController
 
       if @purchase.coupons.empty?
         @purchase.delete!
-        flash[:notice] = "Coupon has been voided. The purchase was voided as well (since it contained on that coupon)"
+        flash[:notice] = "Coupon has been voided. The purchase was voided as well (since it only contained that one coupon)"
       end
 
       # differnce credit needed?

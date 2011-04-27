@@ -54,7 +54,7 @@
                       <p style="color: #adc5d9;font-family: 'Myriad', sans-serif;font-size: 20px;font-weight: normal;margin: 7px 0 0 0;padding:20px; background:#012437; border: 1px solid #3d6073; text-align:center;">
                         Date processed: <%= @refund.created_at.strftime "%B, %e %Y at %H:%M%P" %><br><br>
                         Refunded to your credit card: <strong style="color: #fff"><%= number_to_currency @refund.cc_amount %></strong><br>
-                        Applied in WTD credit: <strong style="color: #fff"><%= number_to_currency @refund.credit_amount %></strong><br>
+                        <% if @refund.credit_amount > 0 %>Applied in WTD credit: <strong style="color: #fff"><%= number_to_currency @refund.credit_amount %></strong><br><% end %>
                         <br><br>
                         <span style="font-size: 14px">You can <%= link_to "view the purchase in your account", purchase_url(@refund.purchase_id), :style => "color:#94BFF2" %> and/or print this email for your records.</span>
                       </p>

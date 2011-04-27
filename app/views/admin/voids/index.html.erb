@@ -47,7 +47,7 @@
       <td><%= void.purchase.invoice_number %></td>
       <td><%= link_to void.purchase.user.customer.name, admin_customer_path(void.purchase.user.customer) %> (<%= void.purchase.user.email %>)</td>
       <td><%= void.created_at.strftime "%m/%d/%Y at %H:%M %p" %></td>
-      <td><%= number_to_currency void.purchase.total %></td>
+      <td><%= void.purchase.total > 0 ? number_to_currency(void.purchase.total) : "(VOID)" %></td>
       <td align="center" style="color: green;"><%= "&#10004;" if void.processed? %></td>
       <td><%= link_to "Details", admin_void_path(void) %></td>
       <td><%= link_to "Process", admin_process_void_path(void) if current_user.admin? and !void.processed? %></td>

@@ -39,7 +39,7 @@
   <br>
   <p>
     <%= label_tag "Adjusted Amount (amount captured)" %>:
-    <strong><%= number_to_currency @void.purchase.total %></strong>
+    <strong><%= @void.purchase.total > 0 ? number_to_currency(@void.purchase.total) : "(VOID)" %></strong>
   </p>
   <br><br>
   <h4>Coupons Voided</h4>

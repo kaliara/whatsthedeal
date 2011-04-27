@@ -15,6 +15,11 @@
     <%= label_tag "Purchase" %>:
     <strong><%= link_to @refund.purchase_id, admin_purchase_path(@refund.purchase_id) %></strong>
   </p>
+
+  <p>
+    <%= label_tag "Invoice Number" %>:
+    <strong><%= @refund.purchase.invoice_number %></strong>
+  </p>
   
   <br>
   <h4>Refund amount</h4>
