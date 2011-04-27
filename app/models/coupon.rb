@@ -97,6 +97,11 @@ class Coupon < ActiveRecord::Base
     self.save
   end
   
+  def refundable?
+    @eod = Time.zone.now.hour >= 17
+    self.active? and self.created_at < DateTime.new(Time.zone.now.year, Time.zone.now.month, @eod ? Time.zone.now.day : Time.zone.now.day - 1, 21, 0, 0)
+  end
+  
   def stolen?(current_user)
     current_user.nil? ? true : self.user.id != current_user.id
   end
