@@ -69,6 +69,14 @@ class Notifier < ActionMailer::Base
    content_type "text/html"
   end
   
+  def refund_processed(refund)
+   recipients   (RAILS_ENV == 'staging' or RAILS_ENV == 'development') ? TEST_RECIPIENT : refund.purchase.user.email
+   from         "support@sowhatsthedeal.com (What's the Deal)"
+   subject      "Refund Processed for your WTD Purchase" + (" ::::: [originally for #{refund.purchase.user.email}]" if (RAILS_ENV == 'staging' or RAILS_ENV == 'development')).to_s
+   body         :refund => refund
+   content_type "text/html"
+  end 
+   
   def new_old_user(user)
    recipients   (RAILS_ENV == 'staging' or RAILS_ENV == 'development') ? TEST_RECIPIENT : user.email
    from         "support@sowhatsthedeal.com (What's the Deal)"

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110406004041) do
+ActiveRecord::Schema.define(:version => 20110425225851) do
 
   create_table "admins", :force => true do |t|
     t.integer  "user_id"
@@ -133,6 +133,8 @@ ActiveRecord::Schema.define(:version => 20110406004041) do
     t.boolean  "mobile_used",           :default => false
     t.datetime "redemption_date"
     t.integer  "gifted_promotion_code"
+    t.boolean  "refunded",              :default => false
+    t.boolean  "deleted",               :default => false
   end
 
   create_table "credits", :force => true do |t|
@@ -421,6 +423,7 @@ ActiveRecord::Schema.define(:version => 20110406004041) do
     t.string   "shipping_state"
     t.string   "shipping_zipcode"
     t.string   "shipping_name"
+    t.boolean  "deleted",                                              :default => false
   end
 
   create_table "raffles", :force => true do |t|
@@ -437,6 +440,17 @@ ActiveRecord::Schema.define(:version => 20110406004041) do
     t.integer  "business_id"
     t.integer  "subscription_list_id", :default => 44
     t.boolean  "hidden",               :default => false
+  end
+
+  create_table "refunds", :force => true do |t|
+    t.integer  "purchase_id"
+    t.integer  "credit_id"
+    t.decimal  "cc_amount",     :precision => 10, :scale => 2, :default => 0.0
+    t.decimal  "credit_amount", :precision => 10, :scale => 2, :default => 0.0
+    t.text     "reason"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "processed",                                    :default => false
   end
 
   create_table "reminders", :force => true do |t|
@@ -511,5 +525,12 @@ ActiveRecord::Schema.define(:version => 20110406004041) do
   end
 
   add_index "users", ["email"], :name => "email", :unique => true
+
+  create_table "voids", :force => true do |t|
+    t.integer  "purchase_id"
+    t.boolean  "processed",   :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

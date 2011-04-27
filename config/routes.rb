@@ -154,6 +154,8 @@ ActionController::Routing::Routes.draw do |map|
   map.admin_ad_preview '/admin/promotions/:id/ad_preview', :controller => 'admin/promotions', :action => 'ad_preview'
   map.admin_user_review_mark_good '/admin/user_reviews/:id/mark_good', :controller => 'admin/user_reviews', :action => 'update', :credit_given => true
   map.admin_user_review_mark_bad  '/admin/user_reviews/:id/mark_bad',  :controller => 'admin/user_reviews', :action => 'update', :credit_given => false
+  map.admin_process_void   '/admin/voids/processing/:id',   :controller => 'admin/voids',   :action => 'processing'
+  map.admin_process_refund '/admin/refunds/processing/:id', :controller => 'admin/refunds', :action => 'processing'
   map.connect '/admin/stats/', :controller => 'admin/stats', :action => 'index'
   
   
@@ -174,9 +176,11 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :promotion_codes
     admin.resources :purchases
     admin.resources :users
+    admin.resources :refunds
     admin.resources :items
     admin.resources :raffles
     admin.resources :user_reviews
+    admin.resources :voids
   end
 
   

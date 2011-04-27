@@ -3,7 +3,7 @@ class Coupon < ActiveRecord::Base
   belongs_to :user
   belongs_to :purchase
   
-  default_scope :order => 'updated_at DESC'
+  default_scope :conditions => {:deleted => false, :refunded => false}, :order => 'updated_at DESC'
   
   named_scope :unused,   :conditions => {:used => false, :gift => false}
   named_scope :used,     :conditions => {:used => true, :gift => false}
@@ -92,6 +92,11 @@ class Coupon < ActiveRecord::Base
     self.save
   end
   
+  def delete!
+    self.deleted = true
+    self.save
+  end
+  
   def stolen?(current_user)
     current_user.nil? ? true : self.user.id != current_user.id
   end
@@ -108,5 +113,13 @@ class Coupon < ActiveRecord::Base
     return true unless self.gift?
     
     !(self.gift_name.blank? or self.gift_name.gsub(/\s/,'').downcase == self.user.customer.name.gsub(/\s/,'').downcase or self.gift_email.blank? or self.gift_from.blank? or self.gift_send_date.blank? or Coupon.find(:all, :conditions => {:user_id => self.user.id, :deal_id => self.deal_id, :gift_name => self.gift_name}).size > self.deal.purchase_limit)
+  end
+  
+  def self.deleted(limit=nil, offset=nil)
+    Coupon.with_exclusive_scope { Coupon.find(:all, :conditions => {:deleted => true}, :limit => limit, :offset => offset) }
+  end
+
+  def self.refunded(limit=nil, offset=nil)
+    Coupon.with_exclusive_scope { Coupon.find(:all, :conditions => {:refunded => true}, :limit => limit, :offset => offset) }
   end
 end

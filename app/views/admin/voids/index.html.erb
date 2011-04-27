@@ -1,0 +1,65 @@
+<% content_for :sub_nav do %>
+<% end %>
+
+<div class="datepicker clearfix">
+  <% form_tag "", :method => :get do %>
+    &nbsp;
+    <%= hidden_field_tag 'start_date', Date.new(Date.today.year, Date.today.month, 1).strftime("%m/%d/%Y"), :id => 'start_date_this_week' %>
+    <%= hidden_field_tag 'end_date', Date.new(Date.today.year, Date.today.month, -1).strftime("%m/%d/%Y"), :id => 'end_date_this_week' %>
+    <%= submit_tag 'This Month' %>
+  <% end %>
+  <% form_tag "", :method => :get do %>
+    <span>or</span>&nbsp;
+    <%= hidden_field_tag 'start_date', Date.commercial(Date.today.year, Date.today.cweek, 1).strftime("%m/%d/%Y"), :id => 'start_date_this_week' %>
+    <%= hidden_field_tag 'end_date', Date.commercial(Date.today.year, Date.today.cweek, 7).strftime("%m/%d/%Y"), :id => 'end_date_this_week' %>
+    <%= submit_tag 'This Week' %>
+  <% end %>
+  <% form_tag "", :method => :get do %>
+    <span>or</span>&nbsp;
+    <%= hidden_field_tag 'start_date', Date.today.strftime("%m/%d/%Y"), :id => 'start_date_today' %>
+    <%= hidden_field_tag 'end_date', Date.today.strftime("%m/%d/%Y"), :id => 'end_date_today' %>
+    <%= submit_tag 'Today' %>
+  <% end %>
+  <% form_tag "", :method => :get do %>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <span>Specific Range:</span>
+    <%= text_field_tag 'start_date', @start_date.strftime("%m/%d/%Y"), :style => "width: 90px" %>
+    &nbsp;&nbsp;to&nbsp;&nbsp;
+    <%= text_field_tag 'end_date', @end_date.strftime("%m/%d/%Y"), :style => "width: 90px" %>
+    <%= submit_tag 'Filter by Date' %>
+  <% end %>
+</div>
+
+<% unless @voids.empty? %>
+  <h2>Voids for <%= @start_date.strftime("%B %e") %> - <%= @end_date.strftime("%B %e") %></h2>
+  <table>
+  <tr>
+    <th>Purchase</th>
+    <th>Invoice Number</th>
+    <th>Customer</th>
+    <th>Date</th>
+    <th>Adjusted Amount</th>
+    <th>Processed?</th>
+  </tr>
+  <% @voids.each do |void| %>
+    <tr>
+      <td><%= link_to void.purchase_id, admin_purchase_path(void.purchase_id) %></td>
+      <td><%= void.purchase.invoice_number %></td>
+      <td><%= link_to void.purchase.user.customer.name, admin_customer_path(void.purchase.user.customer) %> (<%= void.purchase.user.email %>)</td>
+      <td><%= void.created_at.strftime "%m/%d/%Y at %H:%M %p" %></td>
+      <td><%= void.purchase.total > 0 ? number_to_currency(void.purchase.total) : "(VOID)" %></td>
+      <td align="center" style="color: green;"><%= "&#10004;" if void.processed? %></td>
+      <td><%= link_to "Details", admin_void_path(void) %></td>
+      <td><%= link_to "Process", admin_process_void_path(void) if current_user.admin? and !void.processed? %></td>
+    </tr>
+  <% end %>
+  </table>
+<% else %>
+  <p>&nbsp;&nbsp;&nbsp;&nbsp;No voids that match. Perhaps try a different date range?</p>
+<% end %>
+  
+  
+<script type="text/javascript" charset="utf-8">
+  $("#start_date").datepicker();
+  $("#end_date").datepicker();
+</script>

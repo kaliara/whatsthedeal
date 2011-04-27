@@ -1,0 +1,70 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'New Refund', new_admin_refund_path %></li>
+<% end %>
+
+<h2>Refund for <%= @refund.purchase.user.email %></h2>
+
+<div class="section_content">
+  <h4>Refund Details</h4>
+  <p>
+    <%= label_tag "Created" %>:
+    <strong><%= @refund.created_at.strftime "%B, %e %Y at %H:%M %p" %></strong>
+  </p>
+
+  <p>
+    <%= label_tag "Purchase" %>:
+    <strong><%= link_to @refund.purchase_id, admin_purchase_path(@refund.purchase_id) %></strong>
+  </p>
+
+  <p>
+    <%= label_tag "Invoice Number" %>:
+    <strong><%= @refund.purchase.invoice_number %></strong>
+  </p>
+  
+  <br>
+  <h4>Refund amount</h4>
+  <p>
+    <%= label_tag "Issued to Credit Card" %>:
+    <strong><%= number_to_currency @refund.cc_amount %></strong>
+  </p>
+
+  <p>
+    <%= label_tag "Issued as WTD Credit" %>:
+    <strong><%= number_to_currency @refund.credit_amount %></strong>
+  </p>
+  <% if @refund.processed? %>
+  <p>
+    <%= label_tag "Processed" %>:
+    <strong style="color: green">YES</strong>
+  </p>
+  <p>
+    <%= label_tag "Processing Date" %>:
+    <strong><%= @refund.updated_at.strftime "%B, %e %Y at %H:%M %p" %></strong>
+  </p>
+  <% else %>
+  <p>
+    <%= label_tag "Processed" %>:
+    <strong style="color:red">NO</strong>
+  </p>
+  <br>
+    <% form_tag admin_process_refund_path(@refund) do %>
+      <%= submit_tag "Mark as Processed" if current_user.admin? %>
+    <% end %>
+  <% end %>
+
+  <br><br>
+  <h4>Coupons Refunded</h4>
+  <table>
+  <% @refund.coupons.each do |coupon| %>
+    <tr>
+      <td><%= coupon.user.email %></td>
+      <td><%= coupon.confirmation_code %></td>
+      <td><%= coupon.user.customer.name %></td>
+      <td><%= coupon.name %></td>
+    </tr>
+  <% end %>
+  </table>
+
+  <h4>Reason for the refund (interal)</h4>
+  <p><em><%= @refund.reason %></em></p>
+</div>
