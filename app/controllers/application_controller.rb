@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_session, :current_user, :cart, :partner, :originize, :mobile, :force_full_site, :https?, :simple_page?
   filter_parameter_logging :password, :number
   before_filter :store_return_uri, :set_timezone
+  before_filter :admin_required, :only => ['impersonate']
   
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
