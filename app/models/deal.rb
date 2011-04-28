@@ -3,6 +3,7 @@ class Deal < ActiveRecord::Base
   belongs_to :business
   has_many :cart_items
   has_many :coupons
+  has_many :kgb_coupons, :class_name => "kgb_coupons", :foreign_key => "transactions_deal_id"
   
   named_scope :featured, :conditions => ['featured = ? and active = ?', true, true]
   named_scope :active,   :conditions => ['active = ?', true]

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110425225851) do
+ActiveRecord::Schema.define(:version => 20110428031022) do
 
   create_table "admins", :force => true do |t|
     t.integer  "user_id"
@@ -208,6 +208,7 @@ ActiveRecord::Schema.define(:version => 20110425225851) do
     t.integer  "coupon_code_start",                                                    :default => 27
     t.integer  "coupon_code_number_base", :limit => 10, :precision => 10, :scale => 0, :default => 16
     t.boolean  "active",                                                               :default => true
+    t.integer  "kgb_deal_id",                                                          :default => 1
   end
 
   create_table "delayed_emails", :force => true do |t|
@@ -278,6 +279,26 @@ ActiveRecord::Schema.define(:version => 20110425225851) do
     t.integer  "image1_file_size"
     t.datetime "image1_updated_at"
     t.datetime "end_date"
+  end
+
+  create_table "kgb_coupons", :force => true do |t|
+    t.datetime "date_exported"
+    t.string   "transactions_transaction_id"
+    t.integer  "transactions_deal_id"
+    t.integer  "transactions_user_id"
+    t.integer  "transactions_quantity"
+    t.decimal  "transactions_total_amount",   :precision => 10, :scale => 2
+    t.datetime "transactions_timestamp"
+    t.string   "users_first_name"
+    t.string   "users_last_name"
+    t.string   "users_email"
+    t.integer  "deals_merchant_id"
+    t.string   "deals_title"
+    t.decimal  "deals_price",                 :precision => 10, :scale => 2
+    t.datetime "deals_coupon_expires"
+    t.string   "merchants_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "locations", :force => true do |t|
