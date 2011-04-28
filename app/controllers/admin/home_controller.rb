@@ -1,7 +1,6 @@
 class Admin::HomeController < ApplicationController
   layout 'admin'
   before_filter :staff_required, :except => ['login']
-  before_filter :admin_required, :only => ['impersonate']
 
   def index
   end

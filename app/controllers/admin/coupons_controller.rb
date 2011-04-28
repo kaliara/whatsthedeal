@@ -1,7 +1,6 @@
 class Admin::CouponsController < ApplicationController
   layout 'admin', :except => :show
   before_filter :staff_required
-  before_filter :admin_required, :only => ['destroy']
   
   # GET /coupons
   # GET /coupons.xml

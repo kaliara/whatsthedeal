@@ -1,7 +1,7 @@
 class Admin::PromotionsController < ApplicationController
   layout 'admin'
   before_filter :staff_required
-  before_filter :admin_required, :only => ['destroy']
+  before_filter :admin_required, :only => ['create','update','destroy']
   
   # GET /promotions
   # GET /promotions.xml

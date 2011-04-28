@@ -1,7 +1,7 @@
 class Admin::BusinessesController < ApplicationController
   layout 'admin'
   before_filter :staff_required
-  before_filter :admin_required, :only => ['destroy']
+  before_filter :admin_required, :only => ['create','update','destroy']
   
   # GET /businesses
   # GET /businesses.xml
