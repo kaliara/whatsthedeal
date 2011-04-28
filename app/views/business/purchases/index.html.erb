@@ -3,7 +3,7 @@
   
   <label for='promotion_id'><strong>Deal:</strong></label> <%= select_tag :promotion_id, options_for_select([""] + ["All"] + @promotions.collect{|b| [b.start_date.strftime("%m/%d/%Y") + " - " + b.name, b.id]}, params[:promotion_id].to_i > 0 ? params[:promotion_id].to_i : params[:promotion_id]), :onchange => "$('#excel_button').show(); $('#excel_promotion_id').val($('#promotion_id').val())" %>
   <br><br>
-  <%= radio_button_tag 'all', 'no', true %> <label for="q"><strong>Last Name</strong> or <strong>Confirmation Number</strong>:</label>&nbsp;&nbsp;
+  <%= radio_button_tag 'all', 'no', true %> <label for="q"><strong>First/Last Name</strong> or <strong>Confirmation Number</strong>:</label>&nbsp;&nbsp;
   <%= text_field_tag 'q', params[:q], :style => 'width: 200px', :class => "text", :onkeydown => "$('#all_no').attr('checked', true)" %><span style="margin-left: 10px">(if gift, search 'gift from' last name)</span>
   <br><br>
   
@@ -19,12 +19,12 @@
   <span class="export_notice" style="display:none">(Exporting now. Process may take 2-4 minutes.)</span>
 <% end %>
 
-<% unless @coupons.empty? %>
+<% unless (@coupons + @kgb_coupons).empty? %>
   <br><br><br>
   <h1>Mark Coupons As Redeemed</h1>
   <div class="print_this"><%= link_to "Print this Report", "javascript:print()" %></div>
   <% if @type %>
-    <h2><%= pluralize @coupons.size, "Purchases" %> matching <%= @type %> '<%= params[:q] %>'</h2>
+    <h2><%= pluralize (@coupons + @kgb_coupons).size, "Purchases" %> matching <%= @type %> '<%= params[:q] %>'</h2>
   <% elsif params[:promotion_id].to_i > 0 %>
     <h2>Purchases for <%= Promotion.find(params[:promotion_id]).name %></h2>
   <% elsif params[:promotion_id] == 'All' %>
@@ -45,7 +45,7 @@
         <th>Coupon Code</th>
       </tr>
 
-      <% @coupons.each do |coupon| %>
+      <% (@coupons + @kgb_coupons).each do |coupon| %>
         <tr>
           <td class="align_left"><%= coupon.recipient %></td>
           <td><%= coupon.confirmation_code %></td>
@@ -55,7 +55,7 @@
           <% if coupon.biz_used? %>
             <td style="color: green;"><%= "&#10004;" if coupon.biz_used? %></td>
           <% else %>
-            <td><%= check_box_tag "coupons[#{coupon.id}]" %></td>
+            <td><%= check_box_tag "#{coupon.kgb_coupon? ? "kgb_coupons" : "coupons"}[#{coupon.id}]" %></td>
           <% end %>
           <td><%= coupon.coupon_code %></td>
         </tr>

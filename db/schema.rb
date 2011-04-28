@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110428031022) do
+ActiveRecord::Schema.define(:version => 20110428040514) do
 
   create_table "admins", :force => true do |t|
     t.integer  "user_id"
@@ -299,6 +299,10 @@ ActiveRecord::Schema.define(:version => 20110428031022) do
     t.string   "merchants_name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "biz_used",                                                   :default => false
+    t.boolean  "used",                                                       :default => false
+    t.boolean  "mobile_used",                                                :default => false
+    t.datetime "redemption_date"
   end
 
   create_table "locations", :force => true do |t|

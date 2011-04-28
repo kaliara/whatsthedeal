@@ -24,25 +24,25 @@
             <% promotion.deals.each do |deal| %>
               <tr>
                 <td><%= deal.name %></td>
-                <td style="text-align:right"><%= deal.coupons.count %></td>
+                <td style="text-align:right"><%= deal.total_coupons %></td>
                 <% if current_user.business? %>
                 <td style="text-align:right"><%= number_to_currency deal.price %></td>
-                <td style="text-align:right"><%= number_to_currency (deal.price * deal.coupons.count).to_f %></td>
+                <td style="text-align:right"><%= number_to_currency (deal.price * deal.total_coupons).to_f %></td>
                 <td style="text-align:right"><%= number_to_percentage (100.00 - promotion.profit_percentage.to_f, :precision => 2) %></td>
-                <td style="text-align:right"><%= number_to_currency (deal.price * deal.coupons.count * (1 - (promotion.profit_percentage.to_f / 100)), :precision => 2)  %></td>
+                <td style="text-align:right"><%= number_to_currency (deal.price * deal.total_coupons * (1 - (promotion.profit_percentage.to_f / 100)), :precision => 2)  %></td>
                 <% end %>
               </tr>
             <% end %>
             <tr class="table_footer">
               <th colspan="2" style="text-align:right;">
-                <%= promotion.purchases %></th>
+                <%= promotion.purchases(nil, true) %></th>
               <% if current_user.business? %>
                 <th colspan="<%= current_user.business? ? "4" : "1" %>" style="text-align:right;">
                   <% unless promotion.coupons.empty? %>
                     <span class="dont_print">(<%= link_to "Purchaser Report", :controller => 'purchases', :action => 'index', :promotion_id => promotion.id %> | <%= link_to "Demographics", business_purchase_stats_path(:promotion_id => promotion.id) %>)</span> &nbsp;&nbsp;
                   <% end %>
                   
-                  <%= number_to_currency promotion.business_profit, :precision => 2 %>
+                  <%= number_to_currency promotion.business_profit(true), :precision => 2 %>
                 </th>
               <% end %>
             </tr>

@@ -3,7 +3,6 @@ class Deal < ActiveRecord::Base
   belongs_to :business
   has_many :cart_items
   has_many :coupons
-  has_many :kgb_coupons, :class_name => "kgb_coupons", :foreign_key => "transactions_deal_id"
   
   named_scope :featured, :conditions => ['featured = ? and active = ?', true, true]
   named_scope :active,   :conditions => ['active = ?', true]
@@ -66,5 +65,13 @@ class Deal < ActiveRecord::Base
   
   def credit_used 
     self.coupons.collect{|c| c.purchase}.uniq.collect{|p| p.coupons.delete_if{|c| c.deal_id != self.id}.size * p.credit_per_deal}.sum
+  end
+  
+  def total_coupons
+    self.coupons.count + self.kgb_coupons.count
+  end
+  
+  def kgb_coupons
+    KgbCoupon.find(:all, :conditions => {:transactions_deal_id => self.kgb_deal_id})
   end
 end

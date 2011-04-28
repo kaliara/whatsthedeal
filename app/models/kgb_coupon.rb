@@ -1,19 +1,21 @@
 class KgbCoupon < ActiveRecord::Base
-  belongs_to :deal, :class_name => "Deal", :foreign_key => "kgb_deal_id"
-
   validates_numericality_of :transactions_deal_id, :on => :create, :message => "must be a number"
   validates_uniqueness_of :transactions_transaction_id, :on => :create, :message => "must be unique"
   
   def name
-    self.deals_title
+    self.deal.coupon_name
   end
 
   def description
-    self.deals_title
+    self.deal.coupon_description
+  end
+  
+  def deal
+    Deal.find(:all, :conditions => {:kgb_deal_id => self.transactions_deal_id}).first
   end
 
   def coupon_code
-    return "KGB1234"
+    nil
   end
 
   def confirmation_code
@@ -21,15 +23,24 @@ class KgbCoupon < ActiveRecord::Base
   end
 
   def expiration
-    self.deals_coupon_expires
+    self.deal.coupon_expiration
+  end
+  
+  def created_at
+    self.transactions_timestamp
   end
 
   def expired?
-    self.deals_coupon_expires + 1.day - DateTime.new(Time.zone.now.year, Time.zone.now.month, Time.zone.now.day, 23, 59, 59) < 0
+    self.deal.coupon_expiration + 1.day - DateTime.new(Time.zone.now.year, Time.zone.now.month, Time.zone.now.day, 23, 59, 59) < 0
   end
 
   def recipient
-    self.users_first_name + self.users_last_name
+    self.users_first_name + " " + self.users_last_name
+  end
+  
+  def biz_used!
+    self.biz_used = true
+    self.save
   end
 
   def gifted_credit?
@@ -53,6 +64,10 @@ class KgbCoupon < ActiveRecord::Base
   end
 
   def available_tomorrow?
+    true
+  end
+
+  def kgb_coupon?
     true
   end
 end

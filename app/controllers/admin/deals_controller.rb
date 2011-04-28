@@ -54,7 +54,7 @@ class Admin::DealsController < ApplicationController
     respond_to do |format|
       if @deal.save
         flash[:notice] = 'Deal was successfully created.'
-        format.html { redirect_to admin_deals_path }
+        format.html { redirect_to edit_admin_deal_path(@deal) }
         format.xml  { render :xml => @deal, :status => :created, :location => @deal }
       else
         format.html { render :action => "new" }
@@ -71,7 +71,7 @@ class Admin::DealsController < ApplicationController
     respond_to do |format|
       if @deal.update_attributes(params[:deal])
         flash[:notice] = 'Deal was successfully updated.'
-        format.html { redirect_to admin_deals_path }
+        format.html { redirect_to edit_admin_deal_path(@deal) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

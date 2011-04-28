@@ -1,4 +1,4 @@
-<h1>Purchase Demographics</h1>
+<h1>Purchase Demographics (WTD purchases only)</h1>
 <br>
 <% form_tag :action => 'stats' do %>
   <%= label_tag :promotion_id, "Deal:" %> <%= select_tag :promotion_id, options_for_select([""] + @promotions.collect{|p| [p.start_date.strftime("%m/%d/%Y") + " - " + p.name, p.id]}, params[:promotion_id].to_i), :onchange => "submit()" %>

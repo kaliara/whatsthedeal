@@ -67,11 +67,13 @@ class Promotion < ActiveRecord::Base
     self.deals.featured.first || self.deals.first
   end
   
-  def purchases(partner_id=nil)
+  def purchases(partner_id=nil,include_kgb=false)
     if self.id == 230
       Promotion.find(231,232,233,234,235,236,237).collect{|p| p.purchases}.sum
     elsif self.id == 216
       Promotion.find(217,218,219,220,221).collect{|p| p.purchases}.sum
+    elsif partner_id.nil? and include_kgb
+      self.deals.collect{|d| d.total_coupons}.to_a.sum
     elsif partner_id.nil?
       self.deals.collect{|d| d.coupons.count}.to_a.sum
     else
@@ -140,8 +142,12 @@ class Promotion < ActiveRecord::Base
     return @early_bird_coupons.collect{|coupon| coupon.early_bird? ? coupon.deal.early_bird_discount : 0}.sum.to_f
   end
   
-  def business_profit
-    self.deals.collect{|d| d.business_profit * d.coupons.count}.sum
+  def business_profit(include_kgb=false)
+    if include_kgb
+      self.deals.collect{|d| d.business_profit * d.total_coupons}.sum
+    else
+      self.deals.collect{|d| d.business_profit * d.coupons.count}.sum
+    end
   end
   
   def update_business_payments
