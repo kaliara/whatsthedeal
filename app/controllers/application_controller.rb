@@ -189,7 +189,6 @@ class ApplicationController < ActionController::Base
   
   protected
     def staff_required
-      flash[:error] = "Sorry, but you dont' have access to do this. E-mail matt@sowhatsthedeal.com with questions."
       redirect_away(:controller => '/admin/home', :action => 'login') unless (current_user and current_user.staff?)
     end
     def admin_required
