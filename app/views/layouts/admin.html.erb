@@ -32,7 +32,7 @@
           <li><%= link_to "Refunds", admin_refunds_path %></li>
           <li><%= link_to "Voids", admin_voids_path %></li>
           <li><%= link_to "Coupons", admin_coupons_path %></li>
-          <li><%= link_to "Sidebar Promotions", admin_sidebar_promotions_path if current_user and current_user.admin?  %></li>
+          <% if current_user and current_user.admin? %><li><%= link_to "Sidebar Promotions", admin_sidebar_promotions_path %></li><% end %>
         </ul>
       </li>
 
@@ -73,10 +73,10 @@
       
       <li>Users
         <ul>
-          <li><%= link_to "Users", admin_users_path if current_user and current_user.admin?  %></li>
+          <% if current_user and current_user.admin? %><li><%= link_to "Users", admin_users_path if current_user and current_user.admin?  %></li><% end %>
           <li><%= link_to "Customers", admin_customers_path %></li>
-          <li><%= link_to "Admins", admin_admins_path if current_user and current_user.admin? %></li>
-          <li><%= link_to "User Reviews", admin_user_reviews_path if current_user and current_user.admin? %></li>
+          <% if current_user and current_user.admin? %><li><%= link_to "Admins", admin_admins_path if current_user and current_user.admin? %></li><% end %>
+          <% if current_user and current_user.admin? %><li><%= link_to "User Reviews", admin_user_reviews_path if current_user and current_user.admin? %></li><% end %>
         </ul>
       </li>
 
@@ -103,8 +103,8 @@
       <li>Business
         <ul>
           <li><%= link_to "Businesses", admin_businesses_path %></li>                
-          <li><%= link_to "Origins", admin_origins_path if current_user and current_user.admin? %></li>
-          <li><%= link_to "Business Payments", admin_business_payments_path if current_user and current_user.admin? %></li>
+          <% if current_user and current_user.admin? %><li><%= link_to "Origins", admin_origins_path if current_user and current_user.admin? %></li><% end %>
+          <% if current_user and current_user.admin? %><li><%= link_to "Business Payments", admin_business_payments_path if current_user and current_user.admin? %></li><% end %>
         </ul>
       </li>          
     </ul>

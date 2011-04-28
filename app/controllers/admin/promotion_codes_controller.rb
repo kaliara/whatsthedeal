@@ -1,6 +1,6 @@
 class Admin::PromotionCodesController < ApplicationController
   layout 'admin'
-  before_filter :admin_required
+  before_filter :staff_required
   
   # GET /promotion_codes
   # GET /promotion_codes.xml
