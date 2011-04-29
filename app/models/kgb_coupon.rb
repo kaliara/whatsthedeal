@@ -35,7 +35,11 @@ class KgbCoupon < ActiveRecord::Base
   end
 
   def recipient
-    self.users_first_name + " " + self.users_last_name
+    if self.users_last_name.include?("@")
+      self.users_last_name
+    else
+      self.users_first_name.gsub("\\N","") + " " + self.users_last_name
+    end
   end
   
   def biz_used!
