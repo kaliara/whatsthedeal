@@ -3,26 +3,37 @@
 <% end %>
 <br><br>
 
+<% form_tag do %>
+  <%= hidden_field_tag 'start_date', @start_date.strftime("%m/%d/%Y"), :id => "hd1" %>
+  <%= hidden_field_tag 'end_date', @end_date.strftime("%m/%d/%Y"), :id => "hd2" %>
+  <%= label_tag :partner_id, 'Partner Source' %>&nbsp;&nbsp;
+  <%= select_tag :partner_id, options_for_select([["None",""], ['WTD Only', 0], ['Washingtonian', 2], ['Half Price DC', 3], ['OnTap Magazine', 4]], :selected => @partner_id), :onchange => "submit()" %>
+<% end %>
+<br>
 <div class="datepicker clearfix">
   <% form_tag do %>
     &nbsp;
+    <%= hidden_field_tag 'partner_id', @partner_id %>
     <%= hidden_field_tag 'start_date', Date.commercial(Date.today.year, Date.today.cweek, 1).strftime("%m/%d/%Y"), :id => 'start_date_this_week' %>
     <%= hidden_field_tag 'end_date', Date.commercial(Date.today.year, Date.today.cweek, 7).strftime("%m/%d/%Y"), :id => 'end_date_this_week' %>
     <%= submit_tag 'This Week' %>
   <% end %>
   <% form_tag do %>
     <span>or</span>&nbsp;
+    <%= hidden_field_tag 'partner_id', @partner_id %>
     <%= hidden_field_tag 'start_date', (Date.today - 1.day).strftime("%m/%d/%Y"), :id => 'start_date_last_week' %>
     <%= hidden_field_tag 'end_date', (Date.today - 1.day).strftime("%m/%d/%Y"), :id => 'end_date_last_week' %>
     <%= submit_tag 'Yesterday' %>
   <% end %>
   <% form_tag do %>
     <span>or</span>&nbsp;
+    <%= hidden_field_tag 'partner_id', @partner_id %>
     <%= hidden_field_tag 'start_date', Date.today.strftime("%m/%d/%Y"), :id => 'start_date_today' %>
     <%= hidden_field_tag 'end_date', Date.today.strftime("%m/%d/%Y"), :id => 'end_date_today' %>
     <%= submit_tag 'Today' %>
   <% end %>
   <% form_tag do %>
+    <%= hidden_field_tag 'partner_id', @partner_id %>
     &nbsp;&nbsp;&nbsp;&nbsp;
     <span>Specific Range:</span>
     <%= text_field_tag 'start_date', @start_date.strftime("%m/%d/%Y"), :size => 10 %>
@@ -31,10 +42,10 @@
     <%= submit_tag 'Filter by Date' %>
   <% end %>
 </div>
+<br><br>
 
-
-<% if @partner %>
-  <h2>Washingtonian Activity</h2>
+<% if @partner_id %>
+  <h2><%= ['Just WTD','Sloopy','Washingtonian','Half Price DC','OnTap Magazine'][@partner_id] %> Activity</h2>
 <% else %>
   <h2>Overall Activity</h2>
 <% end %>

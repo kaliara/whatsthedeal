@@ -144,7 +144,6 @@ ActionController::Routing::Routes.draw do |map|
   map.admin_washingtonian_dashboard '/admin/dashboards/washingtonian', :controller => '/admin/dashboards', :action => 'washingtonian'
   map.admin_affiliates_dashboard '/admin/dashboards/affiliates', :controller => '/admin/dashboards', :action => 'affiliates'
   map.admin_affiliate_lifetime_dashboard '/admin/dashboards/affiliate_lifetime', :controller => '/admin/dashboards', :action => 'affiliate_lifetime'
-  map.admin_partners_dashboard '/admin/dashboards/partners', :controller => '/admin/dashboards', :action => 'partners'
   map.admin_source_report_dashboard '/admin/dashboards/source_report', :controller => '/admin/dashboards', :action => 'source_report'
   map.admin_sidebar_promotions '/admin/promotions/sidebar', :controller => '/admin/promotions', :action => 'sidebar'
   map.admin_promotions_sort '/admin/promotions/sort', :controller => '/admin/promotions', :action => 'sort'
