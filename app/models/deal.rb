@@ -66,4 +66,12 @@ class Deal < ActiveRecord::Base
   def credit_used 
     self.coupons.collect{|c| c.purchase}.uniq.collect{|p| p.coupons.delete_if{|c| c.deal_id != self.id}.size * p.credit_per_deal}.sum
   end
+  
+  def total_coupons
+    self.coupons.count + self.kgb_coupons.count
+  end
+  
+  def kgb_coupons
+    KgbCoupon.find(:all, :conditions => {:transactions_deal_id => self.kgb_deal_id})
+  end
 end

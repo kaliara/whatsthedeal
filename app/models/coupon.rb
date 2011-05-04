@@ -127,4 +127,8 @@ class Coupon < ActiveRecord::Base
   def self.refunded(limit=nil, offset=nil)
     Coupon.with_exclusive_scope { Coupon.find(:all, :conditions => {:refunded => true}, :limit => limit, :offset => offset) }
   end
+  
+  def kgb_coupon?
+    false
+  end
 end
