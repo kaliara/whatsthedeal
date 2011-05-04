@@ -19,7 +19,7 @@ class Business::PurchasesController < ApplicationController
     if params[:promotion_id].to_i > 0
       @deals = Promotion.find(:all, :conditions => {:business_id => @business_ids, :id => params[:promotion_id].to_i}, :order => 'id DESC').collect{|a|a.deals.collect{|d|d.id}}.flatten
       @kgb_deals = Promotion.find(:all, :conditions => {:business_id => @business_ids, :id => params[:promotion_id].to_i}, :order => 'id DESC').collect{|a|a.deals.collect{|d|d.kgb_deal_id}}.flatten
-    elsif params[:promotion_id] == 'All'
+    elsif params[:promotion_id] == 'All' or params[:promotion_id].blank?
       @deals = Promotion.find(:all, :conditions => {:business_id => @business_ids}, :order => 'id DESC').collect{|a|a.deals.collect{|d|d.id}}.flatten
       @kgb_deals = Promotion.find(:all, :conditions => {:business_id => @business_ids}, :order => 'id DESC').collect{|a|a.deals.collect{|d|d.kgb_deal_id}}.flatten
     end
