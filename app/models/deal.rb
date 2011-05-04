@@ -68,7 +68,7 @@ class Deal < ActiveRecord::Base
   end
   
   def total_coupons
-    self.coupons.count + self.kgb_coupons.count
+    self.coupons.size + self.kgb_coupons.size
   end
   
   def kgb_coupons
