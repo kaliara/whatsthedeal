@@ -24,13 +24,13 @@ class Business::PurchasesController < ApplicationController
       @kgb_deals = Promotion.find(:all, :conditions => {:business_id => @business_ids}, :order => 'id DESC').collect{|a|a.deals.collect{|d|d.kgb_deal_id}}.flatten
     end
 
-    if params[:q] =~ /\d/
+    if params[:q] =~ /\d/ and !params[:q].blank?
       @type = "Confirmation Code"
       @deals = [0] if @deals.empty?
       @kgb_deals = [0] if @kgb_deals.empty?
       @coupons = Coupon.find(:all, :conditions => ["REPLACE(confirmation_code,'-','') = '#{params[:q].gsub(/\-/,'')}' and deal_id in (#{@deals.join(',')})"]).to_a
       @kgb_coupons = KgbCoupon.find(:all, :conditions => ["transactions_transaction_id like ? and transactions_deal_id in (#{@kgb_deals.join(',')})", "%#{params[:q]}%"]).to_a
-    elsif params[:q] =~ /\w+/
+    elsif params[:q] =~ /\w+/ and !params[:q].blank?
       @type = "Name"
       @user_ids = Customer.find(:all, :conditions => ['first_name like ? or last_name like ? or CONCAT(first_name," ",last_name) like ?', "%#{params[:q]}%", "%#{params[:q]}%", "%#{params[:q]}%"]).collect{|c| c.user.id}
       @coupons = Coupon.find(:all, :conditions => {:user_id => @user_ids, :deal_id => @deals}, :order => 'confirmation_code ASC')
