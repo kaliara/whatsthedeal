@@ -52,6 +52,24 @@ every 1.day, :at => '12:15 pm' do
   command 'cd /home/kaliara/public_html/wtd/current/public/system/assets/kgb_vouchers && echo "\$ download" | ftp -i ftp.kgbusa.com'
 end
 
+every 1.day, :at => '4:20 am' do
+  rake "kgb:import_vouchers"
+end
+every 1.day, :at => '8:20 am' do
+  rake "kgb:import_vouchers"
+end
+every 1.day, :at => '12:20 am' do
+  rake "kgb:import_vouchers"
+end
+every 1.day, :at => '4:20 pm' do
+  rake "kgb:import_vouchers"
+end
+every 1.day, :at => '8:20 pm' do
+  rake "kgb:import_vouchers"
+end
+every 1.day, :at => '12:20 pm' do
+  rake "kgb:import_vouchers"
+end
 
 every 10.minutes do
   rake "delayed_emails:email"
