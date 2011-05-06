@@ -1,5 +1,5 @@
 <% content_for :sub_nav do %>
-  <li><%= link_to 'New Refund', new_admin_refund_path %></li>
+  <li><%= link_to 'All Refunds', admin_refunds_path %></li>
 <% end %>
 
 <h2>Refund for <%= @refund.purchase.user.email %></h2>

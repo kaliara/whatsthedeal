@@ -40,6 +40,11 @@ class Business::PurchasesController < ApplicationController
       @kgb_coupons = KgbCoupon.find(:all, :conditions => {:transactions_deal_id => @kgb_deals}, :order => 'transactions_transaction_id ASC')
     end    
     
+    @any_coupon_codes = false
+    (@coupons + @kgb_coupons).each do |c|
+      @any_coupon_codes = true if !c.coupon_code.blank?
+    end
+    
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @purchases }

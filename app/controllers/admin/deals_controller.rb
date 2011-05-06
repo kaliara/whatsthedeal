@@ -9,8 +9,11 @@ class Admin::DealsController < ApplicationController
     if params[:promotion_id]
       @promotion = Promotion.find(params[:promotion_id])
       @deals = @promotion.deals
+    elsif params[:business_id]
+      @business = Business.find(params[:business_id])
+      @deals = @business.promotions.collect{|p| p.deals}.flatten
     else
-      @deals = Deal.find(:all, :order => "id desc")
+      @deals = Deal.find(:all, :order => 'id desc', :limit => (params[:all] ? nil : 20))
     end
     
     respond_to do |format|

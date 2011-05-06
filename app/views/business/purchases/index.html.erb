@@ -21,8 +21,8 @@
 
 <% unless (@coupons + @kgb_coupons).empty? %>
   <br><br><br>
-  <h1>Mark Coupons As Redeemed</h1>
   <div class="print_this"><%= link_to "Print this Report", "javascript:print()" %></div>
+  <h1>Mark Coupons As Redeemed</h1>
   <% if @type %>
     <h2><%= pluralize (@coupons + @kgb_coupons).size, "Purchases" %> matching <%= @type %> '<%= params[:q] %>'</h2>
   <% elsif params[:promotion_id].to_i > 0 %>
@@ -42,7 +42,7 @@
         <th>Deal</th>
         <th>Purchase Price</th>
         <th>Redeemed?</th>
-        <th>Coupon Code</th>
+        <% if @any_coupon_codes %><th>Coupon Code</th><% end %>
       </tr>
 
       <% (@coupons + @kgb_coupons).each do |coupon| %>
@@ -57,7 +57,9 @@
           <% else %>
             <td><%= check_box_tag "#{coupon.kgb_coupon? ? "kgb_coupons" : "coupons"}[#{coupon.id}]" %></td>
           <% end %>
-          <td><%= coupon.coupon_code %></td>
+          <% if @any_coupon_codes %>
+            <td><%= coupon.coupon_code %></td>
+          <% end %>
         </tr>
       <% end %>    
     </table>
