@@ -121,6 +121,14 @@ class Promotion < ActiveRecord::Base
     end
   end
   
+  def initial_revenue(partner_id=nil)
+    self.revenue + self.refund_amount
+  end
+  
+  def refund_amount
+    Coupon.refunded.select{|c| c.deal.promotion_id == self.id}.collect{|c| c.deal.price}.sum
+  end
+  
   def profit(partner_id=nil)
     if partner_id.nil?
       self.deals.collect{|d| d.profit * d.coupons.count}.sum
