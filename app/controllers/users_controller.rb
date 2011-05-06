@@ -105,7 +105,7 @@ class UsersController < ApplicationController
     @quietly_create = params[:quietly_create] || false
     
     if User.exists?(:email => @user.email)
-      flash[:error] = "<img src='/images/logo.png' align='left' width='99' style='margin: 0pt 10px 10px 0pt; position: relative; top: -12px;'/><strong>This email is already registered with What's the Deal</strong>. <br/><br/>Forgot your password? You can <a href='/forgot_password'>reset your password here</a>."
+      flash[:error] = "<img src='/images/logo.png' align='left' width='99' style='margin: 0pt 10px 10px 0pt; position: relative; top: -12px;'/><strong>This email is already registered with WTD</strong>. <br/><br/>Forgot your password? You can <a href='/forgot_password'>reset your password here</a>."
       redirect_to login_path and return
     end
     

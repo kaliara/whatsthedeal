@@ -5,7 +5,7 @@
 #
 # Generated July 02, 2010
 #
-# This configuration file is custom generated for What's The Deal
+# This configuration file is custom generated for WTD
 
 # Here are the settings that are common to all environments:
 common: &default_settings
