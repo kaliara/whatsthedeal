@@ -46,6 +46,11 @@ class Purchase < ActiveRecord::Base
     self.coupons.collect{|coupon| (coupon.deal.price * (coupon.deal.promotion.profit_percentage.to_f / 100)) - (coupon.early_bird? ? coupon.deal.early_bird_discount : 0)}.sum
   end
   
+  def net_revenue
+    @partner_cuts = [1,1,0.5,0.35,10.5]
+    self.coupons.collect{|coupon| ((((coupon.deal.price - (coupon.early_bird? ? coupon.deal.early_bird_discount : 0)) * (coupon.deal.promotion.profit_percentage.to_f / 100)) - coupon.deal.price * Business::PROCESSING_FEE) * @partner_cuts[coupon.deal.promotion.partner_id])}.sum
+  end
+  
   def early_bird_losses
     self.coupons.collect{|coupon| coupon.early_bird? ? coupon.deal.early_bird_discount : 0}.sum
   end

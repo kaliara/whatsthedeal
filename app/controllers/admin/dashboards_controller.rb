@@ -9,11 +9,11 @@ class Admin::DashboardsController < ApplicationController
 
     @partner_id = params[:partner_id].to_i
 
-    @registrations = User.find(:all, :conditions => ["created_at >= ? and created_at < ? #{"and partner_id = " + @partner_id.to_s unless @partner_id.nil?}", @start_date, @end_date + 1.day])
-    @referrals = User.find(:all, :conditions => ["created_at >= ? and created_at < ? #{"and partner_id = " + @partner_id.to_s unless @partner_id.nil?}", @start_date, @end_date + 1.day]).delete_if{|u| Credit.find(:all, :conditions => ["user_id = ? and referrer_user_id > 0", u.id]).size == 0}
-    @subscriptions = User.find(:all, :conditions => ["created_at >= ? and created_at < ? and gets_daily_deal_email = ? #{"and partner_id = " + @partner_id.to_s unless @partner_id.nil?}", @start_date, @end_date + 1.day, true])
-    @purchases = Purchase.find(:all, :conditions => ["created_at >= ? and created_at < ? #{"and partner_id = " + @partner_id.to_s unless @partner_id.nil?}", @start_date, @end_date + 1.day])
-    @first_purchases = Purchase.find(:all, :conditions => ["created_at >= ? and created_at < ? #{"and partner_id = " + @partner_id.to_s unless @partner_id.nil?}", @start_date, @end_date + 1.day]).delete_if{|p| p.id != Purchase.find(:first, :conditions => ["user_id = ?", p.user_id], :order => "created_at ASC").id}
+    @registrations = User.find(:all, :conditions => ["created_at >= ? and created_at < ? #{"and partner_id = " + @partner_id.to_s if @partner_id > 0}", @start_date, @end_date + 1.day])
+    @referrals = User.find(:all, :conditions => ["created_at >= ? and created_at < ? #{"and partner_id = " + @partner_id.to_s if @partner_id > 0}", @start_date, @end_date + 1.day]).delete_if{|u| Credit.find(:all, :conditions => ["user_id = ? and referrer_user_id > 0", u.id]).size == 0}
+    @subscriptions = User.find(:all, :conditions => ["created_at >= ? and created_at < ? and gets_daily_deal_email = ? #{"and partner_id = " + @partner_id.to_s if @partner_id > 0}", @start_date, @end_date + 1.day, true])
+    @purchases = Purchase.find(:all, :conditions => ["created_at >= ? and created_at < ? #{"and partner_id = " + @partner_id.to_s if @partner_id > 0}", @start_date, @end_date + 1.day])
+    @first_purchases = Purchase.find(:all, :conditions => ["created_at >= ? and created_at < ? #{"and partner_id = " + @partner_id.to_s if @partner_id > 0}", @start_date, @end_date + 1.day]).delete_if{|p| p.id != Purchase.find(:first, :conditions => ["user_id = ?", p.user_id], :order => "created_at ASC").id}
     @deals = @purchases.collect{|p| p.coupons}.flatten
     @revenue = @purchases.collect{|p| p.deals_total}.sum
     @revenue_post_credit = @purchases.collect{|p| p.total}.sum
@@ -124,6 +124,21 @@ class Admin::DashboardsController < ApplicationController
     else
       @origins = []
     end
-    
+  end
+  
+  def earn_out
+    @start_date = DateTime.new(2011, 5, 1, 4, 0)
+    @end_date   = DateTime.new(@now.year, @now.month, @now.day, 4, 0)
+
+    @partner_id = params[:partner_id].to_i
+
+    @registrations = User.find(:all, :conditions => ["created_at >= ? and created_at < ? #{"and partner_id = " + @partner_id.to_s if @partner_id > 0}", @start_date, @end_date + 1.day])
+    # @referrals = User.find(:all, :conditions => ["created_at >= ? and created_at < ? #{"and partner_id = " + @partner_id.to_s unless @partner_id.nil?}", @start_date, @end_date + 1.day]).delete_if{|u| Credit.find(:all, :conditions => ["user_id = ? and referrer_user_id > 0", u.id]).size == 0}
+    @subscriptions = User.find(:all, :conditions => ["created_at >= ? and created_at < ? and gets_daily_deal_email = ? #{"and partner_id = " + @partner_id.to_s unless @partner_id.nil?}", @start_date, @end_date + 1.day, true])
+    @purchases = Purchase.find(:all, :conditions => ["created_at >= ? and created_at < ? #{"and partner_id = " + @partner_id.to_s if @partner_id > 0}", @start_date, @end_date + 1.day])
+    # @first_purchases = Purchase.find(:all, :conditions => ["created_at >= ? and created_at < ? #{"and partner_id = " + @partner_id.to_s unless @partner_id.nil?}", @start_date, @end_date + 1.day]).delete_if{|p| p.id != Purchase.find(:first, :conditions => ["user_id = ?", p.user_id], :order => "created_at ASC").id}
+    @vouchers = @purchases.collect{|p| p.coupons}.flatten
+    @revenue_post_credit = @purchases.collect{|p| p.total}.sum
+    @net_revenue = @purchases.collect{|p| p.net_revenue}.sum 
   end
 end

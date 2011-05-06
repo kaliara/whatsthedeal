@@ -1,0 +1,59 @@
+<% content_for :sub_nav do %>
+  <% @no_sub_nav = true %>
+<% end %>
+<br><br>
+
+<% form_tag do %>
+  <%= hidden_field_tag 'start_date', @start_date.strftime("%m/%d/%Y"), :id => "hd1" %>
+  <%= hidden_field_tag 'end_date', @end_date.strftime("%m/%d/%Y"), :id => "hd2" %>
+  <%= label_tag :partner_id, 'Partner Source' %>&nbsp;&nbsp;
+  <%= select_tag :partner_id, options_for_select([["None",0], ['Washingtonian', 2], ['Half Price DC', 3], ['OnTap Magazine', 4], ['Saavy', 5]], :selected => @partner_id), :onchange => "submit()" %>
+<% end %>
+<br>
+<br><br>
+
+<% if @partner_id %>
+  <h2><%= ['None', 'Sloopy','Washingtonian','Half Price DC','OnTap Magazine','Saavy'][@partner_id] %> Activity</h2>
+<% else %>
+  <h2>Overall Activity</h2>
+<% end %>
+<div class="clearfix">
+  <div class="section_element">
+    <h3><%= @start_date.strftime("%B %e") %> - <%= @end_date.strftime("%B %e") %></h3>
+    <div class="section_content">
+      <dl class="homepage totals">
+        <dt>Registrations:</dt>
+        <dd><%= @registrations.size %></dd>
+        <dt>Subscriptions:</dt>
+        <dd><%= @subscriptions.size %></dd>
+        <dt>Purchases:</dt>
+        <dd><%= @purchases.size %></dd>
+        <dt>Vouchers:</dt>
+        <dd><%= @vouchers.size %></dd>
+      </dl>
+    </div>
+  </div>  
+</div>
+<br><br>
+
+<h2>Purchase Information</h2>
+<div class="clearfix">
+  <div class="section_element">
+    <h3><%= @start_date.strftime("%B %e") %> - <%= @end_date.strftime("%B %e") %></h3>
+    <div class="section_content">
+      <dl class="homepage">
+        <dt>Gross Revenue After Credits:</dt>                                                                                
+        <dd><%= number_to_currency @revenue_post_credit %></dd>
+        <dt>Net Revenue After Partner Cuts:</dt>                                                                                               
+        <dd><%= number_to_currency @net_revenue %></dd>
+      </dl>
+    </div>
+  </div>
+</div>
+<br><br>
+
+<script type="text/javascript" charset="utf-8">
+  $("#start_date").datepicker();
+  $("#end_date").datepicker();
+  //$("#total1 strong").html($("#total2 strong").html());
+</script>

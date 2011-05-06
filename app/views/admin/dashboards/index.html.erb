@@ -7,7 +7,7 @@
   <%= hidden_field_tag 'start_date', @start_date.strftime("%m/%d/%Y"), :id => "hd1" %>
   <%= hidden_field_tag 'end_date', @end_date.strftime("%m/%d/%Y"), :id => "hd2" %>
   <%= label_tag :partner_id, 'Partner Source' %>&nbsp;&nbsp;
-  <%= select_tag :partner_id, options_for_select([["None",""], ['WTD Only', 0], ['Washingtonian', 2], ['Half Price DC', 3], ['OnTap Magazine', 4]], :selected => @partner_id), :onchange => "submit()" %>
+  <%= select_tag :partner_id, options_for_select([["None", 0], ['Washingtonian', 2], ['Half Price DC', 3], ['OnTap Magazine', 4]], :selected => @partner_id), :onchange => "submit()" %>
 <% end %>
 <br>
 <div class="datepicker clearfix">
@@ -45,7 +45,7 @@
 <br><br>
 
 <% if @partner_id %>
-  <h2><%= ['Just WTD','Sloopy','Washingtonian','Half Price DC','OnTap Magazine'][@partner_id] %> Activity</h2>
+  <h2><%= ['None','Sloopy','Washingtonian','Half Price DC','OnTap Magazine'][@partner_id] %> Activity</h2>
 <% else %>
   <h2>Overall Activity</h2>
 <% end %>
