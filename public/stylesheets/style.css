@@ -1372,6 +1372,15 @@ h3 .early_bird_title,
   right: 6px;
   top: 100px;
 }
+#learn_more_tooltip{
+  position: absolute;
+  background: #F0DBBA;
+  border: 2px solid #D6942A;
+  width: 212px;
+  padding: 5px;
+  left: 250px;
+  top: 81px;
+}
 .deal_listing #early_bird_tooltip:hover, #asap_tooltip:hover{
   cursor: pointer;
 }
@@ -1382,6 +1391,19 @@ h3 .early_bird_title,
   right:-161px;
   top:-13px;
   width:138px;
+}
+#learn_more_tooltip_link{
+  position: absolute;
+  left: 212px;
+  top: 96px;
+  background: #DA7200;
+  padding: 3px 5px;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 12px;
+  text-decoration: none !important;
 }
 
 .promotion_stats dd{
