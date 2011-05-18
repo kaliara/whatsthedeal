@@ -134,6 +134,7 @@ class UsersController < ApplicationController
     if @user.update_subscriptions(request.referrer, nil, true)
       session[:new_subscriber] = true
       session[:new_subscriber_email] = @user.email
+      session[:new_subscriber_user_id] = @user.id
     end
         
         
