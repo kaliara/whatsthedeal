@@ -146,6 +146,7 @@ class UsersController < ApplicationController
       
       # trigger analytics to track
       session[:new_user] = true
+      session[:new_subscriber_user_id] = @user.id
 
       # check referrals and credits
       unless @promotion_code.nil?

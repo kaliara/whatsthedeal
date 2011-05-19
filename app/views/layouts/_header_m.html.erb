@@ -1,8 +1,8 @@
 <div class="header clearfix">
   <%= link_to image_tag('/images/mobile/logo.png'), root_url, :id => 'logo' %>
   <ul class="main_nav">
-    <li class="<%= 'current' if current_page? promotions_path %>"><%= link_to "More Great Deals", promotions_path %></li>
-    <li class="<%= 'current' if current_page? my_cart_path %>"><%= link_to "Shopping Cart <span class='#{'not_empty' if cart.cart_items.size > 0}'>(#{cart.cart_items.size})</span>", my_cart_path %></li>
+    <li class="<%= 'current' if current_page? promotions_path %>"><%= link_to "More Deals", promotions_path %></li>
+    <li class="<%= 'current' if current_page? my_cart_path %>"><%= link_to "My Cart <span class='#{'not_empty' if cart.cart_items.size > 0}'>(#{cart.cart_items.size})</span>", my_cart_path %></li>
   </ul>
 
   <ul class="account_nav">
