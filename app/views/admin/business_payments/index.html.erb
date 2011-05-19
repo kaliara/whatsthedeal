@@ -79,7 +79,7 @@
               <%= f.hidden_field :promotion_id, :value => promotion.id %>
               <td style="text-align:right;width:90px;font-size:90%">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= f.label :payment1_amount, "90%" %>&nbsp;<%= f.text_field :payment1_amount, :value => (@business_payment.payment1_paid? ? @business_payment.payment1_amount : @business_payment.payment1_estimate), :style => "width: 55px", :disabled => (@business_payment.payment1_paid?) %>
-                <%= f.label :payment2_amount, "Remainder:" %>&nbsp;<%= f.text_field :payment2_amount, :value => (@business_payment.payment2_paid? ? @business_payment.payment2_amount : @business_payment.payment2_estimate), :style => "width: 55px", :disabled => (@business_payment.payment2_paid? or @business_payment.payment2_estimate == 0) %>
+                <%= f.label :payment2_amount, "Remainder:" %>&nbsp;<%= f.text_field :payment2_amount, :value => (@business_payment.payment2_paid? ? @business_payment.payment2_amount : @business_payment.payment2_estimate), :style => "width: 55px", :disabled => (@business_payment.payment2_paid?) %>
               </td>
               <td style="text-align:center">
                 <%= f.text_area :notes, :rows => 3, :cols => 30, :style => "font-size: 10px" %>
