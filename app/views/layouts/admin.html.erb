@@ -131,7 +131,7 @@
     </div>
   <% end %>
 
-  <% if current_user and current_user.accountant? %>
+  <% if current_user and current_user.accountant? and !current_user.admin? %>
     <p class="error"><strong>WARNING:</strong> Please do not run reports between 7:00 AM and 2:00 PM (peak times).  Doing so could jeopardize the WTD system.</p>
   <% end %>
   
