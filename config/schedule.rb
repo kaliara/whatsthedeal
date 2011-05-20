@@ -33,41 +33,11 @@ every 4.hours do
   rake "cleanup:cart_items"
 end
 
-every 1.day, :at => '4:15 am' do
-  command 'cd /home/kaliara/public_html/wtd/current/public/system/assets/kgb_vouchers && echo "\$ download" | ftp -i ftp.kgbusa.com'
-end
-every 1.day, :at => '8:15 am' do
-  command 'cd /home/kaliara/public_html/wtd/current/public/system/assets/kgb_vouchers && echo "\$ download" | ftp -i ftp.kgbusa.com'
-end
-every 1.day, :at => '12:15 am' do
-  command 'cd /home/kaliara/public_html/wtd/current/public/system/assets/kgb_vouchers && echo "\$ download" | ftp -i ftp.kgbusa.com'
-end
-every 1.day, :at => '4:15 pm' do
-  command 'cd /home/kaliara/public_html/wtd/current/public/system/assets/kgb_vouchers && echo "\$ download" | ftp -i ftp.kgbusa.com'
-end
-every 1.day, :at => '8:15 pm' do
-  command 'cd /home/kaliara/public_html/wtd/current/public/system/assets/kgb_vouchers && echo "\$ download" | ftp -i ftp.kgbusa.com'
-end
-every 1.day, :at => '12:15 pm' do
+every 1.hour, :at => 15 do
   command 'cd /home/kaliara/public_html/wtd/current/public/system/assets/kgb_vouchers && echo "\$ download" | ftp -i ftp.kgbusa.com'
 end
 
-every 1.day, :at => '4:20 am' do
-  rake "kgb:import_vouchers"
-end
-every 1.day, :at => '8:20 am' do
-  rake "kgb:import_vouchers"
-end
-every 1.day, :at => '12:20 am' do
-  rake "kgb:import_vouchers"
-end
-every 1.day, :at => '4:20 pm' do
-  rake "kgb:import_vouchers"
-end
-every 1.day, :at => '8:20 pm' do
-  rake "kgb:import_vouchers"
-end
-every 1.day, :at => '12:20 pm' do
+every 1.hour, :at => 20 do
   rake "kgb:import_vouchers"
 end
 
