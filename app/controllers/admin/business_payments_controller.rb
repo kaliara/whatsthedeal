@@ -34,9 +34,7 @@ class Admin::BusinessPaymentsController < ApplicationController
       
       if @business_payment.payment1_amount >= 0
         @business_payment.payment1_paid = true
-      end
-      
-      if @business_payment.payment2_amount >= 0 and @business_payment.payment1_paid?
+      elsif @business_payment.payment2_amount >= 0 and @business_payment.payment1_paid?
         @business_payment.payment2_paid = true
       end
       
