@@ -4,7 +4,7 @@ namespace :kgb do
   desc "Imports the KGB vouchers into the kgb_coupons table"
   task :import_vouchers => :environment do
   
-    Dir.glob(File.join("**","public/system/assets/kgb_vouchers","*.csv"))[-3..-1].each do |file|
+    Dir.glob(File.join("**","public/system/assets/kgb_vouchers","*.csv"))[-15..-1].each do |file|
       File.open(file,'r') do |f|
         f.each do |line|
           @kgb_coupon = KgbCoupon.new

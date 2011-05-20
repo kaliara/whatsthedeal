@@ -5,6 +5,10 @@
 
 # Example:
 
+every 1.hour, :at => 15 do
+  command 'cd /home/kaliara/public_html/wtd/current/public/system/assets/kgb_vouchers && echo "\$ download" | ftp -i ftp.kgbusa.com'
+end
+
 set :output, "log/cron_log.log"
 
 
@@ -31,10 +35,6 @@ end
 
 every 4.hours do
   rake "cleanup:cart_items"
-end
-
-every 1.hour, :at => 15 do
-  command 'cd /home/kaliara/public_html/wtd/current/public/system/assets/kgb_vouchers && echo "\$ download" | ftp -i ftp.kgbusa.com'
 end
 
 every 1.hour, :at => 20 do
