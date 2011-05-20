@@ -191,6 +191,9 @@ class ApplicationController < ActionController::Base
     def staff_required
       redirect_away(:controller => '/admin/home', :action => 'login') unless (current_user and current_user.staff?)
     end
+    def accountant_required
+      redirect_away(:controller => '/admin/home', :action => 'login') unless (current_user and current_user.accountant?)
+    end
     def admin_required
       redirect_away(:controller => '/admin/home', :action => 'login') unless (current_user and current_user.admin?)
     end

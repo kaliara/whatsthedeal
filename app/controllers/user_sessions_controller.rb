@@ -27,7 +27,7 @@ class UserSessionsController < ApplicationController
         cart.save  
       end
       
-      if current_user.staff?
+      if current_user.staff? or current_user.accountant?
         redirect_to admin_home_path
       elsif current_user.business? or current_user.business_staff?
         redirect_to business_home_path

@@ -1,6 +1,6 @@
 class Admin::HomeController < ApplicationController
   layout 'admin'
-  before_filter :staff_required, :except => ['login']
+  before_filter :staff_required, :except => ['login','index']
 
   def index
   end

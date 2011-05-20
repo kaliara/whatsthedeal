@@ -1,6 +1,7 @@
 class Admin::DashboardsController < ApplicationController
   layout 'admin'
-  before_filter :admin_required
+  before_filter :accountant_required, :only => [:index, :earn_out]
+  before_filter :admin_required, :except => [:index, :earn_out]
 
   def index
     @now = DateTime.new(Time.zone.now.year, Time.zone.now.month, Time.zone.now.day, Time.zone.now.hour, Time.zone.now.min, Time.zone.now.sec)
