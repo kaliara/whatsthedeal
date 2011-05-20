@@ -54,7 +54,7 @@ class PurchasesController < ApplicationController
 
       # update credits
       if current_user and !current_user.credits.redeemable.empty?
-        if cart.has_credit_restricted_promotion?
+        if cart.has_credit_restricted_promotion? and cart.deals_total > 0
           flash[:error] = "Sorry, one of the deals in your cart cannot be purchased with credit"
         else
           current_user.credits.redeemable.each do |credit|
