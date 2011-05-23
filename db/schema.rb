@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110520160252) do
+ActiveRecord::Schema.define(:version => 20110520213639) do
 
   create_table "accountants", :force => true do |t|
     t.integer  "user_id"
@@ -48,13 +48,16 @@ ActiveRecord::Schema.define(:version => 20110520160252) do
     t.integer  "promotion_id"
     t.boolean  "paid",                                           :default => false
     t.decimal  "initial_amount",  :precision => 10, :scale => 2, :default => 0.0
-    t.text     "notes"
+    t.text     "payment1_notes"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "payment1_paid",                                  :default => false
     t.boolean  "payment2_paid",                                  :default => false
     t.decimal  "payment1_amount", :precision => 10, :scale => 2, :default => 0.0
     t.decimal  "payment2_amount", :precision => 10, :scale => 2, :default => 0.0
+    t.datetime "payment1_date"
+    t.datetime "payment2_date"
+    t.string   "payment2_notes"
   end
 
   create_table "business_staffs", :force => true do |t|

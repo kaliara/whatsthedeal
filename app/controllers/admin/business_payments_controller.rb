@@ -32,10 +32,10 @@ class Admin::BusinessPaymentsController < ApplicationController
         @business_payment.initial_amount = @business_payment.promotion.business_profit
       end
       
-      if @business_payment.payment1_amount >= 0
-        @business_payment.payment1_paid = true
-      elsif @business_payment.payment2_amount >= 0 and @business_payment.payment1_paid?
+      if @business_payment.payment2_amount >= 0 and @business_payment.payment1_paid?
         @business_payment.payment2_paid = true
+      elsif @business_payment.payment1_amount >= 0
+        @business_payment.payment1_paid = true
       end
       
       if @business_payment.payment1_paid? and @business_payment.payment2_paid?

@@ -48,7 +48,7 @@
 <div class="section_element"> 
   <div class="section_content">
     <% unless @promotions.empty? %>
-      <table width="1200">
+      <table class="business_payments_table">
         <tr>
           <th style="text-align:left">ID</th>
           <th style="text-align:left; width:250px">Promotion Name</th>
@@ -58,7 +58,8 @@
           <th style="text-align:center">% to Business</th>
           <th style="text-align:center">Profit for WTD</th>
           <th style="text-align:center">$$ to Business</th>
-          <th style="text-align:center; width: 290px">Amounts Paid</th>
+          <th style="text-align:center; width: 220px">Amounts Paid</th>
+          <th style="text-align:center">Date</th>
           <th style="text-align:center">Notes</th>
           <th style="text-align:center"></th>
         </tr>
@@ -81,11 +82,20 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= f.label :payment1_amount, "90%" %>&nbsp;<%= f.text_field :payment1_amount, :value => (@business_payment.payment1_paid? ? @business_payment.payment1_amount : @business_payment.payment1_estimate), :style => "width: 55px", :disabled => (@business_payment.payment1_paid?) %>
                 <%= f.label :payment2_amount, "Remainder:" %>&nbsp;<%= f.text_field :payment2_amount, :value => (@business_payment.payment2_paid? ? @business_payment.payment2_amount : @business_payment.payment2_estimate), :style => "width: 55px", :disabled => (@business_payment.payment2_paid?) %>
               </td>
-              <td style="text-align:center">
-                <%= f.text_area :notes, :rows => 3, :cols => 30, :style => "font-size: 10px" %>
+              <td>
+                <%= f.text_field :payment1_date, :value => (@business_payment.payment1_date.strftime("%m/%d/%Y") unless @business_payment.payment1_date.blank?), :style => "width: 75px" %>
+                <%= f.text_field :payment2_date, :value => (@business_payment.payment2_date.strftime("%m/%d/%Y") unless @business_payment.payment2_date.blank?), :style => "width: 75px" %>
               </td>
-              <td style="text-align:left">
-                <%= f.submit "Update", :style => "margin-top: 17px" %>
+              <td>
+                <%= f.text_field :payment1_notes, :style => "font-size: 10px; width:125px" %><br>
+                <%= f.text_field :payment2_notes, :style => "font-size: 10px; width:125px" %>
+              </td>
+              <td style="text-align:left; padding-top: 13px">
+                <% if @business_payment.paid? %>
+                  <strong style="color: green; font-size: 20px">PAID</strong>
+                <% else %>
+                  <%= f.submit "Update" %>
+                <% end %>
               </td>
             <% end %>
           </tr>
@@ -96,3 +106,8 @@
     <% end %>
   </div>
 </div>
+
+<script type="text/javascript" charset="utf-8">
+  $("#business_payment_payment1_date").datepicker();
+  $("#business_payment_payment2_date").datepicker();
+</script>
