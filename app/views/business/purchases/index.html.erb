@@ -43,6 +43,7 @@
         <th>Purchase Price</th>
         <th>Redeemed?</th>
         <% if @any_coupon_codes %><th>Coupon Code</th><% end %>
+        <th>Site</th>
       </tr>
 
       <% (@coupons + @kgb_coupons).each do |coupon| %>
@@ -60,6 +61,7 @@
           <% if @any_coupon_codes %>
             <td><%= coupon.coupon_code %></td>
           <% end %>
+          <td class="coupon_source_<%= coupon.kgb_coupon? ? "kgb" : "wtd" %>"><%= coupon.kgb_coupon? ? "kgb" : "WTD" %></td>
         </tr>
       <% end %>    
     </table>
