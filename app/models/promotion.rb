@@ -125,6 +125,10 @@ class Promotion < ActiveRecord::Base
     self.revenue + self.refund_amount
   end
   
+  def initial_purchases
+    self.purchases + Coupon.refunded.select{|c| c.deal.promotion_id == self.id}.size
+  end
+  
   def refund_amount
     Coupon.refunded.select{|c| c.deal.promotion_id == self.id}.collect{|c| c.deal.price}.sum
   end

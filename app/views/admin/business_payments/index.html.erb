@@ -53,10 +53,10 @@
           <th style="text-align:left">ID</th>
           <th style="text-align:left; width:250px">Promotion Name</th>
           <th style="text-align:center">Purchased</th>
-          <th style="text-align:center">Initial $$</th>
+          <th style="text-align:center">Pre-Credit Rev *</th>
           <th style="text-align:center">$$ in Refunds</th>
           <th style="text-align:center">% to Business</th>
-          <th style="text-align:center">Profit for WTD</th>
+          <th style="text-align:center">Profit for WTD **</th>
           <th style="text-align:center">$$ to Business</th>
           <th style="text-align:center; width: 220px">Amounts Paid</th>
           <th style="text-align:center">Date</th>
@@ -69,7 +69,7 @@
           <tr style="background:#F0E8D0;">
             <td style="text-align:left"><%= promotion.id %></td>
             <td style="text-align:left;font-size:80%"><strong><%= promotion.name %></strong> (ends <%= promotion.end_date.strftime("%e %b %Y") %>)</td>
-            <td style="text-align:right"><%= promotion.purchases %></td>
+            <td style="text-align:right"><%= promotion.initial_purchases %></td>
             <td style="text-align:right"><%= number_to_currency promotion.initial_revenue %></td>
             <td style="text-align:right"><%= number_to_currency promotion.refund_amount %></td>
             <td style="text-align:right"><%= number_to_percentage (100.00 - promotion.profit_percentage.to_f, :precision => 2) %></td>
@@ -101,6 +101,9 @@
           </tr>
         <% end %>
       </table>
+      <br><br>
+      <p>* total money collected before refunds</p>
+      <p>** after credits</p>
     <% else %>
       <p>Choose a promotion from one of the menus above.</p>
     <% end %>
