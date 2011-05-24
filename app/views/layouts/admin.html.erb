@@ -24,7 +24,7 @@
 
   <% if current_user and (current_user.staff? or current_user.accountant?) %>
     <ul id="nav">
-      <% if current_user and current_user.admin? %>
+      <% if current_user and current_user.staff? %>
         <li>Main
           <ul>
             <li><%= link_to "Promotions", admin_promotions_path %></li>
@@ -42,14 +42,14 @@
         <li>Dashboards
           <ul>
             <li><%= link_to "Main", admin_dashboards_path %></li>
-	      	<% if current_user and current_user.admin? %>
-            <li><%= link_to "Promotions", admin_promotions_dashboard_path %></li>
-            <li><%= link_to "Washingtonian", admin_washingtonian_dashboard_path %></li>
-            <li><%= link_to "Affiliates", admin_affiliates_dashboard_path %></li>
-            <li><%= link_to "Affiliate Lifetime", admin_affiliate_lifetime_dashboard_path %></li>
-            <li><%= link_to "Partners", "/admin/dashboards?partner_id=2" %></li>
-            <li><%= link_to "Source Report", admin_source_report_dashboard_path %></li>
-			<% end %>
+  	      	<% if current_user and current_user.admin? %>
+              <li><%= link_to "Promotions", admin_promotions_dashboard_path %></li>
+              <li><%= link_to "Washingtonian", admin_washingtonian_dashboard_path %></li>
+              <li><%= link_to "Affiliates", admin_affiliates_dashboard_path %></li>
+              <li><%= link_to "Affiliate Lifetime", admin_affiliate_lifetime_dashboard_path %></li>
+              <li><%= link_to "Partners", "/admin/dashboards?partner_id=2" %></li>
+              <li><%= link_to "Source Report", admin_source_report_dashboard_path %></li>
+      			<% end %>
             <li><%= link_to "Earn Out Report", admin_earnout_dashboard_path %></li>
           </ul>
         </li>
@@ -68,7 +68,7 @@
       </li>
       <% end %>
       
-      <% if current_user and current_user.admin? %>
+      <% if current_user and current_user.staff? %>
         <li>Credit
           <ul>
             <li><%= link_to "Credit Profile", admin_credit_profile_path %></li>
