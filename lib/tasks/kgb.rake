@@ -4,7 +4,7 @@ namespace :kgb do
   desc "Imports the KGB vouchers into the kgb_coupons table"
   task :import_vouchers => :environment do
   
-    Dir.glob(File.join("**","public/system/assets/kgb_vouchers","*.csv")).sort.reverse[0..5].each do |file|
+    Dir.glob(File.join("**","public/system/assets/kgb_vouchers/KGB_Vouchers","*.csv")).sort.reverse[0..5].each do |file|
       File.open(file,'r') do |f|
         f.each do |line|
           line = line.gsub("\\,","")
