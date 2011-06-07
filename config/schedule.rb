@@ -6,7 +6,7 @@
 # Example:
 
 every 1.hour, :at => 15 do
-  command 'cd /home/kaliara/public_html/wtd/current/public/system/assets/kgb_vouchers && echo "\$ download" | ftp -i ftp.kgbusa.com'
+  command 'cd /home/kaliara/public_html/wtd/current/public/system/assets/kgb_vouchers && lftp -f download.lftp'
 end
 
 set :output, "log/cron_log.log"
