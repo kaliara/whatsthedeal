@@ -7,6 +7,7 @@ namespace :kgb do
     Dir.glob(File.join("**","public/system/assets/kgb_vouchers","*.csv")).sort.reverse[0..5].each do |file|
       File.open(file,'r') do |f|
         f.each do |line|
+          line = line.gsub("\\,","")
           @kgb_coupon = KgbCoupon.new
           @kgb_coupon.date_exported = line.split(",")[0]
           @kgb_coupon.transactions_transaction_id = line.split(",")[1]
