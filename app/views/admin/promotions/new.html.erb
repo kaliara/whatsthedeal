@@ -16,6 +16,11 @@
   </p>
   <br>
   <p>
+    <%= f.label :city_id %><br />
+    <%= f.select :city_id, Promotion::CITIES %>
+  </p>
+  <br>
+  <p>
     <%= f.label :partner_id, 'Sourced by Partner' %><br />
     <%= f.select :partner_id, [['No', 0], ['Washingtonian', 2], ['Half Price DC', 3], ['OnTap Magazine', 4]] %>
   </p>
@@ -99,12 +104,12 @@
   <br><br>
   <h3>Options</h3>
   <p>
-    <%= f.check_box :featured %>
-    <%= f.label :featured, "Featured Override" %>
+    <%= f.check_box :dc_featured %>
+    <%= f.label :dc_featured, "DC Featured Override" %>
   </p>
   <p>
-    <%= f.check_box :washingtonian_featured %>
-    <%= f.label :washingtonian_featured, 'Washingtonian Override' %>
+    <%= f.check_box :nova_featured %>
+    <%= f.label :nova_featured, "NOVA Featured Override" %>
   </p>
   <p>
     <%= f.check_box :halfpricedc_featured %>

@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110520213639) do
+ActiveRecord::Schema.define(:version => 20110608194054) do
 
   create_table "accountants", :force => true do |t|
     t.integer  "user_id"
@@ -44,20 +44,20 @@ ActiveRecord::Schema.define(:version => 20110520213639) do
   end
 
   create_table "business_payments", :force => true do |t|
-    t.integer  "business_id"
-    t.integer  "promotion_id"
-    t.boolean  "paid",                                           :default => false
-    t.decimal  "initial_amount",  :precision => 10, :scale => 2, :default => 0.0
-    t.text     "payment1_notes"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "payment1_paid",                                  :default => false
-    t.boolean  "payment2_paid",                                  :default => false
-    t.decimal  "payment1_amount", :precision => 10, :scale => 2, :default => 0.0
-    t.decimal  "payment2_amount", :precision => 10, :scale => 2, :default => 0.0
-    t.datetime "payment1_date"
-    t.datetime "payment2_date"
-    t.string   "payment2_notes"
+    t.integer "business_id"
+    t.integer "promotion_id"
+    t.boolean "paid",                                           :default => false
+    t.decimal "initial_amount",  :precision => 10, :scale => 2, :default => 0.0
+    t.text    "payment1_notes"
+    t.date    "created_at"
+    t.date    "updated_at"
+    t.boolean "payment1_paid",                                  :default => false
+    t.boolean "payment2_paid",                                  :default => false
+    t.decimal "payment1_amount", :precision => 10, :scale => 2, :default => 0.0
+    t.decimal "payment2_amount", :precision => 10, :scale => 2, :default => 0.0
+    t.date    "payment1_date"
+    t.date    "payment2_date"
+    t.string  "payment2_notes"
   end
 
   create_table "business_staffs", :force => true do |t|
@@ -374,7 +374,7 @@ ActiveRecord::Schema.define(:version => 20110520213639) do
   create_table "promotions", :force => true do |t|
     t.string   "name"
     t.integer  "quota",                                                             :default => 0
-    t.boolean  "featured"
+    t.boolean  "dc_featured"
     t.boolean  "active"
     t.datetime "end_date"
     t.datetime "created_at"
@@ -428,6 +428,8 @@ ActiveRecord::Schema.define(:version => 20110520213639) do
     t.boolean  "physical_address",                                                  :default => true
     t.string   "slug"
     t.boolean  "grab_bag",                                                          :default => false
+    t.integer  "city_id",                                                           :default => 0
+    t.boolean  "nova_featured",                                                     :default => false
   end
 
   create_table "purchases", :force => true do |t|

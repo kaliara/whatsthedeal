@@ -75,6 +75,8 @@ ActionController::Routing::Routes.draw do |map|
   map.subscribe 'subscribe', :controller => 'users', :action => 'create', :quietly_create => true
   map.event_signup 'events/:id/signup', :controller => 'events', :action => 'signup'
   map.create_event_attendee '/event/attendee', :controller => 'attendees', :action => 'create', :return_uri => '/my_account'
+  map.nova_simple_signup '/nova/signup', :controller => 'delayed_subscriptions', :action => 'create', :list => User::VIRGINIA_DEAL_LIST, :referrer => 'nova_email' 
+  map.somd_simple_signup '/somd/signup', :controller => 'delayed_subscriptions', :action => 'create', :list => User::MARYLAND_DEAL_LIST, :referrer => 'somd_email' 
   
   # registration
   map.register 'register', :controller => 'users', :action => 'new'

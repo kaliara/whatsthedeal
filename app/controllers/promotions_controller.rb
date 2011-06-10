@@ -88,11 +88,11 @@ class PromotionsController < ApplicationController
     
     case partner
     when 2
-      @promotion = params[:featured] ? Promotion.washingtonian_featured.first : Promotion.find_by_slug(params[:slug])
+      @promotion = params[:dc_featured] ? Promotion.washingtonian_featured.first : Promotion.find_by_slug(params[:slug])
     when 3
-      @promotion = params[:featured] ? Promotion.halfpricedc_featured.first : Promotion.find_by_slug(params[:slug])
+      @promotion = params[:dc_featured] ? Promotion.halfpricedc_featured.first : Promotion.find_by_slug(params[:slug])
     else
-      @promotion = params[:featured] ? Promotion.featured.first : Promotion.find_by_slug(params[:slug])
+      @promotion = params[:dc_featured] ? Promotion.featured.first : Promotion.find_by_slug(params[:slug])
     end
     if @promotion.nil?
       flash[:error] = "We have updated some of the links to our promotions, please select a promotion from the list below"

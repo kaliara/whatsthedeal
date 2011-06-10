@@ -14,7 +14,7 @@ class Admin::PromotionsController < ApplicationController
     end
     
     @businesses = Business.find(:all, :order => "name asc")
-    @next_featured = Promotion.find(:first, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ?', Time.now.utc + 1.day, Time.now.utc + 1.day, true, false], :order => 'featured DESC, start_date DESC')
+    @next_featured = Promotion.find(:first, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ?', Time.now.utc + 1.day, Time.now.utc + 1.day, true, false], :order => 'dc_featured DESC, start_date DESC')
 
     respond_to do |format|
       format.html # index.html.erb
