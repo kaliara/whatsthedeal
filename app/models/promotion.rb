@@ -5,9 +5,12 @@ class Promotion < ActiveRecord::Base
   
   named_scope :featured, :conditions => ['dc_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'dc_featured DESC, start_date DESC', :limit => 1
   named_scope :dc_featured, :conditions => ['dc_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'dc_featured DESC, start_date DESC', :limit => 1
-  named_scope :washingtonian_featured, :conditions => ['washingtonian_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'washingtonian_featured DESC, start_date DESC', :limit => 1
   named_scope :nova_featured, :conditions => ['nova_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'nova_featured DESC, start_date DESC', :limit => 1
+  # named_scope :somd_featured, :conditions => ['somd_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'submd_featured DESC, start_date DESC', :limit => 1
+  named_scope :washingtonian_featured, :conditions => ['washingtonian_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'washingtonian_featured DESC, start_date DESC', :limit => 1
   named_scope :halfpricedc_featured, :conditions => ['halfpricedc_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'halfpricedc_featured DESC, start_date DESC', :limit => 1
+  named_scope :nova,  :conditions => ['city_id = ? and start_date < ? and end_date > ? and active = ? and hidden = ?', 2, Time.now.utc, Time.now.utc, true, false], :order  => 'nova_featured DESC, start_date DESC'
+  named_scope :submd, :conditions => ['city_id = ? and start_date < ? and end_date > ? and active = ? and hidden = ?', 3, Time.now.utc, Time.now.utc, true, false], :order  => 'submd_featured DESC, start_date DESC'
   named_scope :sidebar, lambda { |excluded| {:conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and id != ?', Time.now.utc, Time.now.utc, true, false, excluded.nil? ? 0 : excluded], :order => 'position ASC', :limit => 3}}
 
   has_attached_file :image1, 
@@ -45,7 +48,7 @@ class Promotion < ActiveRecord::Base
   BUYING_CREDIT_PROMOTION = 266
   PROMOTION_MAP_DEFAULT_LAT = 38.897275
   PROMOTION_MAP_DEFAULT_LNG = -77.036594
-  CITIES = [['Washington DC',0], ['Northern Virginia',1], ['Southern Maryland',2]]
+  CITIES = [['All Cities',0], ['Washington DC',1], ['Northern Virginia',2], ['Southern Maryland',3]]
   
   def active?
     self.active == true and self.start_date < Time.now.utc and self.end_date > Time.now.utc

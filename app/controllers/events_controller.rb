@@ -4,7 +4,7 @@ class EventsController < ApplicationController
 
   def index
     @promotions = []
-    @events = Event.find(:all, :conditions => ['rotation_start_date <= ? and rotation_end_date >= ?', Date.today, Date.today], :order => 'created_at DESC')
+    @events = Event.find(:all, :conditions => ['rotation_start_date <= ? and rotation_end_date >= ?', Time.zone.now, Time.zone.now], :order => 'created_at DESC')
     
     session[:stored_promotion_code_id] = nil
 
