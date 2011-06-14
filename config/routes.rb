@@ -95,7 +95,7 @@ ActionController::Routing::Routes.draw do |map|
   map.timeout_error '/timeout_error', :controller => 'static', :action => 'timeout_error'
   
   # xml bits
-  map.featured 'featured.:format', :controller => 'promotions', :action => 'show', :featured => true
+  map.featured 'featured.:format', :controller => 'promotions', :action => 'show', :dc_featured => true
   map.connect  'rss.:format',      :controller => 'promotions', :action => 'rss'
   map.connect '/promotions/ad_preview.:format', :controller => 'promotions', :action => 'ad_preview'
   map.connect 'lon.:format', :controller => 'promotions', :action => 'lon'
