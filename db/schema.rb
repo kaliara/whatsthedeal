@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110608194054) do
+ActiveRecord::Schema.define(:version => 20110613221034) do
 
   create_table "accountants", :force => true do |t|
     t.integer  "user_id"
@@ -315,6 +315,12 @@ ActiveRecord::Schema.define(:version => 20110608194054) do
     t.boolean  "used",                                                       :default => false
     t.boolean  "mobile_used",                                                :default => false
     t.datetime "redemption_date"
+    t.integer  "voucher_index"
+    t.string   "voucher_alphanum"
+    t.string   "voucher_full_id"
+    t.integer  "voucher_user_id"
+    t.string   "voucher_status"
+    t.datetime "voucher_timestamp"
   end
 
   create_table "locations", :force => true do |t|
