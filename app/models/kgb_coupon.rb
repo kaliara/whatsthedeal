@@ -1,6 +1,6 @@
 class KgbCoupon < ActiveRecord::Base
   validates_numericality_of :transactions_deal_id, :on => :create, :message => "must be a number"
-  validates_uniqueness_of :transactions_transaction_id, :on => :create, :message => "must be unique"
+  validates_uniqueness_of :voucher_alphanum, :on => :create, :message => "must be unique"
   
   def name
     self.deal.coupon_name
