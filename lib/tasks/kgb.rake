@@ -9,27 +9,27 @@ namespace :kgb do
         f.each do |line|
           line = line.gsub("\\,","")
           @kgb_coupon = KgbCoupon.new
-          @kgb_coupon.date_exported = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[0].gsub("\"","")
+          @kgb_coupon.date_exported = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[0].to_s.gsub("\"","")
           @kgb_coupon.transactions_transaction_id = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[2]
           @kgb_coupon.transactions_deal_id = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[4]
           @kgb_coupon.transactions_user_id = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[6]
           @kgb_coupon.transactions_quantity = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[8]
           @kgb_coupon.transactions_total_amount = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[10]
-          @kgb_coupon.transactions_timestamp = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[12].gsub("\"","")
-          @kgb_coupon.users_first_name = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[14].gsub("\"","")
-          @kgb_coupon.users_last_name = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[16].gsub("\"","")
-          @kgb_coupon.users_email = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[18].gsub("\"","")
+          @kgb_coupon.transactions_timestamp = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[12].to_s.gsub("\"","")
+          @kgb_coupon.users_first_name = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[14].to_s.gsub("\"","")
+          @kgb_coupon.users_last_name = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[16].to_s.gsub("\"","")
+          @kgb_coupon.users_email = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[18].to_s.gsub("\"","")
           @kgb_coupon.deals_merchant_id = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[20]
-          @kgb_coupon.deals_title = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[22].gsub("\"","")
+          @kgb_coupon.deals_title = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[22].to_s.gsub("\"","")
           @kgb_coupon.deals_price = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[24]
-          @kgb_coupon.deals_coupon_expires = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[26].gsub("\"","")
-          @kgb_coupon.merchants_name = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[28].gsub("\"","")
+          @kgb_coupon.deals_coupon_expires = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[26].to_s.gsub("\"","")
+          @kgb_coupon.merchants_name = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[28].to_s.gsub("\"","")
           @kgb_coupon.voucher_index = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[30]
-          @kgb_coupon.voucher_alphanum = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[32].gsub("\"","")
-          @kgb_coupon.voucher_full_id = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[34].gsub("\"","")
+          @kgb_coupon.voucher_alphanum = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[32].to_s.gsub("\"","")
+          @kgb_coupon.voucher_full_id = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[34].to_s.gsub("\"","")
           @kgb_coupon.voucher_user_id = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[36]
-          @kgb_coupon.voucher_status = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[38].gsub("\"","")
-          @kgb_coupon.voucher_timestamp = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[40].gsub("\"","")
+          @kgb_coupon.voucher_status = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[38].to_s.gsub("\"","")
+          @kgb_coupon.voucher_timestamp = line.split(/(,)(?=(?:[^"]|"[^"]*")*$)/)[40].to_s.gsub("\"","")
           @kgb_coupon.save
         end
       end
