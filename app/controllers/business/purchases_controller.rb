@@ -29,15 +29,15 @@ class Business::PurchasesController < ApplicationController
       @deals = [0] if @deals.empty?
       @kgb_deals = [0] if @kgb_deals.empty?
       @coupons = Coupon.find(:all, :conditions => ["REPLACE(confirmation_code,'-','') = '#{params[:q].gsub(/\-/,'')}' and deal_id in (#{@deals.join(',')})"]).to_a
-      @kgb_coupons = KgbCoupon.find(:all, :conditions => ["transactions_transaction_id like ? and transactions_deal_id in (#{@kgb_deals.join(',')})", "%#{params[:q]}%"]).to_a
+      @kgb_coupons = KgbCoupon.find(:all, :conditions => ["voucher_full_id like ? and transactions_deal_id in (#{@kgb_deals.join(',')})", "%#{params[:q]}%"]).to_a
     elsif params[:q] =~ /\w+/ and !params[:q].blank?
       @type = "Name"
       @user_ids = Customer.find(:all, :conditions => ['first_name like ? or last_name like ? or CONCAT(first_name," ",last_name) like ?', "%#{params[:q]}%", "%#{params[:q]}%", "%#{params[:q]}%"]).collect{|c| c.user.id}
       @coupons = Coupon.find(:all, :conditions => {:user_id => @user_ids, :deal_id => @deals}, :order => 'confirmation_code ASC')
-      @kgb_coupons = KgbCoupon.find(:all, :conditions => ["(users_first_name like ? or users_last_name like ? or CONCAT(users_first_name,' ',users_last_name) like ?) and transactions_deal_id in (#{@kgb_deals.join(',')})", "%#{params[:q]}%", "%#{params[:q]}%", "%#{params[:q]}%"], :order => 'transactions_transaction_id ASC')
+      @kgb_coupons = KgbCoupon.find(:all, :conditions => ["(users_first_name like ? or users_last_name like ? or CONCAT(users_first_name,' ',users_last_name) like ?) and transactions_deal_id in (#{@kgb_deals.join(',')})", "%#{params[:q]}%", "%#{params[:q]}%", "%#{params[:q]}%"], :order => 'voucher_full_id ASC')
     elsif params[:all] == 'yes'
       @coupons = Coupon.find(:all, :conditions => {:deal_id => @deals}, :order => 'confirmation_code ASC')
-      @kgb_coupons = KgbCoupon.find(:all, :conditions => {:transactions_deal_id => @kgb_deals}, :order => 'transactions_transaction_id ASC')
+      @kgb_coupons = KgbCoupon.find(:all, :conditions => {:transactions_deal_id => @kgb_deals}, :order => 'voucher_full_id ASC')
     end    
     
     @any_coupon_codes = false
