@@ -19,7 +19,7 @@ class KgbCoupon < ActiveRecord::Base
   end
 
   def confirmation_code
-    self.transactions_transaction_id
+    self.voucher_alphanum
   end
 
   def expiration
