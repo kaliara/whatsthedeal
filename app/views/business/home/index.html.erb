@@ -38,10 +38,7 @@
                 <%= promotion.purchases(nil, true) %></th>
               <% if current_user.business? %>
                 <th colspan="<%= current_user.business? ? "4" : "1" %>" style="text-align:right;">
-                  <% unless promotion.coupons.empty? %>
-                    <span class="dont_print">(<%= link_to "Purchaser Report", :controller => 'purchases', :action => 'index', :promotion_id => promotion.id %> | <%= link_to "Demographics", business_purchase_stats_path(:promotion_id => promotion.id) %>)</span> &nbsp;&nbsp;
-                  <% end %>
-                  
+                  <span class="dont_print">(<%= link_to "Purchaser Report", :controller => 'purchases', :action => 'index', :promotion_id => promotion.id %> | <%= link_to "Demographics", business_purchase_stats_path(:promotion_id => promotion.id) %>)</span> &nbsp;&nbsp;
                   <%= number_to_currency promotion.business_profit(true), :precision => 2 %>
                 </th>
               <% end %>
