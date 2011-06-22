@@ -4,9 +4,9 @@ class Promotion < ActiveRecord::Base
   belongs_to :business
   
   named_scope :featured, :conditions => ['dc_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'dc_featured DESC, start_date DESC', :limit => 1
-  named_scope :dc_featured, :conditions => ['dc_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'dc_featured DESC, start_date DESC', :limit => 1
-  named_scope :nova_featured, :conditions => ['nova_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'nova_featured DESC, start_date DESC', :limit => 1
-  # named_scope :somd_featured, :conditions => ['somd_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'submd_featured DESC, start_date DESC', :limit => 1
+  named_scope :dc_featured, :conditions => ['dc_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ? and city_id = ?)', true, Time.now.utc, Time.now.utc, true, false, 1], :order => 'dc_featured DESC, start_date DESC', :limit => 1
+  named_scope :nova_featured, :conditions => ['nova_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ? and city_id = ?)', true, Time.now.utc, Time.now.utc, true, false, 2], :order => 'nova_featured DESC, start_date DESC', :limit => 1
+  # named_scope :somd_featured, :conditions => ['somd_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ? and city_id = ?)', true, Time.now.utc, Time.now.utc, true, false, 3], :order => 'submd_featured DESC, start_date DESC', :limit => 1
   named_scope :washingtonian_featured, :conditions => ['washingtonian_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'washingtonian_featured DESC, start_date DESC', :limit => 1
   named_scope :halfpricedc_featured, :conditions => ['halfpricedc_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'halfpricedc_featured DESC, start_date DESC', :limit => 1
   named_scope :dc,    :conditions => ['city_id = ? and start_date < ? and end_date > ? and active = ? and hidden = ?', 1, Time.now.utc, Time.now.utc, true, false], :order  => 'nova_featured DESC, start_date DESC'

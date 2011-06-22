@@ -4,15 +4,22 @@ class PromotionsController < ApplicationController
     
   def home
     @on_home_page = true
+    @backup_promotion = Promotion.featured.empty? ? Promotion.first : Promotion.featured.first
     session[:force_full_site] = false
     
     case partner
     when 2
-      @promotion = Promotion.washingtonian_featured.empty? ? Promotion.first : Promotion.washingtonian_featured.first
+      @promotion = Promotion.washingtonian_featured.empty? ? @backup_promotion : Promotion.washingtonian_featured.first
     when 3
-      @promotion = Promotion.halfpricedc_featured.empty? ? Promotion.first : Promotion.halfpricedc_featured.first
+      @promotion = Promotion.halfpricedc_featured.empty? ? @backup_promotion : Promotion.halfpricedc_featured.first
     else
-      @promotion = Promotion.featured.empty? ? Promotion.first : Promotion.featured.first
+      if region == 1
+        @promotion = Promotion.dc_featured.empty? ? @backup_promotion : Promotion.dc_featured.first
+      elsif region == 2
+        @promotion = Promotion.nova_featured.empty? ? @backup_promotion : Promotion.nova_featured.first
+      else
+        @promotion = @backup_promotion
+      end
     end
   
     @side_promotions = Promotion.sidebar(@promotion.id)
@@ -27,11 +34,11 @@ class PromotionsController < ApplicationController
   def index
     session[:force_full_site] = false
     
-    if params[:city_id] == 1 or region == 1
+    if region == 1
+      @promotions = Promotion.dc
+    elsif region == 2
       @promotions = Promotion.nova
-    elsif params[:city_id] == 2 or region == 2
-      @promotions = Promotion.nova
-    elsif params[:city_id] == 3 or region == 3
+    elsif region == 3
       @promotions = Promotion.submd
     else
       @promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ?', Time.now.utc, Time.now.utc, true, false], :order  => 'dc_featured DESC, start_date DESC')
