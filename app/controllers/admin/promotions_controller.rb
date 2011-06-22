@@ -120,8 +120,9 @@ class Admin::PromotionsController < ApplicationController
   end
 
   def sort
-    Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and id != ?', Time.now.utc, Time.now.utc, true, false, Promotion.featured.first]).each do |p|
-      p.position = params['promotion'].index(p.id.to_s) + 1
+    @city_id = params[:city_id].to_i
+    Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and id != ?', Time.now.utc + 2.days, Time.now.utc, true, false, Promotion.featured.first]).each do |p|
+      p["#{['','dc_', 'nova_'][@city_id]}position"] = params['promotion'].index(p.id.to_s) + 1
       p.save
     end
     render :nothing => true
@@ -191,7 +192,7 @@ class Admin::PromotionsController < ApplicationController
   # sidebar promotion sorting
   def sidebar
     @city_id = params[:city_id].to_i || 0
-    @promotions = Promotion.find(:all, :conditions => ['city_id = ? and start_date < ? and end_date > ? and active = ? and hidden = ? and id != ?', @city_id, Time.now.utc, Time.now.utc, true, false, 0], :order => 'position')
+    @promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and id != ?', Time.now.utc + 2.days, Time.now.utc, true, false, 0], :order => "#{['','dc_', 'nova_'][@city_id]}position")
 
     respond_to do |format|
       format.html # index.html.erb

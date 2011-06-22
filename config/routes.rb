@@ -154,7 +154,7 @@ ActionController::Routing::Routes.draw do |map|
   map.admin_affiliate_lifetime_dashboard '/admin/dashboards/affiliate_lifetime', :controller => '/admin/dashboards', :action => 'affiliate_lifetime'
   map.admin_source_report_dashboard '/admin/dashboards/source_report', :controller => '/admin/dashboards', :action => 'source_report'
   map.admin_sidebar_promotions '/admin/promotions/sidebar', :controller => '/admin/promotions', :action => 'sidebar'
-  map.admin_promotions_sort '/admin/promotions/sort', :controller => '/admin/promotions', :action => 'sort'
+  map.admin_promotions_sort '/admin/promotions/sort/:city_id', :controller => '/admin/promotions', :action => 'sort'
   map.admin_promotion_codes_unlist '/admin/promotion_codes/unlist', :controller => '/admin/promotion_codes', :action => 'unlist'
   map.admin_origin_associate_business '/admin/origins/associate_business', :controller => '/admin/origins', :action => 'associate_business'
   map.admin_clear_carts '/admin/carts/clear/:id', :controller => 'admin/carts', :action => 'clear'

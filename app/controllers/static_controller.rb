@@ -13,7 +13,7 @@ class StaticController < ApplicationController
         @user = User.new
         @user.customer = Customer.new
       end
-      @side_promotions = Promotion.sidebar
+      @side_promotions = Promotion.sidebar(0, region)
     end
   end
 

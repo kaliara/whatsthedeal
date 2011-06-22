@@ -54,7 +54,7 @@
                 $('#updated').css("opacity", 1);
                 $('#updated').animate({opacity: 0}, 3000);
               },
-            url: '<%= admin_promotions_sort_path %>'})
+            url: '<%= admin_promotions_sort_path(@city_id) %>'})
         }
       });
 </script>

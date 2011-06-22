@@ -188,6 +188,7 @@ class ApplicationController < ActionController::Base
     def impersonate_customer
       if current_user and current_user.admin? and current_user.admin.customer_impersonation_id.to_i > 0
         @current_user = Customer.find(current_user.admin.customer_impersonation_id).user
+        session[:impersonating] = true
       end
     end
 

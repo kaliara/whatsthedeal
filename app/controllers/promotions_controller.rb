@@ -22,7 +22,7 @@ class PromotionsController < ApplicationController
       end
     end
   
-    @side_promotions = Promotion.sidebar(@promotion.id)
+    @side_promotions = Promotion.sidebar(@promotion.id, region)
     @cart_item = CartItem.new
     
     render :action => mobile ? 'show_m' : 'show'
@@ -59,7 +59,7 @@ class PromotionsController < ApplicationController
     session[:force_full_site] = true
     
     @promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and grab_bag = ?', Time.now.utc, Time.now.utc, true, true], :order  => 'dc_featured DESC, start_date DESC')
-    @side_promotions = Promotion.sidebar(@promotions.first.id)
+    @side_promotions = Promotion.sidebar(@promotions.first.id, region)
 
     if @promotions.empty?
       redirect_to promotions_path
@@ -115,7 +115,7 @@ class PromotionsController < ApplicationController
     else
       flash.now[:error] = "Did you miss this deal? <a href='/signup'>Signup for the our Daily Deal e-mails</a> never miss out again!" unless @promotion.end_date > Time.now.utc
       
-      @side_promotions = Promotion.sidebar(@promotion.id)
+      @side_promotions = Promotion.sidebar(@promotion.id, region)
       @cart_item = CartItem.new
     
       # track action
@@ -131,7 +131,7 @@ class PromotionsController < ApplicationController
   
   def buy_credit
     @promotion = Promotion.find(266)
-    @side_promotions = Promotion.sidebar(@promotion.id)
+    @side_promotions = Promotion.sidebar(@promotion.id, region)
     @cart_item = CartItem.new
   end
   

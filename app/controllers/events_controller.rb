@@ -12,14 +12,14 @@ class EventsController < ApplicationController
       flash[:error] = "Sorry, there are no events going on right now. <a href='/signup'>Signup for our listserv</a> to make sure you don't miss the next one!"
       redirect_to root_path
     else
-      @side_promotions = Promotion.sidebar
+      @side_promotions = Promotion.sidebar(0, region)
       render :action => 'index'
     end
   end
   
   def show
     @event = Event.find(params[:id])
-    @side_promotions = Promotion.sidebar
+    @side_promotions = Promotion.sidebar(0, region)
     @user_session = UserSession.new
     @user = User.new
     @user.customer = Customer.new

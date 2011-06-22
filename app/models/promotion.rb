@@ -9,10 +9,10 @@ class Promotion < ActiveRecord::Base
   # named_scope :somd_featured, :conditions => ['somd_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ? and city_id = ?)', true, Time.now.utc, Time.now.utc, true, false, 3], :order => 'submd_featured DESC, start_date DESC', :limit => 1
   named_scope :washingtonian_featured, :conditions => ['washingtonian_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'washingtonian_featured DESC, start_date DESC', :limit => 1
   named_scope :halfpricedc_featured, :conditions => ['halfpricedc_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'halfpricedc_featured DESC, start_date DESC', :limit => 1
-  named_scope :dc,    :conditions => ['city_id = ? and start_date < ? and end_date > ? and active = ? and hidden = ?', 1, Time.now.utc, Time.now.utc, true, false], :order  => 'nova_featured DESC, start_date DESC'
-  named_scope :nova,  :conditions => ['city_id = ? and start_date < ? and end_date > ? and active = ? and hidden = ?', 2, Time.now.utc, Time.now.utc, true, false], :order  => 'nova_featured DESC, start_date DESC'
-  named_scope :submd, :conditions => ['city_id = ? and start_date < ? and end_date > ? and active = ? and hidden = ?', 3, Time.now.utc, Time.now.utc, true, false], :order  => 'submd_featured DESC, start_date DESC'
-  named_scope :sidebar, lambda { |excluded| {:conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and id != ?', Time.now.utc, Time.now.utc, true, false, excluded.nil? ? 0 : excluded], :order => 'position ASC', :limit => 3}}
+  named_scope :dc,    :conditions => ['(city_id = ? or city_id = 0) and start_date < ? and end_date > ? and active = ? and hidden = ?', 1, Time.now.utc, Time.now.utc, true, false], :order  => 'nova_featured DESC, city_id DESC, start_date DESC'
+  named_scope :nova,  :conditions => ['(city_id = ? or city_id = 0) and start_date < ? and end_date > ? and active = ? and hidden = ?', 2, Time.now.utc, Time.now.utc, true, false], :order  => 'nova_featured DESC, city_id DESC, start_date DESC'
+  named_scope :submd, :conditions => ['(city_id = ? or city_id = 0) and start_date < ? and end_date > ? and active = ? and hidden = ?', 3, Time.now.utc, Time.now.utc, true, false], :order  => 'submd_featured DESC, city_id DESC, start_date DESC'
+  named_scope :sidebar, lambda { |excluded, city_id| {:conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and id != ?', Time.now.utc, Time.now.utc, true, false, excluded.nil? ? 0 : excluded], :order => "#{['','dc_', 'nova_'][city_id.nil? ? 0 : city_id.to_i]}position ASC", :limit => 3}}
 
   has_attached_file :image1, 
                       :styles => { :original => "315x222>" }, 
