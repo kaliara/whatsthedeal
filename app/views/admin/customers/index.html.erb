@@ -38,7 +38,7 @@
     <td><%=h customer.state %></td>
     <td><%=h customer.female? ? "Female" : "Male" %></td>
     <td><%=h customer.user.gets_daily_deal_email? ? 'true' : "" %></td>
-    <td><%= link_to 'Impersonate', admin_impersonate_path(:type => 'customer', :id => customer.id) %>&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "#{customer.user.coupons.size} Coupons", admin_coupons_path(:q => customer.user.email) if customer.user.coupons.size > 0 %>&nbsp;&nbsp;</td>
+    <td><%= link_to 'Impersonate', admin_impersonate_path(:type => 'customer', :id => customer.id) if current_user.admin? %>&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "#{customer.user.coupons.size} Coupons", admin_coupons_path(:q => customer.user.email) if customer.user.coupons.size > 0 %>&nbsp;&nbsp;</td>
     <td><%= link_to 'Preview', admin_customer_path(customer) %></td>
     <td><%= link_to 'Edit', edit_admin_customer_path(customer) %></td>
   </tr>

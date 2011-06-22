@@ -44,6 +44,8 @@
               <strong>&nbsp;</strong>
             <% elsif promotion.id == 362 %>
               <strong>1,081</strong>&nbsp;purchases
+            <% elsif promotion.id == 395 %>
+              <strong>300</strong>&nbsp;purchases
             <% elsif promotion.id == 291 %>
               <strong><%= number_with_delimiter(Promotion.find(293).purchases + Promotion.find(294).purchases) %></strong>&nbsp;purchases
             <% else %>

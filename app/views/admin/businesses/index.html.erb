@@ -1,5 +1,5 @@
 <% content_for :sub_nav do %>
-  <li><%= link_to 'New business', new_admin_business_path %></li>
+  <li><%= link_to 'New business', new_admin_business_path if current_user.admin? %></li>
 <% end %>
 
 <h2>Listing businesses</h2>
@@ -20,9 +20,9 @@
     <td><%= number_to_currency business.subscriber_rate %></td>
     <td><%= number_to_percentage business.purchaser_rate, :precision => 2 %></td>
     <td><%= business.street1 %> <%=h business.street2 %> - <%=h business.city %>, <%=h business.state %> <%=h business.zipcode %></td>
-    <td><%= link_to 'Impersonate', admin_impersonate_path(:type => 'business', :id => business.id) %>&nbsp;&nbsp;&nbsp;</td>
+    <td><%= link_to 'Impersonate', admin_impersonate_path(:type => 'business', :id => business.id) if current_user.admin? %>&nbsp;&nbsp;&nbsp;</td>
     <td><%= link_to 'Edit', edit_admin_business_path(business) %></td>
-    <td><%= link_to 'Destroy', admin_business_path(business), :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Destroy', admin_business_path(business), :confirm => 'Are you sure?', :method => :delete if current_user.admin? %></td>
   </tr>
 <% end %>
 </table>

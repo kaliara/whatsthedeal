@@ -6,7 +6,7 @@
   
   <!-- open graph stuff -->
   <meta property="og:title" content="<%= @promotion.name %>"/>
-  <meta property="og:site_name" content="What's The Deal"/>
+  <meta property="og:site_name" content="WTD"/>
   <meta property="og:type" content="article"/>
   <meta property="og:url" content="<%= promotion_slug_url @promotion.slug %>"/>
   <meta property="og:image" content="http://sowhatsthedeal.com<%= @promotion.image1.url %>"/>
@@ -122,9 +122,9 @@
       <span><a target="_blank" href="http://www.facebook.com/share.php?u=<%= CGI::escape promotion_slug_url(@promotion.slug) %>"><img src="/images/facebook.png" /></a></span>
       <span><a target="_blank" href="http://twitter.com/home?status=<%= CGI::escape(@promotion.name + " at " + promotion_slug_url(@promotion.slug)) %>"><img src="/images/twitter.png" /></a></span>
       <% if current_user and current_user.customer? %>
-        <span><a href="mailto:?subject=Check this out  -- <%= @promotion.name.sub(/\%/, '%25') %> from What's the Deal DC&body=I thought you may like today's bargain from What's the Deal DC:  <%= @promotion.name.sub(/\%/, '%25') %> - <%= CGI::escape promotion_slug_url(@promotion.slug) %>.  If you're not already a member, you can get $5 off your first purchase by signing up here <%= HOST_URL %>ref/<%= current_user.referral_link %>.%0A %0AHappy Bargain hunting!"><img src="/images/email.gif" class="email"/></a></span>
+        <span><a href="mailto:?subject=Check this out  -- <%= @promotion.name.sub(/\%/, '%25') %> from WTD DC&body=I thought you may like today's bargain from WTD DC:  <%= @promotion.name.sub(/\%/, '%25') %> - <%= CGI::escape promotion_slug_url(@promotion.slug) %>.  If you're not already a member, you can get $5 off your first purchase by signing up here <%= HOST_URL %>ref/<%= current_user.referral_link %>.%0A %0AHappy Bargain hunting!"><img src="/images/email.gif" class="email"/></a></span>
       <% else %>
-        <span><a href="mailto:?subject=Check this out  -- <%=  @promotion.name.sub(/\%/, '%25') %> from What's the Deal DC&body=I thought you may like today's bargain from What's the Deal DC:  <%=  @promotion.name.sub(/\%/, '%25') %> - <%= CGI::escape promotion_slug_url(@promotion.slug) %>.%0A %0AHappy Bargain hunting!"><img src="/images/email.gif" class="email"/></a></span>
+        <span><a href="mailto:?subject=Check this out  -- <%=  @promotion.name.sub(/\%/, '%25') %> from WTD DC&body=I thought you may like today's bargain from WTD DC:  <%=  @promotion.name.sub(/\%/, '%25') %> - <%= CGI::escape promotion_slug_url(@promotion.slug) %>.%0A %0AHappy Bargain hunting!"><img src="/images/email.gif" class="email"/></a></span>
       <% end %>
     </div>    
     <% unless @promotion.restrictions.blank? %>

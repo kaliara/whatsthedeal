@@ -16,6 +16,11 @@
     <strong><%= link_to @void.purchase_id, admin_purchase_path(@void.purchase_id) %></strong>
   </p>
   
+  <p>
+    <%= label_tag "Invoice Number" %>:
+    <strong><%= @void.purchase.invoice_number %></strong>
+  </p>
+  <br>
   <% if @void.processed? %>
   <p>
     <%= label_tag "Processed" %>:
@@ -39,7 +44,7 @@
   <br>
   <p>
     <%= label_tag "Adjusted Amount (amount captured)" %>:
-    <strong><%= number_to_currency @void.purchase.total %></strong>
+    <strong><%= @void.purchase.total > 0 ? number_to_currency(@void.purchase.total) : "(VOID)" %></strong>
   </p>
   <br><br>
   <h4>Coupons Voided</h4>

@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   has_many :user_reviews
 
   has_one  :staff
+  has_one  :accountant
   has_one  :admin
   has_one  :business
   has_one  :business_staff
@@ -101,6 +102,10 @@ class User < ActiveRecord::Base
   
   def staff?
     !self.admin.nil? or !self.staff.nil?
+  end
+  
+  def accountant?
+    !self.admin.nil? or !self.accountant.nil?
   end
   
   def admin?

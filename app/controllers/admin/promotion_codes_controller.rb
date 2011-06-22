@@ -1,7 +1,6 @@
 class Admin::PromotionCodesController < ApplicationController
   layout 'admin'
   before_filter :staff_required
-  before_filter :admin_required, :only => ['destroy']
   
   # GET /promotion_codes
   # GET /promotion_codes.xml

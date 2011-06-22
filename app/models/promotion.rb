@@ -3,9 +3,14 @@ class Promotion < ActiveRecord::Base
   has_many :coupons, :through => :deals
   belongs_to :business
   
-  named_scope :featured, :conditions => ['featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'featured DESC, start_date DESC', :limit => 1
+  named_scope :featured, :conditions => ['dc_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'dc_featured DESC, start_date DESC', :limit => 1
+  named_scope :dc_featured, :conditions => ['dc_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'dc_featured DESC, start_date DESC', :limit => 1
+  named_scope :nova_featured, :conditions => ['nova_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'nova_featured DESC, start_date DESC', :limit => 1
+  # named_scope :somd_featured, :conditions => ['somd_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'submd_featured DESC, start_date DESC', :limit => 1
   named_scope :washingtonian_featured, :conditions => ['washingtonian_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'washingtonian_featured DESC, start_date DESC', :limit => 1
-  named_scope :halfpricedc_featured,   :conditions => ['halfpricedc_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'halfpricedc_featured DESC, start_date DESC', :limit => 1
+  named_scope :halfpricedc_featured, :conditions => ['halfpricedc_featured = ? or (start_date < ? and end_date > ? and active = ? and hidden = ?)', true, Time.now.utc, Time.now.utc, true, false], :order => 'halfpricedc_featured DESC, start_date DESC', :limit => 1
+  named_scope :nova,  :conditions => ['city_id = ? and start_date < ? and end_date > ? and active = ? and hidden = ?', 2, Time.now.utc, Time.now.utc, true, false], :order  => 'nova_featured DESC, start_date DESC'
+  named_scope :submd, :conditions => ['city_id = ? and start_date < ? and end_date > ? and active = ? and hidden = ?', 3, Time.now.utc, Time.now.utc, true, false], :order  => 'submd_featured DESC, start_date DESC'
   named_scope :sidebar, lambda { |excluded| {:conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and id != ?', Time.now.utc, Time.now.utc, true, false, excluded.nil? ? 0 : excluded], :order => 'position ASC', :limit => 3}}
 
   has_attached_file :image1, 
@@ -43,12 +48,17 @@ class Promotion < ActiveRecord::Base
   BUYING_CREDIT_PROMOTION = 266
   PROMOTION_MAP_DEFAULT_LAT = 38.897275
   PROMOTION_MAP_DEFAULT_LNG = -77.036594
+  CITIES = [['All Cities',0], ['Washington DC',1], ['Northern Virginia',2], ['Southern Maryland',3]]
   
   def active?
     self.active == true and self.start_date < Time.now.utc and self.end_date > Time.now.utc
   end
   
   def featured?
+    self.dc_featured?
+  end
+  
+  def dc_featured?
     Promotion.featured.empty? ? false : self.id == Promotion.featured.first.id
   end
   
@@ -67,11 +77,13 @@ class Promotion < ActiveRecord::Base
     self.deals.featured.first || self.deals.first
   end
   
-  def purchases(partner_id=nil)
+  def purchases(partner_id=nil,include_kgb=false)
     if self.id == 230
       Promotion.find(231,232,233,234,235,236,237).collect{|p| p.purchases}.sum
     elsif self.id == 216
       Promotion.find(217,218,219,220,221).collect{|p| p.purchases}.sum
+    elsif partner_id.nil? and include_kgb
+      self.deals.collect{|d| d.total_coupons}.to_a.sum
     elsif partner_id.nil?
       self.deals.collect{|d| d.coupons.count}.to_a.sum
     else
@@ -119,6 +131,18 @@ class Promotion < ActiveRecord::Base
     end
   end
   
+  def initial_revenue(partner_id=nil)
+    self.revenue + self.refund_amount
+  end
+  
+  def initial_purchases
+    self.purchases + Coupon.refunded.select{|c| c.deal.promotion_id == self.id}.size
+  end
+  
+  def refund_amount
+    Coupon.refunded.select{|c| c.deal.promotion_id == self.id}.collect{|c| c.deal.price}.sum
+  end
+  
   def profit(partner_id=nil)
     if partner_id.nil?
       self.deals.collect{|d| d.profit * d.coupons.count}.sum
@@ -140,8 +164,12 @@ class Promotion < ActiveRecord::Base
     return @early_bird_coupons.collect{|coupon| coupon.early_bird? ? coupon.deal.early_bird_discount : 0}.sum.to_f
   end
   
-  def business_profit
-    self.deals.collect{|d| d.business_profit * d.coupons.count}.sum
+  def business_profit(include_kgb=false)
+    if include_kgb
+      self.deals.collect{|d| d.business_profit * d.total_coupons}.sum
+    else
+      self.deals.collect{|d| d.business_profit * d.coupons.count}.sum
+    end
   end
   
   def update_business_payments

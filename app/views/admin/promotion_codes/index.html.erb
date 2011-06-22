@@ -3,7 +3,7 @@
   <% if params[:all] %>
     <li><%= link_to "Show Only 'Listed' Promotion Codes", "?" %></li>
   <% else %>
-    <li><%= link_to "Show All #{PromotionCode.count} Promotion Codes", "?all=true" %></li>
+    <li><%= link_to "Show All #{PromotionCode.count} Promotion Codes", "?all=true" if current_user.admin? %></li>
   <% end %>
 <% end %>
 

@@ -1,7 +1,6 @@
 class Admin::EventsController < ApplicationController
   layout 'admin', :except => [:show]
-  before_filter :staff_required
-  before_filter :admin_required, :only => ['destroy']
+  before_filter :admin_required
 
   # GET /events
   # GET /events.xml

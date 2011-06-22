@@ -1,7 +1,6 @@
 class Admin::RafflesController < ApplicationController
   layout 'admin', :except => [:show]
-  before_filter :staff_required
-  before_filter :admin_required, :only => ['destroy']
+  before_filter :admin_required
 
   # GET /shoutouts
   # GET /shoutouts.xml

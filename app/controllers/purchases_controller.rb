@@ -13,8 +13,8 @@ class PurchasesController < ApplicationController
     @track_transaction = false
     @on_purchase = true
     
-    @mapped_promotions   = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and physical_address = ?', Time.now.utc, Time.now.utc, true, false, true], :order  => 'featured DESC, start_date DESC')
-    @unmapped_promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and physical_address = ?', Time.now.utc, Time.now.utc, true, false, false], :order  => 'featured DESC, start_date DESC')
+    @mapped_promotions   = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and physical_address = ?', Time.now.utc, Time.now.utc, true, false, true], :order  => 'dc_featured DESC, start_date DESC')
+    @unmapped_promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and physical_address = ?', Time.now.utc, Time.now.utc, true, false, false], :order  => 'dc_featured DESC, start_date DESC')
 
     if !cookies[:location_latitude].blank? and !cookies[:location_longitude].blank?
       session[:location_latitude]  = cookies[:location_latitude] 
@@ -54,7 +54,7 @@ class PurchasesController < ApplicationController
 
       # update credits
       if current_user and !current_user.credits.redeemable.empty?
-        if cart.has_credit_restricted_promotion?
+        if cart.has_credit_restricted_promotion? and cart.deals_total > 0
           flash[:error] = "Sorry, one of the deals in your cart cannot be purchased with credit"
         else
           current_user.credits.redeemable.each do |credit|
@@ -117,8 +117,8 @@ class PurchasesController < ApplicationController
   # POST /purchases
   # POST /purchases.xml
   def create
-    @mapped_promotions   = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and physical_address = ?', Time.now.utc, Time.now.utc, true, false, true], :order  => 'featured DESC, start_date DESC')
-    @unmapped_promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and physical_address = ?', Time.now.utc, Time.now.utc, true, false, false], :order  => 'featured DESC, start_date DESC')
+    @mapped_promotions   = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and physical_address = ?', Time.now.utc, Time.now.utc, true, false, true], :order  => 'dc_featured DESC, start_date DESC')
+    @unmapped_promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and physical_address = ?', Time.now.utc, Time.now.utc, true, false, false], :order  => 'dc_featured DESC, start_date DESC')
     @user = current_user
     @show_demo_survey = (cookies[:seen_demo_survey].to_i < 2) and (@user.customer.zipcode.blank? or @user.customer.female.nil?)
     cookies[:seen_demo_survey] = cookies[:seen_demo_survey].to_i + 1 if @show_demo_survey

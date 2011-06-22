@@ -26,6 +26,16 @@
       <% end %>
     </div>
   </div>
-  
-  <%= link_to "<h1>What's the Deal DC</h1>", root_url, :id => 'logo' %>
+  <%= link_to "<h1>WTD DC</h1>", root_url, :id => 'logo' %>
+  <%= link_to "?", "#", :id => "learn_more_tooltip_link" %>
+  <div id="learn_more_tooltip" style="display: none">WTD is thrilled to now be part of the kgbdeals community, one of the largest daily deals communities in the world.</div>
 </div>
+
+<script type="text/javascript" charset="utf-8">
+  $('#learn_more_tooltip_link').hover(function(){$("#learn_more_tooltip").fadeIn()}, function(){$("#learn_more_tooltip").fadeOut()});
+</script>
+
+
+
+
+

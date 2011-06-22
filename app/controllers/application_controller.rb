@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_session, :current_user, :cart, :partner, :originize, :mobile, :force_full_site, :https?, :simple_page?
   filter_parameter_logging :password, :number
   before_filter :store_return_uri, :set_timezone
+  before_filter :admin_required, :only => ['impersonate']
   
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
@@ -189,6 +190,9 @@ class ApplicationController < ActionController::Base
   protected
     def staff_required
       redirect_away(:controller => '/admin/home', :action => 'login') unless (current_user and current_user.staff?)
+    end
+    def accountant_required
+      redirect_away(:controller => '/admin/home', :action => 'login') unless (current_user and current_user.accountant?)
     end
     def admin_required
       redirect_away(:controller => '/admin/home', :action => 'login') unless (current_user and current_user.admin?)

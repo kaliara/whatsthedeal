@@ -28,6 +28,7 @@
     <th>Emailed</th>
     <th>Printed</th>
     <th>Used</th>
+    <th>Mobile Used</th>
     <th>Used (biz)</th>
     <th>Confirmation Code</th>
     <th>Coupon Code</th>
@@ -44,12 +45,13 @@
     <td style="color: green;"><%= "&#10004;" if coupon.emailed? %></td>
     <td style="color: green;"><%= "&#10004;" if coupon.printed? %></td>
     <td style="color: green;"><%= "&#10004;" if coupon.used? %></td>
+    <td style="color: green;"><%= "&#10004;" if coupon.mobile_used? %></td>
     <td style="color: green;"><%= "&#10004;" if coupon.biz_used? %></td>
     <td><%=h coupon.confirmation_code %></td>
     <td><%=h coupon.coupon_code %></td>
     <td><%= link_to 'Preview', admin_coupon_path (coupon) %></td>
     <td><%= link_to "Activate", admin_activate_coupons_path(coupon) if coupon.deal.promotion.quota_met? and !coupon.active? %></td>
-    <% if coupon.active? %>
+    <% if coupon.refundable? %>
       <td><%= link_to 'Refund', new_admin_refund_path(:coupon_to_refund => coupon.id) %></td>
     <% else %>
       <td><%= link_to 'Void', admin_coupon_path(coupon), :confirm => 'Are you sure?', :method => :delete %></td>

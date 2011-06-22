@@ -1,5 +1,5 @@
 <% content_for :sub_nav do %>
-  <li><%= link_to 'Impersonate this Customer', admin_impersonate_path(:type => 'customer', :id => @user.customer.id) %></li>
+  <li><%= link_to 'Impersonate this Customer', admin_impersonate_path(:type => 'customer', :id => @user.customer.id) if current_user.admin? %></li>
   <li><%= link_to 'Show this Customer', admin_customer_path(@user.customer) %></li>
   <li><%= link_to 'Customer Listing', admin_customers_path %></li>
 <% end %>

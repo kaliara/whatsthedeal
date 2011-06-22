@@ -1,6 +1,6 @@
 class Admin::NewslettersController < ApplicationController
   layout 'admin', :except => [:generate]
-  before_filter :staff_required 
+  before_filter :admin_required
   
   def setup
     @now = DateTime.new(Time.zone.now.year, Time.zone.now.month, Time.zone.now.day, Time.zone.now.hour, Time.zone.now.min, Time.zone.now.sec)

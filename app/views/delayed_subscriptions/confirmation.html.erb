@@ -1,0 +1,9 @@
+<% content_for :page_title do %><%= render_content "list_#{params[:list].to_i}_signup_header" %><% end %>
+<div class="section_element">
+  <div class="section_header">
+    <h3><%= render_content "list_#{params[:list].to_i}_signup_header" %></h3>
+  </div>
+  <div class="section_content">
+    <%= render_content "list_#{params[:list].to_i}_signup_desc" %>
+  </div>
+</div>

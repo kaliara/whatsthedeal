@@ -1,19 +1,28 @@
 <% content_for :sub_nav do %>
-  <li><%= link_to 'New Deal', new_admin_deal_path %></li>
+  <li><%= link_to 'New Deal', new_admin_deal_path if current_user.admin? %></li>
+  <li><%= link_to 'Show All Deals', admin_deals_path(:all => "yes") if current_user.admin? %></li>
 <% end %>
 
-<h2>Listing Deals</h2>
+<div class="section_content">
+  <% form_tag admin_deals_path, :method => :get do %>
+    <label>Business:</label>
+    <%= select_tag :business_id, options_for_select([""] + Business.find(:all, :order => "name ASC").collect{|b| ["#{b.name} (##{b.id.to_s})", b.id]}, :selected => params[:business_id].to_i), :onchange => "submit();" %>
+  <% end %>
+</div>
+<br>
+
+<h2>Listing <%= params[:all].nil? ? "Last 20" : "All" %> Deals</h2>
 
 <table>
   <tr>
     <th>Promotion</th>
+    <th>Start Date</th>
     <th>Code</th>
     <th>Name</th>
     <th>Price</th>
     <th>Value</th>
     <th>Purchase limit</th>
     <th>Inventory</th>
-    <th>Featured</th>
     <th>Coupon Codes</th>
     <th>Activate Coupons</th>
   </tr>
@@ -21,17 +30,17 @@
 <% @deals.each do |deal| %>
   <tr>
     <td><%= deal.promotion.nil? ? "---" : link_to(deal.promotion_id, edit_admin_promotion_path(deal.promotion)) %></td>
+    <td><%= deal.promotion.start_date.strftime("%m/%d/%Y") %></td>
     <td><%=h deal.code %></td>
     <td><%=h deal.name %></td>
     <td><%=h deal.price %></td>
     <td><%=h deal.value %></td>
     <td><%=h deal.purchase_limit %></td>
-    <td><%=h deal.inventory_remaining == 9999 ? "unlimited" : "#{deal.inventory_remaining} of #{deal.inventory}" %></td>
-    <td><%=h deal.featured? %></td>
+    <td><%=h deal.inventory >= 9999 ? "--" : "#{deal.inventory_remaining} of #{deal.inventory}" %></td>
     <td><%= link_to "Coupon Codes", admin_coupon_codes_path(:deal_id => deal.id, :num => 100) if (deal.has_coupon_code? and deal.coupon_code_delta.to_i > 0)  %></td>
-    <td><%= link_to "Activate Coupons", admin_deal_activate_coupons_path(deal) if (!deal.promotion.nil? and deal.promotion.quota_met?)  %></td>
+    <td><%= link_to "Activate", admin_deal_activate_coupons_path(deal) if (!deal.promotion.nil? and deal.promotion.quota_met?)  %></td>
     <td><%= link_to 'Edit', edit_admin_deal_path(deal) %></td>
-    <td><%= link_to 'Destroy', admin_deal_path(deal), :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to 'Destroy', admin_deal_path(deal), :confirm => 'Are you sure?', :method => :delete if current_user.admin? %></td>
   </tr>
 <% end %>
 </table>

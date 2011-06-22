@@ -453,3 +453,12 @@ a.disabled, input.disabled{
   padding: 15px 45px 15px 0;
   background: transparent url(/images/print_icon.jpg) no-repeat center right;
 }
+
+/* purchase list */
+.coupon_source_wtd{
+  color: #E39900;
+}
+.coupon_source_kgb{
+  color: #0096FF;
+  font-weight: bold;
+}

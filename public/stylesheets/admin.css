@@ -672,6 +672,13 @@ h5 a:visited{
   color: #666;
 }
 
+.business_payments_table{
+  width: 1200px;
+}
+.business_payments_table td{
+  font-size: 10px;
+}
+
 .late_business_payment{
   color: red !important;
   font-weight: bold;

@@ -1,6 +1,6 @@
 class Admin::StatsController < ApplicationController
   layout 'admin'
-  before_filter :staff_required
+  before_filter :admin_required
   
   def top_purchasers
     @users = {}

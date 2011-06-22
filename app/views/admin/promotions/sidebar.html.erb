@@ -3,8 +3,14 @@
   <li><%= link_to 'New Promotion', new_admin_promotion_path %></li>
 <% end %>
 
+<% form_tag do %>
+<%= label_tag :city_id, "City: " %>
+<%= select_tag :city_id, options_for_select(Promotion::CITIES, :selected => @city_id), :onchange => "submit()" %>
+<% end %>
 
-<h2>Side Bar Promotions</h2>
+<br><br>
+
+<h2>Side Bar Promotions for <strong><%= Promotion::CITIES[@city_id].first %></strong></h2>
 
 <div id="updated" style="opactiy: 0">Promotion positions have been updated!</div>
 

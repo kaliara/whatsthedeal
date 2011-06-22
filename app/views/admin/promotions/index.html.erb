@@ -1,5 +1,5 @@
 <% content_for :sub_nav do %>
-  <li><%= link_to 'New promotion', new_admin_promotion_path %></li>
+  <li><%= link_to 'New promotion', new_admin_promotion_path if current_user.admin? %></li>
   <li><%= link_to 'Show all promotions', admin_promotions_path(:all => true) %></li>
   <li><%= link_to 'Live promotions', admin_promotions_path(:live => true) %></li>
 <% end %>
@@ -53,7 +53,7 @@
     <td><%= link_to 'Show', promotion_slug_path(:slug => promotion.slug) %></td>
     <td><%= link_to 'Show&nbsp;Deals', admin_deals_path(:promotion_id => promotion.id) %></td>
     <td><%= link_to 'Edit', edit_admin_promotion_path(promotion) %></td>
-    <td><%= (link_to 'Destroy', admin_promotion_path(promotion), :confirm => 'Are you sure?', :method => :delete) unless promotion.purchases > 0 %></td>
+    <td><%= (link_to 'Destroy', admin_promotion_path(promotion), :confirm => 'Are you sure?', :method => :delete) unless (promotion.purchases > 0 or !current_user.admin?) %></td>
   </tr>
 <% end %>
 </table>

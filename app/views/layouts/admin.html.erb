@@ -19,37 +19,43 @@
     <% else %>  
       <p>You are not logged in! (<%= link_to 'login', login_path %> or <%= link_to 'register', new_customer_path %>)</p>
     <% end %>
-     <h1>WTD Admin <a href="/admin/dashboard" style="font-size:50%">(admin dashboard)</a></h1>
+     <h1>WTD Admin</h1>
   </div>
 
-  <% if current_user and current_user.staff? %>
+  <% if current_user and (current_user.staff? or current_user.accountant?) %>
     <ul id="nav">
-      <li>WTD
-        <ul>
-          <li><%= link_to "Promotions", admin_promotions_path %></li>
-          <li><%= link_to "Deals", admin_deals_path %></li>
-          <li><%= link_to "Purchases", admin_purchases_path %></li>
-          <li><%= link_to "Refunds", admin_refunds_path %></li>
-          <li><%= link_to "Voids", admin_voids_path %></li>
-          <li><%= link_to "Coupons", admin_coupons_path %></li>
-          <li><%= link_to "Sidebar Promotions", admin_sidebar_promotions_path %></li>
-        </ul>
-      </li>
-
-      <% if current_user and current_user.admin? %>
-        <li>Dashboards
+      <% if current_user and current_user.staff? %>
+        <li>Main
           <ul>
-            <li><%= link_to "Main", admin_dashboards_path %></li>
-            <li><%= link_to "Promotions", admin_promotions_dashboard_path %></li>
-            <li><%= link_to "Washingtonian", admin_washingtonian_dashboard_path %></li>
-            <li><%= link_to "Affiliates", admin_affiliates_dashboard_path %></li>
-            <li><%= link_to "Affiliate Lifetime", admin_affiliate_lifetime_dashboard_path %></li>
-            <li><%= link_to "Partners", admin_partners_dashboard_path %></li>
-            <li><%= link_to "Source Report", admin_source_report_dashboard_path %></li>
+            <li><%= link_to "Promotions", admin_promotions_path %></li>
+            <li><%= link_to "Deals", admin_deals_path %></li>
+            <li><%= link_to "Purchases", admin_purchases_path %></li>
+            <li><%= link_to "Coupons", admin_coupons_path %></li>
+            <li><%= link_to "Refunds", admin_refunds_path %></li>
+            <li><%= link_to "Voids", admin_voids_path %></li>
+            <% if current_user and current_user.admin? %><li><%= link_to "Sidebar Promotions", admin_sidebar_promotions_path %></li><% end %>
           </ul>
         </li>
       <% end %>
       
+      <% if current_user and current_user.accountant? %>
+        <li>Dashboards
+          <ul>
+            <li><%= link_to "Main", admin_dashboards_path %></li>
+  	      	<% if current_user and current_user.admin? %>
+              <li><%= link_to "Promotions", admin_promotions_dashboard_path %></li>
+              <li><%= link_to "Washingtonian", admin_washingtonian_dashboard_path %></li>
+              <li><%= link_to "Affiliates", admin_affiliates_dashboard_path %></li>
+              <li><%= link_to "Affiliate Lifetime", admin_affiliate_lifetime_dashboard_path %></li>
+              <li><%= link_to "Partners", "/admin/dashboards?partner_id=2" %></li>
+              <li><%= link_to "Source Report", admin_source_report_dashboard_path %></li>
+      			<% end %>
+            <li><%= link_to "Earn Out Report", admin_earnout_dashboard_path %></li>
+          </ul>
+        </li>
+      <% end %>
+      
+      <% if current_user and current_user.admin? %>
       <li>CMS
         <ul>
           <li><%= link_to "Contents", admin_contents_path %></li>
@@ -60,49 +66,54 @@
           <li><%= link_to "Raffles", admin_raffles_path %></li>
         </ul>
       </li>
-      
-      <li>Credit
-        <ul>
-          <li><%= link_to "Credit Profile", admin_credit_profile_path %></li>
-          <li><%= link_to "Promotion Codes", admin_promotion_codes_path %></li>
-          <li><%= link_to "Credits", admin_credits_path %></li>
-        </ul>
-      </li>
-      
-      <li>Users
-        <ul>
-          <li><%= link_to "Users", admin_users_path %></li>
-          <li><%= link_to "Customers", admin_customers_path %></li>
-          <li><%= link_to "Admins", admin_admins_path if current_user and current_user.admin? %></li>
-          <li><%= link_to "User Reviews", admin_user_reviews_path if current_user and current_user.admin? %></li>
-        </ul>
-      </li>
-
-      <li>Stats
-        <ul>
-          <li><%= link_to "Top Purchasers", '/admin/stats/top_purchasers' %></li>
-          <li><%= link_to "Promotion Zip Codes", '/admin/stats/promotion_zipcodes' %></li>
-          <li><%= link_to "Credit Used", '/admin/stats/monthly_credit' %></li>
-          <li><%= link_to "Zip Code Counts", '/admin/stats/zipcode_counts' %></li>
-        </ul>
-      </li>
-        
-      <% if current_user and current_user.admin? %>
-      <li>Carts
-        <ul>
-          <li><%= link_to "Recent Carts", admin_carts_path %></li>
-          <li><%= link_to "Clear Carts", admin_clear_carts_path(:id => 0), :confirm => 'Are you sure?' %></li>
-        </ul>
-      </li>
       <% end %>
+      
+      <% if current_user and current_user.staff? %>
+        <li>Credit
+          <ul>
+            <li><%= link_to "Credit Profile", admin_credit_profile_path %></li>
+            <% if current_user and current_user.admin? %><li><%= link_to "Promotion Codes", admin_promotion_codes_path %></li><% end %>
+            <li><%= link_to "Credits", admin_credits_path %></li>
+          </ul>
+        </li>
+      
+        <li>Users
+          <ul>
+            <% if current_user and current_user.admin? %><li><%= link_to "Users", admin_users_path %></li><% end %>
+            <li><%= link_to "Customers", admin_customers_path %></li>
+            <% if current_user and current_user.admin? %><li><%= link_to "Admins", admin_admins_path %></li><% end %>
+            <% if current_user and current_user.admin? %><li><%= link_to "User Reviews", admin_user_reviews_path %></li><% end %>
+          </ul>
+        </li>
 
-      <li>Business
-        <ul>
-          <li><%= link_to "Businesses", admin_businesses_path %></li>                
-          <li><%= link_to "Origins", admin_origins_path if current_user and current_user.admin? %></li>
-          <li><%= link_to "Business Payments", admin_business_payments_path if current_user and current_user.admin? %></li>
-        </ul>
-      </li>          
+        <% if current_user and current_user.admin? %>
+        <li>Stats
+          <ul>
+            <li><%= link_to "Top Purchasers", '/admin/stats/top_purchasers' %></li>
+            <li><%= link_to "Promotion Zip Codes", '/admin/stats/promotion_zipcodes' %></li>
+            <li><%= link_to "Credit Used", '/admin/stats/monthly_credit' %></li>
+            <li><%= link_to "Zip Code Counts", '/admin/stats/zipcode_counts' %></li>
+          </ul>
+        </li>
+        <% end %>
+        
+        <% if current_user and current_user.admin? %>
+        <li>Carts
+          <ul>
+            <li><%= link_to "Recent Carts", admin_carts_path %></li>
+            <li><%= link_to "Clear Carts", admin_clear_carts_path(:id => 0), :confirm => 'Are you sure?' %></li>
+          </ul>
+        </li>
+        <% end %>
+
+        <li>Business
+          <ul>
+            <li><%= link_to "Businesses", admin_businesses_path %></li>                
+            <% if current_user and current_user.admin? %><li><%= link_to "Origins", admin_origins_path %></li><% end %>
+            <% if current_user and current_user.admin? %><li><%= link_to "Business Payments", admin_business_payments_path %></li><% end %>
+          </ul>
+        </li>          
+      <% end %>
     </ul>
 
     <% unless @no_sub_nav %>
@@ -120,9 +131,14 @@
     </div>
   <% end %>
 
+  <% if current_user and current_user.accountant? and !current_user.admin? %>
+    <p class="error"><strong>WARNING:</strong> Please do not run reports between 7:00 AM and 2:00 PM (peak times).  Doing so could jeopardize the WTD system.</p>
+  <% end %>
+  
+  
   <%= yield %>
-
-  <p class="copyright">What's the Deal.  Copyright 2010</p>
+  
+  <p class="copyright">WTD.  Copyright 2010</p>
 
 
   <script type="text/javascript" charset="utf-8">

@@ -100,9 +100,7 @@ class Admin::RefundsController < ApplicationController
     end
     
     if @refund.save
-      Notifier.deliver_refund_processed(@refund)
-
-      flash[:notice] = 'Refund was successfully processed.'
+      flash[:notice] = 'Refund was successfully saved.'
       redirect_to(admin_refund_path(@refund))
     else
       render :action => "new"
@@ -112,7 +110,11 @@ class Admin::RefundsController < ApplicationController
   def processing
     @refund = Refund.find(params[:id])
     @refund.processed = true
-    @refund.save
+    
+    if @refund.save
+      Notifier.deliver_refund_processed(@refund)
+      flash[:notice] = "Refund marked as processed and email sent to user"
+    end
     
     redirect_to :back
   end

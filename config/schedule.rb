@@ -5,10 +5,14 @@
 
 # Example:
 
+every 1.hour, :at => 15 do
+  command 'cd /home/kaliara/public_html/wtd/current/public/system/assets/kgb_vouchers && lftp -f download.lftp'
+end
+
 set :output, "log/cron_log.log"
 
 
-every 1.day, :at => '4:50 am' do
+every 1.day, :at => '3:50 am' do
   rake "coupons:activate"
 end
 
@@ -31,6 +35,10 @@ end
 
 every 4.hours do
   rake "cleanup:cart_items"
+end
+
+every 1.hour, :at => 20 do
+  rake "kgb:import_vouchers"
 end
 
 every 10.minutes do

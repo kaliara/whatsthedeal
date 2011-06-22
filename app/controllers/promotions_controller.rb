@@ -27,7 +27,13 @@ class PromotionsController < ApplicationController
   def index
     session[:force_full_site] = false
     
-    @promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ?', Time.now.utc, Time.now.utc, true, false], :order  => 'featured DESC, start_date DESC')
+    if params[:city_id] == 2 or session[:city_id] == 2
+      @promotions = Promotion.nova
+    elsif params[:city_id] == 3 or session[:city_id] == 3
+      @promotions = Promotion.submd
+    else
+      @promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ?', Time.now.utc, Time.now.utc, true, false], :order  => 'dc_featured DESC, start_date DESC')
+    end
 
     if @promotions.empty?
       redirect_to root_path
@@ -43,7 +49,7 @@ class PromotionsController < ApplicationController
   def grab_bag
     session[:force_full_site] = true
     
-    @promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and grab_bag = ?', Time.now.utc, Time.now.utc, true, true], :order  => 'featured DESC, start_date DESC')
+    @promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and grab_bag = ?', Time.now.utc, Time.now.utc, true, true], :order  => 'dc_featured DESC, start_date DESC')
     @side_promotions = Promotion.sidebar(@promotions.first.id)
 
     if @promotions.empty?
@@ -57,8 +63,8 @@ class PromotionsController < ApplicationController
   end
 
   def map
-    @mapped_promotions   = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and physical_address = ?', Time.now.utc, Time.now.utc, true, false, true], :order  => 'featured DESC, start_date DESC')
-    @unmapped_promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and physical_address = ?', Time.now.utc, Time.now.utc, true, false, false], :order  => 'featured DESC, start_date DESC')
+    @mapped_promotions   = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and physical_address = ?', Time.now.utc, Time.now.utc, true, false, true], :order  => 'dc_featured DESC, start_date DESC')
+    @unmapped_promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and physical_address = ?', Time.now.utc, Time.now.utc, true, false, false], :order  => 'dc_featured DESC, start_date DESC')
 
     @street  = params[:street]
     @city    = params[:city]
@@ -88,11 +94,11 @@ class PromotionsController < ApplicationController
     
     case partner
     when 2
-      @promotion = params[:featured] ? Promotion.washingtonian_featured.first : Promotion.find_by_slug(params[:slug])
+      @promotion = params[:dc_featured] ? Promotion.washingtonian_featured.first : Promotion.find_by_slug(params[:slug])
     when 3
-      @promotion = params[:featured] ? Promotion.halfpricedc_featured.first : Promotion.find_by_slug(params[:slug])
+      @promotion = params[:dc_featured] ? Promotion.halfpricedc_featured.first : Promotion.find_by_slug(params[:slug])
     else
-      @promotion = params[:featured] ? Promotion.featured.first : Promotion.find_by_slug(params[:slug])
+      @promotion = params[:dc_featured] ? Promotion.featured.first : Promotion.find_by_slug(params[:slug])
     end
     if @promotion.nil?
       flash[:error] = "We have updated some of the links to our promotions, please select a promotion from the list below"

@@ -18,7 +18,7 @@
           <dd><%=h @purchase.created_at.to_date %></dd>
         
           <dt>Deals Purchased:</dt>
-          <dd><%= @purchase.coupons.count %> <%= "<span class='refunded'>(#{@purchase.refund.coupons.count} refunded)</span>" unless @purchase.refund.nil? %></dd>
+          <dd><%= @purchase.coupons.size %> <%= "<span class='refunded'>(#{@purchase.refund.coupons.size} refunded)</span>" unless @purchase.refund.nil? %></dd>
 
           <% unless @purchase.credits.empty? %>
             <dt>WTD Credit used:</dt>

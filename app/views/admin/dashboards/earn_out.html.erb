@@ -1,0 +1,38 @@
+<% content_for :sub_nav do %>
+  <% @no_sub_nav = true %>
+<% end %>
+<br><br>
+
+<h2>Earn Out Report</h2>
+<div class="clearfix">
+  <div class="section_element">
+    <div class="section_content">
+      <dl class="homepage totals">
+        <dt>Registrations:</dt>
+        <dd><%= @registrations.size %></dd>
+        <dt>Subscriptions:</dt>
+        <dd><%= @subscriptions.size %></dd>
+        <dt>Purchases:</dt>
+        <dd><%= @purchases.size %></dd>
+        <dt>Vouchers:</dt>
+        <dd><%= @vouchers.size %></dd>
+      </dl>
+    </div>
+  </div>  
+</div>
+<br><br>
+
+<h2>Purchase Information</h2>
+<div class="clearfix">
+  <div class="section_element">
+    <div class="section_content">
+      <dl class="homepage">
+        <dt>Gross Revenue After Credits:</dt>                                                                                
+        <dd><%= number_to_currency @revenue_post_credit %></dd>
+        <dt>Net Revenue After Partner Cuts:</dt>                                                                                               
+        <dd><%= number_to_currency @net_revenue %></dd>
+      </dl>
+    </div>
+  </div>
+</div>
+<br><br>

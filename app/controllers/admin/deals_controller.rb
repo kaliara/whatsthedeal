@@ -1,6 +1,7 @@
 class Admin::DealsController < ApplicationController
   layout 'admin'
   before_filter :staff_required 
+  before_filter :admin_required, :only => ['create','update','destroy']
   
   # GET /deals
   # GET /deals.xml
@@ -8,8 +9,11 @@ class Admin::DealsController < ApplicationController
     if params[:promotion_id]
       @promotion = Promotion.find(params[:promotion_id])
       @deals = @promotion.deals
+    elsif params[:business_id]
+      @business = Business.find(params[:business_id])
+      @deals = @business.promotions.collect{|p| p.deals}.flatten
     else
-      @deals = Deal.find(:all, :order => "id desc")
+      @deals = Deal.find(:all, :order => 'id desc', :limit => (params[:all] ? nil : 20))
     end
     
     respond_to do |format|
@@ -54,7 +58,7 @@ class Admin::DealsController < ApplicationController
     respond_to do |format|
       if @deal.save
         flash[:notice] = 'Deal was successfully created.'
-        format.html { redirect_to admin_deals_path }
+        format.html { redirect_to edit_admin_deal_path(@deal) }
         format.xml  { render :xml => @deal, :status => :created, :location => @deal }
       else
         format.html { render :action => "new" }
@@ -71,7 +75,7 @@ class Admin::DealsController < ApplicationController
     respond_to do |format|
       if @deal.update_attributes(params[:deal])
         flash[:notice] = 'Deal was successfully updated.'
-        format.html { redirect_to admin_deals_path }
+        format.html { redirect_to edit_admin_deal_path(@deal) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

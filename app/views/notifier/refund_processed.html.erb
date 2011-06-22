@@ -25,8 +25,8 @@
             <td>
               <table width="600" border="0" cellspacing="0" cellpadding="0">
                 <tr>
-                  <td align="left" valign="top" style="font-size:0;"><a href="http://sowhatsthedeal.com<%= @google_tracking %>"><img src="http://sowhatsthedeal.com/emails/new_logo.png" alt="What's the Deal - " width="144" height="77" border="0"></a></td>
-                  <td align="left" valign="top" style="font-size:0;"><img src="http://sowhatsthedeal.com/emails/new_banner.png" alt="Deal is" width="330" height="77"></td>
+                  <td align="left" valign="top" style="font-size:0;"><a href="http://sowhatsthedeal.com<%= @google_tracking %>"><img src="http://sowhatsthedeal.com/emails/new_logo.png" alt="WTD - " width="208" height="77" border="0"></a></td>
+                  <td align="left" valign="top" style="font-size:0;"><img src="http://sowhatsthedeal.com/emails/new_banner.png" alt="Deal is" width="266" height="77"></td>
                   <td align="left" valign="top">
                     <table border="0" cellspacing="0" cellpadding="0">
                       <tr>
@@ -49,12 +49,12 @@
                       <p style="color: #ddd;font-family: 'Myriad', sans-serif;font-size: 14px;font-weight: normal;margin: 0;padding: 15px 0;text-align:left">
                         Hi <%= @refund.purchase.user.customer.name %>,
                         <br><br>
-                        This email is to confirm that we have successfully processed your refund for your purchase at <%= link_to "What's the Deal", root_url, :style => "color:#94BFF2" %>. Below are details of the refund:
+                        This email is to confirm that we have successfully processed your refund for your purchase at <%= link_to "WTD", root_url, :style => "color:#94BFF2" %>. Below are details of the refund:
                       </p>  
                       <p style="color: #adc5d9;font-family: 'Myriad', sans-serif;font-size: 20px;font-weight: normal;margin: 7px 0 0 0;padding:20px; background:#012437; border: 1px solid #3d6073; text-align:center;">
                         Date processed: <%= @refund.created_at.strftime "%B, %e %Y at %H:%M%P" %><br><br>
                         Refunded to your credit card: <strong style="color: #fff"><%= number_to_currency @refund.cc_amount %></strong><br>
-                        Applied in WTD credit: <strong style="color: #fff"><%= number_to_currency @refund.credit_amount %></strong><br>
+                        <% if @refund.credit_amount > 0 %>Applied in WTD credit: <strong style="color: #fff"><%= number_to_currency @refund.credit_amount %></strong><br><% end %>
                         <br><br>
                         <span style="font-size: 14px">You can <%= link_to "view the purchase in your account", purchase_url(@refund.purchase_id), :style => "color:#94BFF2" %> and/or print this email for your records.</span>
                       </p>
@@ -62,9 +62,9 @@
                       <p style="color: #ddd;font-family: 'Myriad', sans-serif;font-size: 14px;font-weight: normal;margin: 0;padding: 15px 0;text-align:left">
                         You should see the refund appear on your credit card within a few days. Let us know if you have any questions and thanks for being a WTD customer.
                         <br><br>
-                         - the (mostly) friendly folks at What's the Deal
+                         - the (mostly) friendly folks at WTD
                         <br><br>
-                        <strong>What's the Deal</strong><br>
+                        <strong>WTD</strong><br>
                         <%= link_to "sowhatsthedeal.com", root_url, :style => "color:#94BFF2" %><br>
                         (888) 765-3481
                       </p>
@@ -83,7 +83,7 @@
           <td style="padding:15px">
             <p style="color: #CFCFCF;font-family: Lucida, sans-serif;font-size: 10px;font-weight: normal;line-height: 15px;margin: 0 0 10px 0;text-align: left;">Questions? Comments? Random rants? Visit our <a href="http://sowhatsthedeal.com/faq<%= @google_tracking %>" style="color: #94BFF2;font-family: Lucida, sans-serif;font-size: 10px;font-weight: normal;">Frequently Asked Questions</a> section, e-mail us at <a href="mailto:support@sowhatsthedeal.com" style="color: #94BFF2;font-family: Lucida, sans-serif;font-size: 10px;font-weight: normal;">support@sowhatsthedeal.com</a> or call us: (888) 765-3481.</p>
 
-            <p style="color: #CFCFCF;font-family: Lucida, sans-serif;font-size: 10px;font-weight: normal;line-height: 15px;margin: 0 0 10px 0;text-align: left;">Please add <a href="mailto:sales@e.sowhatsthedeal.com" style="color: #94BFF2;font-family: Lucida, sans-serif;font-size: 10px;font-weight: normal;">sales@e.sowhatsthedeal.com</a> to your address book or safe sender list so our emails get to your inbox. This email was sent by What's the Deal, LLC | 1921 Florida Ave, NW | Washington, DC  20009 | US.</p>
+            <p style="color: #CFCFCF;font-family: Lucida, sans-serif;font-size: 10px;font-weight: normal;line-height: 15px;margin: 0 0 10px 0;text-align: left;">Please add <a href="mailto:sales@e.sowhatsthedeal.com" style="color: #94BFF2;font-family: Lucida, sans-serif;font-size: 10px;font-weight: normal;">sales@e.sowhatsthedeal.com</a> to your address book or safe sender list so our emails get to your inbox. This email was sent by WTD, LLC | 1921 Florida Ave, NW | Washington, DC  20009 | US.</p>
           </td>
         </tr>
       </table>

@@ -1,7 +1,7 @@
 class Admin::ContentsController < ApplicationController
   layout 'admin'
-  before_filter :staff_required
-  before_filter :admin_required, :only => ['destroy']
+  # before_filter :staff_required
+  before_filter :admin_required
   
   # GET /contents
   # GET /contents.xml

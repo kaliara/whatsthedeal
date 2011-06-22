@@ -28,10 +28,21 @@ class Admin::BusinessPaymentsController < ApplicationController
     @business_payment = BusinessPayment.find(params[:id])
     
     if @business_payment.update_attributes(params[:business_payment])
+      unless @business_payment.initial_amount > 0
+        @business_payment.initial_amount = @business_payment.promotion.business_profit
+      end
+      
+      if @business_payment.payment2_amount >= 0 and @business_payment.payment1_paid?
+        @business_payment.payment2_paid = true
+      elsif @business_payment.payment1_amount >= 0
+        @business_payment.payment1_paid = true
+      end
+      
       if @business_payment.payment1_paid? and @business_payment.payment2_paid?
         @business_payment.paid = true
-        @business_payment.save
       end
+
+      @business_payment.save
       
       flash[:notice] = "Payment for #{@business_payment.business.name} was updated. Good for you!"
     else

@@ -6,7 +6,7 @@
   <meta property="og:title" content="<%= @promotion.name %>"/>
   <meta property="og:type" content="article"/>
   <meta property="og:image" content="http://sowhatsthedeal.com<%= @promotion.image1.url %>"/>
-  <meta property="og:site_name" content="What's The Deal"/>
+  <meta property="og:site_name" content="WTD"/>
   <meta property="og:type" content="article"/>
   <meta property="fb:admins" content="mburnett" />
   <meta name="tweetmeme-title" content="<%= @promotion.name %>" />
@@ -229,7 +229,7 @@
         <% end %>
         
         <div class="checkout_buttons">
-          <% if @promotion.id == 330 or @promotion.id == 362 %>
+          <% if @promotion.id == 330 or @promotion.id == 362 or @promotion.id == 395 %>
             <div class="deal_me_in"><br><br><%= link_to 'Get My Code', @promotion.external_url, :class => 'primary' %><br><br></div>
           <% elsif @promotion.id == 216 %>
             <h3>Choose a performance date</h3>
@@ -278,6 +278,8 @@
           <strong><%= Promotion.find(293).purchases + Promotion.find(294).purchases %></strong>&nbsp;&nbsp;purchased
         <% elsif @promotion.id == 362 %>
           <strong>1,081</strong>&nbsp;&nbsp;purchased
+        <% elsif @promotion.id == 395 %>
+          <strong>300</strong>&nbsp;&nbsp;purchased
         <% elsif @promotion.id == 239 or @promotion.id == 240 or @promotion.id == 260 %>
           <strong><%= number_with_delimiter(@promotion.inventory - @promotion.purchases) %></strong>&nbsp;&nbsp;tickets left
         <% elsif @promotion.inventory.to_i < 999 %>
@@ -287,7 +289,7 @@
         <% end %>
       </div>
     
-      <% if @promotion.id == 330 or @promotion.id == 362 %>
+      <% if @promotion.id == 330 or @promotion.id == 362 or @promotion.id == 395 %>
       <% elsif @promotion.early_bird? %>
         <div class="early_bird">Early&nbsp;Bird</div>
       <% elsif @promotion.inventory.to_i > 999 and !@promotion.ended? and @promotion.quota_met? %>

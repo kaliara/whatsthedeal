@@ -1,7 +1,6 @@
 class Admin::UsersController < ApplicationController
   layout 'admin'
-  before_filter :staff_required
-  before_filter :admin_required, :only => ['destroy']
+  before_filter :admin_required
   
   # GET /users
   # GET /users.xml

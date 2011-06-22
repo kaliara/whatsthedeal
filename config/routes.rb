@@ -75,6 +75,8 @@ ActionController::Routing::Routes.draw do |map|
   map.subscribe 'subscribe', :controller => 'users', :action => 'create', :quietly_create => true
   map.event_signup 'events/:id/signup', :controller => 'events', :action => 'signup'
   map.create_event_attendee '/event/attendee', :controller => 'attendees', :action => 'create', :return_uri => '/my_account'
+  map.nova_simple_signup '/nova/signup', :controller => 'delayed_subscriptions', :action => 'create', :list => User::VIRGINIA_DEAL_LIST, :referrer => 'nova_email' 
+  map.somd_simple_signup '/submd/signup', :controller => 'delayed_subscriptions', :action => 'create', :list => User::MARYLAND_DEAL_LIST, :referrer => 'submd_email' 
   
   # registration
   map.register 'register', :controller => 'users', :action => 'new'
@@ -93,13 +95,15 @@ ActionController::Routing::Routes.draw do |map|
   map.timeout_error '/timeout_error', :controller => 'static', :action => 'timeout_error'
   
   # xml bits
-  map.featured 'featured.:format', :controller => 'promotions', :action => 'show', :featured => true
+  map.featured 'featured.:format', :controller => 'promotions', :action => 'show', :dc_featured => true
   map.connect  'rss.:format',      :controller => 'promotions', :action => 'rss'
   map.connect '/promotions/ad_preview.:format', :controller => 'promotions', :action => 'ad_preview'
   map.connect 'lon.:format', :controller => 'promotions', :action => 'lon'
 
   # promotions
   map.grab_bag '/promotions/grab_bag', :controller => 'promotions', :action => 'grab_bag'
+  map.promotions_nova '/promotions/nova', :controller => 'promotions', :action => 'index', :city_id => 2
+  map.promotions_submd '/promotions/submd', :controller => 'promotions', :action => 'index', :city_id => 3
   map.promotion_slug '/promotions/:slug', :controller => 'promotions', :action => 'show' 
 
   # businesses stuff
@@ -138,11 +142,13 @@ ActionController::Routing::Routes.draw do |map|
   map.admin_deal_activate_coupons '/admin/deals/:id/activate_coupons', :controller => '/admin/deals', :action => 'activate_coupons'
   map.admin_activate_coupons '/admin/coupons/:id/activate_coupons', :controller => '/admin/coupons', :action => 'activate_coupons'
   map.admin_dashboards '/admin/dashboards', :controller => '/admin/dashboards', :action => 'index'
+  map.admin_dashboard_daily_csv '/admin/dashboards/daily.csv', :controller => '/admin/dashboards', :action => 'data', :format => 'csv', :days => '1'
+  map.admin_dashboard_weekly_csv '/admin/dashboards/weekly.csv', :controller => '/admin/dashboards', :action => 'data', :format => 'csv', :days => '7'
   map.admin_promotions_dashboard '/admin/dashboards/promotions', :controller => '/admin/dashboards', :action => 'promotions'
+  map.admin_earnout_dashboard '/admin/dashboards/earn_out', :controller => '/admin/dashboards', :action => 'earn_out'
   map.admin_washingtonian_dashboard '/admin/dashboards/washingtonian', :controller => '/admin/dashboards', :action => 'washingtonian'
   map.admin_affiliates_dashboard '/admin/dashboards/affiliates', :controller => '/admin/dashboards', :action => 'affiliates'
   map.admin_affiliate_lifetime_dashboard '/admin/dashboards/affiliate_lifetime', :controller => '/admin/dashboards', :action => 'affiliate_lifetime'
-  map.admin_partners_dashboard '/admin/dashboards/partners', :controller => '/admin/dashboards', :action => 'partners'
   map.admin_source_report_dashboard '/admin/dashboards/source_report', :controller => '/admin/dashboards', :action => 'source_report'
   map.admin_sidebar_promotions '/admin/promotions/sidebar', :controller => '/admin/promotions', :action => 'sidebar'
   map.admin_promotions_sort '/admin/promotions/sort', :controller => '/admin/promotions', :action => 'sort'

@@ -1,7 +1,6 @@
 class Admin::PromotionsController < ApplicationController
   layout 'admin'
-  before_filter :staff_required
-  before_filter :admin_required, :only => ['destroy']
+  before_filter :admin_required
   
   # GET /promotions
   # GET /promotions.xml
@@ -15,7 +14,7 @@ class Admin::PromotionsController < ApplicationController
     end
     
     @businesses = Business.find(:all, :order => "name asc")
-    @next_featured = Promotion.find(:first, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ?', Time.now.utc + 1.day, Time.now.utc + 1.day, true, false], :order => 'featured DESC, start_date DESC')
+    @next_featured = Promotion.find(:first, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ?', Time.now.utc + 1.day, Time.now.utc + 1.day, true, false], :order => 'dc_featured DESC, start_date DESC')
 
     respond_to do |format|
       format.html # index.html.erb
@@ -191,7 +190,8 @@ class Admin::PromotionsController < ApplicationController
 
   # sidebar promotion sorting
   def sidebar
-    @promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and id != ?', Time.now.utc, Time.now.utc, true, false, 0], :order => 'position')
+    @city_id = params[:city_id].to_i || 0
+    @promotions = Promotion.find(:all, :conditions => ['city_id = ? and start_date < ? and end_date > ? and active = ? and hidden = ? and id != ?', @city_id, Time.now.utc, Time.now.utc, true, false, 0], :order => 'position')
 
     respond_to do |format|
       format.html # index.html.erb

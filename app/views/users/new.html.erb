@@ -1,12 +1,12 @@
 <% content_for :page_title do %>Register For A New Account<% end %>
 <% content_for :head do %>
-  <meta name="title" content="<%= @promotion_code.nil? ? "What's The Deal - Sign Up For Our Daily Deal!" : "$5 off your first purchase at What's the Deal" %>" /> 
+  <meta name="title" content="<%= @promotion_code.nil? ? "WTD - Sign Up For Our Daily Deal!" : "$5 off your first purchase at WTD" %>" /> 
   <meta name="description" content="Free weekly happy hours and ridiculous discounts on restaurants, spas, theaters, bars, concerts, movie tickets, plays, lessons, personal training sessions, hotels, and other generally awesome things in Washington DC.  Up to 80% off list prices!" /> 
   <link rel="image_src" href="http://sowhatsthedeal.com/dc/images/wtd_montage.jpg" />
 
   <!-- open graph stuff -->
   <meta property="og:title" content="Never miss a deal, sign up with WTD"/>
-  <meta property="og:site_name" content="What's The Deal"/>
+  <meta property="og:site_name" content="WTD"/>
   <meta property="og:type" content="article"/>
   <%- if params[:code] -%>
   <meta property="og:url" content="http://sowhatsthedeal.com/ref/<%= params[:code] %>"/>

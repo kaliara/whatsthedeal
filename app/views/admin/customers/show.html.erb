@@ -1,6 +1,6 @@
 <% content_for :sub_nav do %>
   <li><%= link_to 'Credit Profile', admin_credit_profile_path(:email => @customer.user.email) %></li>
-  <li><%= link_to 'Impersonate this Customer', admin_impersonate_path(:type => 'customer', :id => @customer.id) %></li>
+  <li><%= link_to 'Impersonate this Customer', admin_impersonate_path(:type => 'customer', :id => @customer.id) if current_user.admin? %></li>
   <li><%= link_to "Search Coupons", admin_coupons_path(:q => @customer.user.email) %></li>
   <li><%= link_to 'Edit this Customer', edit_admin_customer_path(@customer) %></li>
   <li><%= link_to 'Customer Listing', admin_customers_path %></li>

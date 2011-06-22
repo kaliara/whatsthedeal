@@ -9,30 +9,41 @@ class Business::PurchasesController < ApplicationController
   # GET /purchases.xml
   def index
     user = current_user.business? ? current_user : current_user.business_staff.business.user
+    @deals = []
+    @kgb_deals = []
+    @coupons = []
+    @kgb_coupons = []
     @business_ids = Business.find(:all, :conditions => {:user_id => user.id}).collect{|b| b.id}
     @promotions = Promotion.find(:all, :conditions => {:business_id => @business_ids})
     
     if params[:promotion_id].to_i > 0
       @deals = Promotion.find(:all, :conditions => {:business_id => @business_ids, :id => params[:promotion_id].to_i}, :order => 'id DESC').collect{|a|a.deals.collect{|d|d.id}}.flatten
-    elsif params[:promotion_id] == 'All'
+      @kgb_deals = Promotion.find(:all, :conditions => {:business_id => @business_ids, :id => params[:promotion_id].to_i}, :order => 'id DESC').collect{|a|a.deals.collect{|d|d.kgb_deal_id}}.flatten
+    elsif params[:promotion_id] == 'All' or params[:promotion_id].blank?
       @deals = Promotion.find(:all, :conditions => {:business_id => @business_ids}, :order => 'id DESC').collect{|a|a.deals.collect{|d|d.id}}.flatten
-    else
-      @deals = []
+      @kgb_deals = Promotion.find(:all, :conditions => {:business_id => @business_ids}, :order => 'id DESC').collect{|a|a.deals.collect{|d|d.kgb_deal_id}}.flatten
     end
 
-    if params[:q] =~ /\d/
+    if params[:q] =~ /\d/ and !params[:q].blank?
       @type = "Confirmation Code"
       @deals = [0] if @deals.empty?
+      @kgb_deals = [0] if @kgb_deals.empty?
       @coupons = Coupon.find(:all, :conditions => ["REPLACE(confirmation_code,'-','') = '#{params[:q].gsub(/\-/,'')}' and deal_id in (#{@deals.join(',')})"]).to_a
-    elsif params[:q] =~ /\w+/
+      @kgb_coupons = KgbCoupon.find(:all, :conditions => ["voucher_full_id like ? and transactions_deal_id in (#{@kgb_deals.join(',')})", "%#{params[:q]}%"]).to_a
+    elsif params[:q] =~ /\w+/ and !params[:q].blank?
       @type = "Name"
       @user_ids = Customer.find(:all, :conditions => ['first_name like ? or last_name like ? or CONCAT(first_name," ",last_name) like ?', "%#{params[:q]}%", "%#{params[:q]}%", "%#{params[:q]}%"]).collect{|c| c.user.id}
       @coupons = Coupon.find(:all, :conditions => {:user_id => @user_ids, :deal_id => @deals}, :order => 'confirmation_code ASC')
+      @kgb_coupons = KgbCoupon.find(:all, :conditions => ["(users_first_name like ? or users_last_name like ? or CONCAT(users_first_name,' ',users_last_name) like ?) and transactions_deal_id in (#{@kgb_deals.join(',')})", "%#{params[:q]}%", "%#{params[:q]}%", "%#{params[:q]}%"], :order => 'voucher_full_id ASC')
     elsif params[:all] == 'yes'
       @coupons = Coupon.find(:all, :conditions => {:deal_id => @deals}, :order => 'confirmation_code ASC')
-    else
-      @coupons = []
+      @kgb_coupons = KgbCoupon.find(:all, :conditions => {:transactions_deal_id => @kgb_deals}, :order => 'voucher_full_id ASC')
     end    
+    
+    @any_coupon_codes = false
+    (@coupons + @kgb_coupons).each do |c|
+      @any_coupon_codes = true if !c.coupon_code.blank?
+    end
     
     respond_to do |format|
       format.html # index.html.erb
@@ -116,16 +127,22 @@ class Business::PurchasesController < ApplicationController
   
   # export to .xls
   def export
+    @wtd_coupons = []
+    @kgb_coupons = []
     user = current_user.business? ? current_user : current_user.business_staff.business.user
     @business_ids = Business.find(:all, :conditions => {:user_id => user.id}).collect{|b| b.id}
     @promotions = Promotion.find(:all, :conditions => {:business_id => @business_ids})
     
     if params[:excel_promotion_id].to_i > 0
-      @deals = Promotion.find(:all, :conditions => {:business_id => @business_ids, :id => params[:excel_promotion_id].to_i}, :order => 'id DESC').collect{|a|a.deals.collect{|d|d.id}}.flatten
+      @deals     = Promotion.find(:all, :conditions => {:business_id => @business_ids, :id => params[:excel_promotion_id].to_i}, :order => 'id DESC').collect{|a|a.deals.collect{|d|d.id}}.flatten
+      @kgb_deals = Promotion.find(:all, :conditions => {:business_id => @business_ids, :id => params[:excel_promotion_id].to_i}, :order => 'id DESC').collect{|a|a.deals.collect{|d|d.kgb_deal_id}}.flatten
     else
-      @deals = Promotion.find(:all, :conditions => {:business_id => @business_ids}, :order => 'id DESC').collect{|a|a.deals.collect{|d|d.id}}.flatten
+      @deals     = Promotion.find(:all, :conditions => {:business_id => @business_ids}, :order => 'id DESC').collect{|a|a.deals.collect{|d|d.id}}.flatten
+      @kgb_deals = Promotion.find(:all, :conditions => {:business_id => @business_ids}, :order => 'id DESC').collect{|a|a.deals.collect{|d|d.kgb_deal_id}}.flatten
     end
-    @coupons = Coupon.find(:all, :conditions => {:deal_id => @deals}, :order => 'deal_id ASC')
+    @wtd_coupons = Coupon.find(:all, :conditions => {:deal_id => @deals}, :order => 'deal_id ASC')
+    @kgb_coupons = KgbCoupon.find(:all, :conditions => {:transactions_deal_id => @kgb_deals}, :order => 'transactions_deal_id ASC')
+    @coupons = @wtd_coupons + @kgb_coupons
 
     @path = "dc/biz_exports/" + (user.business.name.downcase.gsub(/[\s+|\W+]/, '')) + '_coupons_' + Time.zone.now.strftime("%m%d%y%H%M") + ".xls"
     book = Spreadsheet::Workbook.new
@@ -146,15 +163,25 @@ class Business::PurchasesController < ApplicationController
   
   # mark many coupons as used
   def bulk_use
-    unless params[:coupons].nil?
-      @coupons = Coupon.find(params[:coupons].keys.to_a)
-      @coupons.each do |coupon|
-        coupon.biz_used = true
-        coupon.redemption_date = Time.now if coupon.redemption_date.nil?
-        coupon.save
-      end
-    else
+    if params[:coupons].nil? and params[:kgb_coupons].nil?
       flash[:error] = "Please select one or more purchases to mark as redeemed"
+    else
+      unless params[:coupons].nil?
+        @coupons = Coupon.find(params[:coupons].keys.to_a)
+        @coupons.each do |coupon|
+          coupon.biz_used = true
+          coupon.redemption_date = Time.now if coupon.redemption_date.nil?
+          coupon.save
+        end
+      end
+      unless params[:kgb_coupons].nil?
+        @kgb_coupons = KgbCoupon.find(params[:kgb_coupons].keys.to_a)
+        @kgb_coupons.each do |coupon|
+          coupon.biz_used = true
+          coupon.redemption_date = Time.now if coupon.redemption_date.nil?
+          coupon.save
+        end
+      end
     end
     
     redirect_to :action => 'index', :promotion_id => params[:promotion_id], :q => params[:q]
