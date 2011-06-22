@@ -3421,3 +3421,10 @@ h3.event_rsvp{
 .refunded{
   color: red;
 }
+
+/* region selector */
+.region_selector{
+  position: relative;
+  top: 65px;
+  left: -130px;
+}
