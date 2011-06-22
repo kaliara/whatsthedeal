@@ -2,7 +2,7 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-  helper_method :current_user_session, :current_user, :cart, :partner, :originize, :mobile, :force_full_site, :https?, :simple_page?
+  helper_method :current_user_session, :current_user, :cart, :partner, :originize, :mobile, :force_full_site, :https?, :simple_page?, :region
   filter_parameter_logging :password, :number
   before_filter :store_return_uri, :set_timezone
   before_filter :admin_required, :only => ['impersonate']
@@ -17,6 +17,18 @@ class ApplicationController < ActionController::Base
   
   def https?
     request.protocol.include? "https"
+  end
+  
+  def region
+    return @region if defined?(@region)
+    
+    @region = cookies[:region].blank? ? 1 : cookies[:region].to_i
+  end
+  
+  def set_region
+    @region = params[:region].blank? ? 1 : params[:region].to_i
+    cookies[:region] = {:value => @region, :expires => 6.months.from_now}
+    redirect_to :back || root_path
   end
 
   def mobile

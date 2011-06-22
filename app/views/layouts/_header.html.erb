@@ -11,6 +11,12 @@
     	  <li class="<%= 'current' if current_page? faq_url %>"><%= link_to "FAQs", faq_url %></li>
       </ul>
     </div>
+    
+    <div class="region_selector">
+      <% form_tag "set_region", :url => set_region_path, :method => :post do %>
+        <%= select_tag "region", options_for_select([["Washington D.C.", 0], ["Northern Virginia", 2]], :selected => region.to_i), :onchange => "submit()" %>
+      <% end %>
+    </div>
 
     <div class="account_nav">
       <% if current_user and current_user.customer? %>

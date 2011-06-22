@@ -27,9 +27,11 @@ class PromotionsController < ApplicationController
   def index
     session[:force_full_site] = false
     
-    if params[:city_id] == 2 or session[:city_id] == 2
+    if params[:city_id] == 1 or region == 1
       @promotions = Promotion.nova
-    elsif params[:city_id] == 3 or session[:city_id] == 3
+    elsif params[:city_id] == 2 or region == 2
+      @promotions = Promotion.nova
+    elsif params[:city_id] == 3 or region == 3
       @promotions = Promotion.submd
     else
       @promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ?', Time.now.utc, Time.now.utc, true, false], :order  => 'dc_featured DESC, start_date DESC')

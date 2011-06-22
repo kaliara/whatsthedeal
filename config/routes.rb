@@ -100,6 +100,9 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/promotions/ad_preview.:format', :controller => 'promotions', :action => 'ad_preview'
   map.connect 'lon.:format', :controller => 'promotions', :action => 'lon'
 
+  # cities
+  map.set_region '/set_region', :controller => 'application', :action => 'set_region', :conditions =>  {:method => :post}
+  
   # promotions
   map.grab_bag '/promotions/grab_bag', :controller => 'promotions', :action => 'grab_bag'
   map.promotions_nova '/promotions/nova', :controller => 'promotions', :action => 'index', :city_id => 2
