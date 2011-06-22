@@ -14,7 +14,7 @@
     
     <% if session[:impersonating] %>
     <div class="region_selector">
-      <% form_tag "set_region", :url => set_region_path, :method => :post do %>
+      <% form_tag set_region_path, :method => :post do %>
         <%= select_tag "region", options_for_select([["Washington D.C.", 0], ["Northern Virginia", 2]], :selected => region.to_i), :onchange => "submit()" %>
       <% end %>
     </div>

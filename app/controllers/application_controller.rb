@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
   def set_region
     @region = params[:region].blank? ? 1 : params[:region].to_i
     cookies[:region] = {:value => @region, :expires => 6.months.from_now}
-    redirect_to :back || root_path
+    redirect_to :back || root_url
   end
 
   def mobile
