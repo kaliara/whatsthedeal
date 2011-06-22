@@ -44,7 +44,7 @@
                       <table width="580" border="0" cellspacing="0" cellpadding="0" style="padding: 10px;text-align:center" bgcolor="#012437">
                         <tr>
                           <td colspan="4">
-                            <h1 style="font-family: 'Myriad', sans-serif;font-weight: normal;margin: 0 0 5px 0;padding:3px;text-align:center"><a href="<%= promotion_slug_url(@promotion.slug) %><%= @google_tracking %>" style="color: #3fc7ff !important;font-family: 'Myriad', sans-serif;font-size: 18px;font-weight: normal;text-decoration: none !important;"><%= @promotion.name %></a></h1>
+                            <h1 style="font-family: 'Myriad', sans-serif;font-weight: normal;margin: 0 0 5px 0;padding:3px;text-align:center"><a href="<%= promotion_slug_url(@promotion.slug) %><%= @google_tracking %>" style="color: #3fc7ff !important;font-family: 'Myriad', sans-serif;font-size: 20px;font-weight: normal;text-decoration: none !important;"><%= @promotion.name %></a></h1>
                           </td>
                         </tr>
                         <tr>
@@ -74,7 +74,7 @@
                             <a href="<%= promotion_slug_url(@promotion.slug) %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;"><img src="http://sowhatsthedeal.com<%= @promotion.image1.url %>" alt="<%= @promotion.business.name %> Deal" border="0" width="340" height="240" style="border: 3px solid #ffffff;"></a>
                           </td>
                           <td align="center">
-                            <p style="text-align:center;margin:5px 0 10px 0;">
+                            <p style="text-align:center;margin:0px 0 10px 0;">
                               <% if @promotion.physical_address? %>
                                 <a href="http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=<%= @promotion.business.street1.gsub(/\s/,"+") %>+<%= @promotion.business.city.gsub(/\s/,"+") %>,+<%= @promotion.business.state %>+<%= @promotion.business.zipcode %>" target="_blank" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;"><img src="http://sowhatsthedeal.com/emails/trans1_map_icon.png" alt="map" border="0" style="border: 0"></a>
                               <% else %>
