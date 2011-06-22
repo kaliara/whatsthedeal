@@ -7,19 +7,24 @@
 
 <% form_tag :action => 'generate'  do %>
   <p>
+    <%= label_tag 'Region' %><br />
+    <%= select_tag :deal_region, options_for_select([["Washington D.C.", 1], ["Northern Virginia", 2]]) %>
+  </p><br><br>
+
+  <p>
     <%= label_tag 'Promotion' %><br />
-    <%= select_tag :promotion_id, options_for_select(@promotions.collect{|p| ["#{p.id} - #{p.name} #{"(featured)" if p.featured?}", p.id] }) %>
+    <%= select_tag :promotion_id, options_for_select(@promotions.collect{|p| ["#{"(**featured**)" if p.featured?} #{p.id} [#{['*','W','N','M'][p.city_id]}] - #{p.name}", p.id] }) %>
   </p><br><br>
 
   <h4><strong>Side Deals</strong></h4>  
   <p style="margin-top:10px">
     <% unless @side_promotions.empty? %>
       <%= label_tag 'Side deal 1' %>
-      <%= select_tag :side_promotion_1, options_for_select(@side_promotions.collect{|p| ["#{"(**ending**)" if p.end_date <= (@now + 60.hours)} #{p.id} - #{p.name}", p.id] }) %><br><br>
+      <%= select_tag :side_promotion_1, options_for_select(@side_promotions.collect{|p| ["#{"(**ending**)" if p.end_date <= (@now + 60.hours)} #{p.id} [#{['*','W','N','M'][p.city_id]}] - #{p.name}", p.id] }) %><br><br>
       <%= label_tag 'Side deal 2' %>
-      <%= select_tag :side_promotion_2, options_for_select(@side_promotions.collect{|p| ["#{"(**ending**)" if p.end_date <= (@now + 60.hours)} #{p.id} - #{p.name}", p.id] }) %><br><br>
+      <%= select_tag :side_promotion_2, options_for_select(@side_promotions.collect{|p| ["#{"(**ending**)" if p.end_date <= (@now + 60.hours)} #{p.id} [#{['*','W','N','M'][p.city_id]}] - #{p.name}", p.id] }) %><br><br>
       <%= label_tag 'Side deal 3' %>
-      <%= select_tag :side_promotion_3, options_for_select(@side_promotions.collect{|p| ["#{"(**ending**)" if p.end_date <= (@now + 60.hours)} #{p.id} - #{p.name}", p.id] }) %><br><br>
+      <%= select_tag :side_promotion_3, options_for_select(@side_promotions.collect{|p| ["#{"(**ending**)" if p.end_date <= (@now + 60.hours)} #{p.id} [#{['*','W','N','M'][p.city_id]}] - #{p.name}", p.id] }) %><br><br>
     <% else %>
       Sorry, but there are no other active deals available (this is very rare, might want to double check that all the promotions are working correctly).
     <% end %>
