@@ -38,7 +38,6 @@ class Admin::PromotionsController < ApplicationController
   def new
     @promotion = Promotion.new
 
-
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @promotion }
@@ -47,8 +46,17 @@ class Admin::PromotionsController < ApplicationController
 
   # GET /promotions/1/edit
   def edit
-    @promotion = Promotion.find(params[:id])
-    session[:return_to] = nil
+    if current_user and current_user.admin?
+      @promotion = Promotion.find(params[:id])
+      session[:return_to] = nil
+    
+      respond_to do |format|
+        format.html # new.html.erb
+        format.xml  { render :xml => @promotion }
+      end
+    else
+      redirect_to login_path
+    end
   end
 
   # POST /promotions
@@ -90,27 +98,31 @@ class Admin::PromotionsController < ApplicationController
   # PUT /promotions/1.xml
   def update
     @promotion = Promotion.find(params[:id])
-
-    respond_to do |format|
-      if @promotion.update_attributes(params[:promotion])
-        # remove &nbsp;
-        @promotion.summary = @promotion.summary.gsub(/\&nbsp\;/," ")
-        @promotion.body1 = @promotion.body1.gsub(/\&nbsp\;/," ")
-        @promotion.body2 = @promotion.body2.gsub(/\&nbsp\;/," ")
-        @promotion.save
-        
-        unless params[:duration].blank?
-          @promotion.end_date = (@promotion.start_date.to_time + params[:duration].to_i.days + params[:end_time].to_i.hours).to_datetime
+    
+    if current_user and current_user.admin?
+      respond_to do |format|
+        if @promotion.update_attributes(params[:promotion])
+          # remove &nbsp;
+          @promotion.summary = @promotion.summary.gsub(/\&nbsp\;/," ")
+          @promotion.body1 = @promotion.body1.gsub(/\&nbsp\;/," ")
+          @promotion.body2 = @promotion.body2.gsub(/\&nbsp\;/," ")
           @promotion.save
-        end
         
-        flash[:notice] = 'Promotion was successfully updated.'
-        format.html { redirect_to session[:return_to].blank? ? edit_admin_promotion_path(@promotion) : session[:return_to] }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @promotion.errors, :status => :unprocessable_entity }
+          unless params[:duration].blank?
+            @promotion.end_date = (@promotion.start_date.to_time + params[:duration].to_i.days + params[:end_time].to_i.hours).to_datetime
+            @promotion.save
+          end
+        
+          flash[:notice] = 'Promotion was successfully updated.'
+          format.html { redirect_to session[:return_to].blank? ? edit_admin_promotion_path(@promotion) : session[:return_to] }
+          format.xml  { head :ok }
+        else
+          format.html { render :action => "edit" }
+          format.xml  { render :xml => @promotion.errors, :status => :unprocessable_entity }
+        end
       end
+    else
+      redirect_to login_path
     end
   end
   
