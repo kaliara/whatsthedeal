@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
   def set_region
     @region = params[:region].blank? ? 1 : params[:region].to_i
     cookies[:region] = {:value => @region, :expires => 6.months.from_now}
-    redirect_to :back || root_url
+    redirect_to request.referrer.nil? ? root_url : request.referrer
   end
 
   def mobile
@@ -188,7 +188,6 @@ class ApplicationController < ActionController::Base
     def impersonate_customer
       if current_user and current_user.admin? and current_user.admin.customer_impersonation_id.to_i > 0
         @current_user = Customer.find(current_user.admin.customer_impersonation_id).user
-        session[:impersonating] = true
       end
     end
 

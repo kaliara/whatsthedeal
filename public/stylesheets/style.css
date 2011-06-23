@@ -3424,7 +3424,59 @@ h3.event_rsvp{
 
 /* region selector */
 .region_selector{
+  background: transparent url(/images/selector.png) 40px 0 no-repeat;
+  position: absolute;
+  top: 40px;
+  left: 448px;
+  text-align: right;
+  width: 208px;
+  padding: 29px 20px 32px 0;
+}
+.region_selector .current_region{
+  cursor: pointer;
+}
+.region_selector .current_region input{
+  color: #ccd6db;
+  font-weight: bold;
+  font-family: Myriad, Helvetica, sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+}
+.region_selector .current_region input:hover{
+  color: #4e6f81;
+}
+.region_selector .current_region input:active{
+  padding: 0;
+  margin: 0 6px 0 0;
+}
+.selecting_region{
+  background-position: -193px 0;
+}
+.selecting_region .current_region input{
+  color: #4e6f81;
+}
+.region_selector .region_list{
   position: relative;
-  top: 65px;
-  left: -130px;
+  top: 5px;
+}
+.region_selector .region_list input{
+  color: #aac5db;
+  font-weight: normal;
+  font-family: Myriad, Helvetica, sans-serif;
+  font-size: 12px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  padding: 3px;
+  margin-right: 3px;
+}
+.region_selector .region_list input:hover{
+  color: #fff;
+  background: #1b465c;
+}
+.region_selector .region_list input:active{
+  padding: 3px;
+  margin: 0 3px 0 0;
 }
