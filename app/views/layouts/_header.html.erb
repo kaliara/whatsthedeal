@@ -15,13 +15,16 @@
     <div class="region_selector">
       <div class="current_region"><%= submit_tag Promotion::CITIES[region].first %></div>
       <div class="region_list" style="display:none">
-        <% form_tag set_region_path, :method => :post do %>
-          <%= hidden_field_tag :region, 2 %>
-          <%= submit_tag "Northern Virginia" %>
-        <% end %>
-        <% form_tag set_region_path, :method => :post do %>
-          <%= hidden_field_tag :region, 1 %>
-          <%= submit_tag "Washington D.C." %>
+        <% if region == 1 %>
+          <% form_tag set_region_path, :method => :post do %>
+            <%= hidden_field_tag :region, 2 %>
+            <%= submit_tag "Northern Virginia" %>
+          <% end %>
+        <% else %>
+          <% form_tag set_region_path, :method => :post do %>
+            <%= hidden_field_tag :region, 1 %>
+            <%= submit_tag "Washington D.C." %>
+          <% end %>
         <% end %>
       </div>
     </div>

@@ -3472,7 +3472,7 @@ h3.event_rsvp{
   background: transparent;
   border: none;
   padding: 3px;
-  margin-right: 3px;
+  margin: 0 3px 0 0;
 }
 .region_selector .region_list input:hover{
   color: #fff;
