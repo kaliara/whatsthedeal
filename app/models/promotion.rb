@@ -179,4 +179,8 @@ class Promotion < ActiveRecord::Base
       bp.save
     end
   end
+  
+  def self.arlnow
+    Promotion.find(Misc.value('arlnow', Promotion.featured.first.id).to_i)
+  end
 end

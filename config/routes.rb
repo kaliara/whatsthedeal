@@ -96,6 +96,7 @@ ActionController::Routing::Routes.draw do |map|
   
   # xml bits
   map.featured 'featured.:format', :controller => 'promotions', :action => 'show', :dc_featured => true
+  map.arlnow 'arlnow.:format', :controller => 'promotions', :action => 'show', :arlnow => true
   map.connect  'rss.:format',      :controller => 'promotions', :action => 'rss'
   map.connect '/promotions/ad_preview.:format', :controller => 'promotions', :action => 'ad_preview'
   map.connect 'lon.:format', :controller => 'promotions', :action => 'lon'

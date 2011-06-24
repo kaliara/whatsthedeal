@@ -101,14 +101,19 @@ class PromotionsController < ApplicationController
     session[:force_full_site] = false
     session[:clicked_promotion_map] = params[:clicked_promotion_map]
     
-    case partner
-    when 2
-      @promotion = params[:dc_featured] ? Promotion.washingtonian_featured.first : Promotion.find_by_slug(params[:slug])
-    when 3
-      @promotion = params[:dc_featured] ? Promotion.halfpricedc_featured.first : Promotion.find_by_slug(params[:slug])
+    if params[:arlnow]
+      @promotion = Promotion.arlnow
     else
-      @promotion = params[:dc_featured] ? Promotion.featured.first : Promotion.find_by_slug(params[:slug])
+      case partner
+      when 2
+        @promotion = params[:dc_featured] ? Promotion.washingtonian_featured.first : Promotion.find_by_slug(params[:slug])
+      when 3
+        @promotion = params[:dc_featured] ? Promotion.halfpricedc_featured.first : Promotion.find_by_slug(params[:slug])
+      else
+        @promotion = params[:dc_featured] ? Promotion.featured.first : Promotion.find_by_slug(params[:slug])
+      end
     end
+    
     if @promotion.nil?
       flash[:error] = "We have updated some of the links to our promotions, please select a promotion from the list below"
       redirect_to promotions_path

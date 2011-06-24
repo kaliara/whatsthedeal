@@ -21,6 +21,7 @@ class ApplicationController < ActionController::Base
   
   def region
     return @region if defined?(@region)
+    return 0 if mobile
     
     @region = cookies[:region].blank? ? 1 : cookies[:region].to_i
   end
