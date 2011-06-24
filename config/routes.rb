@@ -174,6 +174,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :businesses
     admin.resources :carts
     admin.resources :contents
+    admin.resources :miscs
     admin.resources :coupons
     admin.resources :credits
     admin.resources :customers
