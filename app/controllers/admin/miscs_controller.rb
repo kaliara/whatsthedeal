@@ -33,13 +33,13 @@ class Admin::MiscsController < ApplicationController
   # POST /miscs
   # POST /miscs.xml
   def create
-    @misc = Misc.new(params[:Misc])
+    @misc = Misc.new(params[:misc])
 
     respond_to do |format|
       if @misc.save
         flash[:notice] = 'Misc was successfully created.'
         format.html { redirect_to :action => 'index' }
-        format.xml  { render :xml => @misc, :status => :created, :location => @Misc }
+        format.xml  { render :xml => @misc, :status => :created, :location => @misc }
       else
         format.html { render :action => "new" }
         format.xml  { render :xml => @misc.errors, :status => :unprocessable_entity }
