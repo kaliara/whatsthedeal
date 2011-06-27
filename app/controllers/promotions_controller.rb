@@ -34,15 +34,7 @@ class PromotionsController < ApplicationController
   def index
     session[:force_full_site] = false
     
-    if region == 1
-      @promotions = Promotion.dc
-    elsif region == 2
-      @promotions = Promotion.nova
-    elsif region == 3
-      @promotions = Promotion.submd
-    else
-      @promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ?', Time.now.utc, Time.now.utc, true, false], :order  => 'dc_featured DESC, start_date DESC')
-    end
+    @promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ?', Time.now.utc, Time.now.utc, true, false], :order  => 'start_date DESC')
 
     if @promotions.empty?
       redirect_to root_path
