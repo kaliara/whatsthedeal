@@ -76,7 +76,19 @@
             <% unless current_user.gets_daily_deal_email? %>
               <div class="label_set">
                 <%= check_box_tag :gets_daily_deal_email, true, true %>&nbsp;&nbsp;
-                <%= label_tag :gets_daily_deal_email, "The WTD Daily Deal Email" %>
+                <%= label_tag :gets_daily_deal_email, "Washington DC Daily Deal" %>
+              </div>
+            <% end %>
+            <% unless current_user.gets_va_daily_deal_email? %>
+              <div class="label_set">
+                <%= check_box_tag :gets_va_daily_deal_email, true, true %>&nbsp;&nbsp;
+                <%= label_tag :gets_va_daily_deal_email, "Northern Virginia Daily Deal" %>
+              </div>
+            <% end %>
+            <% unless current_user.gets_md_daily_deal_email? %>
+              <div class="label_set">
+                <%= check_box_tag :gets_md_daily_deal_email, false, true %>&nbsp;&nbsp;
+                <%= label_tag :gets_md_daily_deal_email, "Suburban Maryland Daily Deal" %>
               </div>
             <% end %>
             <% unless current_user.gets_happy_hour_announcement_email? %>
