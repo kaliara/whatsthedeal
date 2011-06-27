@@ -197,7 +197,7 @@ class User < ActiveRecord::Base
   end
   
   def unlikely_subscriber?
-    return true if unlikely_subscriber > User::UNLIKELY_SUBSCRIBER_MAX
+    return true if unlikely_subscriber.to_i > User::UNLIKELY_SUBSCRIBER_MAX
     self.unlikely_subscriber += 1
     self.save
     return false
