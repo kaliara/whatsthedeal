@@ -5,7 +5,7 @@
       <div class="sidebar_content global_announce"><p><%= render_content 'global_announcement_desc' %></p></div>
     <% end %>
   
-    <% unless current_user and current_user.gets_daily_deal_email? %>
+    <% unless current_user and (current_user.gets_daily_deal_email? or current_user.unlikely_subscriber?) %>
       <h2>The Daily Deal</h2>
       <div class="sidebar_content get_daily_deal">
         <p>Great DC deals delivered to your inbox!</p>
@@ -70,7 +70,7 @@
       <% end %>
     <% end %>
   
-    <h2><a href="/promotions/map">Deals Near Me</a><br/></h2>
+    <!-- <h2><a href="/promotions/map">Deals Near Me</a><br/></h2>
     <div class="sidebar_content">
       <p><strong>Find out what deals are available near you.</strong></p>
       <br/>
@@ -92,7 +92,8 @@
         </div>
       </div>
     <% end %>
-  
+   -->
+   
     <div class="sidebar_content last">
       <h2>Share With Friends</h2>
       <div class="refer_a_friend"><%= link_to "Refer a friend, grab $5", referral_info_url, :class => "five_dollar" %></div>

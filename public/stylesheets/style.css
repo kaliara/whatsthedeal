@@ -283,7 +283,7 @@ a.rss_icon:hover{
 
 .signup_box{
   margin: 0;
-  width: 292px;
+  width: 345px;
   padding: 15px; 
   background: rgb(23, 63, 111) none repeat scroll 0% 0%; 
   color: rgb(255, 255, 255); 
@@ -1729,7 +1729,7 @@ p.event_full{
 .sidebar_text{
   float: right;
   margin: 31px 0 0;
-  width: 183px;
+  width: 165px;
 }
 .sidebar_text p{
   line-height: 110%;
@@ -1746,7 +1746,7 @@ p.event_full{
 .label_input_form label{
   float: left;
   display: block;
-  width: 150px;
+  width: 165px;
   text-align: right;
   margin-right: 10px;
   position: relative;
@@ -3273,7 +3273,7 @@ h3.event_rsvp{
 }
 #signup_page .signup_button{
   margin-top: 20px;
-  margin-left: 40px;
+  margin-left: 74px;
 }
 #signup_page .primary{
   background: transparent url(/images/promo_deal_me_in_bg.png) repeat-x center left;
@@ -3317,7 +3317,7 @@ h3.event_rsvp{
 #signup_page .email_field input{
   font-size: 1.1em;
   padding: 3px;
-  width: 250px;
+  width: 310px;
 }
 #signup_page .signup_text .logged_in_text{
   font-size: 1.2em;

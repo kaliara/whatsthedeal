@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110624185202) do
+ActiveRecord::Schema.define(:version => 20110627152744) do
 
   create_table "accountants", :force => true do |t|
     t.integer  "user_id"
@@ -334,13 +334,6 @@ ActiveRecord::Schema.define(:version => 20110624185202) do
     t.datetime "updated_at"
   end
 
-  create_table "misc", :force => true do |t|
-    t.string   "key"
-    t.string   "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "miscs", :force => true do |t|
     t.string   "key"
     t.string   "value"
@@ -583,6 +576,7 @@ ActiveRecord::Schema.define(:version => 20110624185202) do
     t.boolean  "quietly_created",                    :default => false
     t.boolean  "gets_va_daily_deal_email",           :default => false
     t.boolean  "gets_md_daily_deal_email",           :default => false
+    t.integer  "unlikely_subscriber",                :default => 0
   end
 
   add_index "users", ["email"], :name => "email", :unique => true

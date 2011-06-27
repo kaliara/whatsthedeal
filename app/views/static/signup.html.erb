@@ -174,7 +174,19 @@ window.onload = Custom.init;</script>
           <% unless current_user.gets_daily_deal_email? %>
             <div class="label_set email_list">
               <%= f.check_box :gets_daily_deal_email, :class => 'styled' %>&nbsp;&nbsp;
-              <%= f.label :gets_daily_deal_email, "WTD Daily Deal Email" %>
+              <%= f.label :gets_daily_deal_email, "Washington DC Daily Deal" %>
+            </div>
+          <% end %>
+          <% unless current_user.gets_va_daily_deal_email? %>
+            <div class="label_set email_list">
+              <%= f.check_box :gets_va_daily_deal_email, :class => 'styled' %>&nbsp;&nbsp;
+              <%= f.label :gets_va_daily_deal_email, "Northern Virginia Daily Deal" %>
+            </div>
+          <% end %>
+          <% unless current_user.gets_md_daily_deal_email? %>
+            <div class="label_set email_list">
+              <%= f.check_box :gets_md_daily_deal_email, :class => 'styled' %>&nbsp;&nbsp;
+              <%= f.label :gets_md_daily_deal_email, "Suburban Maryland Daily Deal" %>
             </div>
           <% end %>
           <% unless current_user.gets_happy_hour_announcement_email? %>
@@ -199,7 +211,9 @@ window.onload = Custom.init;</script>
               <%= f.text_field :email, :size => 25 %>
             </div>
 
-            <div class="email_list"><%= f.check_box :gets_daily_deal_email, :checked => true, :class => 'styled' %>&nbsp;&nbsp;<%= f.label :gets_daily_deal_email, "WTD Daily Deal" %></div>
+            <div class="email_list"><%= f.check_box :gets_daily_deal_email, :checked => true, :class => 'styled' %>&nbsp;&nbsp;<%= f.label :gets_daily_deal_email, "Washington DC Daily Deal" %></div>
+            <div class="email_list"><%= f.check_box :gets_va_daily_deal_email, :checked => true, :class => 'styled' %>&nbsp;&nbsp;<%= f.label :gets_daily_deal_email, "Northern Virginia Daily Deal" %></div>
+            <div class="email_list"><%= f.check_box :gets_md_daily_deal_email, :class => 'styled' %>&nbsp;&nbsp;<%= f.label :gets_daily_deal_email, "Suburban Maryland Daily Deal" %></div>
             <div class="email_list"><%= f.check_box :gets_happy_hour_announcement_email, :checked => true, :class => 'styled' %>&nbsp;&nbsp;<%= f.label :gets_happy_hour_announcement_email, "Weekly Happy Hour" %></div>
             
             <div class="signup_button"><%= f.submit 'Subscribe Now', :class => 'primary' %></div>

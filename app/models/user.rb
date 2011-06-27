@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   HAPPY_HOUR_LIST = '74'
   VIRGINIA_DEAL_LIST = '115'
   MARYLAND_DEAL_LIST = '116'
+  UNLIKELY_SUBSCRIBER_MAX = 5
   
   has_one  :cart
   has_many :purchases
@@ -193,6 +194,13 @@ class User < ActiveRecord::Base
   
   def entered?(raffle)
     !Entry.find(:all, :conditions => {:raffle_id => raffle.id, :user_id => self.id}).empty?
+  end
+  
+  def unlikely_subscriber?
+    return true if unlikely_subscriber > User::UNLIKELY_SUBSCRIBER_MAX
+    self.unlikely_subscriber += 1
+    self.save
+    return false
   end
   
   def generate_referral_link
