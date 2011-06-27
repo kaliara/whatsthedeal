@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   HAPPY_HOUR_LIST = '74'
   VIRGINIA_DEAL_LIST = '115'
   MARYLAND_DEAL_LIST = '116'
-  UNLIKELY_SUBSCRIBER_MAX = 5
+  UNLIKELY_SUBSCRIBER_MAX = 25
   
   has_one  :cart
   has_many :purchases
