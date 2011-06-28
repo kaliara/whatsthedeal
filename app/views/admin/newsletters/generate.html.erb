@@ -44,7 +44,7 @@
                       <table width="580" border="0" cellspacing="0" cellpadding="0" style="padding: 10px;text-align:center" bgcolor="#012437">
                         <tr>
                           <td colspan="4">
-                            <h1 style="font-family: 'Myriad', sans-serif;font-weight: normal;margin: 0 0 5px 0;padding:3px;text-align:center"><a href="<%= promotion_slug_url(@promotion.slug) %><%= @google_tracking %>" style="color: #3fc7ff !important;font-family: 'Myriad', sans-serif;font-size: 20px;font-weight: normal;text-decoration: none !important;"><%= @promotion.name %></a></h1>
+                            <h1 style="font-family: 'Myriad', sans-serif;font-weight: normal;margin: 0 0 5px 0;padding:3px;text-align:center"><a href="<%= promotion_slug_url(@promotion.slug) %><%= @google_tracking %>" style="color: #3fc7ff !important;font-family: 'Myriad', sans-serif;font-size: 20px;font-weight: normal;text-decoration: none !important;"><span style="color: #3FC7FF !important;"><%= @promotion.name %></span></a></h1>
                           </td>
                         </tr>
                         <tr>
@@ -71,7 +71,7 @@
                       <table width="580" border="0" cellspacing="0" cellpadding="0" style="padding: 10px 0">
                         <tr>
                           <td width="340">
-                            <a href="<%= promotion_slug_url(@promotion.slug) %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3fc7ff;text-decoration: underline;"><img src="http://sowhatsthedeal.com<%= @promotion.image1.url %>" alt="<%= @promotion.business.name %> Deal" border="0" width="340" height="240" style="border: 3px solid #ffffff;"></a>
+                            <a href="<%= promotion_slug_url(@promotion.slug) %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: normal;color: #3FC7FF !important;text-decoration: underline;"><img src="http://sowhatsthedeal.com<%= @promotion.image1.url %>" alt="<%= @promotion.business.name %> Deal" border="0" width="340" height="240" style="border: 3px solid #ffffff;"></a>
                           </td>
                           <td align="center">
                             <p style="text-align:center;margin:0px 0 10px 0;">
@@ -110,7 +110,7 @@
                   <% unless @side_promotions.empty? %>
                   <tr>
                     <td>
-                      <h2 style="font-family: Helvetica, Myriad, sans-serif;font-size: 28px;color: #ffffff;margin: 20px 0 10px 0;padding: 0;">more deals <span style="font-weight:normal">for you (<a href="<%= promotions_url %><%= @google_tracking %>" style="color: #3FC7FF;">all deals</a>)</span></h2>
+                      <h2 style="font-family: Helvetica, Myriad, sans-serif;font-size: 28px;color: #ffffff;margin: 20px 0 10px 0;padding: 0;">more deals <span style="font-weight:normal">for you (<a href="<%= promotions_url %><%= @google_tracking %>" style="color: #3FC7FF !important;">all deals</a>)</span></h2>
                       <table width="580" border="0" cellspacing="0" cellpadding="0">
                         <% @side_promotions.each do |side_promotion| %>
                         <tr>
@@ -121,7 +121,7 @@
                             <table width="410" border="0" cellspacing="0" cellpadding="0">
                               <tr height="50">
                                 <td valign="middle" align="left" bgcolor="#012437">
-                                  <h1 style="font-family: 'Myriad', sans-serif;font-weight: normal;margin: 15px 0 15px 15px;padding:0;text-align:left;font-size: 14px;line-height:18px"><a href="<%= promotion_slug_url(side_promotion.slug) %><%= @google_tracking %>" style="color: #3fc7ff !important;font-family: 'Myriad', sans-serif;font-size: 14px;font-weight: normal;text-decoration: none !important;"><%= side_promotion.name %></a></h1>
+                                  <h1 style="font-family: 'Myriad', sans-serif;font-weight: normal;margin: 15px 0 15px 15px;padding:0;text-align:left;font-size: 14px;line-height:18px"><a href="<%= promotion_slug_url(side_promotion.slug) %><%= @google_tracking %>" style="color: #3fc7ff !important;font-family: 'Myriad', sans-serif;font-size: 14px;font-weight: normal;text-decoration: none !important;"><span style="color: #3FC7FF !important;"><%= side_promotion.name %></span></a></h1>
                                 </td>
                                 <td valign="middle" align="right" bgcolor="#012437" style="padding-left:20px">
                                   <span style="color: #fff;font-family: 'Myriad', sans-serif;font-size: 20px;font-weight: bold;margin-right:3px;padding: 0;"><%= has_cents?(side_promotion.featured_deal.price) ? number_to_currency(side_promotion.featured_deal.price, :precision => 2) : number_to_currency(side_promotion.featured_deal.price, :precision => 0) %></span>
