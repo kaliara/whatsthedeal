@@ -14,7 +14,10 @@ class Admin::NewslettersController < ApplicationController
   def generate
     @deal_region = params[:deal_region].to_i
     @promotion = Promotion.find(params[:promotion_id])
-    @side_promotions = Promotion.find([params[:side_promotion_1], params[:side_promotion_2], params[:side_promotion_3]])
+    @side_promotions = []
+    @side_promotions[0] = Promotion.find(params[:side_promotion_1])
+    @side_promotions[1] = Promotion.find(params[:side_promotion_2])
+    @side_promotions[2] = Promotion.find(params[:side_promotion_3])
     @event1 = Event.find(params[:event1_id]) if params[:event1_id].to_i > 0
     @event2 = Event.find(params[:event2_id]) if params[:event2_id].to_i > 0
     @shoutout1 = Shoutout.find(params[:shoutout1_id]) if params[:shoutout1_id].to_i > 0
