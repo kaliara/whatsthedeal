@@ -143,7 +143,13 @@
                           </td>
                           <td width="7"><img src="http://sowhatsthedeal.com/emails/trans1_altcitybox_right.png" alt=""/></td>
                         </tr>
-                          <td colspan="4"><a href="http://sowhatsthedeal.com/nova/signup?email=matt@kaliara.com"><img src="<%= @region == 1 ? "http://sowhatsthedeal.com/emails/trans1_altcitybox_bottom_nova.png" : "http://sowhatsthedeal.com/emails/trans1_altcitybox_bottom.png" %>" alt="" border="0"/></a></td>
+                          <td colspan="4">
+                            <% if @region == 1 %>
+                              <a href="http://sowhatsthedeal.com/nova/signup?email=matt@kaliara.com"><img src="http://sowhatsthedeal.com/emails/trans1_altcitybox_bottom_nova.png" alt="" border="0"/></a>
+                            <% else %>
+                              <img src="http://sowhatsthedeal.com/emails/trans1_altcitybox_bottom.png" border="0" alt="" />
+                            <% end %>
+                          </td>
                         </tr>
                       </table>
                     </td>
