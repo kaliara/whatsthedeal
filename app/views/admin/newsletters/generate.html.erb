@@ -31,7 +31,7 @@
           <table width="600" border="0" cellspacing="0" cellpadding="0" bgcolor="#013049" style="margin-bottom: 20px">
             <tr>
               <td>
-                <a href="http://sowhatsthedeal.com<%= @google_tracking %>"><img src="http://sowhatsthedeal.com/emails/<%= @deal_region == 2 ? 'trans1_nova_header' : 'trans1_header' %>.png" alt="WTD - " width="600" height="89" border="0"></a>
+                <a href="http://sowhatsthedeal.com<%= @google_tracking %>"><img src="http://sowhatsthedeal.com/emails/<%= @deal_region == 1 ? 'trans1_header' : 'trans1_nova_header' %>.png" alt="WTD - " width="600" height="89" border="0"></a>
               </td>
             </tr>
             
@@ -106,11 +106,55 @@
                     </td>
                   </tr>
                   
+                  <!-- alt city promotion -->
+                  <% unless @alt_city_promotion.nil? %>
+                  <tr>
+                    <td>
+                      <h2 style="font-family: Helvetica, Myriad, sans-serif;font-size: 28px;color: #ffffff;margin: 23px 0 10px 0;padding: 0;"><%= @deal_region == 1 ? "northern virginia" : "washington dc" %> <span style="font-weight:normal">featured deal</span></h2>
+                      <table width="565" border="0" cellspacing="0" cellpadding="0" bgcolor="#156fab">
+                        <tr>
+                          <td colspan="4"><img src="http://sowhatsthedeal.com/emails/trans1_altcitybox_top.png" alt=""/></td>
+                        </tr>
+                        <tr>
+                          <td width="7"><img src="http://sowhatsthedeal.com/emails/trans1_altcitybox_left.png" alt=""/></td>
+                          <td width="175" valign="top" style="padding: 5px 0 0 5px">
+                            <a href="<%= promotion_slug_url(@alt_city_promotion.slug) %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: bold;color: #1279af;"><img src="http://sowhatsthedeal.com<%= @alt_city_promotion.image1.url %>" border="0" width="157" height="110" style="border: 1px solid #cccccc;"></a>
+                          </td>
+                          <td width="375" valign="top" style="padding: 5px 5px 0 0">
+                            <table width="375" border="0" cellspacing="0" cellpadding="0">
+                              <tr height="50">
+                                <td valign="middle" align="left" bgcolor="#10496f">
+                                  <h1 style="font-family: 'Myriad', sans-serif;font-weight: normal;margin: 15px 0 15px 15px;padding:0;text-align:left;font-size: 14px;line-height:18px"><a href="<%= promotion_slug_url(@alt_city_promotion.slug) %><%= @google_tracking %>" style="color: #3fc7ff !important;font-family: 'Myriad', sans-serif;font-size: 14px;font-weight: normal;text-decoration: none !important;"><span style="color: #3FC7FF !important;"><%= @alt_city_promotion.name %></span></a></h1>
+                                </td>
+                                <td valign="middle" align="right" bgcolor="#10496f" style="padding-left:20px">
+                                  <span style="color: #fff;font-family: 'Myriad', sans-serif;font-size: 20px;font-weight: bold;margin-right:3px;padding: 0;"><%= has_cents?(@alt_city_promotion.featured_deal.price) ? number_to_currency(@alt_city_promotion.featured_deal.price, :precision => 2) : number_to_currency(@alt_city_promotion.featured_deal.price, :precision => 0) %></span>
+                                </td>
+                                <td valign="middle" width="70" bgcolor="#10496f">
+                                  <span style="font-family: 'Myriad', sans-serif;font-size: 20px;font-weight: normal;padding: 0;color: #FF9B00;"><a href="<%= promotion_slug_url(@alt_city_promotion.slug) %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 18px;font-weight: normal;color: #FF9B00;text-decoration: underline;"><img src="http://sowhatsthedeal.com/emails/trans1_altcitybox_view.png" alt="View" border="0" style="border: none;"></a></span>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td valign="middle" align="left" colspan="3" style="padding: 10px 15px 0">
+                                  <span style="color: #adc5d9;font-family: 'Myriad', sans-serif;font-size: 16px;font-weight: normal;margin-right:3px;padding: 0;">value:</span> <span style="font-family: 'Myriad', sans-serif;font-size: 16px;font-weight: normal;padding: 0;color: #adc5d9;margin-right:30px"><strong style="color: #ffffff;"><%= has_cents?(@alt_city_promotion.featured_deal.value) ? number_to_currency(@alt_city_promotion.featured_deal.value, :precision => 2) : number_to_currency(@alt_city_promotion.featured_deal.value, :precision => 0) %></strong></span>
+                                  <span style="color: #adc5d9;font-family: 'Myriad', sans-serif;font-size: 16px;font-weight: normal;margin-right:3px;padding: 0;">discount:</span> <span style="font-family: 'Myriad', sans-serif;font-size: 16px;font-weight: normal;padding: 0;color: #adc5d9;"><strong style="color: #ffffff;"><%= number_to_percentage (1 - @alt_city_promotion.featured_deal.price.to_f / @alt_city_promotion.featured_deal.value.to_f) * 100, :precision => 0 %></strong></span>
+                                </td>
+                              </tr>
+                            </table>
+                          </td>
+                          <td width="7"><img src="http://sowhatsthedeal.com/emails/trans1_altcitybox_right.png" alt=""/></td>
+                        </tr>
+                          <td colspan="4"><img src="http://sowhatsthedeal.com/emails/trans1_altcitybox_bottom.png" alt=""/></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                  <% end %>
+                  
                   <!-- more deals for you -->
                   <% unless @side_promotions.empty? %>
                   <tr>
                     <td>
-                      <h2 style="font-family: Helvetica, Myriad, sans-serif;font-size: 28px;color: #ffffff;margin: 20px 0 10px 0;padding: 0;">more deals <span style="font-weight:normal">for you (<a href="<%= promotions_url %><%= @google_tracking %>" style="color: #3FC7FF !important;">all deals</a>)</span></h2>
+                      <h2 style="font-family: Helvetica, Myriad, sans-serif;font-size: 28px;color: #ffffff;margin: 30px 0 10px 0;padding: 0;">more deals <span style="font-weight:normal">for you (<a href="<%= promotions_url %><%= @google_tracking %>" style="color: #3FC7FF !important;">all deals</a>)</span></h2>
                       <table width="580" border="0" cellspacing="0" cellpadding="0">
                         <% @side_promotions.each do |side_promotion| %>
                         <tr>
