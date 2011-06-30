@@ -5,7 +5,7 @@
 
 <% form_tag do %>
 <%= label_tag :city_id, "City: " %>
-<%= select_tag :city_id, options_for_select([['Washington DC', 0],['Northern Virginia', 2]], :selected => @city_id), :onchange => "submit()" %>
+<%= select_tag :city_id, options_for_select([['Washington DC', 1],['Northern Virginia', 2]], :selected => @city_id), :onchange => "submit()" %>
 <% end %>
 
 <br><br>
