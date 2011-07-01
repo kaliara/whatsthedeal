@@ -117,11 +117,11 @@
                         </tr>
                         <tr>
                           <td width="7"><img src="http://sowhatsthedeal.com/emails/trans1_altcitybox_left.png" alt=""/></td>
-                          <td width="175" valign="top" style="padding: 5px 0 0 5px">
+                          <td width="170" valign="top" style="padding: 5px 0 0 5px">
                             <a href="<%= promotion_slug_url(@alt_city_promotion.slug) %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 12px;font-weight: bold;color: #1279af;"><img src="http://sowhatsthedeal.com<%= @alt_city_promotion.image1.url %>" border="0" width="157" height="110" style="border: 1px solid #cccccc;"></a>
                           </td>
-                          <td width="375" valign="top" style="padding: 5px 5px 0 0">
-                            <table width="375" border="0" cellspacing="0" cellpadding="0">
+                          <td width="385" valign="top" style="padding: 5px 5px 0 0">
+                            <table width="385" border="0" cellspacing="0" cellpadding="0">
                               <tr height="50">
                                 <td valign="middle" align="left" bgcolor="#10496f">
                                   <h1 style="font-family: 'Myriad', sans-serif;font-weight: normal;margin: 15px 0 15px 15px;padding:0;text-align:left;font-size: 14px;line-height:18px"><a href="<%= promotion_slug_url(@alt_city_promotion.slug) %><%= @google_tracking %>" style="color: #3fc7ff !important;font-family: 'Myriad', sans-serif;font-size: 14px;font-weight: normal;text-decoration: none !important;"><span style="color: #3FC7FF !important;"><%= @alt_city_promotion.name %></span></a></h1>
@@ -144,7 +144,7 @@
                           <td width="7"><img src="http://sowhatsthedeal.com/emails/trans1_altcitybox_right.png" alt=""/></td>
                         </tr>
                           <td colspan="4">
-                            <% if @region == 1 %>
+                            <% if @deal_region == 1 %>
                               <a href="http://sowhatsthedeal.com/nova/signup?email=matt@kaliara.com"><img src="http://sowhatsthedeal.com/emails/trans1_altcitybox_bottom_nova.png" alt="" border="0"/></a>
                             <% else %>
                               <img src="http://sowhatsthedeal.com/emails/trans1_altcitybox_bottom.png" border="0" alt="" />
