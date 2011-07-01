@@ -283,7 +283,7 @@ a.rss_icon:hover{
 
 .signup_box{
   margin: 0;
-  width: 345px;
+  width: 370px;
   padding: 15px; 
   background: rgb(23, 63, 111) none repeat scroll 0% 0%; 
   color: rgb(255, 255, 255); 
@@ -3260,7 +3260,7 @@ h3.event_rsvp{
 }
 #signup_page .signup_box{
   background: #002436;
-  font-size: 1.25em;
+  font-size: 1.15em;
   line-height: 1.25em;
   padding: 25px 20px 25px 30px;
   font-family: 'Myriad Pro', Myriad, Helvetica, sans-serif;
