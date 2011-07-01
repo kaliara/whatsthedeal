@@ -188,6 +188,8 @@
     <% end %>
   </div>
 </div>
+
+<%= javascript_tag "var AUTH_TOKEN = #{form_authenticity_token.inspect};" if protect_against_forgery? %>
 <script type="text/javascript" charset="utf-8">
   function showOverlay() {
     $('#alt_list_overlay').fadeIn('slow'); 
@@ -198,8 +200,24 @@
   }
   $('#alt_list_overlay #overlay_close').click(closeOverlay);
   setTimeout(showOverlay, 750);
+
+  $('.edit_user').submit(function(){
+    $.ajax({
+        type: 'post', 
+        data: $('.edit_user').serialize(), 
+        dataType: 'script', 
+        complete: function(request){
+          $('#alt_list_overlay').fadeOut('slow');
+        },
+        url: '/users/update'
+    });
+    return false;
+  }
+  );
 </script>
+
 <script type="text/javascript" charset="utf-8">
+  
 /*
 
 CUSTOM FORM ELEMENTS
@@ -343,7 +361,8 @@ var Custom = {
 		}
 	}
 }
-window.onload = Custom.init;</script>
+window.onload = Custom.init;
+</script>
 <% end %>
 
 

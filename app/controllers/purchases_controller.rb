@@ -12,7 +12,7 @@ class PurchasesController < ApplicationController
     @user = current_user
     @track_transaction = false
     @on_purchase = true
-    
+    @show_nova_popup = true
     @mapped_promotions   = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and physical_address = ?', Time.now.utc, Time.now.utc, true, false, true], :order  => 'dc_featured DESC, start_date DESC')
     @unmapped_promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and physical_address = ?', Time.now.utc, Time.now.utc, true, false, false], :order  => 'dc_featured DESC, start_date DESC')
 
