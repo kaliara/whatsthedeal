@@ -120,8 +120,11 @@ class PurchasesController < ApplicationController
     @mapped_promotions   = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and physical_address = ?', Time.now.utc, Time.now.utc, true, false, true], :order  => 'dc_featured DESC, start_date DESC')
     @unmapped_promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and physical_address = ?', Time.now.utc, Time.now.utc, true, false, false], :order  => 'dc_featured DESC, start_date DESC')
     @user = current_user
-    @show_demo_survey = (cookies[:seen_demo_survey].to_i < 2) and (@user.customer.zipcode.blank? or @user.customer.female.nil?)
-    cookies[:seen_demo_survey] = cookies[:seen_demo_survey].to_i + 1 if @show_demo_survey
+    @show_demo_survey = false
+    #@show_demo_survey = (cookies[:seen_demo_survey].to_i < 2) and (@user.customer.zipcode.blank? or @user.customer.female.nil?)
+    # cookies[:seen_demo_survey] = cookies[:seen_demo_survey].to_i + 1 if @show_demo_survey
+    @show_nova_popup = (cookies[:seen_nova_popup].to_i < 2) and !current_user.gets_va_daily_deal_email?
+    cookies[:seen_nova_popup] = cookies[:seen_nova_popup].to_i + 1 if @show_nova_popup
     
     unless cart.empty?
       @user = current_user
