@@ -102,7 +102,7 @@ class PromotionsController < ApplicationController
       when 3
         @promotion = params[:dc_featured] ? Promotion.halfpricedc_featured.first : Promotion.find_by_slug(params[:slug])
       else
-        @promotion = params[:dc_featured] ? Promotion.featured.first : Promotion.find_by_slug(params[:slug])
+        @promotion = params[:dc_featured] ? Promotion.dc_featured.first : Promotion.find_by_slug(params[:slug])
       end
     end
     
