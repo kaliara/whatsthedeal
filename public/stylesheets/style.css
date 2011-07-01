@@ -3424,60 +3424,60 @@ h3.event_rsvp{
 
 /* region selector */
 .region_selector{
-  background: transparent url(/images/selector.png) 40px 0 no-repeat;
+  background: url("/images/selector.png") no-repeat scroll -15px 0 transparent;
+  left: 416px;
   position: absolute;
-  top: 40px;
-  left: 448px;
-  text-align: right;
-  width: 208px;
-  padding: 29px 20px 32px 0;
+  text-align: left;
+  top: 45px;
+  width: 235px;
+}
+.region_1{
+  padding: 24px 19px 15px 12px;
+  background-position: -15px 0;
+}
+.region_2{
+  padding: 24px 19px 15px 8px;
+  background-position: -869px 0;
 }
 .region_selector .current_region{
-  cursor: pointer;
-}
-.region_selector .current_region input{
-  color: #ccd6db;
+  background: transparent;
+  color: #fff;
   font-weight: bold;
-  font-family: Myriad, Helvetica, sans-serif;
+  font-family: Helvetica, sans-serif;
+  font-size: 13px;
+  border: none;
+  padding: 0 8px 0 0;
+  margin: 0;
+  cursor: default;
+}
+.region_selector input{
+  color: #65B0FF;
+  text-decoration: underline;
+  font-weight: normal;
+  font-family: Helvetica, sans-serif;
   font-size: 13px;
   cursor: pointer;
   background: transparent;
   border: none;
-  padding: 0;
-  margin: 0 6px 0 0;
+  padding: 2px 7px 3px 3px;
+  margin:  0;
 }
-.region_selector .current_region input:hover{
-  color: #4e6f81;
+.region_2 input{
+  padding-right: 13px;
 }
-.region_selector .current_region input:active{
-  padding: 0;
-  margin: 0 6px 0 0;
-}
-.selecting_region{
-  background-position: -353px 0;
-}
-.selecting_region .current_region input{
-  color: #4e6f81;
-}
-.region_selector .region_list{
-  position: relative;
-  top: 5px;
-}
-.region_selector .region_list input{
-  color: #aac5db;
-  font-weight: normal;
-  font-family: Myriad, Helvetica, sans-serif;
-  font-size: 12px;
-  cursor: pointer;
-  background: transparent;
-  border: none;
-  padding: 3px;
-  margin: 0 3px 0 0;
-}
-.region_selector .region_list input:hover{
+.region_selector input:hover{
   color: #fff;
+  text-decoration: none;
 }
-.region_selector .region_list input:active{
-  padding: 3px;
-  margin: 0 3px 0 0;
+.region_selector  input:active{
+  padding: 2px 7px 3px 3px;
+  margin: 0;
+  text-decoration: none;
+}
+.region_2 input:active{
+  padding-right: 13px;
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  .region_2 input{ padding-right: 18px;}
+  .region_2 input:active{ padding-right: 18px;}
 }

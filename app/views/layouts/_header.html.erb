@@ -12,21 +12,20 @@
       </ul>
     </div>
     
-    <div class="region_selector">
-      <div class="current_region"><%= submit_tag Promotion::CITIES[region].first %></div>
-      <div class="region_list" style="display:none">
-        <% if region == 1 %>
-          <% form_tag set_region_path, :method => :post do %>
-            <%= hidden_field_tag :region, 2 %>
-            <%= submit_tag "Northern Virginia" %>
-          <% end %>
-        <% else %>
-          <% form_tag set_region_path, :method => :post do %>
-            <%= hidden_field_tag :region, 1 %>
-            <%= submit_tag "Washington D.C." %>
-          <% end %>
+    <div class="region_selector region_<%= region %>">
+      <% if region == 1 %>
+        <% form_tag set_region_path, :method => :post do %>
+          <%= hidden_field_tag :region, 2 %>
+          <span class="current_region">Washington D.C.</span>
+          <%= submit_tag "Northern Virginia" %>
         <% end %>
-      </div>
+      <% else %>
+        <% form_tag set_region_path, :method => :post do %>
+          <%= hidden_field_tag :region, 1 %>
+          <%= submit_tag "Washington DC" %>
+          <span class="current_region">Northern Virginia</span>
+        <% end %>
+      <% end %>
     </div>
     
     <div class="account_nav">
@@ -50,5 +49,4 @@
 
 <script type="text/javascript" charset="utf-8">
   $('#learn_more_tooltip_link').hover(function(){$("#learn_more_tooltip").fadeIn()}, function(){$("#learn_more_tooltip").fadeOut()});
-  $('.current_region').click(function(){$(".region_list").toggle();$(".region_selector").toggleClass('selecting_region')})
 </script>
