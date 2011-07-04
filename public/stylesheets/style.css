@@ -416,6 +416,18 @@ ul.social_links li {
   padding: 5px 15px 0 0;
 }
 
+.sidebar .alt_city_sidebar_deal h4{
+  font-size: 145%;
+  line-height: 100%;
+  margin: 10px 0 0;
+  padding-bottom: 0;
+}
+.sidebar .alt_city_sidebar_deal .deal_thumbnail{
+  width: 265px;
+  height: auto;
+  float: none;
+}
+
 
 .footer_container{
   background-color: #0F4991;

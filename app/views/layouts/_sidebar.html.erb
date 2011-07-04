@@ -10,7 +10,7 @@
       <h2><%= region == 1 ? "Nova Featured Deal" : "DC Featured Deal" %></h2>
       <div class="sidebar_content">
         <div class="alt_city_sidebar_deal">
-          <img src="<%= alt_featured_promotion.image1.url %>" class="deal_thumbnail" />
+          <%= link_to image_tag(alt_featured_promotion.image1.url, :class => 'deal_thumbnail'), promotion_slug_path(alt_featured_promotion.slug) %>
           <h4><%= link_to truncate(alt_featured_promotion.name, :length => 50), promotion_slug_path(alt_featured_promotion.slug), :title => alt_featured_promotion.name %></h4>
         </div>
       </div>
@@ -35,7 +35,7 @@
       <div class="sidebar_content">
         <% @side_promotions.each do |promotion| %>
           <div class="deal_preview clearfix">
-            <img src="<%= promotion.image1.url %>" class="deal_thumbnail" />
+            <%= link_to image_tag(promotion.image1.url, :class => 'deal_thumbnail'), promotion_slug_path(promotion.slug) %>
             <h4><%= link_to truncate(promotion.name, :length => 50), promotion_slug_path(promotion.slug), :title => promotion.name %></h4>
             <dl><dt>Days Left: </dt><dd><%= ((promotion.end_date - Time.now.utc)/86400) < 1 ? "< 1" : ((promotion.end_date - Time.now.utc)/86400).floor %></dd></dl>
             <% if promotion.id == 330 %>
