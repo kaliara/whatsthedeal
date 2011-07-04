@@ -19,7 +19,7 @@ class AttendeesController < ApplicationController
     
     if current_user and current_user.customer.has_name?
       @user = current_user
-      @side_promotions = Promotion.sidebar(0, region)
+      @side_promotions = Promotion.sidebar([0], region)
       
       @user.gets_happy_hour_announcement_email = params[:gets_happy_hour_announcement_email] unless params[:gets_happy_hour_announcement_email].blank?
       @user.gets_daily_deal_email = params[:gets_daily_deal_email] unless params[:gets_daily_deal_email].blank?

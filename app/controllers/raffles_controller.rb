@@ -8,7 +8,7 @@ class RafflesController < ApplicationController
   
   def show
     @raffle = Raffle.find(params[:id])
-    @side_promotions = Promotion.sidebar(0, region)
+    @side_promotions = Promotion.sidebar([0], region)
     @user_session = UserSession.new
     @user = User.new
     @user.customer = Customer.new

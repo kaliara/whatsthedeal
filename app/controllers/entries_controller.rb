@@ -20,7 +20,7 @@ class EntriesController < ApplicationController
     
     if current_user and current_user.customer.has_name?
       @user = current_user
-      @side_promotions = Promotion.sidebar(0, region)
+      @side_promotions = Promotion.sidebar([0], region)
       
       @entry = Entry.new({:user_id => @user.id, :raffle_id => @raffle.id})
       @entry.save

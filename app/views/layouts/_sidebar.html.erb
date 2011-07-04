@@ -4,6 +4,17 @@
       <h2><%= render_content 'global_announcement_title' %></h2>
       <div class="sidebar_content global_announce"><p><%= render_content 'global_announcement_desc' %></p></div>
     <% end %>
+
+    <% alt_featured_promotion = region == 1 ? Promotion.nova_featured.first :  Promotion.dc_featured.first %>
+    <% unless @no_alt_featured_promotion or (!@promotion.nil? and @promotion.id == alt_featured_promotion.id) %>
+      <h2><%= region == 1 ? "Nova Featured Deal" : "DC Featured Deal" %></h2>
+      <div class="sidebar_content">
+        <div class="alt_city_sidebar_deal">
+          <img src="<%= alt_featured_promotion.image1.url %>" class="deal_thumbnail" />
+          <h4><%= link_to truncate(alt_featured_promotion.name, :length => 50), promotion_slug_path(alt_featured_promotion.slug), :title => alt_featured_promotion.name %></h4>
+        </div>
+      </div>
+    <% end %>
   
     <% unless current_user and (current_user.gets_daily_deal_email? or current_user.unlikely_subscriber?) %>
       <h2>The Daily Deal</h2>

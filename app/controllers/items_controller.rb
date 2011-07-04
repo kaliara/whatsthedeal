@@ -4,7 +4,7 @@ class ItemsController < ApplicationController
 
   def index
     @promotions = Promotion.find(268, 269, 270, 272)
-    @side_promotions = Promotion.sidebar(0, region)
+    @side_promotions = Promotion.sidebar([0], region)
     @items = Item.all
     render :action => 'index'
   end

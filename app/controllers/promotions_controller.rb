@@ -15,14 +15,16 @@ class PromotionsController < ApplicationController
     else
       if region == 1
         @promotion = Promotion.dc_featured.empty? ? @backup_promotion : Promotion.dc_featured.first
+        @side_promotions = Promotion.sidebar([@promotion.id, Promotion.nova_featured], region)
       elsif region == 2
         @promotion = Promotion.nova_featured.empty? ? @backup_promotion : Promotion.nova_featured.first
+        @side_promotions = Promotion.sidebar([@promotion.id, Promotion.dc_featured], region)
       else
         @promotion = @backup_promotion
+        @side_promotions = Promotion.sidebar([@promotion.id], region)
       end
     end
   
-    @side_promotions = Promotion.sidebar(@promotion.id, region)
     @cart_item = CartItem.new
     
     render :action => mobile ? 'show_m' : 'show'
@@ -33,6 +35,7 @@ class PromotionsController < ApplicationController
   # GET /promotions.xml
   def index
     session[:force_full_site] = false
+    @no_alt_featured_promotion = true
     
     @promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ?', Time.now.utc, Time.now.utc, true, false], :order  => 'start_date DESC')
 
@@ -51,7 +54,7 @@ class PromotionsController < ApplicationController
     session[:force_full_site] = true
     
     @promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and grab_bag = ?', Time.now.utc, Time.now.utc, true, true], :order  => 'dc_featured DESC, start_date DESC')
-    @side_promotions = Promotion.sidebar(@promotions.first.id, region)
+    @side_promotions = Promotion.sidebar([@promotions.first.id], region)
 
     if @promotions.empty?
       redirect_to promotions_path
@@ -112,7 +115,7 @@ class PromotionsController < ApplicationController
     else
       flash.now[:error] = "Did you miss this deal? <a href='/signup'>Signup for the our Daily Deal e-mails</a> never miss out again!" unless @promotion.end_date > Time.now.utc
       
-      @side_promotions = Promotion.sidebar(@promotion.id, region)
+      @side_promotions = Promotion.sidebar([@promotion.id], region)
       @cart_item = CartItem.new
     
       # track action
@@ -128,7 +131,7 @@ class PromotionsController < ApplicationController
   
   def buy_credit
     @promotion = Promotion.find(266)
-    @side_promotions = Promotion.sidebar(@promotion.id, region)
+    @side_promotions = Promotion.sidebar([@promotion.id], region)
     @cart_item = CartItem.new
   end
   
