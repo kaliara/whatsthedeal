@@ -5,12 +5,13 @@
       <div class="sidebar_content global_announce"><p><%= render_content 'global_announcement_desc' %></p></div>
     <% end %>
 
-    <% unless @alt_featured_promotion.nil? %>
+    <% unless @side_promotions.blank? %>
+      <% @alt_featured_promotion = (region == 1 ? Promotion.nova_featured.first : Promotion.dc_featured.first) if @alt_featured_promotion.nil? %>
       <h2>
         <% if @back_to_regular %>
-          <%= region == 1 ? "NOVA Featured Deal" : "DC Featured Deal" %>
-        <% else %>
           <%= region == 1 ? "DC Featured Deal" : "NOVA Featured Deal" %>
+        <% else %>
+          <%= region == 1 ? "NOVA Featured Deal" : "DC Featured Deal" %>
         <% end %>
       </h2>
       <div class="sidebar_content">
@@ -38,7 +39,7 @@
     <% unless @side_promotions.blank? %>
       <h2><%= link_to "More Great Deals", promotions_path %></h2>
       <div class="sidebar_content">
-        <% @side_promotions.each do |promotion| %>
+        <% @side_promotions.delete_if{|p| p.id == @alt_featured_promotion.id}.each do |promotion| %>
           <div class="deal_preview clearfix">
             <%= link_to image_tag(promotion.image1.url, :class => 'deal_thumbnail'), promotion_slug_path(promotion.slug) %>
             <h4><%= link_to truncate(promotion.name, :length => 50), promotion_slug_path(promotion.slug), :title => promotion.name %></h4>
