@@ -15,12 +15,15 @@ class PromotionsController < ApplicationController
     else
       if region == 1
         @promotion = Promotion.dc_featured.empty? ? @backup_promotion : Promotion.dc_featured.first
+        @alt_featured_promotion = Promotion.nova_featured.first
         @side_promotions = Promotion.sidebar([@promotion.id, Promotion.nova_featured], region)
       elsif region == 2
         @promotion = Promotion.nova_featured.empty? ? @backup_promotion : Promotion.nova_featured.first
+        @alt_featured_promotion = Promotion.dc_featured.first
         @side_promotions = Promotion.sidebar([@promotion.id, Promotion.dc_featured], region)
       else
         @promotion = @backup_promotion
+        @alt_featured_promotion = Promotion.featured.first
         @side_promotions = Promotion.sidebar([@promotion.id], region)
       end
     end
@@ -116,6 +119,13 @@ class PromotionsController < ApplicationController
       flash.now[:error] = "Did you miss this deal? <a href='/signup'>Signup for the our Daily Deal e-mails</a> never miss out again!" unless @promotion.end_date > Time.now.utc
       
       @side_promotions = Promotion.sidebar([@promotion.id], region)
+      @alt_featured_promotion = region == 1 ? Promotion.nova_featured.first : Promotion.dc_featured.first
+      
+      if @alt_featured_promotion.id == @promotion.id
+        @back_to_regular = true
+        @alt_featured_promotion = region == 1 ? Promotion.dc_featured.first : Promotion.nova_featured.first
+      end        
+
       @cart_item = CartItem.new
     
       # track action
