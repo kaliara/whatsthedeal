@@ -37,6 +37,44 @@ class Admin::CouponsController < ApplicationController
     end
   end
 
+  # GET /coupons/1
+  # GET /coupons/1.xml
+  def edit
+    @coupon = Coupon.find(params[:id])
+    
+    respond_to do |format|
+      format.html { }
+      format.xml  { head :ok }
+    end
+  end
+  
+  # PUT /coupon/1
+  # PUT /coupon/1.xml
+  def update
+    @coupon = Coupon.find(params[:id])
+
+    respond_to do |format|
+      if true
+        @coupon.update_attributes(params[:coupon])
+        @coupon.generate_gift_access_token
+        @coupon.save
+
+        if params[:send_now]
+          Notifier.deliver_coupon_gift_received(@coupon)
+          Notifier.deliver_coupon_gift_sent(@coupon)
+          @coupon.emailed!
+        end      
+        
+        format.html { redirect_to admin_coupon_path(:id => @coupon.id, :new_gift => true) }
+        format.xml  { head :ok }
+      else
+        format.html { render :action => "edit" }
+        format.xml  { render :xml => @coupon.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+  
+
   # DELETE /coupons/1
   # DELETE /coupons/1.xml
   def destroy

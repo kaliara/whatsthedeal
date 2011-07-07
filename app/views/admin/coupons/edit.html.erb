@@ -1,0 +1,57 @@
+<% content_for :sub_nav do %>
+  <li><%= link_to 'Coupon listing', admin_coupons_path %></li>
+<% end %>
+
+<h2>Current Details</h2>
+<div class="section_content">
+  <strong>User:</strong> <%=h @coupon.user.email %><br>
+  <strong>Recipient:</strong> <%=h @coupon.recipient %><br>
+  <br>
+  <strong>Purchase:</strong> <%= link_to @coupon.purchase_id, admin_purchase_path(@coupon.purchase_id) %><br>
+  <strong>Deal:</strong> <%=h @coupon.name %><br>
+  <br>
+  <strong>Confirmation:</strong> <%=h @coupon.confirmation_code %><br>
+  <strong>Coupon Code:</strong> <%=h @coupon.coupon_code %>
+  <br><br>
+</div>
+
+<h2>Change to Gift</h2>
+
+<% form_for([:admin, @coupon]) do |f| %>
+  <%= f.error_messages %>
+  <%= f.hidden_field :gift, :value => true %>
+
+  <p>
+    <%= f.label :gift_name %> (name of recipient)<br />
+    <%= f.text_field :gift_name %>
+  </p><br>
+
+  <p>
+    <%= f.label :gift_from %> (customer name)<br />
+    <%= f.text_field :gift_from %>
+  </p><br>
+
+  <p>
+    <%= f.label :gift_send_date %> (when gift will be emailed)<br />
+    <%= f.text_field :gift_send_date %>
+  </p><br>
+
+  <p>
+    <%= f.label :gift_email %> (who to send to)<br />
+    <%= f.text_field :gift_email %>
+  </p><br>
+
+  <p>
+    <%= label_tag 'Send Now?' %> (email recipient coupon immediately)<br />
+    <%= check_box_tag :send_now %>
+  </p><br>
+  
+  <p>
+    <%= f.submit 'Change to Gift' %>
+  </p>
+
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+  $("#coupon_gift_send_date").datepicker({ minDate: new Date( <%= (Date.today + 1.day).year %>, <%= (Date.today + 1.day).month - 1 %>, <%= (Date.today + 1.day).day %>) });
+</script>
