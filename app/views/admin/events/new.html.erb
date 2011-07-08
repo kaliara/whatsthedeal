@@ -96,6 +96,20 @@
     <%= text_field_tag :survey_question %>
   </p>
   <br><br>
+  <h3>Email More Great Deals Selection</h3>
+  <p>
+    <%= f.label :side_promotion_1, "Promotion 1" %> 
+    <%= f.select :side_promotion_1, options_for_select(@promotions.collect{|p| ["#{"(**featured**)" if p.featured?} #{p.id} [#{['*','W','N','M'][p.city_id]}] - #{p.name}", p.id] }, :selected => @event.side_promotion_1) %>
+  </p>
+  <p>
+    <%= f.label :side_promotion_2, "Promotion 2" %> 
+    <%= f.select :side_promotion_2, options_for_select(@promotions.collect{|p| ["#{"(**featured**)" if p.featured?} #{p.id} [#{['*','W','N','M'][p.city_id]}] - #{p.name}", p.id] }, :selected => @event.side_promotion_2) %>
+  </p>
+  <p>
+    <%= label :side_promotion_3, "Promotion 3" %> 
+    <%= f.select :side_promotion_3, options_for_select(@promotions.collect{|p| ["#{"(**featured**)" if p.featured?} #{p.id} [#{['*','W','N','M'][p.city_id]}] - #{p.name}", p.id] }, :selected => @event.side_promotion_3) %>
+  </p>
+  <br><br>
   <p>
     <%= f.submit 'Create' %>
   </p>

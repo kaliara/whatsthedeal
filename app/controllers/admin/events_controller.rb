@@ -18,7 +18,10 @@ class Admin::EventsController < ApplicationController
   def show
     @event = Event.find(params[:id])
     @promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ?', Time.now.utc, Time.now.utc, true], :order => 'updated_at DESC', :limit => 3)
-    @side_promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and id != ?', (Time.now.utc + 20.hours), (Time.now.utc + 20.hours), true, false, 0], :order => 'end_date ASC', :limit => 3)
+    @side_promotions = []
+    @side_promotions[0] = @event.side_promotion_1.to_i > 0 ? Promotion.find(@event.side_promotion_1.to_i) : Promotion.featured.first
+    @side_promotions[1] = @event.side_promotion_2.to_i > 0 ? Promotion.find(@event.side_promotion_2.to_i) : Promotion.featured.first
+    @side_promotions[2] = @event.side_promotion_3.to_i > 0 ? Promotion.find(@event.side_promotion_3.to_i) : Promotion.featured.first
     @google_tracking = "?utm_source=happyhourannouncement&utm_medium=email&utm_campaign=happyhour"
     
     respond_to do |format|
@@ -49,6 +52,7 @@ class Admin::EventsController < ApplicationController
   # GET /events/new.xml
   def new
     @event = Event.new
+    @promotions = Promotion.find(:all, :conditions => ['start_date < ? and start_date > ? and active = ? and hidden = ?', (Time.now.utc + 3.days), (Time.now.utc - 14.days), true, false], :order => 'start_date DESC')
 
     respond_to do |format|
       format.html # new.html.erb
@@ -59,6 +63,7 @@ class Admin::EventsController < ApplicationController
   # GET /events/1/edit
   def edit
     @event = Event.find(params[:id])
+    @promotions = Promotion.find(:all, :conditions => ['start_date < ? and start_date > ? and active = ? and hidden = ?', (Time.now.utc + 3.days), (Time.now.utc - 14.days), true, false], :order => 'start_date DESC')
   end
 
   # POST /events
