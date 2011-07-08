@@ -142,6 +142,11 @@ class Business::PurchasesController < ApplicationController
   def export
     @wtd_coupons = []
     @kgb_coupons = []
+    @sortable_coupons = []
+    @unsortable_coupons = []
+    @sorting_hash = {}
+    @sorted_coupons = []
+    @row = 0
     user = current_user.business? ? current_user : current_user.business_staff.business.user
     @business_ids = Business.find(:all, :conditions => {:user_id => user.id}).collect{|b| b.id}
     @promotions = Promotion.find(:all, :conditions => {:business_id => @business_ids})
@@ -155,15 +160,28 @@ class Business::PurchasesController < ApplicationController
     end
     @wtd_coupons = Coupon.find(:all, :conditions => {:deal_id => @deals}, :order => 'deal_id ASC')
     @kgb_coupons = KgbCoupon.find(:all, :conditions => {:transactions_deal_id => @kgb_deals}, :order => 'transactions_deal_id ASC')
-    @coupons = @wtd_coupons + @kgb_coupons
+
+    @sortable_coupons = @wtd_coupons + @kgb_coupons.select{|kc| !kc.users_last_name.include?("@") }
+    @unsortable_coupons = (@wtd_coupons + @kgb_coupons) - @sortable_coupons
+    
+    @sortable_coupons.each_with_index do |coupon, i|
+      @sorting_hash[i] = coupon.recipient[/(\w+)\s*\z/]
+    end
+    
+    @sorted_coupons = @sorting_hash.sort {|a,b| a[1].to_s.downcase <=> b[1].to_s.downcase}
 
     @path = "dc/biz_exports/" + (user.business.name.downcase.gsub(/[\s+|\W+]/, '')) + '_coupons_' + Time.zone.now.strftime("%m%d%y%H%M") + ".xls"
     book = Spreadsheet::Workbook.new
     sheet1 = book.create_worksheet
 
-    sheet1.row(0).push "Purchaser Name", "Confirmation Code", "Date Purchased", "Deal", "Purchase Price", "Redeemed?", "Coupon Code"
-    @coupons.each_with_index do |coupon,i|
-      sheet1.row(i+1).push coupon.recipient, coupon.confirmation_code, coupon.created_at.strftime("%b %e, %Y"), coupon.name, Object.new.extend(ActionView::Helpers::NumberHelper).number_to_currency(coupon.deal.price), (coupon.biz_used? ? 'Yes' : ''), coupon.coupon_code
+    sheet1.row(0).push "Last Name", "First Name", "Confirmation Code", "Date Purchased", "Deal", "Purchase Price", "Redeemed?", "Coupon Code"
+    @sorted_coupons.each_with_index do |coupon_pair, i|
+      coupon = @sortable_coupons[coupon_pair[0]] 
+      sheet1.row(i+1).push coupon.recipient[/(\w+)\s*\z/].capitalize, coupon.recipient.gsub(/(\w+)\s*\z/,"").capitalize + (" (gift from " + coupon.user.customer.name + ")" if coupon.gift?).to_s, coupon.confirmation_code, coupon.created_at.strftime("%b %e, %Y"), coupon.name, Object.new.extend(ActionView::Helpers::NumberHelper).number_to_currency(coupon.deal.price), (coupon.biz_used? ? 'Yes' : ''), coupon.coupon_code
+      @row = i + 1
+    end
+    @unsortable_coupons.each_with_index do |coupon,i|
+      sheet1.row(@row+i+1).push coupon.recipient, "", coupon.confirmation_code, coupon.created_at.strftime("%b %e, %Y"), coupon.name, Object.new.extend(ActionView::Helpers::NumberHelper).number_to_currency(coupon.deal.price), (coupon.biz_used? ? 'Yes' : ''), coupon.coupon_code
     end
 
     format = Spreadsheet::Format.new :weight => :bold, :size => 18
