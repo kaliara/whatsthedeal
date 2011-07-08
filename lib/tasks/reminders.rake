@@ -7,9 +7,9 @@ namespace :reminders do
 
     unless @near_sellout_promotions.empty?
       Reminder.find(:all, :conditions => {:promotion_id => @near_sellout_promotions.collect{|p| p.id}, :emailed => false}).each do |reminder|
-        Notifier.deliver_promotion_reminder_near_sellout(reminder)
+        Notifier.deliver_promotion_reminder_near_sellout(reminder) if reminder.promotion.send_reminders
         reminder.emailed!
-        puts "Emailed Promotion ##{reminder.promotion_id} reminder (near sellout) to #{reminder.email}."
+        puts "#{reminder.promotion.send_reminders ? "Emailed" : "Skipped"} Promotion ##{reminder.promotion_id} reminder (near sellout) to #{reminder.email}."
       end
     end
     
@@ -18,9 +18,9 @@ namespace :reminders do
 
     unless @ending_promotions.empty?
       Reminder.find(:all, :conditions => {:promotion_id => @ending_promotions.collect{|p| p.id}, :emailed => false}).each do |reminder|
-        Notifier.deliver_promotion_reminder(reminder)
+        Notifier.deliver_promotion_reminder(reminder) if reminder.promotion.send_reminders
         reminder.emailed!
-        puts "Emailed Promotion ##{reminder.promotion_id} reminder (ending) to #{reminder.email}."
+        puts "#{reminder.promotion.send_reminders ? "Emailed" : "Skipped"} Promotion ##{reminder.promotion_id} reminder (ending) to #{reminder.email}."
       end
     end
   end
