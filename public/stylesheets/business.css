@@ -396,6 +396,9 @@ a.disabled, input.disabled{
   border-color: #A3895B;
   color: #aaa !important;
 } 
+.disabled_search{
+  opacity: 0.5;
+}
 .label_input_form{
   margin-bottom: 20px;
 }
@@ -461,4 +464,16 @@ a.disabled, input.disabled{
 .coupon_source_kgb{
   color: #0096FF;
   font-weight: bold;
+}
+.small_text{
+  font-size: 85%;
+}
+.business_table strong{
+  color: #000;
+}
+.business_table em{
+  color: red;
+}
+.capitalize{
+  text-transform: capitalize;
 }

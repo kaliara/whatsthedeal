@@ -13,8 +13,13 @@ class Business::PurchasesController < ApplicationController
     @kgb_deals = []
     @coupons = []
     @kgb_coupons = []
+    @sortable_coupons = []
+    @unsortable_coupons = []
+    @sorting_hash = {}
+    @sorted_coupons = []
     @business_ids = Business.find(:all, :conditions => {:user_id => user.id}).collect{|b| b.id}
     @promotions = Promotion.find(:all, :conditions => {:business_id => @business_ids})
+    @any_coupon_codes = false
     
     if params[:promotion_id].to_i > 0
       @deals = Promotion.find(:all, :conditions => {:business_id => @business_ids, :id => params[:promotion_id].to_i}, :order => 'id DESC').collect{|a|a.deals.collect{|d|d.id}}.flatten
@@ -39,8 +44,16 @@ class Business::PurchasesController < ApplicationController
       @coupons = Coupon.find(:all, :conditions => {:deal_id => @deals}, :order => 'confirmation_code ASC')
       @kgb_coupons = KgbCoupon.find(:all, :conditions => {:transactions_deal_id => @kgb_deals}, :order => 'voucher_full_id ASC')
     end    
+
+    @sortable_coupons = @coupons + @kgb_coupons.select{|kc| !kc.users_last_name.include?("@") }
+    @unsortable_coupons = (@coupons + @kgb_coupons) - @sortable_coupons
     
-    @any_coupon_codes = false
+    @sortable_coupons.each_with_index do |coupon, i|
+      @sorting_hash[i] = coupon.recipient[/(\w+)\s*\z/]
+    end
+    
+    @sorted_coupons = @sorting_hash.sort {|a,b| a[1].to_s.downcase <=> b[1].to_s.downcase}
+    
     (@coupons + @kgb_coupons).each do |c|
       @any_coupon_codes = true if !c.coupon_code.blank?
     end

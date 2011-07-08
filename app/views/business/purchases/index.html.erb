@@ -10,7 +10,7 @@
   <%= radio_button_tag 'all', 'yes', nil, :onclick => "$('#q').val('')" %> <label for="all_yes"><strong>Show All Purchases</strong></label>
   
   <br><br>
-  <%= submit_tag 'search', :class => "submit" %>
+  <%= submit_tag 'search', :class => "submit", :onclick => "$(this).addClass('disabled_search'); $(this).attr('disabled', 'disabled');" %>
 <% end %>
 <br><br>
 <% form_tag :action => 'export' do %>
@@ -34,9 +34,10 @@
   <% form_tag '/business/purchases/bulk_use', :class => "purchases_report" do %>
     <%= hidden_field_tag :q, params[:q] %>
     <%= hidden_field_tag :promotion_id, params[:promotion_id] %>
-    <table class="business_table" width="1023">
+    <table class="business_table" width="1020">
       <tr>
-        <th class="align_left">Purchaser Name</th>
+        <th class="align_left">Last&nbsp;Name</th>
+        <th class="align_left">First&nbsp;Name</th>
         <th>Confirmation Code</th>
         <th>Date Purchased</th>
         <th>Deal</th>
@@ -46,12 +47,14 @@
         <th>Site</th>
       </tr>
 
-      <% (@coupons + @kgb_coupons).each do |coupon| %>
+      <% @sorted_coupons.each do |coupon_pair| %>
+        <% coupon = @sortable_coupons[coupon_pair[0]] %>
         <tr>
-          <td class="align_left"><%= coupon.recipient %></td>
+          <td class="align_left capitalize"><strong><%= coupon.recipient[/(\w+)\s*\z/] %></strong></td>
+          <td class="align_left capitalize"><%= coupon.recipient.gsub(/(\w+)\s*\z/,"") %><%= " <br/><em class='small_text'>(gift from " + coupon.user.customer.name + ")</em>" if coupon.gift? %></td>
           <td><%= coupon.confirmation_code %></td>
           <td><%= coupon.created_at.strftime("%b %e, %Y") %></td>
-          <td><%= coupon.name %></td>
+          <td class="small_text" width="225"><%= coupon.name %></td>
           <td><%= number_to_currency coupon.deal.price %></td>
           <% if coupon.biz_used? %>
             <td style="color: green;"><%= "&#10004;" if coupon.biz_used? %></td>
@@ -62,6 +65,25 @@
             <td><%= coupon.coupon_code %></td>
           <% end %>
           <td class="coupon_source_<%= coupon.kgb_coupon? ? "kgb" : "wtd" %>"><%= coupon.kgb_coupon? ? "kgb" : "WTD" %></td>
+        </tr>
+      <% end %>    
+
+      <% @unsortable_coupons.each do |unsortable_coupon| %>
+        <tr>
+          <td class="align_left" colspan="2"><%= unsortable_coupon.recipient %><%= " <strong class='small_text'>(from " + unsortable_coupon.user.customer.name + ")</strong>" if unsortable_coupon.gift? %></td>
+          <td><%= unsortable_coupon.confirmation_code %></td>
+          <td><%= unsortable_coupon.created_at.strftime("%b %e, %Y") %></td>
+          <td class="small_text" width="225"><%= unsortable_coupon.name %></td>
+          <td><%= number_to_currency unsortable_coupon.deal.price %></td>
+          <% if unsortable_coupon.biz_used? %>
+            <td style="color: green;"><%= "&#10004;" if unsortable_coupon.biz_used? %></td>
+          <% else %>
+            <td><%= check_box_tag "#{unsortable_coupon.kgb_coupon? ? "kgb_coupons" : "coupons"}[#{unsortable_coupon.id}]" %></td>
+          <% end %>
+          <% if @any_coupon_codes %>
+            <td><%= coupon.coupon_code %></td>
+          <% end %>
+          <td class="coupon_source_<%= unsortable_coupon.kgb_coupon? ? "kgb" : "wtd" %>"><%= unsortable_coupon.kgb_coupon? ? "kgb" : "WTD" %></td>
         </tr>
       <% end %>    
     </table>

@@ -40,10 +40,10 @@
     <img src="/images/logo_on_white.png" id="wtd_coupon_logo" />
     <img src="/images/hpdc_coupon_logo.png" id="hpdc_coupon_logo" style="display: none" />
     <% if coupon.gift? %>
-      <p class="coupon_recipient">Gift for: <strong><%=h coupon.recipient %></strong></p><br>
+      <p class="coupon_recipient capitalize">Gift for: <strong><%=h coupon.recipient %></strong></p><br>
       <p class="confirmation_code" style="font-size: 120%;">Gift from: <strong><%=h coupon.user.customer.name %></strong></p>
     <% else %>
-      <p class="coupon_recipient">Customer: <strong><%=h coupon.recipient %></strong></p>
+      <p class="coupon_recipient capitalize">Customer: <strong><%=h coupon.recipient %></strong></p>
     <% end %>
     <p class="confirmation_code">Confirmation Code: <strong><%=h coupon.confirmation_code %></strong></p>
     <p class="coupon_expiration">Expires: <%=h coupon.expiration > 3.years.from_now ? "Never!" : coupon.expiration.strftime("%m/%d/%Y") %></p>

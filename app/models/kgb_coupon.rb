@@ -33,6 +33,10 @@ class KgbCoupon < ActiveRecord::Base
   def expired?
     self.deal.coupon_expiration + 1.day - DateTime.new(Time.zone.now.year, Time.zone.now.month, Time.zone.now.day, 23, 59, 59) < 0
   end
+  
+  def gift?
+    false
+  end
 
   def recipient
     if self.users_last_name.include?("@")

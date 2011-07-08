@@ -3493,3 +3493,7 @@ h3.event_rsvp{
   .region_2 input{ padding-right: 18px;}
   .region_2 input:active{ padding-right: 18px;}
 }
+
+.capitalize{
+  text-transform: capitalize;
+}
