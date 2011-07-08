@@ -1,5 +1,6 @@
 <% content_for :sub_nav do %>
   <li><%= link_to 'Deal Listing', admin_deals_path %></li>
+  <li><%= link_to "Coupon Sample", admin_sample_coupon_path(:sample_for_deal => @deal.id) %></li>
 <% end %>
 
 <%= render :partial => "/admin/shared/tiny_mce" %>

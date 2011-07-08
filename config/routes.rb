@@ -143,6 +143,7 @@ ActionController::Routing::Routes.draw do |map|
   map.admin_event_sidebar_preview '/admin/events/sidebar_preview/:id', :controller => 'admin/events', :action => 'sidebar_preview'
   map.admin_event_rsvp_list '/admin/events/:id/rsvp_list', :controller => 'admin/events', :action => 'rsvp_list'
   map.admin_coupon_codes '/admin/deals/coupon_codes/:deal_id', :controller => 'admin/deals', :action => 'coupon_codes'
+  map.admin_sample_coupon '/admin/coupons/sample/:sample_for_deal', :controller => 'admin/coupons', :action => 'show'
   map.admin_credit_profile '/admin/users/credit_profile', :controller => 'admin/users', :action => 'credit_profile'
   map.admin_promotion_activate_coupons '/admin/promotions/:id/activate_coupons', :controller => '/admin/promotions', :action => 'activate_coupons'
   map.admin_deal_activate_coupons '/admin/deals/:id/activate_coupons', :controller => '/admin/deals', :action => 'activate_coupons'

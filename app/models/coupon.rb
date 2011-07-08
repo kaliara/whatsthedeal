@@ -131,4 +131,20 @@ class Coupon < ActiveRecord::Base
   def kgb_coupon?
     false
   end
+  
+  def self.sample(deal_id, redeemed=false, gift=false)
+    @coupon = Coupon.new
+    @coupon.deal_id = deal_id
+    @coupon.number = 1
+    @coupon.confirmation_code = "ABCD-1234"
+    @coupon.user = User.find(1)
+    @coupon.active = true
+    @coupon.emailed = true
+    @coupon.used = redeemed
+    @coupon.gift = gift
+    @coupon.gift_name = "Matthew Burnett"
+    
+    return @coupon
+  end
+  
 end

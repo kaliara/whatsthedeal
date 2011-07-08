@@ -29,7 +29,7 @@ class Admin::CouponsController < ApplicationController
   # GET /coupons/1
   # GET /coupons/1.xml
   def show
-    @coupon = Coupon.find(params[:id])
+    @coupon = params[:sample_for_deal].to_i > 0 ? Coupon.sample(params[:sample_for_deal].to_i, params[:redeemed], params[:gift]) : Coupon.find(params[:id])
     
     respond_to do |format|
       format.html { }
