@@ -123,6 +123,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect '/business', :controller => 'business/home', :action => 'index'
   map.connect '/biz', :controller => 'business/home', :action => 'index'
   map.business_home '/business/home', :controller => 'business/home', :action => 'index'
+  map.business_sammple_coupon '/business/coupons/sample', :controller => 'business/coupons', :action => 'show'
   map.namespace :business do |business|
     business.resources :purchases
     business.resources :promotions

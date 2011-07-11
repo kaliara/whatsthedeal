@@ -30,6 +30,7 @@
                 <td style="text-align:right"><%= number_to_currency (deal.price * deal.total_coupons).to_f %></td>
                 <td style="text-align:right"><%= number_to_percentage (100.00 - promotion.profit_percentage.to_f, :precision => 2) %></td>
                 <td style="text-align:right"><%= number_to_currency (deal.price * deal.total_coupons * (1 - (promotion.profit_percentage.to_f / 100)), :precision => 2)  %></td>
+                <td class="extra"><%= link_to "Sample Coupon", business_sammple_coupon_path(:sample_for_deal => deal.id) %></td>
                 <% end %>
               </tr>
             <% end %>
