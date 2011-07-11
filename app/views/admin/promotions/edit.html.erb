@@ -1,5 +1,5 @@
 <% content_for :sub_nav do %>
-  <li><%= link_to 'Show this Promotion', promotion_slug_path(:slug => @promotion.slug) %></li>
+  <li><%= link_to 'Show this Promotion', promotion_slug_url(:slug => @promotion.slug, :host => "sowhatsthedeal.com") %></li>
   <li><%= link_to 'Ad Preview', admin_ad_preview_path(:id => @promotion.id) %></li>
   <li><%= link_to 'Show&nbsp;Deals', admin_deals_path(:promotion_id => @promotion.id) %></li>
   <li><%= link_to 'Edit Business', edit_admin_business_path(@promotion.business_id) %></li>
@@ -21,7 +21,7 @@
   <br>
   <p>
     <%= f.label :city_id %><br />
-    <%= f.select :city_id, ["Washington D.C.", 0], ["Northern Virginia", 2] %>
+    <%= f.select :city_id, [["Washington D.C.", 0], ["Northern Virginia", 2]] %>
   </p>
   <br>
   <p>
