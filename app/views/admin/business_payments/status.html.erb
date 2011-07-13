@@ -1,0 +1,20 @@
+<% content_for :sub_nav do %>
+  <% @no_sub_nav = true %>
+<% end %>
+<br><br>
+
+<div class="section_content clearfix">
+  <h3><span style="color: green">OK</span> to Refund:</h3>
+  <ul>
+    <% @unpaid_businesses.each do |biz| %>
+      <li><%= biz.name %></li>
+    <% end %>
+  </ul>
+  <br><br>
+  <h3><span style="color: red">NO</span> Credit Card Refund:</h3>
+  <ul>
+    <% @paid_businesses.each do |biz| %>
+      <li><%= biz.name %></li>
+    <% end %>
+  </ul>
+</div>

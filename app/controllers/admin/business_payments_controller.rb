@@ -51,4 +51,14 @@ class Admin::BusinessPaymentsController < ApplicationController
     
     redirect_to :action => 'index', :paid_business_id => @business_payment.business_id, :partially_paid_business_id => @business_payment.business_id, :unpaid_business_id => @business_payment.business_id
   end
+  
+  def status
+    @promotions = Promotion.find(:all, :conditions => ['start_date <= ?', Time.zone.now]).delete_if{|p| !p.active?}.collect{|p| p.id}
+
+    @unsettled_payments = BusinessPayment.find(:all, :conditions => {:paid => false, :payment2_paid => false, :promotion_id => @promotions}).collect{|p| p.business_id}.uniq
+    @settled_payments = BusinessPayment.find(:all, :conditions => {:paid => true, :promotion_id => @promotions}).collect{|p| p.business_id}.uniq
+
+    @unpaid_businesses = Business.find(:all, :conditions => {:id => @unsettled_payments}, :order => "name ASC")
+    @paid_businesses = Business.find(:all, :conditions => {:id => (@settled_payments - @unsettled_payments)}, :order => "name ASC")
+  end
 end

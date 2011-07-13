@@ -168,6 +168,7 @@ ActionController::Routing::Routes.draw do |map|
   map.admin_user_review_mark_bad  '/admin/user_reviews/:id/mark_bad',  :controller => 'admin/user_reviews', :action => 'update', :credit_given => false
   map.admin_process_void   '/admin/voids/processing/:id',   :controller => 'admin/voids',   :action => 'processing'
   map.admin_process_refund '/admin/refunds/processing/:id', :controller => 'admin/refunds', :action => 'processing'
+  map.admin_business_status '/admin/business_payments/status', :controller => 'admin/business_payments', :action => 'status'
   map.connect '/admin/stats/', :controller => 'admin/stats', :action => 'index'
   
   
