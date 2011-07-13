@@ -53,7 +53,7 @@ class Admin::BusinessPaymentsController < ApplicationController
   end
   
   def status
-    @promotions = Promotion.find(:all, :conditions => ['start_date <= ?', Time.zone.now]).delete_if{|p| !p.active?}.collect{|p| p.id}
+    @promotions = Promotion.find(:all, :conditions => ['start_date <= ? and end_date > ?', Time.zone.now, 6.months.ago]).collect{|p| p.id}
 
     @unsettled_payments = BusinessPayment.find(:all, :conditions => {:paid => false, :payment2_paid => false, :promotion_id => @promotions}).collect{|p| p.business_id}.uniq
     @settled_payments = BusinessPayment.find(:all, :conditions => {:paid => true, :promotion_id => @promotions}).collect{|p| p.business_id}.uniq

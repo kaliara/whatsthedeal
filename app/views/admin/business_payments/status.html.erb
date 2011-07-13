@@ -7,14 +7,14 @@
   <h3><span style="color: green">OK</span> to Refund:</h3>
   <ul>
     <% @unpaid_businesses.each do |biz| %>
-      <li><%= biz.name %></li>
+      <li><%= biz.promotions.last.end_date.strftime("%m/%d/%Y") %> - <%= biz.name %></li>
     <% end %>
   </ul>
   <br><br>
   <h3><span style="color: red">NO</span> Credit Card Refund:</h3>
   <ul>
     <% @paid_businesses.each do |biz| %>
-      <li><%= biz.name %></li>
+      <li><%= biz.promotions.last.end_date.strftime("%m/%d/%Y") %> - <%= biz.name %></li>
     <% end %>
   </ul>
 </div>
