@@ -3,12 +3,12 @@
   <meta name="title" content="<%= @promotion.name %>" /> 
   <meta name="description" content="<%= truncate(strip_tags(@promotion.body1), :length => 200) %>" /> 
   <link rel="image_src" href="https://sowhatsthedeal.com<%= @promotion.image1.url %>" />
+  <meta property="og:url" content="http://sowhatsthedeal.com<%= promotion_slug_path(@promotion.slug) %>"/>
   <meta property="og:title" content="<%= @promotion.name %>"/>
   <meta property="og:type" content="article"/>
   <meta property="og:image" content="http://sowhatsthedeal.com<%= @promotion.image1.url %>"/>
   <meta property="og:site_name" content="WTD"/>
-  <meta property="og:type" content="article"/>
-  <meta property="fb:admins" content="mburnett" />
+  <meta property="fb:admins" content="mburnett," />
   <meta name="tweetmeme-title" content="<%= @promotion.name %>" />
   
   <% if @promotion.deals.active.size > 1 %>
