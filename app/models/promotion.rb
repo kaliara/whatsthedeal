@@ -70,6 +70,10 @@ class Promotion < ActiveRecord::Base
     return false
   end
   
+  def kgb_linked?
+    return self.deals.delete_if{|d| d.kgb_deal_id.to_i > 1}.empty?
+  end
+  
   def auto_activate_coupons?
     self.auto_activate_coupons == true and self.quota_met? and (self.start_date < 1.day.ago)
   end

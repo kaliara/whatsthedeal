@@ -706,3 +706,9 @@ h5 a:visited{
   color: red;
   font-weight: bold;
 }
+.not_linked{
+  color: red;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+}

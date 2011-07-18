@@ -27,9 +27,9 @@
     <th>ID</th>
     <th>Name</th>
     <th>Deals</th>
-    <th><strong>Purchases</strong></th>
-    <th>Quota</th>
-    <th>Profit Percentage</th>
+    <th><strong>Sold</strong></th>
+    <th>KGB Linked</th>
+    <th>WTD Profit Percentage</th>
     <th>Live on WTD</th>
     <th>Start date</th>
     <th>End date</th>
@@ -41,8 +41,8 @@
     <td><%=h promotion.id %></td>
     <td><%=h promotion.name %><%= ' <span style="color: green">(featured)</span>' if promotion.featured? %><%= ' <span style="color: #467EA7">(featured tomorrow)</span>' if promotion.id == @next_featured.id %></td>
     <td><%=h promotion.deals.count %></td>
-    <td><strong><%=h promotion.purchases %></strong></td>
-    <td><%=h promotion.quota %></td>
+    <td><%=h promotion.purchases %></td>
+    <td class="not_linked"><%= "X" if promotion.kgb_linked? %></td>
     <td><%= number_to_percentage promotion.profit_percentage, :precision => 2 %></td>
     <td><%= "Yes" if promotion.active? %></td>
     <td><%=h promotion.start_date.strftime("%b %e, %Y") %></td>
