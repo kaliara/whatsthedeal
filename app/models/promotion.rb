@@ -71,7 +71,7 @@ class Promotion < ActiveRecord::Base
   end
   
   def kgb_linked?
-    return self.deals.delete_if{|d| d.kgb_deal_id.to_i > 1}.empty?
+    return !self.deals.delete_if{|d| d.kgb_deal_id.to_i > 1}.empty?
   end
   
   def auto_activate_coupons?
