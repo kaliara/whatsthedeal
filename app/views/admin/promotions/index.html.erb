@@ -26,11 +26,9 @@
   <tr>
     <th>ID</th>
     <th>Name</th>
-    <th>Deals</th>
-    <th><strong>Sold</strong></th>
-    <th>KGB Linked</th>
-    <th>WTD Profit Percentage</th>
     <th>Live on WTD</th>
+    <th>KGB Linked</th>
+    <th><strong>Sold</strong></th>
     <th>Start date</th>
     <th>End date</th>
     <th>Activate Coupons</th>
@@ -40,17 +38,15 @@
   <tr id="promotion_<%= promotion.id %>" class="<%= "featured" if promotion.featured? %> <%= "next_featured" if promotion.id == @next_featured.id %> <%= "inactive" unless promotion.active? %>">
     <td><%=h promotion.id %></td>
     <td><%=h promotion.name %><%= ' <span style="color: green">(featured)</span>' if promotion.featured? %><%= ' <span style="color: #467EA7">(featured tomorrow)</span>' if promotion.id == @next_featured.id %></td>
-    <td><%=h promotion.deals.count %></td>
-    <td><%=h promotion.purchases %></td>
-    <td class="not_linked"><%= "X" if promotion.kgb_linked? %></td>
-    <td><%= number_to_percentage promotion.profit_percentage, :precision => 2 %></td>
     <td><%= "Yes" if promotion.active? %></td>
+    <td class="not_linked"><%= "X" if promotion.kgb_linked? %></td>
+    <td><%=h promotion.purchases %></td>
     <td><%=h promotion.start_date.strftime("%b %e, %Y") %></td>
     <td><%=h (promotion.end_date - 4.hours).strftime("%b %e, %Y") %></td>
-    <td><%= link_to "Activate Coupons", admin_promotion_activate_coupons_path(promotion) if promotion.quota_met?  %></td>
+    <td><%= link_to "Activate", admin_promotion_activate_coupons_path(promotion) if promotion.quota_met?  %></td>
     <td><%= link_to "Clear Carts", admin_clear_carts_path(:id => promotion.id), :confirm => 'Are you sure clear all of the cart items for this promotion?'  %></td>
-    <td><%= link_to 'Show', promotion_slug_url(:slug => promotion.slug, :host => "sowhatsthedeal.com") %></td>
-    <td><%= link_to 'Show&nbsp;Deals', admin_deals_path(:promotion_id => promotion.id) %></td>
+    <td><%= link_to 'Preview', promotion_slug_url(:slug => promotion.slug, :host => "sowhatsthedeal.com") %></td>
+    <td><%= link_to 'Deals', admin_deals_path(:promotion_id => promotion.id) %></td>
     <td><%= link_to 'Edit', edit_admin_promotion_path(promotion) %></td>
     <td><%= (link_to 'Destroy', admin_promotion_path(promotion), :confirm => 'Are you sure?', :method => :delete) unless (promotion.purchases > 0 or !current_user.admin?) %></td>
   </tr>
