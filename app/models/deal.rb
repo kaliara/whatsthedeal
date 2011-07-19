@@ -40,6 +40,7 @@ class Deal < ActiveRecord::Base
   end
   
   def early_bird?
+    return true if self.id == 838
     self.early_bird_discount > 0 and !self.promotion.quota_met?
   end
   
