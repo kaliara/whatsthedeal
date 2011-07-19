@@ -186,9 +186,7 @@
                   <% unless deal.id == 411 %>
                   <dl class="clearfix">
                     <dt>You Pay:</dt>&nbsp;
-                    <% if deal.forced_early_bird? %>  
-                      <dd><%= number_to_currency deal.adjusted_price, :precision => (has_cents?(deal.adjusted_price) ? 2 : 0) %></dd>
-                    <% elsif deal.early_bird? %>
+                    <% if deal.early_bird? %>
                       <dd class="early_bird_discount"><span><%= number_to_currency deal.price, :precision => 0 %></span>&nbsp;<%= number_to_currency deal.adjusted_price, :precision => (has_cents?(@promotion.featured_deal.price) ? 2 : 0) %></dd>
                     <% else %>  
                       <dd><%= number_to_currency deal.price, :precision => (has_cents?(deal.price) ? 2 : 0) %></dd>
@@ -211,9 +209,7 @@
             <div class="single_deal">
               <dl class="clearfix">
                 <dt>You Pay</dt>
-                <% if @promotion.featured_deal.forced_early_bird? %>  
-                  <dd><%= number_to_currency @promotion.featured_deal.adjusted_price, :precision => (has_cents?(@promotion.featured_deal.adjusted_price) ? 2 : 0) %></dd>
-                <% elsif @promotion.featured_deal.early_bird? %>
+                <% if @promotion.featured_deal.early_bird? %>
                   <dd class="early_bird_discount"><span><%= number_to_currency @promotion.featured_deal.price, :precision => 0 %></span>&nbsp;<%= number_to_currency @promotion.featured_deal.adjusted_price, :precision => (has_cents?(@promotion.featured_deal.price) ? 2 : 0) %></dd>
                 <% else %>
                   <dd><%= number_to_currency @promotion.featured_deal.price, :precision => (has_cents?(@promotion.featured_deal.price) ? 2 : 0) %></dd>
