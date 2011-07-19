@@ -186,7 +186,9 @@
                   <% unless deal.id == 411 %>
                   <dl class="clearfix">
                     <dt>You Pay:</dt>&nbsp;
-                    <% if deal.early_bird? %>
+                    <% if deal.forced_early_bird? %>  
+                      <dd><%= number_to_currency deal.adjusted_price, :precision => (has_cents?(deal.adjusted_price) ? 2 : 0) %></dd>
+                    <% elsif deal.early_bird? %>
                       <dd class="early_bird_discount"><span><%= number_to_currency deal.price, :precision => 0 %></span>&nbsp;<%= number_to_currency deal.adjusted_price, :precision => (has_cents?(@promotion.featured_deal.price) ? 2 : 0) %></dd>
                     <% else %>  
                       <dd><%= number_to_currency deal.price, :precision => (has_cents?(deal.price) ? 2 : 0) %></dd>
@@ -209,7 +211,9 @@
             <div class="single_deal">
               <dl class="clearfix">
                 <dt>You Pay</dt>
-                <% if @promotion.featured_deal.early_bird? %>
+                <% if @promotion.featured_deal.forced_early_bird? %>  
+                  <dd><%= number_to_currency @promotion.featured_deal.adjusted_price, :precision => (has_cents?(@promotion.featured_deal.adjusted_price) ? 2 : 0) %></dd>
+                <% elsif @promotion.featured_deal.early_bird? %>
                   <dd class="early_bird_discount"><span><%= number_to_currency @promotion.featured_deal.price, :precision => 0 %></span>&nbsp;<%= number_to_currency @promotion.featured_deal.adjusted_price, :precision => (has_cents?(@promotion.featured_deal.price) ? 2 : 0) %></dd>
                 <% else %>
                   <dd><%= number_to_currency @promotion.featured_deal.price, :precision => (has_cents?(@promotion.featured_deal.price) ? 2 : 0) %></dd>
@@ -289,7 +293,7 @@
       </div>
     
       <% if @promotion.id == 330 or @promotion.id == 362 or @promotion.id == 395 %>
-      <% elsif @promotion.early_bird? %>
+      <% elsif @promotion.early_bird? and !@promotion.featured_deal.forced_early_bird? %>
         <div class="early_bird">Early&nbsp;Bird</div>
       <% elsif @promotion.inventory.to_i > 999 and !@promotion.ended? and @promotion.quota_met? %>
         <div class="deal_is_on">Deal&nbsp;Is&nbsp;On!</div>

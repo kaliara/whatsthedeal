@@ -39,9 +39,12 @@ class Deal < ActiveRecord::Base
     self.inventory_remaining <= (self.inventory * Reminder::REMINDER_THRESHOLD)
   end
   
+  def forced_early_bird?
+    self.id == 838
+  end
+  
   def early_bird?
-    return true if self.id == 838
-    self.early_bird_discount > 0 and !self.promotion.quota_met?
+    self.forced_early_bird? or (self.early_bird_discount > 0 and !self.promotion.quota_met?)
   end
   
   def adjusted_price
