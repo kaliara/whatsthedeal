@@ -209,7 +209,9 @@
             <div class="single_deal">
               <dl class="clearfix">
                 <dt>You Pay</dt>
-                <% if @promotion.featured_deal.early_bird? %>
+                <% if @promotion.featured_deal.id == 838 %>
+                  <dd class="early_bird_discount"><span>$4</span>&nbsp;$1</dd>
+                <% elsif @promotion.featured_deal.early_bird? %>
                   <dd class="early_bird_discount"><span><%= number_to_currency @promotion.featured_deal.price, :precision => 0 %></span>&nbsp;<%= number_to_currency @promotion.featured_deal.adjusted_price, :precision => (has_cents?(@promotion.featured_deal.price) ? 2 : 0) %></dd>
                 <% else %>
                   <dd><%= number_to_currency @promotion.featured_deal.price, :precision => (has_cents?(@promotion.featured_deal.price) ? 2 : 0) %></dd>
