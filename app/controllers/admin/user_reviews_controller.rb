@@ -3,7 +3,7 @@ class Admin::UserReviewsController < ApplicationController
   before_filter :admin_required 
   
   def index
-    @user_reviews = UserReview.find(:all, :order => 'id DESC')
+    @user_reviews = UserReview.find(:all, :order => 'id DESC', :limit => params[:all] ? nil : 10 )
 
     respond_to do |format|
       format.html # index.html.erb
