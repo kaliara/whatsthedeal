@@ -7,7 +7,9 @@
   <%= text_field_tag 'q', params[:q], :style => 'width: 200px', :class => "text", :onkeydown => "$('#all_no').attr('checked', true)" %><span style="margin-left: 10px">(if gift, search 'gift from' last name)</span>
   <br><br>
   
-  <%= radio_button_tag 'all', 'yes', nil, :onclick => "$('#q').val('')" %> <label for="all_yes"><strong>Show All Purchases</strong></label>
+  <% unless current_user.business.id == 365 %>
+    <%= radio_button_tag 'all', 'yes', nil, :onclick => "$('#q').val('')" %> <label for="all_yes"><strong>Show All Purchases</strong></label>
+  <% end %>
   
   <br><br>
   <%= submit_tag 'search', :class => "submit", :onclick => "$(this).addClass('disabled_search');" %>
