@@ -207,7 +207,7 @@ class UsersController < ApplicationController
     if !params[:code].blank? and PromotionCode.exists?(:code => params[:code])
       @stored_promotion_code = PromotionCode.find_by_code(params[:code])
       session[:stored_promotion_code_id] = @stored_promotion_code.id
-      flash.now[:notice] = "Welcome - you're a friend of #{@stored_promotion_code.user.customer.first_name}, right? Register below to get your $5 credit!<br/>#{@stored_promotion_code.user.customer.first_name} will get his or her credit once you make you first purchase."
+      flash.now[:notice] = "Welcome - you're a friend of #{@stored_promotion_code.user.customer.first_name}, right? Register below to get your $5 credit!<br/>#{@stored_promotion_code.user.customer.first_name} will get his or her credit once you use your credit on a purchase."
     end
 
     render :action => 'new'
