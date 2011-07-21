@@ -1707,6 +1707,9 @@ p.event_full{
 .event_content .signup_box{
   width: 292px;
 }
+.event_content .login_box{
+  width: 211px;
+}
 
 /*Member Profile*/
 #facebook, #twitter{
