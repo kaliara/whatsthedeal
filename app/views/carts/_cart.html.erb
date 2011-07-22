@@ -10,7 +10,7 @@
   <% unless cart.cart_items.empty? %>
     <% cart.cart_items.each do |cart_item| %>
     <tr>
-      <td class="deal_name"><%= cart_item.deal.name %><%= " at #{cart_item.deal.promotion.business.name unless cart_item.deal.promotion.business.nil?}" %><% if cart_item.gift? %><br><span class="gift_cart_item">Gift for <%= link_to cart_item.gift_name, edit_gift_item_path(cart_item.id) %></span><% end %></td>
+      <td class="deal_name"><%= cart_item.deal.coupon_name %><% if cart_item.gift? %><br><span class="gift_cart_item">Gift for <%= link_to cart_item.gift_name, edit_gift_item_path(cart_item.id) %></span><% end %></td>
       <td class="quantity">
         <% form_for(cart_item) do |f| %>
           <%= f.select :quantity, 0..([cart_item.deal.inventory_remaining, cart_item.deal.purchase_limit_remaining(cart, cart_item.gift_name) + cart_item.quantity].min), {:selected => cart_item.quantity}, {:onchange => "submit()"} %>&nbsp;&nbsp;<%= link_to 'Remove', cart_item_path(cart_item), :confirm => "Remove #{cart_item.deal.name} from cart?", :method => :delete, :class => 'remove' %>
