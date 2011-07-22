@@ -102,8 +102,8 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'lon.:format', :controller => 'promotions', :action => 'lon'
 
   # cities
-  map.nova '/dc', :controller => 'promotions', :action => 'show', :region => 1
-  map.nova '/nova', :controller => 'promotions', :action => 'show', :region => 2
+  map.connect '/dc', :controller => 'promotions', :action => 'show', :region => 1
+  map.connect '/nova', :controller => 'promotions', :action => 'show', :region => 2
   map.set_region '/set_region', :controller => 'application', :action => 'set_region', :conditions =>  {:method => :post}
   
   # promotions
