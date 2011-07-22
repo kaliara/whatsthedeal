@@ -37,7 +37,7 @@ namespace :coupons do
   desc "Emails gift coupons to gift recipient and marks coupons as emailed"
   task :send_gifts => :environment do
     Coupon.find(:all, :conditions => ['gift = ? and active = ? and emailed = ? and gift_send_date <= ? and gift_email is not null', true, true, false, DateTime.new(Date.today.year, Date.today.month, Date.today.day,23,59,0)]).each do |coupon|
-      if Coupon.gift_email =~ /[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i
+      if coupon.gift_email =~ /[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/i
         if coupon.gifted_credit?
           Notifier.deliver_coupon_gifted_credit_received(coupon)        
         else

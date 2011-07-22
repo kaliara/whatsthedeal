@@ -5,6 +5,14 @@ class Notifier < ActionMailer::Base
   TEST_RECIPIENT = "testing@sowhatsthedeal.com"
   TESTING = (RAILS_ENV == 'staging' or RAILS_ENV == 'development')
   
+  def admin_message(message)
+   recipients   "matt@sowhatsthedeal.com"
+   from         "errors@sowhatsthedeal.com (WTD)"
+   subject      "Admin Message"
+   body         :message => message
+   content_type "text/html"
+  end
+  
   def signup_confirmation(user)
    recipients   (RAILS_ENV == 'staging' or RAILS_ENV == 'development') ? TEST_RECIPIENT : user.email
    from         "support@sowhatsthedeal.com (WTD)"
