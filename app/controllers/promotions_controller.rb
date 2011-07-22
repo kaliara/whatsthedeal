@@ -101,6 +101,8 @@ class PromotionsController < ApplicationController
     
     if params[:arlnow]
       @promotion = Promotion.arlnow
+    elsif params[:region]
+      @promotion = params[:region] == 2 ? Promotion.nova_featured.first : Promotion.dc_featured.first
     else
       case partner
       when 2
