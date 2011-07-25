@@ -144,6 +144,7 @@ class PaymentProfile < ActiveRecord::Base
   end
   
   def duplicate_payment_profile?(profile)
+    return false if profile[:payment_profile][:payment][:credit_card].number.nil?
     PaymentProfile.find(:all, :conditions => {
       :billing_cc_last_four => profile[:payment_profile][:payment][:credit_card].number[-4..-1],
      #:billing_cc_year      => profile[:payment_profile][:payment][:credit_card].year, # had to take this out since auth.net won't provide it in the getPaymentProfile 
