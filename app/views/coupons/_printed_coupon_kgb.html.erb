@@ -1,0 +1,232 @@
+<!-- start of kgb coupon -->
+
+          <style type="text/css">
+
+                  /* reset.css reloaded - eric meyer - http://meyerweb.com/eric/thoughts/2007/05/01/reset-reloaded/ */
+                  html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,dl,dt,dd,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin: 0;padding: 0;border: 0;outline: 0;font-weight: inherit;font-style: inherit;font-size: 100%;font-family: inherit;vertical-align: baseline;}:focus{outline: 0;}body{line-height: 1;color: black;background: white;}table{border-collapse: separate;border-spacing: 0;}caption,th,td{text-align: left;font-weight: normal;}
+                  strong,b{font-weight: bold}
+                  /* fonts.css - yui - http://developer.yahoo.com/yui/fonts/ */
+                  body {background:#e7ecf0;font:13px/1.231 arial,helvetica,clean,sans-serif;*font-size:small;*font:x-small;}table {font-size:inherit;font:100%;}pre,code,kbd,samp,tt{font-family:monospace;*font-size:108%;line-height:100%;}
+                  .coupon{width:612px; margin:20px auto}
+                  .upper-card{width:557px;border:1px solid #98999b; background-color:#fff;padding:10px;}
+                  .upper-card div.inner{border:2px dashed #aeaeae;padding:9px 10px; min-height: 316px;}
+                  .left{float:left;}
+                  .right{float:right; height: 100%;}
+                  .clear{clear:both;}
+                  .left-side{text-align: center; padding-right: 20px; width:115px;}
+                  .right-side{padding-left: 29px; padding-top: 6px; width:365px; border-left: 1px solid #E4E4E4;  padding-bottom: 20px;}
+                  .voucher-for{text-transform:uppercase;font-size: 12px; margin-top:5px;}
+                  .price {font-size:40px; font-weight:bold; line-height:40px; margin-top:10px;}
+                  .price SUP { font-size:12px; vertical-align:super; }
+                  .price SUP.dlr {display: inline-block;font-size: 24px;*font-size: 28px;height: 20px;line-height: 23px;margin-top: 3px;vertical-align: top;}
+                  .price SUP.hund {display: inline-block;font-size: 24px;*font-size: 28px;height: 20px;line-height: 23px;margin-top: 3px;vertical-align: top;border-bottom: 2px solid #333;padding-bottom: 2px;}
+                   td{vertical-align: top; font-size: 11px; color: #656565;}
+                  .upper-card td img{margin-top: 4px;}
+                  .h1{font-size: 13px; font-weight: bold; color: #000;}
+                  .table2{margin-top: 20px;}
+                  .table2 td{padding-right: 10px; line-height: 18px;}
+                  .upper{text-transform: uppercase;}
+                  .table3{margin-top: 10px;}
+                  .number{font-size: 27px; font-weight: bold; color: #000; padding-right: 0px !important; padding-top: 20px; text-transform: uppercase;}
+                  .gmap{border:1px solid #2585ad;float:left;}
+                  .table4{margin-top: 20px; width: 577px;}
+                   ul{margin:0px;padding:0px 7px 0px 0px; line-height: 14px; margin-top: 5px; font-size: 11px; list-style: disc}
+                   ul li{margin-bottom: 4px}
+                  .table5{margin-top: 50px; width: 577;}
+                  .table5 td{font-size: 10px; line-height: 15px}
+                  .gMapWidget {
+                      background-color: #E5E3DF;
+                      overflow: hidden;
+                      position: relative;
+                      border: 1px solid #CADAE7;
+                      height: 188px;
+                      width: 180px;
+                  }
+                  .business_info b, .business_info strong {font-size: 11px;}
+                  .redemption_status {
+                      background: none repeat scroll 0 0 #A3C1EC;
+                      clear: both;
+                      color: #194AA7;
+                      font-size: 1.2em;
+                      line-height: 1.2em;
+                      margin-bottom: 15px;
+                      padding: 7px 0 5px 25px;
+                  }
+                  .back_link{margin-bottom: 10px }
+                  .edit_coupon{margin: 0 0 10px 0}
+           </style>
+           <style type="text/css" media="print">
+             .edit_coupon{ display: none; }
+             .print_this{ display: none; }
+             .back_link { display: none; }
+             .map_replacement { display: none; }
+           </style>
+           
+           <% if coupon.used? %>
+             <style type="text/css" media="screen">
+               body{ background: transparent url(/images/redeemed_watermark.png) repeat 0 0 !important; }
+               .upper-card{background: transparent}
+             </style>
+           <% end %>
+      <% @promotion = coupon.deal.promotion %>
+        
+  
+        
+      <div id="voucher_div_content">
+          <div class="coupon">
+              <% if params[:sample_for_deal] %>
+                <div class="back_link"><%= link_to "Back to Home", business_home_path %></div>
+              <% else %>
+                <div class="back_link"><%= link_to "Back to My Deals", my_deals_path %></div>
+                
+                <% if !coupon.used? and coupon.active? %>
+                  <% if mobile and !coupon.mobile_used? and !coupon.deal.has_coupon_code? %>
+                    <p class="mobile_usage_clause">Please present this coupon to <%= coupon.deal.promotion.business.name %> <strong>before</strong> you enjoy the product or service. Thanks!</p>
+                    <% form_for coupon do |f| %>  
+                      <%= f.hidden_field :id, :value => "coupon_#{coupon.id}" %>
+                      <%= f.hidden_field :used, :value => true %>
+                      <%= f.submit "Redeem This Coupon", :confirm => 'By clicking OK you are confirming that this coupon is being redeemed.  Once confirmed, you won\'t be able to use the coupon again.', :class => 'secondary' %>
+                    <% end %>
+                    <br><br>
+                  <% else %>  
+                    <% form_for coupon do |f| %>  
+                      <%= f.hidden_field :id, :value => "coupon_#{coupon.id}" %>
+                      <%= f.hidden_field :used, :value => true %>
+                      <%= f.submit "Mark as Redeemed", :confirm => 'By clicking OK you are confirming that this coupon is being redeemed.  Once confirmed, you won\'t be able to use the coupon again.', :class => 'secondary' %>
+                    <% end %>
+                  <% end %>
+                <% end %>
+                
+              <% end %>
+            
+              <div class="upper-card">
+                  <div class="inner">
+                      
+                      <% unless params[:sample_for_deal] %>
+                        <% if coupon.mobile_used? %>
+                          <div class="redemption_status">Redeemed via Mobile Device: <%= "<br/>" if mobile %><strong><%= coupon.redemption_date.strftime("%b %d, %Y at %l:%M %p") unless coupon.redemption_date.nil? %></strong></div>
+                        <% elsif coupon.used? %>
+                          <div class="redemption_status">User Marked as Redeemed: <%= "<br/>" if mobile %><strong><%= coupon.updated_at.strftime("%b %d, %Y") unless coupon.updated_at.nil? %></strong></div>
+                        <% end %>
+                      <% end %>
+                    
+                      <div class="left left-side">
+                          <img alt="kgbdeals logo" class="" src="http://sowhatsthedeal.com/images/logo_on_white.png" style="width:130px">
+                          <div class="voucher-for">VOUCHER FOR</div>
+                          <div class="price"><sup class="dlr">$</sup><%= number_to_currency coupon.deal.value, :precision => (has_cents?(coupon.deal.value) ? 2 : 0), :unit => "" %></div>                        
+                      </div>
+                      <div class="left right-side">
+                          <table class="table1">
+                              <tbody><tr>
+                                  <td class="description">
+
+                      <p><%= render :partial => "/promotions/business_address" %></p>
+
+                                  </td>
+                              </tr>
+                          </tbody></table>
+                          <table class="table2" width="340">
+                              <tbody><tr>
+                                  <td colspan="2" class="h1"><%= coupon.deal.coupon_name %></td>
+                              </tr>
+                              <tr>
+                                  <td>
+                                      <img src="http://sowhatsthedeal.com<%= coupon.deal.promotion.image1.url %>" alt="" title="" height="90" width="142">
+                                  </td>
+                                  <td>
+                                      &nbsp;
+                                  </td>
+                              </tr>
+                          </tbody></table>
+                          <table class="table3">
+                              <tbody><tr>
+                                  <td width="45%">
+                                      <p class="upper">recipient:</p>
+                                      <p class="h1"><%= coupon.recipient %></p>
+                                  </td>
+                                  <td width="55%">
+                                      <p class="upper">expires:</p>
+                                      <p class="h1"><%= coupon.expiration.strftime("%m/%d/%Y") %></p>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <td colspan="2" width="365" class="number">
+                                    <% unless coupon.coupon_code.blank? %>
+                                      <p class="upper" style="color:#656565;font-size:11px;font-weight:normal">coupon code:</p>
+                                      <%= coupon.coupon_code %>
+                                    <% else %>
+                                      #<%= coupon.confirmation_code %>
+                                    <% end %>
+                                  </td>
+                              </tr>
+                          </tbody></table>
+                          <% if coupon.gift? %>
+                            <br>
+                            <p class="upper" style="color:#656565;font-size:11px;font-weight:normal">original purchaser:</p>
+                            <p class="h1"><%= coupon.user.customer.name %></p>
+                          <% end %>
+                          <% unless coupon.coupon_code.blank? %>
+                            <br>
+                            <p class="upper" style="color:#656565;font-size:11px;font-weight:normal">confirmation:</p>
+                            <p class="h1"><%= coupon.confirmation_code %></p>
+                          <% end %>
+                      </div>
+                      <div class="clear"></div>
+                  </div>
+              </div>
+
+              <div class="location">
+                  <table class="table4">
+                      <tbody><tr>
+                          <td width="175" style="padding-right: 30px">
+                            <% unless coupon.deal.promotion.id == 259 %>
+                              <div class="map">
+                                <% unless coupon.deal.promotion.map_replacement_image.file? %>
+                                  <a href="<%= "http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=#{coupon.deal.promotion.business.street1.gsub(/\s/,"+")}+#{coupon.deal.promotion.business.city.gsub(/\s/,"+")},+#{coupon.deal.promotion.business.state}+#{coupon.deal.promotion.business.zipcode}" %>"><img src="/dc/images/map_default.jpg" id="map<%= coupon.id %>" alt="Map of <%= coupon.deal.promotion.business.name %>" width="<%= mobile ? '315' : '188' %>" align="<%= 'right' unless mobile %>" target="_blank" /></a>
+                                <% else %>
+                                  <%= image_tag coupon.deal.promotion.map_replacement_image.url, {:class => "map_replacement"} %>
+                                <% end %>
+                              </div>
+                            <% end %>
+                          </td>
+                          <td>
+                              <p class="h1">The Fine Print:</p>
+                              <%= coupon.deal.promotion.restrictions %>
+                          </td>
+                          <% unless coupon.deal.coupon_description.blank? and coupon.deal.coupon_instructions.blank? %>                      
+                            <td width="175">
+                                <p class="h1">How to use this voucher:</p>
+                                <p style="padding-right:5px;line-height: 14px;margin-top: 5px">
+                                  <%= coupon.description %>
+                                  <%= coupon.deal.coupon_instructions %>
+                                  <% unless coupon.coupon_code.blank? %><br><br>Coupon Code: <strong style="font-weight: bold;color:#000"><%= coupon.coupon_code %></strong><% end %>
+                                </p>
+                            </td>
+                          <% end %>
+                      </tr>
+                  </tbody></table>
+
+                  <table class="table5">
+                      <tbody><tr>
+                          <td>
+                             This Coupon expires on&nbsp;05/25/2011&nbsp;Once this Coupon is redeemed, it cannot be transferred to another person. Gratuities are not included. Your use of this Coupon is subject to the kgbdeals <a href="http://www.kgbdeals.com/company/terms">Terms of Service</a> posted on the <a href="http://www.kgbdeals.com/">www.kgbdeals.com</a> website. Partial redemptions: If you redeem this Coupon for less than its total face value, you will not be entitled to receive any credit or cash for the difference between the face value of the Coupon and the amount you actually redeemed unless otherwise required by law. Redemption Value: If this Coupon is not redeemed by the expiration date, this Coupon will continue to have a redemption value equal to the amount you paid at the named merchant for the period specified by applicable law. The redemption value will be reduced by the amount of purchases made. This Coupon can only be used for making purchases of goods and/or services at the named merchant. It cannot be redeemed for cash or applied as payment to any account unless required by law. Neither kgb Deals nor the named merchant shall be responsible for Coupons that are lost or damaged. <br><br>Share the wealth -- tell a friend about kgbdeals.com<br>Got questions? Text 542542 (kgbkgb) and get answers while on your mobile phone. Check out kgb.com                         
+                          </td>
+                      </tr>
+                  </tbody></table>
+              </div>
+          </div>
+      </div>
+  
+      <script type="text/javascript" charset="utf-8">
+        var geocoder;
+        var map;
+        geocoder = new google.maps.Geocoder();
+        var address = "<%= coupon.deal.promotion.business.street1 %> <%= coupon.deal.promotion.business.city %>, <%= coupon.deal.promotion.business.state %> <%= coupon.deal.promotion.business.zipcode %>";
+        geocoder.geocode( { 'address': address}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            document.getElementById('map<%= coupon.id %>').src = "http://maps.google.com/maps/api/staticmap?center=" + results[0].geometry.location.toString().slice(1,-1) + "&zoom=14&markers=" + results[0].geometry.location.toString().slice(1,-1) + "&size=188x180&sensor=false"
+          }
+        });
+      </script>
+
+<!-- end of kgb coupon -->

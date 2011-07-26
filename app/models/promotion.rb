@@ -49,6 +49,7 @@ class Promotion < ActiveRecord::Base
   BUYING_CREDIT_PROMOTION = 266
   PROMOTION_MAP_DEFAULT_LAT = 38.897275
   PROMOTION_MAP_DEFAULT_LNG = -77.036594
+  TRANSITION_TO_NEW_COUPON_STYLE = 575
   CITIES = [['All Cities',0], ['Washington DC',1], ['Northern Virginia',2], ['Southern Maryland',3]]
   
   def active?
@@ -72,6 +73,10 @@ class Promotion < ActiveRecord::Base
   
   def kgb_linked?
     return !self.deals.delete_if{|d| d.kgb_deal_id.to_i > 1}.empty?
+  end
+  
+  def updated_coupon_style?
+    self.id >= Promotion::TRANSITION_TO_NEW_COUPON_STYLE
   end
   
   def auto_activate_coupons?
