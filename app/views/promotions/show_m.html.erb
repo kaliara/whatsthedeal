@@ -52,7 +52,7 @@
         <% else %>
           <%= hidden_field_tag "cart_items[0][deal_id]", @promotion.featured_deal.id %>
           <%= hidden_field_tag "cart_items[0][quantity]", 1 %>
-          <% if @promotion.id == 330 %>
+          <% if @promotion.id == 330 or @promotion.id == 476 %>
             <div class="special_deal_me_in_message">Click below<br>to get your FREE<br>10% off coupon code!</div>
           <% elsif @promotion.id == 362 %>
             <div class="special_deal_me_in_message">Click below<br>to get your FREE<br>50% off coupon code!</div>
