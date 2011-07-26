@@ -42,7 +42,7 @@
     <%= f.hidden_field :invoice_number, :value => Time.now.strftime("%y%m%d%H%M%S") %>
     <%= f.hidden_field :customer_ip, :value => request.remote_ip %>
     <%= f.hidden_field :customer_email, :value  => current_user.email %>
-    <%= f.hidden_field :description, :value => (cart.cart_items.collect{|c| "#{c.deal.name}(#{c.quantity})"}).join(',') %>
+    <%= f.hidden_field :description, :value => (cart.cart_items.collect{|c| "#{c.deal.coupon_name}(#{c.quantity})"}).join(',') %>
 
     <% if cart.total > 0 %>
       <% unless @existing_payment_profile %>
