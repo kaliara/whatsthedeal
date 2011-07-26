@@ -117,7 +117,7 @@
       </div>
     
       <div class="purchases">
-        <% if @promotion.id == 330 %>
+        <% if @promotion.id == 330 or @promotion.id == 476 %>
           <strong>&nbsp;</strong>
         <% elsif @promotion.id == 291 or @promotion.id == 293 or @promotion.id == 294 %>
           <strong><%= Promotion.find(293).purchases + Promotion.find(294).purchases %></strong>&nbsp;&nbsp;purchased
