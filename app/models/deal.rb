@@ -8,7 +8,7 @@ class Deal < ActiveRecord::Base
   named_scope :active,   :conditions => ['active = ?', true]
     
   validates_presence_of :name, :on => :save, :message => "can't be blank"
-  validates_uniqueness_of :code, :on => :create, :message => "must be unique"
+  # validates_uniqueness_of :code, :on => :create, :message => "must be unique"
   validates_numericality_of :coupon_code_delta, :only_integer => true, :on => :save, :message => "must be a whole number"
   
   def purchase_limit_remaining(cart,gift_name=nil)

@@ -146,7 +146,7 @@
          // add item might be called for every item in the shopping cart
         _gaq.push(['_addItem',
           '<%= @purchase.invoice_number %>',  // order ID - required
-          '<%= coupon.deal.code %>',          // SKU/code
+          '<%= coupon.deal.id %>',            // SKU/code
           '<%= coupon.name %>',               // product name
           '',                                 // category or variation
           '<%= coupon.deal.price %>',         // unit price - required
