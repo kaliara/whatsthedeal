@@ -177,7 +177,7 @@ class Business::PurchasesController < ApplicationController
     sheet1.row(0).push "Last Name", "First Name", "Confirmation Code", "Date Purchased", "Deal", "Purchase Price", "Redeemed?", "Coupon Code"
     @sorted_coupons.each_with_index do |coupon_pair, i|
       coupon = @sortable_coupons[coupon_pair[0]] 
-      sheet1.row(i+1).push coupon.recipient[/(\w+)\s*\z/].capitalize, coupon.recipient.gsub(/(\w+)\s*\z/,"").capitalize + (" (gift from " + coupon.user.customer.name + ")" if coupon.gift?).to_s, coupon.confirmation_code, coupon.created_at.strftime("%b %e, %Y"), coupon.name, Object.new.extend(ActionView::Helpers::NumberHelper).number_to_currency(coupon.deal.price), (coupon.biz_used? ? 'Yes' : ''), coupon.coupon_code
+      sheet1.row(i+1).push coupon.recipient[/(\w+)\s*\z/], coupon.recipient.gsub(/(\w+)\s*\z/,"") + (" (gift from " + coupon.user.customer.name + ")" if coupon.gift?).to_s, coupon.confirmation_code, coupon.created_at.strftime("%b %e, %Y"), coupon.name, Object.new.extend(ActionView::Helpers::NumberHelper).number_to_currency(coupon.deal.price), (coupon.biz_used? ? 'Yes' : ''), coupon.coupon_code
       @row = i + 1
     end
     @unsortable_coupons.each_with_index do |coupon,i|
