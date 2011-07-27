@@ -72,7 +72,7 @@ class CouponsController < ApplicationController
       redirect_to my_deals_path
     else
       @coupon.printed!
-      render :action => @coupon.promotion.updated_coupon_style? ? 'show_new' : 'show'
+      render :action => @coupon.deal.promotion.updated_coupon_style? ? 'show_new' : 'show'
     end
   end
   
