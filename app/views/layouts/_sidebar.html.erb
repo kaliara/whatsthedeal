@@ -44,9 +44,11 @@
             <%= link_to image_tag(promotion.image1.url, :class => 'deal_thumbnail'), promotion_slug_path(promotion.slug) %>
             <h4><%= link_to truncate(promotion.name, :length => 50), promotion_slug_path(promotion.slug), :title => promotion.name %></h4>
             <dl><dt>Days Left: </dt><dd><%= ((promotion.end_date - Time.now.utc)/86400) < 1 ? "< 1" : ((promotion.end_date - Time.now.utc)/86400).floor %></dd></dl>
-            <% if promotion.id == 330 or promotion.id == 476 %>
+            <% if promotion.id == 330 %>
             <% elsif promotion.id == 362 %>
               <dl class="last">Purchases: <dt></dt><dd>1,081</dd></dl>
+            <% elsif promotion.id == 476 %>
+              <dl class="last">Purchases: <dt></dt><dd><%= Misc.value('promotion_476_purchases', 195) %></dd></dl>
             <% elsif promotion.id == 395 %>
               <dl class="last">Purchases: <dt></dt><dd>300</dd></dl>
             <% else %>
