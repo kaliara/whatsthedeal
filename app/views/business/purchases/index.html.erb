@@ -83,7 +83,7 @@
             <td><%= check_box_tag "#{unsortable_coupon.kgb_coupon? ? "kgb_coupons" : "coupons"}[#{unsortable_coupon.id}]" %></td>
           <% end %>
           <% if @any_coupon_codes %>
-            <td><%= coupon.coupon_code %></td>
+            <td><%= unsortable_coupon.coupon_code %></td>
           <% end %>
           <td class="coupon_source_<%= unsortable_coupon.kgb_coupon? ? "kgb" : "wtd" %>"><%= unsortable_coupon.kgb_coupon? ? "kgb" : "WTD" %></td>
         </tr>
