@@ -70,7 +70,7 @@ class PaymentProfile < ActiveRecord::Base
     if duplicate_payment_profile?(@profile)
       errors.add(:profile, 'This payment information has been used already. Please contact support@sowhatsthedeal.com if you believe this message has appeared in error.')
       return false
-    elsif credit_card[:number].size < 15 or credit_card[:number].size > 16
+    elsif credit_card[:number].blank? or credit_card[:number].size < 15 or credit_card[:number].size > 16
       errors.add(:profile, 'Please check your <strong>Credit Card Number</strong>, it should be 15 (American Express) or 16 (MasterCard and Visa) digits long')
       return false
     # elsif credit_card[:verification_value].size < 3 or credit_card[:verification_value].size > 4
@@ -82,7 +82,7 @@ class PaymentProfile < ActiveRecord::Base
     elsif billing_address[:address1].blank?
       errors.add(:profile, 'Please fill in your <strong>Billing Address</strong>.')
       return false
-    elsif billing_address[:zip].size < 5
+    elsif billing_address[:zip].blank? or billing_address[:zip].size < 5
       errors.add(:profile, 'Please check your <strong>Billing Zip Code</strong>.  It should be at least 5 digits long.')
       return false
     end
