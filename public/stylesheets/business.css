@@ -238,6 +238,9 @@ label{
 .page_content strong{
   color: #fff;
 }
+.page_content .error{
+  color: #BE353E;
+}
 
 /* Section Element*/
 .section_element{

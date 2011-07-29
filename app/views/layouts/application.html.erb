@@ -33,6 +33,7 @@
     <div class="page_content with_sidebar <%= "more_great_deals" if current_page?(promotions_path) or current_page?(events_path) %> <%= "signup" if controller.action_name == 'signup' %>">
       <%= yield :errors %>
       
+      <% flash[:error] = render_content("maintenance_notice") %>
       <% unless flash[:notice].blank? and flash[:error].blank? %>
         <div class="flash">
           <% unless flash[:notice].blank? %><p class="notice"><%= flash[:notice] %></p><% end %>
