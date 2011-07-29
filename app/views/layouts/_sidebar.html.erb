@@ -7,19 +7,21 @@
 
     <% unless @side_promotions.blank? %>
       <% @alt_featured_promotion = (region == 1 ? Promotion.nova_featured.first : Promotion.dc_featured.first) if @alt_featured_promotion.nil? %>
-      <h2>
-        <% if @back_to_regular %>
-          <%= region == 1 ? "DC Featured Deal" : "NOVA Featured Deal" %>
-        <% else %>
-          <%= region == 1 ? "NOVA Featured Deal" : "DC Featured Deal" %>
-        <% end %>
-      </h2>
-      <div class="sidebar_content">
-        <div class="alt_city_sidebar_deal">
-          <%= link_to image_tag(@alt_featured_promotion.image1.url, :class => 'deal_thumbnail'), promotion_slug_path(@alt_featured_promotion.slug) %>
-          <h4><%= link_to truncate(@alt_featured_promotion.name, :length => 75), promotion_slug_path(@alt_featured_promotion.slug), :title => @alt_featured_promotion.name %></h4>
+      <% unless @alt_featured_promotion.nil? %>
+        <h2>
+          <% if @back_to_regular %>
+            <%= region == 1 ? "DC Featured Deal" : "NOVA Featured Deal" %>
+          <% else %>
+            <%= region == 1 ? "NOVA Featured Deal" : "DC Featured Deal" %>
+          <% end %>
+        </h2>
+        <div class="sidebar_content">
+          <div class="alt_city_sidebar_deal">
+            <%= link_to image_tag(@alt_featured_promotion.image1.url, :class => 'deal_thumbnail'), promotion_slug_path(@alt_featured_promotion.slug) %>
+            <h4><%= link_to truncate(@alt_featured_promotion.name, :length => 75), promotion_slug_path(@alt_featured_promotion.slug), :title => @alt_featured_promotion.name %></h4>
+          </div>
         </div>
-      </div>
+      <% end %>
     <% end %>
   
     <% unless current_user and (current_user.gets_daily_deal_email? or current_user.unlikely_subscriber?) %>

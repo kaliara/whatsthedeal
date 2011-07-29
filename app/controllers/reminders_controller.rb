@@ -15,7 +15,7 @@ class RemindersController < ApplicationController
       if @reminder.save
         session[:add_reminder] = true
       else
-        flash[:error] = "Hmmm... something seems to be wrong with your email address for the reminder. Verify your address in #{link_to 'your account', my_account_path}."
+        flash[:error] = "Hmmm... something seems to be wrong with your email address for the reminder. Verify your address in <a href='/my_account'>your account</a>."
       end
 
       redirect_to @from_index ? promotions_path : promotion_slug_path(Promotion.find(params[:reminder_promotion_id]).slug)
