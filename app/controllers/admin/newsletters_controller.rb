@@ -23,7 +23,7 @@ class Admin::NewslettersController < ApplicationController
     @event2 = Event.find(params[:event2_id]) if params[:event2_id].to_i > 0
     @shoutout1 = Shoutout.find(params[:shoutout1_id]) if params[:shoutout1_id].to_i > 0
     @shoutout2 = Shoutout.find(params[:shoutout2_id]) if params[:shoutout2_id].to_i > 0
-    @google_tracking = "?utm_source=newsletter&utm_medium=email&utm_campaign=dailydeal"
+    @google_tracking = "?utm_source=newsletter&utm_medium=email#{"_nova" if @deal_region == 2}&utm_campaign=dailydeal"
   end
 
 end
