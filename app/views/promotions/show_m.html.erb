@@ -52,7 +52,7 @@
         <% else %>
           <%= hidden_field_tag "cart_items[0][deal_id]", @promotion.featured_deal.id %>
           <%= hidden_field_tag "cart_items[0][quantity]", 1 %>
-          <% if @promotion.id == 330 or @promotion.id == 476 %>
+          <% if @promotion.id == 330 or @promotion.id == 476 or @promotion.id == 501 %>
             <div class="special_deal_me_in_message">Click below<br>to get your FREE<br>10% off coupon code!</div>
           <% elsif @promotion.id == 362 %>
             <div class="special_deal_me_in_message">Click below<br>to get your FREE<br>50% off coupon code!</div>
@@ -80,7 +80,7 @@
         <% end %>
         
         <div class="checkout_buttons">
-          <% if @promotion.id == 330 or @promotion.id == 362 or @promotion.id == 395 or @promotion.id == 476 %>
+          <% if @promotion.id == 330 or @promotion.id == 362 or @promotion.id == 395 or @promotion.id == 476 or @promotion.id == 501 %>
             <div class="deal_me_in"><br><br><%= link_to 'Get My Code', @promotion.external_url, :class => 'primary' %><br><br></div>
           <% elsif @promotion.id == 216 %>
             <h3>Choose a performance date</h3>
@@ -119,6 +119,8 @@
       <div class="purchases">
         <% if @promotion.id == 330 or @promotion.id == 476 %>
           <strong>&nbsp;</strong>
+        <% elsif promotion.id == 501 %>
+          <strong><%= Misc.value('promotion_501_purchases', 100) %></strong>&nbsp;&nbsp;purchased
         <% elsif @promotion.id == 291 or @promotion.id == 293 or @promotion.id == 294 %>
           <strong><%= Promotion.find(293).purchases + Promotion.find(294).purchases %></strong>&nbsp;&nbsp;purchased
         <% elsif @promotion.id == 362 %>
