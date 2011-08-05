@@ -19,7 +19,7 @@ class Purchase < ActiveRecord::Base
   def process
     @gateway = get_payment_gateway
     response = @gateway.create_customer_profile_transaction({:transaction => {
-                                                                :type => :auth_only,
+                                                                :type => :auth_capture,
                                                                 :amount => total,
                                                                 :customer_profile_id => self.user.customer_cim_id,
                                                                 :customer_payment_profile_id => self.payment_profile.payment_cim_id,
