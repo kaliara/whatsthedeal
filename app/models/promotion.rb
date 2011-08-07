@@ -49,7 +49,7 @@ class Promotion < ActiveRecord::Base
   BUYING_CREDIT_PROMOTION = 266
   PROMOTION_MAP_DEFAULT_LAT = 38.897275
   PROMOTION_MAP_DEFAULT_LNG = -77.036594
-  TRANSITION_TO_NEW_COUPON_STYLE = 575
+  TRANSITION_TO_NEW_COUPON_STYLE = Date.parse('2011-08-07')
   CITIES = [['All Cities',0], ['Washington DC',1], ['Northern Virginia',2], ['Southern Maryland',3]]
   
   def active?
@@ -76,7 +76,7 @@ class Promotion < ActiveRecord::Base
   end
   
   def updated_coupon_style?
-    self.id >= Promotion::TRANSITION_TO_NEW_COUPON_STYLE
+    self.start_date > Promotion::TRANSITION_TO_NEW_COUPON_STYLE
   end
   
   def auto_activate_coupons?
