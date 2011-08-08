@@ -18,7 +18,7 @@ class CartsController < ApplicationController
         @other_promotions = Promotion.find(:all, :conditions => ["end_date > ? and active = ? and hidden = ?", Time.zone.now, true, false], :limit => 3, :order => "end_date ASC")
       else
         @cart_deals = Deal.find(:all, :conditions => ["id in (#{cart.cart_items.collect{|ci| ci.deal_id}.join(',')})"]).collect{|d| d.promotion_id}.join(',')
-        @promotions = Promotion.find(:all, :conditions  => ["id not in (#{@cart_deals})"]).delete_if{|p| !p.active? or p.sold_out?}.collect{|p| p.id}.join(',')
+        @promotions = Promotion.find(:all, :conditions  => ["id not in (#{@cart_deals})"]).delete_if{|p| !p.active? or p.sold_out? or !p.external_url.blank?}.collect{|p| p.id}.join(',')
         @other_promotions = @promotions.empty? ? [] : Promotion.find(:all, :conditions => ["id in (#{@promotions}) and end_date > ? and active = ? and hidden = ?", Time.zone.now, true, false], :limit => 3, :order => "end_date ASC")
 
         # update credits
