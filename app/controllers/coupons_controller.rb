@@ -39,7 +39,7 @@ class CouponsController < ApplicationController
     elsif !@coupon.stolen?(current_user)
       flash.now[:notice] = "Remember, You can only use each coupon one time." if @coupon.printed?
       @coupon.printed! unless @coupon.printed?
-      render :action => @coupon.deal.promotion.updated_coupon_style? ? 'show_new' : 'show'
+      render :action => 'show'
     else
       redirect_to my_deals_path
     end
@@ -72,7 +72,7 @@ class CouponsController < ApplicationController
       redirect_to my_deals_path
     else
       @coupon.printed!
-      render :action => @coupon.deal.promotion.updated_coupon_style? ? 'show_new' : 'show'
+      render :action => 'show'
     end
   end
   
