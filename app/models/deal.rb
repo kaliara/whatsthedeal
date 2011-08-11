@@ -71,6 +71,11 @@ class Deal < ActiveRecord::Base
     self.coupons.collect{|c| c.purchase}.uniq.collect{|p| p.coupons.delete_if{|c| c.deal_id != self.id}.size * p.credit_per_deal}.sum
   end
   
+  def full_restrictions
+    # regex to add deal's expiration at bottom
+    self.promotion.restrictions
+  end
+  
   def total_coupons
     self.coupons.size + self.kgb_coupons.size
   end

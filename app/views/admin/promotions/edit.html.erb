@@ -51,6 +51,10 @@
     <%= f.file_field :ad_image1 %>
   </p>
   <p>
+    <%= f.label :image2, "Montage Image(600px wide or less)" %><br />
+    <%= f.file_field :image2 %>
+  </p>
+  <p>
     <%= f.label :map_replacement_image, "Map Replacement (265 x 265)" %><br />
     <%= f.file_field :map_replacement_image %>
   </p>
@@ -65,10 +69,6 @@
   <p>
     <%= f.label :body1, "Main Body Text" %><br />
     <%= f.text_area :body1, :cols => 100 %>
-  </p>
-  <p>
-    <%= f.label :image2, "Montage Image(600px wide or less)" %><br />
-    <%= f.file_field :image2 %>
   </p>
   <p>
     <%= f.label :body2, "Additional Body Text (below montage)" %><br />

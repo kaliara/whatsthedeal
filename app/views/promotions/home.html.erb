@@ -130,7 +130,7 @@
     <% unless @promotion.restrictions.blank? %>
       <div class="fine_print_promotions">
         <h5>Fine Print:</h5>
-        <%= @promotion.restrictions %>
+        <%= @promotion.full_restrictions %>
       </div>
     <% end %>
     <%= render :partial => "business_address", :locals => {:promotion => @promotion} %>

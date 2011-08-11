@@ -47,6 +47,10 @@
     <%= f.file_field :ad_image1 %>
   </p>
   <p>
+    <%= f.label :image2, "Montage Image(600px wide or less)" %><br />
+    <%= f.file_field :image2 %>
+  </p>
+  <p>
     <%= f.label :map_replacement_image, "Map Replacement (265 x 265)" %><br />
     <%= f.file_field :map_replacement_image %>
   </p>
@@ -61,10 +65,6 @@
   <p>
     <%= f.label :body1, "Main Body Text" %><br />
     <%= f.text_area :body1, :cols => 100 %>
-  </p>
-  <p>
-    <%= f.label :image2, "Montage Image(600px wide or less)" %><br />
-    <%= f.file_field :image2 %>
   </p>
   <p>
     <%= f.label :body2, "Additional Body Text (below montage)" %><br />
@@ -91,7 +91,7 @@
   <br>
   <p>
     <%= f.label :start_date %><br />
-    <%= f.date_select :start_date, :start_year => Date.today.year, :default => {:year => (1.week.from_now).year, :month => (1.week.from_now).month, :day => (1.week.from_now).day}, :order => [:month, :day, :year] %> at 12:01 AM (EST).
+    <%= f.date_select :start_date, :start_year => Date.today.year, :default => {:year => 2012, :month => (2.weeks.from_now).month, :day => (2.weeks.from_now).day}, :order => [:month, :day, :year] %> at 12:01 AM (EST).
   </p>
   <p>
     <%= label_tag 'Duration (in days)' %>

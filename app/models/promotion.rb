@@ -182,6 +182,11 @@ class Promotion < ActiveRecord::Base
     end
   end
   
+  def full_restrictions
+    # regex to add featured deal's expiration at bottom
+    self.restrictions
+  end
+  
   def update_business_payments
     BusinessPayment.find(:all, :conditions => {:promotion_id => self.id}).each do |bp|
       bp.business_id = self.business_id

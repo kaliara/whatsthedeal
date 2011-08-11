@@ -143,7 +143,7 @@
     <% unless coupon.deal.promotion.restrictions.blank? %>
       <div class="restrictions clear">
         <h4>This coupon has the following restrictions:</h4>
-        <%= coupon.deal.promotion.restrictions %>
+        <%= coupon.deal.full_restrictions %>
       </div>
     <% end %>
 

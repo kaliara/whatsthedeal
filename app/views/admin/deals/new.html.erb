@@ -11,7 +11,7 @@
 
   <p>
     <%= f.label :promotion_id %><br />
-    <%= f.select :promotion_id, Promotion.all.collect{|p| [p.id.to_s + " - " + p.name, p.id]} %>
+    <%= f.select :promotion_id, Promotion.all.reverse.collect{|p| [p.id.to_s + " - " + p.name, p.id]} %>
   </p><br>
   <p>
     <%= f.label :kgb_deal_id %> (ID associated with KGB deal)<br />
