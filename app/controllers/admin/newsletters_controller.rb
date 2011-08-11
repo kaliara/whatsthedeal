@@ -5,7 +5,7 @@ class Admin::NewslettersController < ApplicationController
   def setup
     @now = DateTime.new(Time.zone.now.year, Time.zone.now.month, Time.zone.now.day, Time.zone.now.hour, Time.zone.now.min, Time.zone.now.sec)
     
-    @promotions = Promotion.find(:all, :conditions => ['start_date > ? and start_date <  ? and active = ? and hidden = ?', (Time.now.utc - 1.day), (Time.now.utc + 4.days), true, false], :order => 'start_date DESC')
+    @promotions = Promotion.find(:all, :conditions => ['start_date > ? and start_date <  ? and active = ? and hidden = ?', (Time.now.utc - 3.day), (Time.now.utc + 4.days), true, false], :order => 'start_date DESC')
     @side_promotions = Promotion.find(:all, :conditions => ['start_date < ? and end_date > ? and active = ? and hidden = ? and id != ?', (Time.now.utc + 20.hours), (Time.now.utc + 20.hours), true, false, 0], :order => 'end_date ASC')
     @events = Event.all.reverse
     @shoutouts = Shoutout.all.reverse

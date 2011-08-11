@@ -221,7 +221,7 @@
                                 </td>
                                 <td valign="top" width="160">
                                   <h5 style="color: #666666;font-family: 'Myriad', sans-serif;font-size: 11px;text-transform: uppercase;margin: 0 0 5px 0;"><a href="<%= event_url @event1 %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 11px;font-weight: bold;color: #1279af;"><%= @event1.header %></a></h5>
-                                  <p style="font-family: Lucida, sans-serif;font-size: 11px;font-weight: normal;color: #666666;margin: 0 0 16px 0;padding: 0;margin-bottom: 0;"><%= @event1.description %> &nbsp;<%= link_to @event1.read_more_text, event_url(@event1) %></p>
+                                  <p style="font-family: Lucida, sans-serif;font-size: 11px;font-weight: bold;color: #666666;margin: 0 0 16px 0;padding: 0;margin-bottom: 0;"><%= @event1.description %> &nbsp;<a href="<%= event_url @event1 %><%= @google_tracking %>"><%= @event1.read_more_text %></a></p>
                                 </td>
                               </tr>
                             </table>
@@ -236,7 +236,7 @@
                                 </td>
                                 <td valign="top" width="160">
                                   <h5 style="color: #666666;font-family: 'Myriad', sans-serif;font-size: 11px;text-transform: uppercase;margin: 0 0 5px 0;"><a href="<%= event_url @event2 %><%= @google_tracking %>" style="font-family: Lucida, sans-serif;font-size: 11px;font-weight: bold;color: #1279af;"><%= @event2.header %></a></h5>
-                                  <p style="font-family: Lucida, sans-serif;font-size: 11px;font-weight: normal;color: #666666;margin: 0 0 16px 0;padding: 0;margin-bottom: 0;"><%= @event2.description %> &nbsp;<%= link_to @event2.read_more_text, event_url(@event2) %></p>
+                                  <p style="font-family: Lucida, sans-serif;font-size: 11px;font-weight: normal;color: #666666;margin: 0 0 16px 0;padding: 0;margin-bottom: 0;"><%= @event2.description %> &nbsp;<a href="<%= event_url @event2 %><%= @google_tracking %>"><%= @event2.read_more_text %></a></p>
                                 </td>
                               </tr>
                             </table>
