@@ -70,7 +70,7 @@
         <h2>Events &amp; Shoutouts</h2>
       <% end %>
   
-      <% Event.in_rotation do |event| %>
+      <% Event.in_rotation.each do |event| %>
       <div class="sidebar_content clearfix">
         <h3><%= link_to event.header, event %></h3>
         <div class="event">
