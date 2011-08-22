@@ -72,10 +72,10 @@
   
       <% Event.in_rotation do |event| %>
       <div class="sidebar_content clearfix">
-        <h3><%= link_to @event.header, @event %></h3>
+        <h3><%= link_to event.header, event %></h3>
         <div class="event">
-          <%= link_to image_tag(@event.image1.url, :alt => @event.header), @event %>
-          <p><%= @event.description %>&nbsp;<%= link_to @event.read_more_text, @event %></p> 
+          <%= link_to image_tag(event.image1.url, :alt => event.header), event %>
+          <p><%= event.description %>&nbsp;<%= link_to event.read_more_text, event %></p> 
         </div>
       </div>
       <% end %>
