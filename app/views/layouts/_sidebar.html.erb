@@ -70,18 +70,17 @@
         <h2>Events &amp; Shoutouts</h2>
       <% end %>
   
-      <% unless Event.in_rotation.empty? %>
-        <% @event = Event.in_rotation[rand(Event.in_rotation.size).to_i] %>
-        <div class="sidebar_content clearfix">
-          <h3><%= link_to @event.header, @event %></h3>
-          <div class="event">
-            <%= link_to image_tag(@event.image1.url, :alt => @event.header), @event %>
-            <p><%= @event.description %>&nbsp;<%= link_to @event.read_more_text, @event %></p> 
-          </div>
+      <% Event.in_rotation do |event| %>
+      <div class="sidebar_content clearfix">
+        <h3><%= link_to @event.header, @event %></h3>
+        <div class="event">
+          <%= link_to image_tag(@event.image1.url, :alt => @event.header), @event %>
+          <p><%= @event.description %>&nbsp;<%= link_to @event.read_more_text, @event %></p> 
         </div>
+      </div>
       <% end %>
 
-      <% unless Shoutout.in_rotation.empty? %>
+      <% unless Shoutout.in_rotation.empty? or Event.in_rotation.size > 1 %>
         <% @shoutout = Shoutout.in_rotation[rand(Shoutout.in_rotation.size).to_i] %>
         <div class="sidebar_content clearfix">
           <h3><%= @shoutout.header %></h3>

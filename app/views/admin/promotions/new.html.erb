@@ -95,7 +95,7 @@
   </p>
   <p>
     <%= label_tag 'Duration (in days)' %>
-    <%= select_tag :duration, options_for_select(1..60, :selected => params[:duration].to_i > 0 ? params[:duration].to_i : 14) %> ending at <%= select_tag :end_time, options_for_select([['noon', 12], ['midnight', 0]], :selected => params[:end_time].to_i > 0 ? params[:end_time].to_i : 12) %>
+    <%= select_tag :duration, options_for_select(1..60, :selected => params[:duration].to_i > 0 ? params[:duration].to_i : 14) %> ending at <%= select_tag :end_time, options_for_select([['noon', 12], ['midnight', 0]], :selected => params[:end_time].to_i > 0 ? params[:end_time].to_i : 0) %>
   </p>
   <br>
   <div id="end_date">
