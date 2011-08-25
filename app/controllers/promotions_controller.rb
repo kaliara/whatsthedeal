@@ -12,6 +12,7 @@ class PromotionsController < ApplicationController
       @promotion = Promotion.washingtonian_featured.empty? ? @backup_promotion : Promotion.washingtonian_featured.first
     when 3
       @promotion = Promotion.halfpricedc_featured.empty? ? @backup_promotion : Promotion.halfpricedc_featured.first
+      @side_promotions = Promotion.sidebar([@promotion.id], region)
     else
       if region == 1
         @promotion = Promotion.dc_featured.empty? ? @backup_promotion : Promotion.dc_featured.first
@@ -109,6 +110,7 @@ class PromotionsController < ApplicationController
         @promotion = params[:dc_featured] ? Promotion.washingtonian_featured.first : Promotion.find_by_slug(params[:slug])
       when 3
         @promotion = params[:dc_featured] ? Promotion.halfpricedc_featured.first : Promotion.find_by_slug(params[:slug])
+        @side_promotions = Promotion.sidebar([@promotion.id], region)
       else
         @promotion = params[:dc_featured] ? Promotion.dc_featured.first : Promotion.find_by_slug(params[:slug])
       end
