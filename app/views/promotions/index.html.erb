@@ -51,7 +51,9 @@
             <% elsif promotion.id == 395 %>
               <strong>300</strong>&nbsp;purchases
             <% elsif promotion.id == 291 %>
-              <strong><%= number_with_delimiter(Promotion.find(293).purchases + Promotion.find(294).purchases) %></strong>&nbsp;purchases
+              <strong><%= number_with_delimiter(Promotion.find(293).purchases + Promotion.find(294).purchases) %></strong>&nbsp;purchased
+            <% elsif promotion.id == 537 or promotion.id == 538 or promotion.id == 539 or@promotion.id == 540 %>
+              <strong><%= Promotion.find(538).purchases + Promotion.find(539).purchases + Promotion.find(540).purchases %></strong>&nbsp;&nbsp;purchased
             <% else %>
               <strong><%= number_with_delimiter promotion.purchases %></strong>&nbsp;purchases
             <% end %>

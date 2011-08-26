@@ -247,9 +247,16 @@
               <li><strong><a href="/promotions/236">Wednesday,&nbsp;Nov 24th 7:30 pm</a></strong></li>
               <li><strong><a href="/promotions/237">3-Play Weekday Subscription</a></strong></li>
             </ul>
+          <% elsif @promotion.id == 537 %>
+            <h3 style="padding-left:30px;text-align:left">Choose an area</h3>
+            <ul style="font-size: 120%; line-height: 1.2em;list-style-type: disc; text-align: left; color: #E9EFF3; margin-left: 45px">
+              <li><strong><a href="/promotions/538">DC Metro</a></strong></li>
+              <li><strong><a href="/promotions/540">Suburban Maryland</a></strong></li>
+              <li><strong><a href="/promotions/539">Northern Virginia</a></strong></li>
+            </ul>
           <% elsif !@promotion.ended? and !@promotion.sold_out? and @promotion.id != 291 %>
             <div class="deal_me_in"><%= submit_tag 'Deal Me In', :class => 'primary', :disabled => !@promotion.active? %></div>
-            <%= submit_tag Promotion::BUY_AS_GIFT_LABEL, :class => 'buy_as_gift' unless (@promotion.id == 477 or @promotion.id == 476 or @promotion.id == 501 or @promotion.id == 169) %>
+            <%= submit_tag Promotion::BUY_AS_GIFT_LABEL, :class => 'buy_as_gift' unless (@promotion.id == 477 or @promotion.id == 476 or @promotion.id == 501 or @promotion.id == 169 or @promotion.id == 538 or @promotion.id == 539 or @promotion.id == 540) %>
           <% else %>
           <% end %>
         </div>
@@ -277,6 +284,8 @@
           <strong>&nbsp;</strong>
         <% elsif @promotion.id == 291 or @promotion.id == 293 or @promotion.id == 294 %>
           <strong><%= Promotion.find(293).purchases + Promotion.find(294).purchases %></strong>&nbsp;&nbsp;purchased
+        <% elsif @promotion.id == 537 or @promotion.id == 538 or @promotion.id == 539 or @promotion.id == 540 %>
+          <strong><%= Promotion.find(538).purchases + Promotion.find(539).purchases + Promotion.find(540).purchases %></strong>&nbsp;&nbsp;purchased
         <% elsif @promotion.id == 362 %>
           <strong>1,081</strong>&nbsp;&nbsp;purchased
         <% elsif @promotion.id == 476 %>

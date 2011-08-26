@@ -55,6 +55,8 @@
               <dl class="last">Purchases: <dt></dt><dd><%= Misc.value('promotion_501_purchases', 100) %></dd></dl>
             <% elsif promotion.id == 395 %>
               <dl class="last">Purchases: <dt></dt><dd>300</dd></dl>
+            <% elsif promotion.id == 537 or promotion.id == 538 or promotion.id == 539 or promotion.id == 540 %>
+              <dl class="last">Purchases: <dt></dt><dd><%= Promotion.find(538).purchases + Promotion.find(539).purchases + Promotion.find(540).purchases %></dd></dl>
             <% else %>
               <dl class="last">Purchases: <dt></dt><dd><%= number_with_delimiter promotion.purchases %></dd></dl>
             <% end %>
