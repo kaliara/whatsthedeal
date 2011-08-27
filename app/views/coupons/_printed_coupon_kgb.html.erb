@@ -120,7 +120,17 @@
                               <tbody><tr>
                                   <td class="description">
 
-                      <p><%= render :partial => "/promotions/business_address" %></p>
+                      <p>
+                        <% if coupon.deal.id == 954 %>  
+                        <div class="business_info">
+                          <address>
+                            <br><br>
+                            1630 King Street<br>Alexandria, VA 22314
+                          </address>
+                        </div>
+                        <% else %>
+                          <%= render :partial => "/promotions/business_address" %></p>
+                        <% end %>
 
                                   </td>
                               </tr>

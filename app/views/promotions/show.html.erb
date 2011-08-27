@@ -250,9 +250,9 @@
           <% elsif @promotion.id == 537 %>
             <h3 style="padding-left:30px;text-align:left">Choose an area</h3>
             <ul style="font-size: 120%; line-height: 1.2em;list-style-type: disc; text-align: left; color: #E9EFF3; margin-left: 45px">
-              <li><strong><a href="/promotions/538">DC Metro</a></strong></li>
-              <li><strong><a href="/promotions/540">Suburban Maryland</a></strong></li>
-              <li><strong><a href="/promotions/539">Northern Virginia</a></strong></li>
+              <li><strong><%= link_to promotion_slug_path(Promotion.find(538).slug), "DC Metro" %></strong></li>
+              <li><strong><%= link_to promotion_slug_path(Promotion.find(540).slug), "Suburban Maryland" %></strong></li>
+              <li><strong><%= link_to promotion_slug_path(Promotion.find(539).slug), "Northern Virginia" %></strong></li>
             </ul>
           <% elsif !@promotion.ended? and !@promotion.sold_out? and @promotion.id != 291 %>
             <div class="deal_me_in"><%= submit_tag 'Deal Me In', :class => 'primary', :disabled => !@promotion.active? %></div>
