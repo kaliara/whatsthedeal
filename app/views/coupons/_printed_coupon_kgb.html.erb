@@ -70,6 +70,77 @@
            <% end %>
       <% @promotion = coupon.deal.promotion %>
         
+      <% 
+        case coupon.deal.id
+          when 960
+              coupon.deal.promotion.business.street1 = "5001 Garrett Ave."
+              coupon.deal.promotion.business.city = "Beltsville"
+              coupon.deal.promotion.business.state = "MD"
+              coupon.deal.promotion.business.zipcode = "20705"
+              coupon.deal.promotion.business.phone = "301-595-2056"
+          when 959
+              coupon.deal.promotion.business.street1 = "1235 S. Clark St."
+              coupon.deal.promotion.business.city = "Arlington"
+              coupon.deal.promotion.business.state = "VA"
+              coupon.deal.promotion.business.zipcode = "22202"
+              coupon.deal.promotion.business.phone = "703-415-9642"
+          when 958
+              coupon.deal.promotion.business.street1 = "700 14th Street NW."
+              coupon.deal.promotion.business.city = "Washington"
+              coupon.deal.promotion.business.street1 = "DC"
+              coupon.deal.promotion.business.street1 = "20005"
+              coupon.deal.promotion.business.phone = "202-393-2440"
+          when 957
+              coupon.deal.promotion.business.street1 = "218 Maple Ave West."
+              coupon.deal.promotion.business.city = "Vienna"
+              coupon.deal.promotion.business.state = "VA"
+              coupon.deal.promotion.business.zipcode = "22180"
+              coupon.deal.promotion.business.phone = "703-242-9373"
+          when 956
+              coupon.deal.promotion.business.street1 = "7115 Leesburg Pike #103"
+              coupon.deal.promotion.business.city = "Falls Church"
+              coupon.deal.promotion.business.state = "VA"
+              coupon.deal.promotion.business.zipcode = "22043"
+              coupon.deal.promotion.business.phone = "703-237-3839"
+          when 955
+              coupon.deal.promotion.business.street1 = "6218 Rolling Rd."
+              coupon.deal.promotion.business.city = "Springfield"
+              coupon.deal.promotion.business.state = "VA"
+              coupon.deal.promotion.business.zipcode = "22152"
+              coupon.deal.promotion.business.phone = "703-866-9642"
+          when 954
+              coupon.deal.promotion.business.street1 = "1630 King St."
+              coupon.deal.promotion.business.city = "Alexandria"
+              coupon.deal.promotion.business.state = "VA" 
+              coupon.deal.promotion.business.zipcode = "22314"
+              coupon.deal.promotion.business.phone = "703-684-7717"
+          when 953
+              coupon.deal.promotion.business.street1 = "840 Muddy Branch Rd."
+              coupon.deal.promotion.business.city = "Gaithersburg"
+              coupon.deal.promotion.business.state = "MD" 
+              coupon.deal.promotion.business.zipcode = "20878"
+              coupon.deal.promotion.business.phone = "301-330-4861"
+          when 952
+              coupon.deal.promotion.business.street1 = "13878 Georgia Avenue."
+              coupon.deal.promotion.business.city = "Aspen Hill"
+              coupon.deal.promotion.business.state = "MD"
+              coupon.deal.promotion.business.zipcode = "20906"
+              coupon.deal.promotion.business.phone = "301-871-0480"
+          when 951
+              coupon.deal.promotion.business.street1 = "1065 Rockville Pike."
+              coupon.deal.promotion.business.city = "Rockville"
+              coupon.deal.promotion.business.state = "MD" 
+              coupon.deal.promotion.business.zipcode = "20852"
+              coupon.deal.promotion.business.phone = "301-424-9033"
+          when 950
+              coupon.deal.promotion.business.street1 = "7849 Old Georgetown Rd."
+              coupon.deal.promotion.business.city = "Bethesda"
+              coupon.deal.promotion.business.state = "MD" 
+              coupon.deal.promotion.business.zipcode = "20814"
+              coupon.deal.promotion.business.phone = "301-907-6520"
+        end
+      %>
+  
   
         
       <div id="voucher_div_content">
@@ -120,18 +191,9 @@
                               <tbody><tr>
                                   <td class="description">
 
-                      <p>
-                        <% if coupon.deal.id == 954 %>  
-                        <div class="business_info">
-                          <address>
-                            <br><br>
-                            1630 King Street<br>Alexandria, VA 22314
-                          </address>
-                        </div>
-                        <% else %>
-                          <%= render :partial => "/promotions/business_address" %></p>
-                        <% end %>
-
+                                    <p>
+                                      <%= render :partial => "/promotions/business_address" %>
+                                    </p>
                                   </td>
                               </tr>
                           </tbody></table>
@@ -191,10 +253,10 @@
                           <td width="175" style="padding-right: 30px">
                             <% unless coupon.deal.promotion.id == 259 %>
                               <div class="map">
-                                <% unless coupon.deal.promotion.map_replacement_image.file? %>
-                                  <a href="<%= "http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=#{coupon.deal.promotion.business.street1.gsub(/\s/,"+")}+#{coupon.deal.promotion.business.city.gsub(/\s/,"+")},+#{coupon.deal.promotion.business.state}+#{coupon.deal.promotion.business.zipcode}" %>"><img src="/dc/images/map_default.jpg" id="map<%= coupon.id %>" alt="Map of <%= coupon.deal.promotion.business.name %>" width="<%= mobile ? '315' : '188' %>" align="<%= 'right' unless mobile %>" target="_blank" /></a>
-                                <% else %>
+                                <% if coupon.deal.promotion.map_replacement_image.file? and !(950..960).include?(coupon.deal.id) %>
                                   <%= image_tag coupon.deal.promotion.map_replacement_image.url, {:class => "map_replacement"} %>
+                                <% else %>
+                                  <a href="<%= "http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=#{coupon.deal.promotion.business.street1.gsub(/\s/,"+")}+#{coupon.deal.promotion.business.city.gsub(/\s/,"+")},+#{coupon.deal.promotion.business.state}+#{coupon.deal.promotion.business.zipcode}" %>"><img src="/dc/images/map_default.jpg" id="map<%= coupon.id %>" alt="Map of <%= coupon.deal.promotion.business.name %>" width="<%= mobile ? '315' : '188' %>" align="<%= 'right' unless mobile %>" target="_blank" /></a>
                                 <% end %>
                               </div>
                             <% end %>

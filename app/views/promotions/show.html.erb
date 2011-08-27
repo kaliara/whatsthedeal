@@ -250,9 +250,9 @@
           <% elsif @promotion.id == 537 %>
             <h3 style="padding-left:30px;text-align:left">Choose an area</h3>
             <ul style="font-size: 120%; line-height: 1.2em;list-style-type: disc; text-align: left; color: #E9EFF3; margin-left: 45px">
-              <li><strong><%= link_to promotion_slug_path(Promotion.find(538).slug), "DC Metro" %></strong></li>
-              <li><strong><%= link_to promotion_slug_path(Promotion.find(540).slug), "Suburban Maryland" %></strong></li>
-              <li><strong><%= link_to promotion_slug_path(Promotion.find(539).slug), "Northern Virginia" %></strong></li>
+              <li><strong><%= link_to "DC Metro", promotion_slug_path(Promotion.find(538).slug) %></strong></li>
+              <li><strong><%= link_to "Suburban Maryland", promotion_slug_path(Promotion.find(540).slug) %></strong></li>
+              <li><strong><%= link_to "Northern Virginia", promotion_slug_path(Promotion.find(539).slug) %></strong></li>
             </ul>
           <% elsif !@promotion.ended? and !@promotion.sold_out? and @promotion.id != 291 %>
             <div class="deal_me_in"><%= submit_tag 'Deal Me In', :class => 'primary', :disabled => !@promotion.active? %></div>
@@ -334,6 +334,32 @@
           <%= @promotion.summary %>
           <br><br>
           <%= render :partial => "business_address", :locals => {:promotion => @promotion} %>
+          <% if @promotion.id == 538 %>
+            7000 14th street NW<br>
+            Washington, DC 20005
+          <% elsif @promotion.id == 539 %>
+            <div style="text-align: center">
+              <br>
+              <h3>Virginia Locations</h3>
+              <br>
+              <p>16153 King Street<br>Alexandria, VA</p>
+              <p>6218 Rolling RD<br>Springfield, VA 22152</p>
+              <p>1235 South Clark<br>Arlington, VA 22202</p>
+              <p>7115 Leesburg Pike Suite #103<br>Falls Church, VA 22043</p>
+              <p>218 Maple Ave West<br>Vienna, VA 22043</p>
+            </div>
+          <% elsif @promotion.id == 540 %>
+            <div style="text-align: center">
+              <br>
+              <h3>Maryland Locations</h3>
+              <br>
+              <p>13878 Georgia Avenue<br>Aspen Hill, MD 20906</p>
+              <p>7849 Old Georgetown RD<br>Bethesda MD, 20814</p>
+              <p>840  Muddy Branch RD<br>Gaithersburg MD 20878</p>
+              <p>1065 Rockville Pike<br>Rockville, MD 20852</p>
+              <p>5001 Beltsville Ave<br>Beltsville, MD 20705</p>
+            </div>
+          <% end %>
         </div>
         <div class="ie_clear"></div>
       </div>
