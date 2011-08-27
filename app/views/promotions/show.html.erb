@@ -335,8 +335,11 @@
           <br><br>
           <%= render :partial => "business_address", :locals => {:promotion => @promotion} %>
           <% if @promotion.id == 538 %>
-            7000 14th street NW<br>
-            Washington, DC 20005
+            <div style="text-align: center">
+              <br>
+              7000 14th street NW<br>
+              Washington, DC 20005
+            </div>
           <% elsif @promotion.id == 539 %>
             <div style="text-align: center">
               <br>
