@@ -2,8 +2,6 @@
   <li><%= link_to 'Misc Listing', admin_miscs_path %></li>
 <% end %>
 
-<%= render :partial => "/admin/shared/tiny_mce" %>
-
 <h2>Edit Misc Item</h2>
 
 <% form_for([:admin,@misc]) do |f| %>
@@ -15,7 +13,7 @@
   </p>
   <p>
     <%= f.label :value %><br />
-    <%= f.text_field :value, :cols => 30 %><br><br>
+    <%= f.text_area :value, :cols => 30, :rows => 20 %><br><br>
   </p>
   <p>
     <%= f.submit 'Update' %>

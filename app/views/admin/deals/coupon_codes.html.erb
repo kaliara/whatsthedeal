@@ -10,4 +10,9 @@
 
 <br><br>
 
-<ol><%= @coupon_codes.collect{|cc| "<li>" + cc + "</li>" } %></ol>
+<ol>
+  <% for x in 1..@num do %>
+    <% @sample_coupon.number = x %>
+    <li><%= @sample_coupon.coupon_code %></li>
+  <% end %>
+</ol>

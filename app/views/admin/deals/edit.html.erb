@@ -1,6 +1,7 @@
 <% content_for :sub_nav do %>
   <li><%= link_to 'Deal Listing', admin_deals_path %></li>
   <li><%= link_to "Coupon Sample", admin_sample_coupon_path(:sample_for_deal => @deal.id) %></li>
+  <li><%= link_to "Coupon Codes", admin_coupon_codes_path(:deal_id => @deal.id, :num => 100) if (@deal.has_coupon_code? or @deal.pregenerated_codes?)  %></li>
 <% end %>
 
 <%= render :partial => "/admin/shared/tiny_mce" %>
@@ -84,6 +85,10 @@
     <%= f.label :has_coupon_code %>
   </p>
   <div id="coupon_code" style="<%= "display:none" unless @deal.has_coupon_code? %>">
+    <p>
+      <%= f.check_box :pregenerated_codes %>
+      <%= f.label :pregenerated_codes %> (<%= link_to "create a Misc entry", new_admin_misc_path(:key => "deal_#{@deal.id}_codes") %> called "deal_<%= @deal.id %>_codes" and paste the codes in there)
+    </p>
     <p>
       <%= f.label :coupon_code_prefix %> (or for Hard-coded)<br />
       <%= f.text_field :coupon_code_prefix %>

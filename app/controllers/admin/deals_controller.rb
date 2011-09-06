@@ -99,12 +99,7 @@ class Admin::DealsController < ApplicationController
   def coupon_codes
     @deal = Deal.find(params[:deal_id])
     @num = params[:num].to_i > 0 ? params[:num].to_i : 100
-    @coupon_codes = []
-    
-    # should match what is in Coupon.coupon_code function
-    (1..@num).to_a.each do |i|
-      @coupon_codes << @deal.coupon_code_prefix + (@deal.coupon_code_start + (@deal.coupon_code_delta * i)).to_s(@deal.coupon_code_number_base).upcase
-    end
+    @sample_coupon = Coupon.new(:deal_id => @deal.id, :number => 1)
   end
   
   # email and activate coupons

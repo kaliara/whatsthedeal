@@ -14,7 +14,7 @@
 <% @miscs.each do |misc| %>
   <tr class="misc_entry">
     <td><%= misc.key %></td>
-    <td><%= strip_tags truncate(misc.value, :length => 200) %></td>
+    <td><%= strip_tags truncate(misc.value, :length => 100) %></td>
     <td><%= link_to 'Edit', edit_admin_misc_path(misc) %></td>
     <td><%= link_to 'Destroy', admin_misc_path(misc), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>

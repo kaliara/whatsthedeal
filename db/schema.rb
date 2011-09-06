@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110708152244) do
+ActiveRecord::Schema.define(:version => 20110906185417) do
 
   create_table "accountants", :force => true do |t|
     t.integer  "user_id"
@@ -221,6 +221,7 @@ ActiveRecord::Schema.define(:version => 20110708152244) do
     t.integer  "coupon_code_number_base", :limit => 10, :precision => 10, :scale => 0, :default => 16
     t.boolean  "active",                                                               :default => true
     t.integer  "kgb_deal_id",                                                          :default => 1
+    t.boolean  "pregenerated_codes",                                                   :default => false
   end
 
   create_table "delayed_emails", :force => true do |t|
@@ -339,7 +340,7 @@ ActiveRecord::Schema.define(:version => 20110708152244) do
 
   create_table "miscs", :force => true do |t|
     t.string   "key"
-    t.string   "value"
+    t.text     "value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

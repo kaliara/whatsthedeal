@@ -82,7 +82,12 @@
     <%= f.check_box :has_coupon_code, :onclick => "getElementById('coupon_code').style.display='block';" %>
     <%= f.label :has_coupon_code %>
   </p>
+  
   <div id="coupon_code" style="<%= "display:none" unless @deal.has_coupon_code? %>">
+    <p>
+      <%= f.check_box :pregenerated_codes %>
+      <%= f.label :pregenerated_codes %> (check this if codes are provided for you)
+    </p>
     <p>
       <%= f.label :coupon_code_prefix %> (or for Hard-coded)<br />
       <%= f.text_field :coupon_code_prefix %>
