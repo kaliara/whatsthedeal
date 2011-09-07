@@ -2,6 +2,8 @@
   <li><%= link_to 'Misc Listing', admin_miscs_path %></li>
 <% end %>
 
+<%= render :partial => "/admin/shared/tiny_mce" %>
+
 <h2>Edit Misc Item</h2>
 
 <% form_for([:admin,@misc]) do |f| %>
