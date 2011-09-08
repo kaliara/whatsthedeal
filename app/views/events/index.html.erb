@@ -17,7 +17,7 @@
               <dl class="clearfix">
                 <dt>You Pay</dt><dd><%= number_to_currency promotion.featured_deal.price, :precision => (has_cents?(promotion.featured_deal.price) ? 2 : 0) %></dd>
               </dl>
-              <% unless promotion.id == 359 %>
+              <% unless promotion.id == 359 or (promotion.featured_deal.value == promotion.featured_deal.price) %>
                 <dl class="clearfix">
                   <dt>Value</dt><dd><%= number_to_currency promotion.featured_deal.value, :precision => (has_cents?(promotion.featured_deal.value) ? 2 : 0) %></dd>
                 </dl>
