@@ -318,7 +318,7 @@
   <div class="promotion_tabs">
     <%= link_to 'Summary', '#summary', :class => 'tab active_tab', :id => 'tab_summary', :onclick => "showTab('summary'); return false;" %>
     <%= link_to 'Details', '#details', :class => 'tab', :id => 'tab_details', :onclick => "showTab('details'); return false;" %>
-    <%= link_to 'Reviews', '#reviews', :class => 'tab', :id => 'tab_reviews', :onclick => "showTab('reviews'); return false;" %>
+    <%= link_to 'Reviews', '#reviews', :class => 'tab', :id => 'tab_reviews', :onclick => "showTab('reviews'); return false;" unless @promotion.body2.empty? %>
     <%= link_to 'Fine Print', '#restrictions', :class => 'tab', :id => 'tab_restrictions', :onclick => "showTab('restrictions'); return false;" %>
     
     <div class="tab_content clearfix">
