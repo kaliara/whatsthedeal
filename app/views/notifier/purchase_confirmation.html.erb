@@ -22,7 +22,7 @@
         <% unless @purchase.credits.empty? %>
           <li><span><label style="margin-right: 10px;">WTD Credit used:</label><strong style="color: #F5A73A;"><%= number_to_currency([@purchase.credits.collect{|c| c.value}.to_a.sum, @purchase.deals_total].min, :precision => 0)%></strong></span></li>
         <% end %>
-        <li><span><label style="margin-right: 10px;">Total<%= " (after credits)" unless @purchase.credits.empty? %>:</label><strong style="color: #F5A73A;"><%= number_to_currency @purchase.total %></strong></span></li>
+        <li><span><label style="margin-right: 10px;">Total<%= " (after credits used)" unless @purchase.credits.empty? %>:</label><strong style="color: #F5A73A;"><%= number_to_currency @purchase.total %></strong></span></li>
         
         </ul>
       </td>
