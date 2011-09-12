@@ -3,8 +3,8 @@ class EventsController < ApplicationController
   layout :hyrbrid_layout_application
 
   def index
-    # @promotions = [Promotion.find(556)]
-    @promotions = []
+    @promotions = [Promotion.find(556)]
+    # @promotions = []
     @events = Event.find(:all, :conditions => ['rotation_start_date <= ? and rotation_end_date >= ?', Time.zone.now, Time.zone.now], :order => 'created_at DESC')
     
     session[:stored_promotion_code_id] = nil
