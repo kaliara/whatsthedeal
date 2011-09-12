@@ -43,7 +43,9 @@
                     <% else %>  
                       <dd><%= number_to_currency deal.price, :precision => (has_cents?(deal.price) ? 2 : 0) %></dd>
                     <% end %>
-                    <dt>Value:</dt>&nbsp;<dd><%= number_to_currency deal.value, :precision => (has_cents?(deal.value) ? 2 : 0) %></dd>
+                    <% unless deal.value == deal.price %>
+                      <dt>Value:</dt>&nbsp;<dd><%= number_to_currency deal.value, :precision => (has_cents?(deal.value) ? 2 : 0) %></dd>
+                    <% end %>
                   </dl>
                 <% end %>
               </div>
@@ -67,7 +69,7 @@
                   <dd><%= number_to_currency @promotion.featured_deal.price, :precision => (has_cents?(@promotion.featured_deal.price) ? 2 : 0) %></dd>
                 <% end %>
               </dl>
-              <% unless @promotion.id == 359 %>
+              <% unless @promotion.id == 359 or (@promotion.featured_deal.value == @promotion.featured_deal.price) %>
                 <dl class="clearfix">
                   <dt>Value</dt><dd><%= number_to_currency @promotion.featured_deal.value, :precision => (has_cents?(@promotion.featured_deal.value) ? 2 : 0) %></dd>
                 </dl>
