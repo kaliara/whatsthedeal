@@ -28,7 +28,7 @@ class Coupon < ActiveRecord::Base
     return "" unless (self.deal.has_coupon_code? or self.deal.pregenerated_codes?)
     
     if self.deal.pregenerated_codes?
-      Misc.value("deal_#{self.deal.id}_codes","CODEnotFOUND").split(/[<br\s\/>|\W]/).delete_if{|x| x.blank?}[self.number - 1].to_s
+      Misc.value("deal_#{self.deal.id}_codes","CODEnotFOUND").split(/<br\s?\/?>|\W/i).delete_if{|x| x.blank?}[self.number - 1].to_s
     elsif self.deal.coupon_code_delta.to_i > 0
       self.deal.coupon_code_prefix + (self.deal.coupon_code_start + (self.deal.coupon_code_delta * self.number)).to_s(self.deal.coupon_code_number_base).upcase
     else
