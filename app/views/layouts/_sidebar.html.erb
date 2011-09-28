@@ -10,9 +10,9 @@
       <% unless @alt_featured_promotion.nil? %>
         <h2>
           <% if @back_to_regular %>
-            <%= region == 1 ? "DC Featured Deal" : "NOVA Featured Deal" %>
+            <%= region == 1 ? "DC Featured Deal" : "Featured Side Deal" %>
           <% else %>
-            <%= region == 1 ? "NOVA Featured Deal" : "DC Featured Deal" %>
+            <%= region == 1 ? "Featured Side Deal" : "DC Featured Deal" %>
           <% end %>
         </h2>
         <div class="sidebar_content">
