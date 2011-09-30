@@ -22,7 +22,9 @@
      <h1>WTD Admin</h1>
   </div>
 
-  <% if current_user and (current_user.staff? or current_user.accountant?) %>
+  <% if current_user and current_user.admin.id == Admin::LIZ %>
+    <%= link_to "New Deal", new_admin_deal_path %>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "Current Deals", admin_deals_path %><br><br>
+  <% elsif current_user and (current_user.staff? or current_user.accountant?) %>
     <ul id="nav">
       <% if current_user and current_user.staff? %>
         <li>Main
