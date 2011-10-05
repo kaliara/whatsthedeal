@@ -107,12 +107,14 @@
           </ul>
         </li>
         <% end %>
-
+      <% end %>
+      
+      <% if current_user and (current_user.accountant? or current_user.staff?) %>
         <li>Business
           <ul>
             <li><%= link_to "Businesses", admin_businesses_path %></li>                
             <li><%= link_to "Payment Status", admin_business_status_path %></li>                
-            <% if current_user and current_user.admin? %><li><%= link_to "Business Payments", admin_business_payments_path %></li><% end %>
+            <% if current_user and current_user.accountant? %><li><%= link_to "Business Payments", admin_business_payments_path %></li><% end %>
             <% if current_user and current_user.admin? %><li><%= link_to "Origins", admin_origins_path %></li><% end %>
           </ul>
         </li>          
