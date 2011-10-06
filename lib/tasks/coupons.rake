@@ -18,20 +18,20 @@ namespace :coupons do
 
   desc "Emails coupons that are activated and marks them as emailed"
   task :email => :environment do
-    User.all.each do |user|
-      coupons_to_email = []
-      user.coupons.each do |coupon|
-        if coupon.active? and !coupon.emailed? and !coupon.gift? and !coupon.shippable?
-          coupons_to_email << coupon
-          coupon.emailed!
-        end
-      end
-      
-      unless coupons_to_email.empty? or !user.gets_coupon_ready_email?
-        Notifier.deliver_coupons_ready_notification(user, coupons_to_email)
-        puts "Emailed coupon for #{user.email}."
-      end
-    end
+   Coupon.find(:all, :conditions => {:emailed => false, :active => true, :gift => false}).collect{|c| c.user}.uniq.each do |user|
+     coupons_to_email = []
+     user.coupons.each do |coupon|
+       if coupon.active? and !coupon.emailed? and !coupon.gift? and !coupon.shippable?
+         coupons_to_email << coupon
+         coupon.emailed!
+       end
+     end
+
+     unless coupons_to_email.empty? or !user.gets_coupon_ready_email?
+       Notifier.deliver_coupons_ready_notification(user, coupons_to_email)
+       puts "Emailed coupon for #{user.email}."
+     end
+   end
   end
 
   desc "Emails gift coupons to gift recipient and marks coupons as emailed"
@@ -39,12 +39,14 @@ namespace :coupons do
     Coupon.find(:all, :conditions => ['gift = ? and active = ? and emailed = ? and gift_send_date <= ? and gift_email is not null', true, true, false, DateTime.new(Date.today.year, Date.today.month, Date.today.day,23,59,0)]).each do |coupon|
       email_match = coupon.gift_email =~ /^[A-Z0-9._%-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
       unless email_match.nil?
-        if coupon.gifted_credit?
-          Notifier.deliver_coupon_gifted_credit_received(coupon)        
-        else
-          Notifier.deliver_coupon_gift_received(coupon)
+        unless coupon.shippable?
+          if coupon.gifted_credit?
+            Notifier.deliver_coupon_gifted_credit_received(coupon)        
+          else
+            Notifier.deliver_coupon_gift_received(coupon)
+          end
+          Notifier.deliver_coupon_gift_sent(coupon)
         end
-        Notifier.deliver_coupon_gift_sent(coupon)
         coupon.emailed!
         puts "Emailed gift to #{coupon.gift_email}."
       else
