@@ -47,23 +47,25 @@ class ApplicationController < ActionController::Base
   
   # partner subdomain check
   def partner
-    return @partner if defined?(@partner)
-    
-    if !request.subdomains.empty? and (request.subdomains.first == 'washingtonian')
-      @partner = 0
-    elsif !request.subdomains.empty? and (request.subdomains.first == 'halfpricedc')
-      @partner = 3
-    else
-      @partner = 0
-    end
-    @partner
+    return 0
+    # return @partner if defined?(@partner)
+    # 
+    # if !request.subdomains.empty? and (request.subdomains.first == 'washingtonian')
+    #   @partner = 0
+    # elsif !request.subdomains.empty? and (request.subdomains.first == 'halfpricedc')
+    #   @partner = 3
+    # else
+    #   @partner = 0
+    # end
+    # @partner
   end
   
   def hyrbrid_layout_application
     if mobile
       'mobile'
     else
-      ['application','sloopy','washingtonian','halfpricedc'][partner]
+      # ['application','sloopy','washingtonian','halfpricedc'][partner]
+      'application'
     end
   end
   
@@ -71,7 +73,8 @@ class ApplicationController < ActionController::Base
     if mobile
       'mobile'
     else
-      ['no_sidebar','sloopy','washingtonian','halfpricedc'][partner]
+      # ['no_sidebar','sloopy','washingtonian','halfpricedc'][partner]
+      'no_sidebar'
     end
   end
   
