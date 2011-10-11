@@ -81,7 +81,7 @@ class Business::PurchasesController < ApplicationController
       @deals = [Promotion.find(:all, :conditions => {:business_id => @business_ids}, :order => 'id DESC').collect{|a|a.deals.collect{|d|d.id}}.flatten.first]
     end
 
-    @coupons = Coupon.find(:all, :conditions => ['deal_id in (?) and mobile_used = ? and redemption_date >= ? and redemption_date < ?', @deals.join(','), true, @start_date, @end_date + 1.day], :order => 'redemption_date ASC')
+    @coupons = Coupon.find(:all, :conditions => ["deal_id in (#{@deals.join(',')}) and mobile_used = ? and redemption_date >= ? and redemption_date < ?", true, @start_date, @end_date + 1.day], :order => 'redemption_date ASC')
     
     render :action => 'mobile_redemptions'
   end
