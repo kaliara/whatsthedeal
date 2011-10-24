@@ -273,7 +273,11 @@
         <div class="deal_ended">Sorry, but this deal is over</div>
       <% else %>
         <% if @promotion.sold_out? %>
-          <div class="almost_over deal_ended"><strong>Sorry, But This Deal is Sold Out</strong></div>
+          <% if @promotion.id == 625 %>
+            <div class="almost_over deal_ended"><strong><%= render_content('alt_sold_out_message') %></strong></div>
+          <% else %>
+            <div class="almost_over deal_ended"><strong>Sorry, But This Deal is Sold Out</strong></div>
+          <% end %>
         <% else %>
           <div class="time_left <%= 'almost_over' if @promotion.almost_over? %>">
             Time Left:&nbsp;&nbsp;<strong><%= distance_of_time_in_words_to_now(@promotion.end_date) unless @promotion.ended? %></strong>
