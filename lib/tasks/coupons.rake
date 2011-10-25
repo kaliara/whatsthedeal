@@ -1,19 +1,29 @@
 namespace :coupons do
   desc "Activates coupons whose promotion has reached its quota"
   task :activate => :environment do
-    Promotion.all.each do |promotion|
-      puts "Checking quota of promotion: #{promotion.name}"
-      if promotion.purchases >= promotion.quota
-        puts "This promotion has reached its quota"
-        promotion.deals.each do |deal|
-          deal.coupons.inactive.each do |coupon|  
-            if coupon.activate!
-              puts coupon.name + " ACTIVATED FOR " + coupon.user.customer.name
-            end
-          end
+    Coupon.inactive.collect{|c| c.deal.promotion}.uniq.each do |promotion|
+      if promotion.quota_met?
+        puts "quota met for #{promotion.name}"
+        promotion.coupons.inactive.each do |coupon|
+          coupon.active = true
+          coupon.save!
+          # puts coupon.name + " ACTIVATED FOR " + coupon.user.customer.name
         end
       end
     end
+    # Promotion.all.each do |promotion|
+    #   puts "Checking quota of promotion: #{promotion.name}"
+    #   if promotion.purchases >= promotion.quota
+    #     puts "This promotion has reached its quota"
+    #     promotion.deals.each do |deal|
+    #       deal.coupons.inactive.each do |coupon|  
+    #         if coupon.activate!
+    #           puts coupon.name + " ACTIVATED FOR " + coupon.user.customer.name
+    #         end
+    #       end
+    #     end
+    #   end
+    # end
   end
 
   desc "Emails coupons that are activated and marks them as emailed"
