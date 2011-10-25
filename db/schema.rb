@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110906185417) do
+ActiveRecord::Schema.define(:version => 20111025155329) do
 
   create_table "accountants", :force => true do |t|
     t.integer  "user_id"
@@ -148,6 +148,8 @@ ActiveRecord::Schema.define(:version => 20110906185417) do
     t.boolean  "refunded",              :default => false
     t.boolean  "deleted",               :default => false
   end
+
+  add_index "coupons", ["deleted", "refunded", "deal_id"], :name => "coupons_idx"
 
   create_table "credits", :force => true do |t|
     t.integer  "user_id"
@@ -452,6 +454,8 @@ ActiveRecord::Schema.define(:version => 20110906185417) do
     t.boolean  "send_reminders",                                                    :default => true
   end
 
+  add_index "promotions", ["start_date", "end_date", "active", "hidden"], :name => "promotions_idx"
+
   create_table "purchases", :force => true do |t|
     t.string   "invoice_number"
     t.datetime "created_at"
@@ -585,6 +589,7 @@ ActiveRecord::Schema.define(:version => 20110906185417) do
   end
 
   add_index "users", ["email"], :name => "email", :unique => true
+  add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
 
   create_table "voids", :force => true do |t|
     t.integer  "purchase_id"
