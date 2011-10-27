@@ -26,6 +26,11 @@
   </p>
   <br>
   <p>
+    <%= f.label :salesperson, "Sales Person" %><br />
+    <%= f.select :salesperson, Promotion::SALESPEOPLE %>
+  </p>
+  <br>
+  <p>
     <%= f.label :name %><br />
     <%= f.text_field :name, :onkeyup => "updateSlugName();" %>
   </p>
@@ -134,6 +139,10 @@
   <p>
     <%= f.check_box :physical_address %>
     <%= f.label :physical_address %> (if not checked, will NOT show up on deal map)
+  </p>
+  <p>
+    <%= f.check_box :national %>
+    <%= f.label :national, "National Deal" %>
   </p>
   <br><br>
   <p>

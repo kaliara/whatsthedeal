@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111025155329) do
+ActiveRecord::Schema.define(:version => 20111027182429) do
 
   create_table "accountants", :force => true do |t|
     t.integer  "user_id"
@@ -342,7 +342,7 @@ ActiveRecord::Schema.define(:version => 20111025155329) do
 
   create_table "miscs", :force => true do |t|
     t.string   "key"
-    t.text     "value"
+    t.text     "value",      :limit => 2147483647
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -452,6 +452,8 @@ ActiveRecord::Schema.define(:version => 20111025155329) do
     t.integer  "dc_position",                                                       :default => 99
     t.integer  "nova_position",                                                     :default => 99
     t.boolean  "send_reminders",                                                    :default => true
+    t.string   "salesperson",                                                       :default => "Unknown"
+    t.boolean  "national",                                                          :default => false
   end
 
   add_index "promotions", ["start_date", "end_date", "active", "hidden"], :name => "promotions_idx"

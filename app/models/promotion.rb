@@ -51,6 +51,7 @@ class Promotion < ActiveRecord::Base
   PROMOTION_MAP_DEFAULT_LNG = -77.036594
   TRANSITION_TO_NEW_COUPON_STYLE = Date.parse('2011-08-07')
   CITIES = [['All Cities',0], ['Washington DC',1], ['Northern Virginia',2], ['Southern Maryland',3]]
+  SALESPEOPLE = ['Unknown','Brian Jarcho','Jason Modzeleski','Juan Tapia','Bill, Ledbetter','Rob Schutz','Inside Sales']
   
   def active?
     self.active == true and self.start_date < Time.now.utc and self.end_date > Time.now.utc

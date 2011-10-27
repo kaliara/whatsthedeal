@@ -28,6 +28,10 @@
     <%= f.label :partner_id, 'Sourced by Partner' %><br />
     <%= f.select :partner_id, [['No', 0], ['Washingtonian', 2], ['Half Price DC', 3], ['OnTap Magazine', 4]] %>
   </p>
+  <p>
+    <%= f.label :salesperson, "Sales Person" %><br />
+    <%= f.select :salesperson, Promotion::SALESPEOPLE %>
+  </p>
   <br>
   <p>
     <%= f.label :name %><br />
@@ -146,6 +150,10 @@
   <p>
     <%= f.check_box :physical_address %>
     <%= f.label :physical_address %> (if not checked, will NOT show up on deal map)
+  </p>
+  <p>
+    <%= f.check_box :national %>
+    <%= f.label :national, "National Deal" %>
   </p>
   <br>
   <p>
