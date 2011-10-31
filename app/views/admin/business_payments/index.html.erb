@@ -70,10 +70,10 @@
             <td style="text-align:left"><%= promotion.id %></td>
             <td style="text-align:left;font-size:80%"><strong><%= promotion.name %></strong> (ends <%= promotion.end_date.strftime("%e %b %Y") %>)</td>
             <td style="text-align:right"><%= promotion.initial_purchases %></td>
-            <td style="text-align:right"><%= number_to_currency promotion.initial_revenue %></td>
-            <td style="text-align:right"><%= number_to_currency promotion.refund_amount %></td>
-            <td style="text-align:right"><%= number_to_percentage (100.00 - promotion.profit_percentage.to_f, :precision => 2) %></td>
-            <td style="text-align:center"><%= number_to_currency(promotion.revenue - promotion.credit_used - promotion.business_profit) %></td>
+            <td style="text-align:right"><%# number_to_currency promotion.initial_revenue %> (n/c)</td>
+            <td style="text-align:right"><%# number_to_currency promotion.refund_amount %> (n/c)</td>
+            <td style="text-align:right"><%# number_to_percentage (100.00 - promotion.profit_percentage.to_f, :precision => 2) %> (n/c)</td>
+            <td style="text-align:center"><%# number_to_currency(promotion.revenue - promotion.credit_used - promotion.business_profit) %> (n/c)</td>
             <td style="text-align:right" class="total"><%= number_to_currency promotion.business_profit %></td>
 
             <% form_for ([:admin,@business_payment]) do |f| %>
