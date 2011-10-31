@@ -5,7 +5,7 @@
 
 # Example:
 
-every 4.hour, :at => 15 do
+every 1.hour, :at => 15 do
   command 'cd /home/kaliara/public_html/wtd/current/public/system/assets/kgb_vouchers && lftp -f download.lftp'
 end
 
@@ -30,45 +30,42 @@ end
 
 every 1.day, :at => '5:35 am' do
   rake "cleanup:carts"
-  #rake "cleanup:credits"
 end
 
 every 4.hours do
-  # rake "cleanup:cart_items"
+  rake "cleanup:cart_items"
 end
 
-every 4.hour, :at => 20 do
+every 1.hour, :at => 25 do
   rake "kgb:import_vouchers"
 end
 
-# every 10.minutes do
-every 2.hours do
+every 10.minutes do
   rake "delayed_emails:email"
 end
 
-# every 27.minutes do
-every 4.hours do
+every 27.minutes do
   rake "subscriptions:update" 
 end
-# 
-# every 1.day, :at => '1:00 am' do
-#   rake "reminders:email"
-# end
-# every 1.day, :at => '5:00 am' do
-#   rake "reminders:email"
-# end
-# every 1.day, :at => '9:00 am' do
-#   rake "reminders:email"
-# end
+
+every 1.day, :at => '1:00 am' do
+  rake "reminders:email"
+end
+every 1.day, :at => '5:00 am' do
+  rake "reminders:email"
+end
+every 1.day, :at => '9:00 am' do
+  rake "reminders:email"
+end
 every 1.day, :at => '1:00 pm' do
   rake "reminders:email"
 end
-# every 1.day, :at => '5:00 pm' do
-#   rake "reminders:email"
-# end
-# every 1.day, :at => '9:00 pm' do
-#   rake "reminders:email"
-# end
+every 1.day, :at => '5:00 pm' do
+  rake "reminders:email"
+end
+every 1.day, :at => '9:00 pm' do
+  rake "reminders:email"
+end
 
 
 
