@@ -12,23 +12,23 @@ end
 set :output, "log/cron_log.log"
 
 
-every 1.day, :at => '3:50 am' do
+every 1.day, :at => '4:50 am' do
   rake "coupons:activate"
 end
 
-every 1.day, :at => '5:05 am' do
+every 1.day, :at => '6:05 am' do
   rake "coupons:email"
 end
 
-every 1.day, :at => '6:05 am' do
+every 1.day, :at => '7:05 am' do
   rake "coupons:send_gifts"
 end
 
-every 1.day, :at => '5:15 am' do
+every 1.day, :at => '6:15 am' do
   rake "coupons:reminder"
 end
 
-every 1.day, :at => '5:35 am' do
+every 1.day, :at => '6:35 am' do
   rake "cleanup:carts"
 end
 
