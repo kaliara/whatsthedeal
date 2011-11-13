@@ -54,10 +54,11 @@
   <div class="main_wrapper wrapper clearfix">  
     <div class="page_content">
       <%= yield :errors %>
-      
+      <p class="notice">Due to a problem during the upgrade process, kgb vouchers might not show up on the system until Monday morning at 1pm
+        </p>
       <% unless flash[:notice].blank? and flash[:error].blank? %>
         <div class="flash">
-          <% unless flash[:notice].blank? %><p class="notice">Due to a problem during the upgrade process, kgb vouchers might not show up on the system until Monday morning at 1pm<br><%= flash[:notice] %></p><% end %>
+          <% unless flash[:notice].blank? %><p class="notice"><%= flash[:notice] %></p><% end %>
           <% unless flash[:error].blank?  %><p class="error"><%= flash[:error] %></p><% end %>
         </div>
       <% end %>
