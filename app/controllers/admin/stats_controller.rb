@@ -23,7 +23,8 @@ class Admin::StatsController < ApplicationController
       @date = @date + 1.month
     end
     
-    @outstanding_credit = Credit.find(:all, :conditions => ['user_id is not null and promotion_code_id != 2 and purchase_id is null']).collect{|c| c.value}.sum
+    # @outstanding_credit = Credit.find(:all, :conditions => ['user_id is not null and promotion_code_id != 2 and purchase_id is null']).collect{|c| c.value}.sum
+    @outstanding_credit = Credit.find(:all, :conditions => ['user_id is not null and purchase_id is null']).collect{|c| c.value}.sum
   end
   
   def zipcode_counts
