@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  # new promotions link
+  map.new_promo_show '/old_promos/:slug', :controller => 'promotions', :action => 'show', :requirements => {:protocol => "http"}
 
   # old urls
   map.connect 'deal/access/:deal_id/:user_id', :controller => 'coupons', :action => 'legacy', :requirements => {:protocol => "http"}
