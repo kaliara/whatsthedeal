@@ -112,7 +112,7 @@ ActionController::Routing::Routes.draw do |map|
   map.grab_bag '/promotions/grab_bag', :controller => 'promotions', :action => 'grab_bag'
   map.promotions_nova '/promotions/nova', :controller => 'promotions', :action => 'index', :city_id => 2
   map.promotions_submd '/promotions/submd', :controller => 'promotions', :action => 'index', :city_id => 3
-  map.promotion_slug '/promotions/:slug', :controller => 'promotions', :action => 'show' 
+  map.promotion_slug '/old_promos/:slug', :controller => 'promotions', :action => 'show' 
 
   # businesses stuff
   map.connect '/business/purchases/bulk_use', :controller => '/business/purchases', :action => 'bulk_use'

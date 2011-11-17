@@ -1,5 +1,5 @@
 <% content_for :sub_nav do %>
-  <li><%= link_to 'Show this Promotion', special_preview_path(:slug => @promotion.slug, :password => Promotion::PREVIEW_PASSWORD) %></li>
+  <li><%= link_to 'Show this Promotion', promotion_slug_url(:slug => @promotion.slug, :host => "sowhatsthedeal.com") %></li>
   <li><%= link_to 'Edit this Promotion', edit_admin_promotion_path(:id => @promotion.id) %></li>
   <li><%= link_to 'Show Deals', admin_deals_path(:promotion_id => @promotion.id) %></li>
   <li>&nbsp;&nbsp;</li>
