@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111027182429) do
+ActiveRecord::Schema.define(:version => 20111118154746) do
 
   create_table "accountants", :force => true do |t|
     t.integer  "user_id"
@@ -147,6 +147,7 @@ ActiveRecord::Schema.define(:version => 20111027182429) do
     t.integer  "gifted_promotion_code"
     t.boolean  "refunded",              :default => false
     t.boolean  "deleted",               :default => false
+    t.string   "access_token"
   end
 
   add_index "coupons", ["deleted", "refunded", "deal_id"], :name => "coupons_idx"

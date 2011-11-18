@@ -29,6 +29,7 @@ ActionController::Routing::Routes.draw do |map|
   map.edit_coupon_gift   'edit_coupon_gift/:id',   :controller => 'coupons', :action => 'edit_gift'
   map.update_coupon_gift 'update_coupon_gift/:id', :controller => 'coupons', :action => 'update_gift'
   map.gift               '/gift/:token',           :controller => 'coupons', :action => 'show_gift'
+  map.voucher       '/voucher/:access_token',      :controller => 'coupons', :action => 'show', :direct => "yes"
   map.buy_credit         '/promotions/buy_credit', :controller => 'promotions', :action => 'buy_credit'
   map.coupon_shipping_details '/coupons/:id/shipping_details', :controller => 'coupons', :action => 'shipping_details'
   

@@ -13,7 +13,7 @@ class Coupon < ActiveRecord::Base
   named_scope :printed,  :conditions => {:printed => true}
   named_scope :inactive, :conditions => {:active => false}  
   
-  before_save :valid_gift?
+  # before_save :valid_gift?
   after_create :generate_confirmation_code, :generate_gift_access_token
   
   def name
@@ -51,6 +51,11 @@ class Coupon < ActiveRecord::Base
       self.gift_access_token = Digest::MD5.hexdigest(self.gift_name.reverse + self.id.to_s)
       self.save
     end
+  end
+  
+  def generate_access_token
+    self.access_token = Digest::MD5.hexdigest(self.id.to_s + self.confirmation_code)
+    self.save
   end
   
   def expiration
