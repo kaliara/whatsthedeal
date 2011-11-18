@@ -6,6 +6,8 @@
 
 <% if params[:new_gift] %>
   <div class="notice">This coupon is now a gift and can be accessed by the recipient at: <%= @coupon.gift_access_token.nil? ? "(error)" : link_to(gift_url(:token => @coupon.gift_access_token, :host => "sowhatsthedeal.com"), gift_url(:token => @coupon.gift_access_token, :host => "sowhatsthedeal.com")) %>.  If you have chosen to send an email, the recipient will receive this information in an email.</div>
+<% elsif current_user and current_user.admin %>
+  <div class="notice">The customer can directly access this voucher at: <%= voucher_url(@coupon.access_code, :host => "sowhatsthedeal.com") %></div>
 <% end %>
 
 <%= render :partial => (@coupon.deal.promotion.updated_coupon_style? ? "/coupons/printed_coupon_kgb" : "/coupons/printed_coupon"), :locals => {:coupon => @coupon} %>

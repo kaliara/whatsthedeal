@@ -50,6 +50,8 @@ class CouponsController < ApplicationController
     unless @coupon.nil?
       @coupon.printed! unless @coupon.printed?
       render :action => 'show'
+    else
+      redirect_to :back
     end
   end
         

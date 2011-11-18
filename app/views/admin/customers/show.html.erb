@@ -35,7 +35,7 @@
             <div class="coupon_container">
           	  <div class="coupon">
           		  <div class="coupon_content">
-          			  <h5><%= link_to coupon.name, admin_coupon_path(coupon.id) %></h5>
+          			  <h5><%= link_to coupon.name, voucher_path(coupon.access_token) %></h5>
           			  <p class="expiration_date">Expires: <%=h coupon.expiration.strftime("%m/%d/%Y") %></p>
           		  </div>
           	  </div>
