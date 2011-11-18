@@ -31,7 +31,7 @@ class CouponsController < ApplicationController
     @on_my_account = true
     session[:force_full_site] = false
     
-    @coupon = (params[:direct] == "yes" ? Coupon.find_by_access_token(params[:access_token]) : (Coupon.find(params[:id])))
+    @coupon = Coupon.find(params[:id])
     
     if @coupon.shippable?
       flash.now[:error] = "Sorry, but this is a physical coupon that we have mailed to you, So you can't view or print it."
@@ -45,6 +45,14 @@ class CouponsController < ApplicationController
     end
   end
   
+  def show_direct
+    @coupon = Coupon.find_by_access_token(params[:access_token])
+    unless @coupon.nil?
+      @coupon.printed! unless @coupon.printed?
+      render :action => 'show'
+    end
+  end
+        
   def shipping_details
     @on_my_account = true
     session[:force_full_site] = false
