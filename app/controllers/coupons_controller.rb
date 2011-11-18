@@ -1,5 +1,5 @@
 class CouponsController < ApplicationController
-  layout :hyrbrid_layout_nosidebar, :except => [:show, :show_gift]
+  layout :hyrbrid_layout_nosidebar, :except => [:show, :show_gift, :show_direct]
   
   before_filter :impersonate_customer
   before_filter :customer_required, :except => [:bulk_use, :legacy, :show_gift]
